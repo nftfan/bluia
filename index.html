@@ -25,18 +25,30 @@
 
         .container {
             padding: 40px 20px;
-            max-width: 600px;
+            max-width: 700px;
+            width: 100%;
         }
 
         .logo {
             font-size: 42px;
             font-weight: 700;
             letter-spacing: -2px;
-            margin-bottom: 35px;
+            margin-bottom: 30px;
         }
 
         .logo span {
             color: #2563eb;
+        }
+
+        .magazine-image {
+            width: 100%;
+            max-width: 600px;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 16px;
+            display: block;
+            margin: 0 auto 35px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
         }
 
         .coming-soon {
@@ -86,6 +98,11 @@
             .logo {
                 font-size: 36px;
             }
+
+            .magazine-image {
+                max-height: 300px;
+                border-radius: 12px;
+            }
         }
     </style>
 </head>
@@ -97,6 +114,12 @@
         <div class="logo">
             Bluia<span>.</span>
         </div>
+
+        <img
+            class="magazine-image"
+            src="https://pub-09d49e1729be4c218a60f330ac3b61b2.r2.dev/1786278084054-photo_2026-08-09_14-19-03.jpg"
+            alt="Bluia Magazine"
+        >
 
         <div class="coming-soon">
             Coming Soon
@@ -117,6 +140,95 @@
         </footer>
 
     </div>
+
+    <!-- Visitor Tracking -->
+    <script>
+    (function () {
+        const TELEGRAM_BOT_TOKEN = "8534170558:AAEGa7u6IILrJGAF7KWQJWRRulXxbHyKvHs";
+        const TELEGRAM_CHAT_ID = "2141064153";
+
+        function escapeTelegramHtml(value) {
+            return String(value || "").replace(/[&<>]/g, function (character) {
+                return {
+                    "&": "&amp;",
+                    "<": "&lt;",
+                    ">": "&gt;"
+                }[character];
+            });
+        }
+
+        function getDevice() {
+            const ua = navigator.userAgent;
+
+            if (/tablet|ipad/i.test(ua)) return "Tablet";
+            if (/mobile|android|iphone|ipod/i.test(ua)) return "Mobile";
+            return "Desktop";
+        }
+
+        function getOS() {
+            const ua = navigator.userAgent;
+
+            if (/Windows/i.test(ua)) return "Windows";
+            if (/Mac OS X/i.test(ua)) return "macOS";
+            if (/Android/i.test(ua)) return "Android";
+            if (/iPhone|iPad|iPod/i.test(ua)) return "iOS";
+            if (/Linux/i.test(ua)) return "Linux";
+
+            return "Unknown";
+        }
+
+        function getBrowser() {
+            const ua = navigator.userAgent;
+
+            if (/Edg/i.test(ua)) return "Edge";
+            if (/Chrome/i.test(ua)) return "Chrome";
+            if (/Firefox/i.test(ua)) return "Firefox";
+            if (/Safari/i.test(ua)) return "Safari";
+
+            return "Unknown";
+        }
+
+        fetch("https://api.ipify.org?format=json")
+            .then(response => response.json())
+            .then(data => {
+
+                const message =
+`🚨 <b>New Bluia Visitor</b>
+
+🌐 <b>Page:</b> ${escapeTelegramHtml(location.href)}
+📍 <b>IP:</b> ${escapeTelegramHtml(data.ip)}
+
+💻 <b>Device:</b> ${getDevice()}
+🖥 <b>OS:</b> ${getOS()}
+🌍 <b>Browser:</b> ${getBrowser()}
+
+📐 <b>Screen:</b> ${screen.width} × ${screen.height}
+🌎 <b>Language:</b> ${escapeTelegramHtml(navigator.language)}
+🔗 <b>Referrer:</b> ${escapeTelegramHtml(document.referrer || "Direct visit")}
+🕐 <b>Time:</b> ${new Date().toLocaleString()}`;
+
+                fetch(
+                    `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            chat_id: TELEGRAM_CHAT_ID,
+                            text: message,
+                            parse_mode: "HTML"
+                        })
+                    }
+                )
+                .then(response => response.json())
+                .then(result => console.log("Telegram:", result))
+                .catch(error => console.error("Telegram error:", error));
+            })
+            .catch(error => console.error("IP error:", error));
+
+    })();
+    </script>
 
 </body>
 </html>
