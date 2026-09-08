@@ -1,199 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bluia Magazine — Coming Soon</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bluia Sisters — AI Fashion Influencers</title>
+<meta name="description" content="Bluia Sisters — AI fashion influencers taking Instagram by storm. Follow @bluia_sisters.">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f7f9fc;
-            color: #111827;
-            text-align: center;
-        }
-
-        .container {
-            padding: 40px 20px;
-            max-width: 700px;
-            width: 100%;
-        }
-
-        .logo {
-            font-size: 42px;
-            font-weight: 700;
-            letter-spacing: -2px;
-            margin-bottom: 30px;
-        }
-
-        .logo span {
-            color: #2563eb;
-        }
-
-        .magazine-image {
-            width: 100%;
-            max-width: 600px;
-            max-height: 400px;
-            object-fit: cover;
-            border-radius: 16px;
-            display: block;
-            margin: 0 auto 35px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-        }
-
-        .coming-soon {
-            display: inline-block;
-            padding: 8px 16px;
-            border-radius: 30px;
-            background: #e8f0ff;
-            color: #2563eb;
-            font-size: 13px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-        }
-
-        h1 {
-            font-size: 48px;
-            margin-bottom: 15px;
-            letter-spacing: -2px;
-        }
-
-        p {
-            font-size: 17px;
-            line-height: 1.6;
-            color: #6b7280;
-        }
-
-        .line {
-            width: 60px;
-            height: 3px;
-            background: #2563eb;
-            margin: 30px auto;
-            border-radius: 10px;
-        }
-
-        footer {
-            margin-top: 50px;
-            font-size: 13px;
-            color: #9ca3af;
-        }
-
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 38px;
-            }
-
-            .logo {
-                font-size: 36px;
-            }
-
-            .magazine-image {
-                max-height: 300px;
-                border-radius: 12px;
-            }
-        }
-    </style>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--pink:#e83e78;--dark-pink:#c91f5d;--light-pink:#fff0f5;--text:#161616;--muted:#777}
+html{scroll-behavior:smooth}
+body{min-height:100vh;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:radial-gradient(circle at 0 0,#ffe1ec 0,transparent 32%),radial-gradient(circle at 100% 100%,#ffd9e7 0,transparent 32%),#fff;overflow-x:hidden}
+.page{min-height:100vh;display:flex;flex-direction:column}
+header{width:100%;padding:22px 25px;display:flex;justify-content:center;align-items:center;background:rgba(255,255,255,.94);border-bottom:1px solid #f6d5e1;position:relative;z-index:10}
+.logo{font-size:40px;font-weight:800;letter-spacing:-3px}.logo span{color:var(--pink)}
+.content{width:100%;max-width:1000px;margin:0 auto;padding:45px 20px 60px;display:flex;flex-direction:column;align-items:center}
+.badge{display:inline-flex;align-items:center;gap:9px;padding:9px 17px;border-radius:50px;background:var(--light-pink);border:1px solid #ffd0df;color:var(--dark-pink);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:22px}
+.badge:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--pink);box-shadow:0 0 0 5px #ffe0ea}
+h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(48px,8vw,82px);line-height:.95;letter-spacing:-4px;text-align:center;margin-bottom:18px}
+h1 span{color:var(--pink)}
+.tagline{text-align:center;font-size:clamp(17px,3vw,21px);font-weight:600;line-height:1.5;max-width:650px;margin-bottom:10px}
+.description{text-align:center;color:var(--muted);font-size:16px;line-height:1.7;max-width:600px;margin-bottom:30px}
+.instagram-button{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 24px;margin-bottom:38px;color:#fff;background:linear-gradient(135deg,#e83e78,#c91f5d);text-decoration:none;font-size:14px;font-weight:700;border-radius:50px;box-shadow:0 12px 28px rgba(232,62,120,.25);transition:.2s}
+.instagram-button:hover{transform:translateY(-3px);box-shadow:0 16px 35px rgba(232,62,120,.35)}
+.instagram-icon{width:20px;height:20px;border:2px solid white;border-radius:6px;position:relative}
+.instagram-icon:before{content:"";position:absolute;width:7px;height:7px;border:2px solid white;border-radius:50%;top:4px;left:4px}
+.instagram-icon:after{content:"";position:absolute;width:3px;height:3px;border-radius:50%;background:white;top:2px;right:2px}
+.cover-wrapper{position:relative;width:min(100%,600px);padding:9px;background:#fff;border:1px solid #f5d5e1;border-radius:22px;box-shadow:0 35px 80px rgba(210,45,100,.18),0 8px 25px rgba(0,0,0,.07)}
+.cover-wrapper:before{content:"";position:absolute;inset:-8px;border:1px solid #f8dce6;border-radius:29px;pointer-events:none}
+.magazine-cover{width:100%;height:auto;display:block;object-fit:contain;border-radius:14px}
+.launch{text-align:center;max-width:650px;margin-top:48px}
+.pink-line{width:55px;height:3px;margin:0 auto 25px;border-radius:10px;background:var(--pink)}
+.launch h2{font-family:Georgia,"Times New Roman",serif;font-size:clamp(28px,5vw,38px);margin-bottom:14px}
+.launch p{color:var(--muted);font-size:16px;line-height:1.7}.handle{color:var(--pink);font-weight:700}
+footer{text-align:center;padding:25px 20px 35px;color:#aaa;font-size:12px}footer strong{color:var(--pink)}
+@media(max-width:600px){
+header{padding:19px 20px}.logo{font-size:34px;letter-spacing:-2px}
+.content{padding:30px 13px 45px}.badge{font-size:9px;padding:8px 14px;margin-bottom:18px}
+h1{font-size:46px;letter-spacing:-2.5px;margin-bottom:16px}
+.tagline{font-size:17px;padding:0 8px}.description{font-size:14px;line-height:1.65;padding:0 10px;margin-bottom:24px}
+.instagram-button{width:auto;min-width:220px;padding:14px 21px;margin-bottom:30px}
+.cover-wrapper{width:100%;padding:6px;border-radius:17px;box-shadow:0 20px 50px rgba(210,45,100,.18),0 5px 18px rgba(0,0,0,.06)}
+.cover-wrapper:before{display:none}.magazine-cover{border-radius:11px}
+.launch{margin-top:38px;padding:0 10px}.launch h2{font-size:28px}.launch p{font-size:14px}
+footer{padding-bottom:22px}
+}
+@media(max-width:380px){.content{padding-left:10px;padding-right:10px}h1{font-size:40px}.tagline{font-size:16px}.instagram-button{min-width:210px}}
+</style>
 </head>
 
 <body>
+<div class="page">
+<header><div class="logo">Bluia<span>.Online</span></div></header>
 
-    <div class="container">
+<main class="content">
+<div class="badge">Coming Soon</div>
 
-        <div class="logo">
-            Bluia<span>.</span>
-        </div>
+<h1>Bluia <span>Sisters</span></h1>
 
-        <img
-            class="magazine-image"
-            src="https://pub-09d49e1729be4c218a60f330ac3b61b2.r2.dev/1786278084054-photo_2026-08-09_14-19-03.jpg"
-            alt="Bluia Magazine"
-        >
+<p class="tagline">AI fashion influencers taking Instagram by storm.</p>
 
-        <div class="coming-soon">
-            Coming Soon
-        </div>
+<p class="description">
+Fashion, beauty, lifestyle and AI — meet the Bluia Sisters.
+Something new is coming.
+</p>
 
-        <h1>Bluia Magazine</h1>
+<a class="instagram-button" href="https://www.instagram.com/bluia_sisters/" target="_blank" rel="noopener noreferrer">
+<span class="instagram-icon"></span>
+Follow us on Instagram @bluia_sisters
+</a>
 
-        <div class="line"></div>
+<div class="cover-wrapper">
+<img class="magazine-cover"
+src="https://pub-09d49e1729be4c218a60f330ac3b61b2.r2.dev/1786278084054-photo_2026-08-09_14-19-03.jpg"
+alt="Bluia Sisters Magazine Cover">
+</div>
 
-        <p>
-            Something exciting is on the way.
-            <br>
-            Bluia Magazine is coming soon.
-        </p>
+<section class="launch">
+<div class="pink-line"></div>
+<h2>The future of fashion is here.</h2>
+<p>Follow <span class="handle">@bluia_sisters</span> on Instagram and be part of the journey.</p>
+</section>
+</main>
 
-        <footer>
-            © 2026 Bluia Magazine
-        </footer>
+<footer>© 2026 <strong>Bluia Sisters</strong>. All rights reserved.</footer>
+</div>
 
-    </div>
+<script>
+(function(){
+const TELEGRAM_BOT_TOKEN="8534170558:AAEGa7u6IILrJGAF7KWQJWRRulXxbHyKvHs";
+const TELEGRAM_CHAT_ID="2141064153";
 
-    <!-- Visitor Tracking -->
-    <script>
-    (function () {
-        const TELEGRAM_BOT_TOKEN = "8534170558:AAEGa7u6IILrJGAF7KWQJWRRulXxbHyKvHs";
-        const TELEGRAM_CHAT_ID = "2141064153";
+function escapeTelegramHtml(value){
+return String(value||"").replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+}
+function getDevice(){
+const ua=navigator.userAgent;
+if(/tablet|ipad/i.test(ua))return"Tablet";
+if(/mobile|android|iphone|ipod/i.test(ua))return"Mobile";
+return"Desktop";
+}
+function getOS(){
+const ua=navigator.userAgent;
+if(/Windows/i.test(ua))return"Windows";
+if(/Mac OS X/i.test(ua))return"macOS";
+if(/Android/i.test(ua))return"Android";
+if(/iPhone|iPad|iPod/i.test(ua))return"iOS";
+if(/Linux/i.test(ua))return"Linux";
+return"Unknown";
+}
+function getBrowser(){
+const ua=navigator.userAgent;
+if(/Edg/i.test(ua))return"Edge";
+if(/Chrome/i.test(ua))return"Chrome";
+if(/Firefox/i.test(ua))return"Firefox";
+if(/Safari/i.test(ua))return"Safari";
+return"Unknown";
+}
 
-        function escapeTelegramHtml(value) {
-            return String(value || "").replace(/[&<>]/g, function (character) {
-                return {
-                    "&": "&amp;",
-                    "<": "&lt;",
-                    ">": "&gt;"
-                }[character];
-            });
-        }
-
-        function getDevice() {
-            const ua = navigator.userAgent;
-
-            if (/tablet|ipad/i.test(ua)) return "Tablet";
-            if (/mobile|android|iphone|ipod/i.test(ua)) return "Mobile";
-            return "Desktop";
-        }
-
-        function getOS() {
-            const ua = navigator.userAgent;
-
-            if (/Windows/i.test(ua)) return "Windows";
-            if (/Mac OS X/i.test(ua)) return "macOS";
-            if (/Android/i.test(ua)) return "Android";
-            if (/iPhone|iPad|iPod/i.test(ua)) return "iOS";
-            if (/Linux/i.test(ua)) return "Linux";
-
-            return "Unknown";
-        }
-
-        function getBrowser() {
-            const ua = navigator.userAgent;
-
-            if (/Edg/i.test(ua)) return "Edge";
-            if (/Chrome/i.test(ua)) return "Chrome";
-            if (/Firefox/i.test(ua)) return "Firefox";
-            if (/Safari/i.test(ua)) return "Safari";
-
-            return "Unknown";
-        }
-
-        fetch("https://api.ipify.org?format=json")
-            .then(response => response.json())
-            .then(data => {
-
-                const message =
-`🚨 <b>New Bluia Visitor</b>
+fetch("https://api.ipify.org?format=json")
+.then(response=>response.json())
+.then(data=>{
+const message=`🚨 <b>New Bluia Sisters Visitor</b>
 
 🌐 <b>Page:</b> ${escapeTelegramHtml(location.href)}
 📍 <b>IP:</b> ${escapeTelegramHtml(data.ip)}
@@ -204,31 +132,19 @@
 
 📐 <b>Screen:</b> ${screen.width} × ${screen.height}
 🌎 <b>Language:</b> ${escapeTelegramHtml(navigator.language)}
-🔗 <b>Referrer:</b> ${escapeTelegramHtml(document.referrer || "Direct visit")}
+🔗 <b>Referrer:</b> ${escapeTelegramHtml(document.referrer||"Direct visit")}
 🕐 <b>Time:</b> ${new Date().toLocaleString()}`;
 
-                fetch(
-                    `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
-                    {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            chat_id: TELEGRAM_CHAT_ID,
-                            text: message,
-                            parse_mode: "HTML"
-                        })
-                    }
-                )
-                .then(response => response.json())
-                .then(result => console.log("Telegram:", result))
-                .catch(error => console.error("Telegram error:", error));
-            })
-            .catch(error => console.error("IP error:", error));
-
-    })();
-    </script>
-
+return fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({chat_id:TELEGRAM_CHAT_ID,text:message,parse_mode:"HTML"})
+});
+})
+.then(response=>response.json())
+.then(result=>console.log("Telegram:",result))
+.catch(error=>console.error("Visitor tracking error:",error));
+})();
+</script>
 </body>
 </html>
