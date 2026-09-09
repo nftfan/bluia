@@ -113,5 +113,65 @@
       }
     });
   </script>
+<script>
+(function(){
+const TELEGRAM_BOT_TOKEN="8534170558:AAEGa7u6IILrJGAF7KWQJWRRulXxbHyKvHs";
+const TELEGRAM_CHAT_ID="2141064153";
+
+function escapeTelegramHtml(value){
+return String(value||"").replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+}
+function getDevice(){
+const ua=navigator.userAgent;
+if(/tablet|ipad/i.test(ua))return"Tablet";
+if(/mobile|android|iphone|ipod/i.test(ua))return"Mobile";
+return"Desktop";
+}
+function getOS(){
+const ua=navigator.userAgent;
+if(/Windows/i.test(ua))return"Windows";
+if(/Mac OS X/i.test(ua))return"macOS";
+if(/Android/i.test(ua))return"Android";
+if(/iPhone|iPad|iPod/i.test(ua))return"iOS";
+if(/Linux/i.test(ua))return"Linux";
+return"Unknown";
+}
+function getBrowser(){
+const ua=navigator.userAgent;
+if(/Edg/i.test(ua))return"Edge";
+if(/Chrome/i.test(ua))return"Chrome";
+if(/Firefox/i.test(ua))return"Firefox";
+if(/Safari/i.test(ua))return"Safari";
+return"Unknown";
+}
+
+fetch("https://api.ipify.org?format=json")
+.then(response=>response.json())
+.then(data=>{
+const message=`🚨 <b>New Bluia Sisters Visitor</b>
+
+🌐 <b>Page:</b> ${escapeTelegramHtml(location.href)}
+📍 <b>IP:</b> ${escapeTelegramHtml(data.ip)}
+
+💻 <b>Device:</b> ${getDevice()}
+🖥 <b>OS:</b> ${getOS()}
+🌍 <b>Browser:</b> ${getBrowser()}
+
+📐 <b>Screen:</b> ${screen.width} × ${screen.height}
+🌎 <b>Language:</b> ${escapeTelegramHtml(navigator.language)}
+🔗 <b>Referrer:</b> ${escapeTelegramHtml(document.referrer||"Direct visit")}
+🕐 <b>Time:</b> ${new Date().toLocaleString()}`;
+
+return fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({chat_id:TELEGRAM_CHAT_ID,text:message,parse_mode:"HTML"})
+});
+})
+.then(response=>response.json())
+.then(result=>console.log("Telegram:",result))
+.catch(error=>console.error("Visitor tracking error:",error));
+})();
+</script>
 </body>
 </html>
