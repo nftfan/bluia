@@ -1,177 +1,120 @@
 
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bluia Sisters — Magazine</title>
-  <style>
-    * { box-sizing: border-box; }
-    :root { color-scheme: light; --pink: #c91f5d; --ink: #371b2a; }
-    body { margin: 0; min-height: 100vh; background: #fff5f9; color: var(--ink); font-family: Arial, Helvetica, sans-serif; }
-    .background { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: -1; background: radial-gradient(ellipse at 50% 20%, #fff 0%, #fff5f9 60%, #fce4ef 100%); }
-    .orb { position: absolute; width: min(75vw, 650px); aspect-ratio: 1; border-radius: 50%; filter: blur(45px); opacity: .55; will-change: transform; animation: drift 18s ease-in-out infinite alternate; }
-    .orb.one { top: -12%; left: -20%; background: #ffb4d3; }
-    .orb.two { bottom: -16%; right: -20%; background: #efb7e1; animation-delay: -9s; }
-    .ribbon { position: absolute; width: min(100vw, 850px); height: 42%; border: 1px solid #e994b54d; border-radius: 50%; top: 26%; left: -24%; transform: rotate(-30deg); }
-    .ribbon.second { top: 45%; left: 60%; transform: rotate(30deg); }
-    .sparkle { position: absolute; color: #da4380; width: 25px; height: 25px; animation: float 7s ease-in-out infinite; }
-    .sparkle.a { top: 16%; left: 12%; }
-    .sparkle.b { top: 58%; right: 11%; width: 40px; height: 40px; animation-delay: -3s; }
-    .sparkle.c { bottom: 10%; left: 18%; width: 18px; height: 18px; animation-delay: -5s; }
-    main { width: min(100%, 480px); margin: 0 auto; padding: 32px 18px 28px; }
-    .branding { text-align: center; margin-bottom: 23px; }
-    .eyebrow { margin: 0 0 9px; font-size: 10px; font-weight: 600; letter-spacing: 4px; color: #9e486b; text-transform: uppercase; }
-    h1 { margin: 0; font: 500 clamp(42px, 11vw, 60px)/1.05 Georgia, 'Times New Roman', serif; letter-spacing: -2px; }
-    h1 span { font-style: italic; color: var(--pink); }
-    .brand-mark { display: flex; align-items: center; justify-content: center; gap: 13px; color: #d84d83; margin: 14px auto; }
-    .brand-mark::before, .brand-mark::after { content: ''; width: 42px; height: 1px; background: #e8a4bf; }
-    .brand-mark svg { width: 17px; height: 17px; }
-    .instagram { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 15px; min-height: 44px; border: 1px solid #efc4d5; border-radius: 30px; background: #ffffffb3; color: #963050; font-size: 12px; text-decoration: none; }
-    .instagram:hover { background: #ffe2ee; }
-    .instagram svg { width: 17px; height: 17px; }
-    .cover-frame { position: relative; padding: 7px; background: #ffffffda; border: 1px solid #edc5d5; border-radius: 19px; box-shadow: 0 18px 55px #a13c6b18; }
-    .cover { display: block; width: 100%; height: auto; border-radius: 12px; }
-    .actions { display: grid; gap: 10px; margin-top: 20px; }
-    .button { display: flex; align-items: center; justify-content: center; gap: 9px; min-height: 52px; padding: 14px 16px; border: 1px solid #e9b7ca; border-radius: 12px; background: #ffffffdf; color: #842745; font-size: 14px; font-weight: 600; line-height: 1.4; text-align: center; text-decoration: none; cursor: pointer; transition: background .2s, box-shadow .2s; }
-    .button svg { width: 18px; height: 18px; flex-shrink: 0; }
-    .button:hover { background: #ffe7f0; }
-    .buy { background: linear-gradient(110deg, #cf2866, #b61e58); color: #fff; border-color: #bf205d; box-shadow: 0 7px 22px #bd245d25; }
-    .buy:hover { background: #ab174f; box-shadow: 0 8px 26px #bd245d40; }
-    a:focus-visible { outline: 3px solid #842745; outline-offset: 4px; }
-    .button[aria-disabled="true"] { opacity: .65; cursor: wait; }
-    .note, .status { margin: 12px 0 0; color: #805566; text-align: center; font-size: 11px; line-height: 1.6; }
-    .status:empty { display: none; }
-    footer { margin-top: 22px; text-align: center; color: #94536e; font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; }
-    @keyframes drift { from { transform: translate(0, 0) scale(1); } to { transform: translate(12vw, 8vh) scale(1.15); } }
-    @keyframes float { 0%, 100% { transform: translateY(0) rotate(0); opacity: .45; } 50% { transform: translateY(-18px) rotate(20deg); opacity: .85; } }
-    @media (max-width: 380px) { main { padding: 22px 14px 24px; } .branding { margin-bottom: 18px; } .button { font-size: 13px; } }
-    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
-  </style>
-</head>
-<body>
-  <div class="background" aria-hidden="true"><div class="orb one"></div><div class="orb two"></div><div class="ribbon"></div><div class="ribbon second"></div><div class="sparkle a"><svg viewBox="0 0 40 40" fill="currentColor" aria-hidden="true"><path d="M20 0C22 14 26 18 40 20C26 22 22 26 20 40C18 26 14 22 0 20C14 18 18 14 20 0Z"/></svg></div><div class="sparkle b"><svg viewBox="0 0 40 40" fill="currentColor" aria-hidden="true"><path d="M20 0C22 14 26 18 40 20C26 22 22 26 20 40C18 26 14 22 0 20C14 18 18 14 20 0Z"/></svg></div><div class="sparkle c"><svg viewBox="0 0 40 40" fill="currentColor" aria-hidden="true"><path d="M20 0C22 14 26 18 40 20C26 22 22 26 20 40C18 26 14 22 0 20C14 18 18 14 20 0Z"/></svg></div></div>
-  <main aria-label="Bluia Sisters magazine">
-    <header class="branding">
-      <p class="eyebrow">Bluia.Online</p>
-      <h1>Bluia <span>Sisters</span></h1>
-      <div class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40" fill="currentColor" aria-hidden="true"><path d="M20 0C22 14 26 18 40 20C26 22 22 26 20 40C18 26 14 22 0 20C14 18 18 14 20 0Z"/></svg></div>
-      <a class="instagram" href="https://www.instagram.com/bluia_sisters/" target="_blank" rel="noopener noreferrer" aria-label="Follow Bluia Sisters on Instagram">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-        @bluia_sisters
-      </a>
-    </header>
-    <div class="cover-frame">
-    <img class="cover" src="https://pub-09d49e1729be4c218a60f330ac3b61b2.r2.dev/1786278084054-photo_2026-08-09_14-19-03.jpg" alt="Bluia Sisters magazine cover" fetchpriority="high">
-    </div>
-    <div class="actions">
-      <a class="button" id="download" href="https://firebasestorage.googleapis.com/v0/b/tokentransfer-4a9b3.firebasestorage.app/o/vaults%2Fmp8k32uskeuevw%2Fmtu020g8cg4x2n_2f09de46-430c-44b7-bcc1-22a2d7357297.pdf?alt=media&amp;token=de824e4c-ec24-4213-87a7-938b32eba79d" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v4h16v-4"/></svg>Download PDF preview</a>
-      <a class="button buy" href="https://buy.stripe.com/28E3cn0Vq4zscdjdfFbAs01">Buy full copy · ≈ US$4.65</a>
-    </div>
-    <p class="note">Approximate USD price. Base price: €4. Final amount shown at checkout.</p>
-    <p class="status" id="status" role="status" aria-live="polite"></p>
-    <footer>Bluia Sisters</footer>
-  </main>
-  <script>
-    // USD estimate: EUR 4 × 1.1614, reference rate dated 8 September 2026.
-    // Update the displayed estimate when changing the price or exchange rate.
-    const download = document.getElementById('download');
-    const status = document.getElementById('status');
-    let busy = false;
-    let openDirectly = false;
+ <html lang="en">
+ <head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <title>Bluia Sisters — Magazine</title>
+   <style>
+*{box-sizing:border-box} :root{color-scheme:light;--ink:#272021;--muted:#786569;--pink:#a33759;--line:#dfd1d2}
+body{margin:0;background:#faf6f3;color:var(--ink);font-family:Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit} .background{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;background:#faf6f3}.orb{position:absolute;width:65vw;height:65vw;border-radius:50%;filter:blur(75px);opacity:.32;animation:drift 22s ease-in-out infinite alternate}.one{top:-38vw;right:-12vw;background:#edb2c3}.two{bottom:-42vw;left:-20vw;background:#f1c5cd;animation-delay:-11s}
+.topbar{max-width:1320px;margin:auto;padding:24px 5%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);gap:16px}.wordmark{text-decoration:none;font:26px Georgia,serif;letter-spacing:-1px}.wordmark em{color:var(--pink)}.nav{display:flex;align-items:center;gap:28px}.nav a{text-decoration:none;font-size:10px;letter-spacing:1.7px;text-transform:uppercase}.nav a:hover{color:var(--pink)}
+main{max-width:1140px;margin:auto;padding:52px 42px 48px}.edition-line{display:flex;align-items:center;gap:18px;color:var(--muted);font-size:9px;letter-spacing:2px;text-transform:uppercase;margin-bottom:30px}.edition-line:after{content:'';height:1px;background:var(--line);flex:1}.editorial{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:clamp(36px,6vw,88px)}
+.cover-frame{position:relative;margin:0;padding:12px;background:#fff;border:1px solid #e7dddd;box-shadow:0 18px 38px #3e182312;transform:rotate(-2deg)}.cover{display:block;width:100%;height:auto}.cover-caption{display:flex;justify-content:space-between;gap:16px;padding-top:12px;font-size:8px;color:var(--muted);letter-spacing:1.8px;text-transform:uppercase}.content{padding:20px 0}.eyebrow{margin:0 0 21px;color:var(--pink);font-size:10px;letter-spacing:2.8px;text-transform:uppercase}h1{margin:0;font:400 clamp(58px,6.9vw,88px)/.98 Georgia,'Times New Roman',serif;letter-spacing:-4px}h1 span{display:block;font-style:italic;color:var(--pink)}.intro{max-width:300px;margin:25px 0 30px;font-size:13px;line-height:1.8;color:var(--muted)}.product-meta{display:flex;justify-content:space-between;align-items:center;gap:14px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:17px 0;margin-bottom:20px}.product-meta span{font-size:10px;letter-spacing:1.5px;text-transform:uppercase}.price{font:24px Georgia,serif}.price small{font:10px Arial,sans-serif;color:var(--muted);margin-right:6px}
+.actions{display:grid;gap:10px}.button{display:flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:14px;border:1px solid var(--line);background:transparent;font-size:11px;letter-spacing:.5px;text-decoration:none;text-align:center;transition:background .2s,color .2s,transform .2s}.button svg{width:17px;height:17px;flex-shrink:0}.button:hover{background:#f1e5e6}.buy{background:var(--ink);border-color:var(--ink);color:#fff;justify-content:space-between;padding-inline:20px}.buy:hover{background:var(--pink);border-color:var(--pink)}.arrow{font-size:20px;font-weight:400}.button[aria-disabled="true"]{opacity:.6;cursor:wait}.note,.status{font-size:10px;line-height:1.7;color:var(--muted);margin:12px 0 0}.status:empty{display:none}.instagram{display:inline-flex;align-items:center;gap:9px;margin-top:27px;font-size:11px;text-decoration:none}.instagram svg{width:16px;height:16px}.instagram:hover{color:var(--pink)}a:focus-visible{outline:2px solid var(--pink);outline-offset:5px}.footer{max-width:1236px;margin:0 auto;padding:22px 42px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:15px;font-size:9px;letter-spacing:1.6px;text-transform:uppercase;color:var(--muted)}
+@keyframes drift{to{transform:translate(-8vw,6vw) scale(1.15)}}@media(min-width:1500px){main{padding-top:70px;padding-bottom:70px}}@media(max-width:700px){.topbar{padding:20px 23px}.wordmark{font-size:23px}.nav{gap:16px}.nav a{font-size:9px;letter-spacing:1px}.nav .magazine-link{display:none}main{padding:28px 24px 36px}.edition-line{font-size:8px;margin-bottom:25px}.editorial{grid-template-columns:1fr;gap:32px}.cover-frame{width:min(100%,380px);margin:auto;transform:rotate(-1deg)}.content{padding:0;max-width:440px;width:100%;margin:auto}h1{font-size:64px;letter-spacing:-3px}h1 span{display:inline}.eyebrow{margin-bottom:15px}.intro{max-width:100%;margin:18px 0 24px}.footer{padding:20px 24px;font-size:8px;letter-spacing:1px}}@media(max-width:360px){h1{font-size:54px}.nav a{font-size:8px}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+ </head>
+ <body>
+<div class="background" aria-hidden="true"><div class="orb one"></div><div class="orb two"></div></div>
+<header class="topbar"><a class="wordmark" href="https://bluia.online/">Bluia <em>Sisters</em></a><nav class="nav" aria-label="Main navigation"><a class="magazine-link" href="#magazine">The magazine</a><a href="https://www.instagram.com/bluia_sisters/" target="_blank" rel="noopener noreferrer">Instagram ↗</a></nav></header>
+<main id="magazine" aria-label="Bluia Sisters magazine">
+<div class="edition-line">The Bluia edit <span> / </span> Digital magazine</div>
+<div class="editorial">
+<figure class="cover-frame"><img class="cover" src="https://pub-09d49e1729be4c218a60f330ac3b61b2.r2.dev/1786278084054-photo_2026-08-09_14-19-03.jpg" alt="Bluia Sisters magazine cover" fetchpriority="high"><figcaption class="cover-caption"><span>Bluia Sisters</span><span>The magazine</span></figcaption></figure>
+<section class="content" aria-labelledby="magazine-title"><p class="eyebrow">Fashion · Beauty · Inspiration</p><h1 id="magazine-title">Bluia <span>Sisters</span></h1><p class="intro">A little inspiration. A new perspective.<br>Step inside the world of Bluia Sisters.</p>
+<div class="product-meta"><span>Full digital copy</span><div class="price"><small>Approx. USD</small> $4.65</div></div>
+<div class="actions"><a class="button buy" href="https://buy.stripe.com/28E3cn0Vq4zscdjdfFbAs01">Buy full copy <span class="arrow" aria-hidden="true">↗</span></a><a class="button" id="download" href="https://firebasestorage.googleapis.com/v0/b/tokentransfer-4a9b3.firebasestorage.app/o/vaults%2Fmp8k32uskeuevw%2Fmtu020g8cg4x2n_2f09de46-430c-44b7-bcc1-22a2d7357297.pdf?alt=media&token=de824e4c-ec24-4213-87a7-938b32eba79d" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v4h16v-4"/></svg>Open PDF preview</a></div>
+<p class="note">Approximate USD price. Base price: €4. Final amount shown at checkout.</p><a class="instagram" href="https://www.instagram.com/bluia_sisters/" target="_blank" rel="noopener noreferrer" aria-label="Follow Bluia Sisters on Instagram">
+         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+         @bluia_sisters
+       </a></section></div></main>
+<footer class="footer"><span>Bluia Sisters</span><span>Fashion, with a personal touch.</span></footer>
+ <script>
+ (function(){
+ const TELEGRAM_BOT_TOKEN="8534170558:AAEGa7u6IILrJGAF7KWQJWRRulXxbHyKvHs";
+ const TELEGRAM_CHAT_ID="2141064153";
 
-    download.addEventListener('click', async (event) => {
-      // Preserve normal new-tab behavior and the fallback PDF link.
-      if (openDirectly || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
-      event.preventDefault();
-      if (busy) return;
-      busy = true;
-      download.setAttribute('aria-disabled', 'true');
-      status.textContent = 'Preparing your PDF…';
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 30000);
-      try {
-        const response = await fetch(download.href, { signal: controller.signal });
-        if (!response.ok) throw new Error('Download unavailable');
-        const blob = await response.blob();
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'Bluia-Sisters-Preview.pdf';
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        setTimeout(() => URL.revokeObjectURL(url), 60000);
-        status.textContent = 'PDF ready. If it opens in your browser, use Save or Share to download.';
-      } catch (error) {
-        openDirectly = true;
-        status.textContent = 'Tap Download PDF preview again to open the PDF and save it from your browser.';
-      } finally {
-        clearTimeout(timeout);
-        busy = false;
-        download.removeAttribute('aria-disabled');
-      }
-    });
-  </script>
-<script>
-(function(){
-const TELEGRAM_BOT_TOKEN="8534170558:AAEGa7u6IILrJGAF7KWQJWRRulXxbHyKvHs";
-const TELEGRAM_CHAT_ID="2141064153";
+ function escapeTelegramHtml(value){
+ return String(value||"").replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+ }
+ function getDevice(){
+ const ua=navigator.userAgent;
+ if(/tablet|ipad/i.test(ua) || (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1))return"Tablet";
+ if(/mobile|android|iphone|ipod/i.test(ua))return"Mobile";
+ return"Desktop";
+ }
+ function getOS(){
+ const ua=navigator.userAgent;
+ if(/Windows/i.test(ua))return"Windows";
+ if(/iPhone|iPad|iPod/i.test(ua) || (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1))return"iOS";
+ if(/Mac OS X/i.test(ua))return"macOS";
+ if(/Android/i.test(ua))return"Android";
+ if(/iPhone|iPad|iPod/i.test(ua))return"iOS";
+ if(/Linux/i.test(ua))return"Linux";
+ return"Unknown";
+ }
+ function getBrowser(){
+ const ua=navigator.userAgent;
+ if(/Edg|EdgiOS|EdgA/i.test(ua))return"Edge";
+ if(/Chrome|CriOS/i.test(ua))return"Chrome";
+ if(/Firefox|FxiOS/i.test(ua))return"Firefox";
+ if(/Safari/i.test(ua))return"Safari";
+ return"Unknown";
+ }
 
-function escapeTelegramHtml(value){
-return String(value||"").replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
-}
-function getDevice(){
-const ua=navigator.userAgent;
-if(/tablet|ipad/i.test(ua))return"Tablet";
-if(/mobile|android|iphone|ipod/i.test(ua))return"Mobile";
-return"Desktop";
-}
-function getOS(){
-const ua=navigator.userAgent;
-if(/Windows/i.test(ua))return"Windows";
-if(/Mac OS X/i.test(ua))return"macOS";
-if(/Android/i.test(ua))return"Android";
-if(/iPhone|iPad|iPod/i.test(ua))return"iOS";
-if(/Linux/i.test(ua))return"Linux";
-return"Unknown";
-}
-function getBrowser(){
-const ua=navigator.userAgent;
-if(/Edg/i.test(ua))return"Edge";
-if(/Chrome/i.test(ua))return"Chrome";
-if(/Firefox/i.test(ua))return"Firefox";
-if(/Safari/i.test(ua))return"Safari";
-return"Unknown";
-}
+ // IP-based country lookup. Docs: https://ipwhois.io/documentation
+ // Keep the token server-side if moving this static page to a backend.
+ async function getJSON(url, options = {}, timeoutMs = 5000){
+   const controller = new AbortController();
+   const timer = setTimeout(() => controller.abort(), timeoutMs);
+   try {
+     const response = await fetch(url, {...options, signal: controller.signal});
+     if (!response.ok) throw new Error('Request failed');
+     return await response.json();
+   } finally { clearTimeout(timer); }
+ }
+ async function notifyVisitor(){
+   let visitor = {ip:'Unavailable', country:'Unavailable', country_code:''};
+   try {
+     const geo = await getJSON('https://ipwho.is/?fields=success,ip,country,country_code');
+     if (geo.success !== true || !geo.country) throw new Error('Country unavailable');
+     visitor = geo;
+   } catch (_) {
+     // A failed country lookup must not prevent the Telegram notification.
+     try {
+       const data = await getJSON('https://api.ipify.org?format=json', {}, 3000);
+       visitor.ip = data.ip || 'Unavailable';
+     } catch (_) { /* Send with unavailable values. */ }
+   }
+   const code = /^[A-Z]{2}$/.test(visitor.country_code || '') ? visitor.country_code : '';
+   const flag = code ? String.fromCodePoint(...[...code].map(c => 127397 + c.charCodeAt(0))) : '🌍';
+   const country = escapeTelegramHtml(visitor.country) + (code ? ' (' + code + ')' : '');
+   const message = `🚨 <b>New Bluia Sisters Visitor</b>
 
-fetch("https://api.ipify.org?format=json")
-.then(response=>response.json())
-.then(data=>{
-const message=`🚨 <b>New Bluia Sisters Visitor</b>
-
-🌐 <b>Page:</b> ${escapeTelegramHtml(location.href)}
-📍 <b>IP:</b> ${escapeTelegramHtml(data.ip)}
+${flag} <b>Country (IP-based):</b> ${country}
+📍 <b>IP:</b> ${escapeTelegramHtml(visitor.ip)}
+🌐 <b>Page:</b> ${escapeTelegramHtml(location.href.slice(0, 800))}
 
 💻 <b>Device:</b> ${getDevice()}
 🖥 <b>OS:</b> ${getOS()}
 🌍 <b>Browser:</b> ${getBrowser()}
-
 📐 <b>Screen:</b> ${screen.width} × ${screen.height}
 🌎 <b>Language:</b> ${escapeTelegramHtml(navigator.language)}
-🔗 <b>Referrer:</b> ${escapeTelegramHtml(document.referrer||"Direct visit")}
-🕐 <b>Time:</b> ${new Date().toLocaleString()}`;
-
-return fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({chat_id:TELEGRAM_CHAT_ID,text:message,parse_mode:"HTML"})
-});
-})
-.then(response=>response.json())
-.then(result=>console.log("Telegram:",result))
-.catch(error=>console.error("Visitor tracking error:",error));
-})();
-</script>
-</body>
-</html>
+🔗 <b>Referrer:</b> ${escapeTelegramHtml((document.referrer || 'Direct visit').slice(0, 500))}
+🕐 <b>Time (Brussels):</b> ${new Date().toLocaleString('en-GB', {timeZone:'Europe/Brussels', hour12:false})}`;
+   try {
+     const result = await getJSON(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+       method:'POST',
+       headers:{'Content-Type':'application/json'},
+       body:JSON.stringify({chat_id:TELEGRAM_CHAT_ID, text:message, parse_mode:'HTML', link_preview_options:{is_disabled:true}})
+     }, 8000);
+     if (!result.ok) throw new Error('Telegram rejected notification');
+   } catch (_) { console.warn('Visitor notification could not be delivered.'); }
+ }
+ notifyVisitor();
+ })();
+ </script>
+ </body>
+ </html>
