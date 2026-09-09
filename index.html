@@ -1,150 +1,117 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bluia Sisters — AI Fashion Influencers</title>
-<meta name="description" content="Bluia Sisters — AI fashion influencers taking Instagram by storm. Follow @bluia_sisters.">
-
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--pink:#e83e78;--dark-pink:#c91f5d;--light-pink:#fff0f5;--text:#161616;--muted:#777}
-html{scroll-behavior:smooth}
-body{min-height:100vh;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:radial-gradient(circle at 0 0,#ffe1ec 0,transparent 32%),radial-gradient(circle at 100% 100%,#ffd9e7 0,transparent 32%),#fff;overflow-x:hidden}
-.page{min-height:100vh;display:flex;flex-direction:column}
-header{width:100%;padding:22px 25px;display:flex;justify-content:center;align-items:center;background:rgba(255,255,255,.94);border-bottom:1px solid #f6d5e1;position:relative;z-index:10}
-.logo{font-size:40px;font-weight:800;letter-spacing:-3px}.logo span{color:var(--pink)}
-.content{width:100%;max-width:1000px;margin:0 auto;padding:45px 20px 60px;display:flex;flex-direction:column;align-items:center}
-.badge{display:inline-flex;align-items:center;gap:9px;padding:9px 17px;border-radius:50px;background:var(--light-pink);border:1px solid #ffd0df;color:var(--dark-pink);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:22px}
-.badge:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--pink);box-shadow:0 0 0 5px #ffe0ea}
-h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(48px,8vw,82px);line-height:.95;letter-spacing:-4px;text-align:center;margin-bottom:18px}
-h1 span{color:var(--pink)}
-.tagline{text-align:center;font-size:clamp(17px,3vw,21px);font-weight:600;line-height:1.5;max-width:650px;margin-bottom:10px}
-.description{text-align:center;color:var(--muted);font-size:16px;line-height:1.7;max-width:600px;margin-bottom:30px}
-.instagram-button{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 24px;margin-bottom:38px;color:#fff;background:linear-gradient(135deg,#e83e78,#c91f5d);text-decoration:none;font-size:14px;font-weight:700;border-radius:50px;box-shadow:0 12px 28px rgba(232,62,120,.25);transition:.2s}
-.instagram-button:hover{transform:translateY(-3px);box-shadow:0 16px 35px rgba(232,62,120,.35)}
-.instagram-icon{width:20px;height:20px;border:2px solid white;border-radius:6px;position:relative}
-.instagram-icon:before{content:"";position:absolute;width:7px;height:7px;border:2px solid white;border-radius:50%;top:4px;left:4px}
-.instagram-icon:after{content:"";position:absolute;width:3px;height:3px;border-radius:50%;background:white;top:2px;right:2px}
-.cover-wrapper{position:relative;width:min(100%,600px);padding:9px;background:#fff;border:1px solid #f5d5e1;border-radius:22px;box-shadow:0 35px 80px rgba(210,45,100,.18),0 8px 25px rgba(0,0,0,.07)}
-.cover-wrapper:before{content:"";position:absolute;inset:-8px;border:1px solid #f8dce6;border-radius:29px;pointer-events:none}
-.magazine-cover{width:100%;height:auto;display:block;object-fit:contain;border-radius:14px}
-.launch{text-align:center;max-width:650px;margin-top:48px}
-.pink-line{width:55px;height:3px;margin:0 auto 25px;border-radius:10px;background:var(--pink)}
-.launch h2{font-family:Georgia,"Times New Roman",serif;font-size:clamp(28px,5vw,38px);margin-bottom:14px}
-.launch p{color:var(--muted);font-size:16px;line-height:1.7}.handle{color:var(--pink);font-weight:700}
-footer{text-align:center;padding:25px 20px 35px;color:#aaa;font-size:12px}footer strong{color:var(--pink)}
-@media(max-width:600px){
-header{padding:19px 20px}.logo{font-size:34px;letter-spacing:-2px}
-.content{padding:30px 13px 45px}.badge{font-size:9px;padding:8px 14px;margin-bottom:18px}
-h1{font-size:46px;letter-spacing:-2.5px;margin-bottom:16px}
-.tagline{font-size:17px;padding:0 8px}.description{font-size:14px;line-height:1.65;padding:0 10px;margin-bottom:24px}
-.instagram-button{width:auto;min-width:220px;padding:14px 21px;margin-bottom:30px}
-.cover-wrapper{width:100%;padding:6px;border-radius:17px;box-shadow:0 20px 50px rgba(210,45,100,.18),0 5px 18px rgba(0,0,0,.06)}
-.cover-wrapper:before{display:none}.magazine-cover{border-radius:11px}
-.launch{margin-top:38px;padding:0 10px}.launch h2{font-size:28px}.launch p{font-size:14px}
-footer{padding-bottom:22px}
-}
-@media(max-width:380px){.content{padding-left:10px;padding-right:10px}h1{font-size:40px}.tagline{font-size:16px}.instagram-button{min-width:210px}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bluia Sisters — Magazine</title>
+  <style>
+    * { box-sizing: border-box; }
+    :root { color-scheme: light; --pink: #c91f5d; --ink: #371b2a; }
+    body { margin: 0; min-height: 100vh; background: #fff5f9; color: var(--ink); font-family: Arial, Helvetica, sans-serif; }
+    .background { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: -1; background: radial-gradient(ellipse at 50% 20%, #fff 0%, #fff5f9 60%, #fce4ef 100%); }
+    .orb { position: absolute; width: min(75vw, 650px); aspect-ratio: 1; border-radius: 50%; filter: blur(45px); opacity: .55; will-change: transform; animation: drift 18s ease-in-out infinite alternate; }
+    .orb.one { top: -12%; left: -20%; background: #ffb4d3; }
+    .orb.two { bottom: -16%; right: -20%; background: #efb7e1; animation-delay: -9s; }
+    .ribbon { position: absolute; width: min(100vw, 850px); height: 42%; border: 1px solid #e994b54d; border-radius: 50%; top: 26%; left: -24%; transform: rotate(-30deg); }
+    .ribbon.second { top: 45%; left: 60%; transform: rotate(30deg); }
+    .sparkle { position: absolute; color: #da4380; width: 25px; height: 25px; animation: float 7s ease-in-out infinite; }
+    .sparkle.a { top: 16%; left: 12%; }
+    .sparkle.b { top: 58%; right: 11%; width: 40px; height: 40px; animation-delay: -3s; }
+    .sparkle.c { bottom: 10%; left: 18%; width: 18px; height: 18px; animation-delay: -5s; }
+    main { width: min(100%, 480px); margin: 0 auto; padding: 32px 18px 28px; }
+    .branding { text-align: center; margin-bottom: 23px; }
+    .eyebrow { margin: 0 0 9px; font-size: 10px; font-weight: 600; letter-spacing: 4px; color: #9e486b; text-transform: uppercase; }
+    h1 { margin: 0; font: 500 clamp(42px, 11vw, 60px)/1.05 Georgia, 'Times New Roman', serif; letter-spacing: -2px; }
+    h1 span { font-style: italic; color: var(--pink); }
+    .brand-mark { display: flex; align-items: center; justify-content: center; gap: 13px; color: #d84d83; margin: 14px auto; }
+    .brand-mark::before, .brand-mark::after { content: ''; width: 42px; height: 1px; background: #e8a4bf; }
+    .brand-mark svg { width: 17px; height: 17px; }
+    .instagram { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 15px; min-height: 44px; border: 1px solid #efc4d5; border-radius: 30px; background: #ffffffb3; color: #963050; font-size: 12px; text-decoration: none; }
+    .instagram:hover { background: #ffe2ee; }
+    .instagram svg { width: 17px; height: 17px; }
+    .cover-frame { position: relative; padding: 7px; background: #ffffffda; border: 1px solid #edc5d5; border-radius: 19px; box-shadow: 0 18px 55px #a13c6b18; }
+    .cover { display: block; width: 100%; height: auto; border-radius: 12px; }
+    .actions { display: grid; gap: 10px; margin-top: 20px; }
+    .button { display: flex; align-items: center; justify-content: center; gap: 9px; min-height: 52px; padding: 14px 16px; border: 1px solid #e9b7ca; border-radius: 12px; background: #ffffffdf; color: #842745; font-size: 14px; font-weight: 600; line-height: 1.4; text-align: center; text-decoration: none; cursor: pointer; transition: background .2s, box-shadow .2s; }
+    .button svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .button:hover { background: #ffe7f0; }
+    .buy { background: linear-gradient(110deg, #cf2866, #b61e58); color: #fff; border-color: #bf205d; box-shadow: 0 7px 22px #bd245d25; }
+    .buy:hover { background: #ab174f; box-shadow: 0 8px 26px #bd245d40; }
+    a:focus-visible { outline: 3px solid #842745; outline-offset: 4px; }
+    .button[aria-disabled="true"] { opacity: .65; cursor: wait; }
+    .note, .status { margin: 12px 0 0; color: #805566; text-align: center; font-size: 11px; line-height: 1.6; }
+    .status:empty { display: none; }
+    footer { margin-top: 22px; text-align: center; color: #94536e; font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; }
+    @keyframes drift { from { transform: translate(0, 0) scale(1); } to { transform: translate(12vw, 8vh) scale(1.15); } }
+    @keyframes float { 0%, 100% { transform: translateY(0) rotate(0); opacity: .45; } 50% { transform: translateY(-18px) rotate(20deg); opacity: .85; } }
+    @media (max-width: 380px) { main { padding: 22px 14px 24px; } .branding { margin-bottom: 18px; } .button { font-size: 13px; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+  </style>
 </head>
-
 <body>
-<div class="page">
-<header><div class="logo">Bluia<span>.Online</span></div></header>
+  <div class="background" aria-hidden="true"><div class="orb one"></div><div class="orb two"></div><div class="ribbon"></div><div class="ribbon second"></div><div class="sparkle a"><svg viewBox="0 0 40 40" fill="currentColor" aria-hidden="true"><path d="M20 0C22 14 26 18 40 20C26 22 22 26 20 40C18 26 14 22 0 20C14 18 18 14 20 0Z"/></svg></div><div class="sparkle b"><svg viewBox="0 0 40 40" fill="currentColor" aria-hidden="true"><path d="M20 0C22 14 26 18 40 20C26 22 22 26 20 40C18 26 14 22 0 20C14 18 18 14 20 0Z"/></svg></div><div class="sparkle c"><svg viewBox="0 0 40 40" fill="currentColor" aria-hidden="true"><path d="M20 0C22 14 26 18 40 20C26 22 22 26 20 40C18 26 14 22 0 20C14 18 18 14 20 0Z"/></svg></div></div>
+  <main aria-label="Bluia Sisters magazine">
+    <header class="branding">
+      <p class="eyebrow">Bluia.Online</p>
+      <h1>Bluia <span>Sisters</span></h1>
+      <div class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40" fill="currentColor" aria-hidden="true"><path d="M20 0C22 14 26 18 40 20C26 22 22 26 20 40C18 26 14 22 0 20C14 18 18 14 20 0Z"/></svg></div>
+      <a class="instagram" href="https://www.instagram.com/bluia_sisters/" target="_blank" rel="noopener noreferrer" aria-label="Follow Bluia Sisters on Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        @bluia_sisters
+      </a>
+    </header>
+    <div class="cover-frame">
+    <img class="cover" src="https://pub-09d49e1729be4c218a60f330ac3b61b2.r2.dev/1786278084054-photo_2026-08-09_14-19-03.jpg" alt="Bluia Sisters magazine cover" fetchpriority="high">
+    </div>
+    <div class="actions">
+      <a class="button" id="download" href="https://firebasestorage.googleapis.com/v0/b/tokentransfer-4a9b3.firebasestorage.app/o/vaults%2Fmp8k32uskeuevw%2Fmtu020g8cg4x2n_2f09de46-430c-44b7-bcc1-22a2d7357297.pdf?alt=media&amp;token=de824e4c-ec24-4213-87a7-938b32eba79d" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v4h16v-4"/></svg>Download PDF preview</a>
+      <a class="button buy" href="https://buy.stripe.com/28E3cn0Vq4zscdjdfFbAs01">Buy full copy · ≈ US$4.65</a>
+    </div>
+    <p class="note">Approximate USD price. Base price: €4. Final amount shown at checkout.</p>
+    <p class="status" id="status" role="status" aria-live="polite"></p>
+    <footer>Bluia Sisters</footer>
+  </main>
+  <script>
+    // USD estimate: EUR 4 × 1.1614, reference rate dated 8 September 2026.
+    // Update the displayed estimate when changing the price or exchange rate.
+    const download = document.getElementById('download');
+    const status = document.getElementById('status');
+    let busy = false;
+    let openDirectly = false;
 
-<main class="content">
-<div class="badge">Coming Soon</div>
-
-<h1>Bluia <span>Sisters</span></h1>
-
-<p class="tagline">AI fashion influencers taking Instagram by storm.</p>
-
-<p class="description">
-Fashion, beauty, lifestyle and AI — meet the Bluia Sisters.
-Something new is coming.
-</p>
-
-<a class="instagram-button" href="https://www.instagram.com/bluia_sisters/" target="_blank" rel="noopener noreferrer">
-<span class="instagram-icon"></span>
-Follow us on Instagram @bluia_sisters
-</a>
-
-<div class="cover-wrapper">
-<img class="magazine-cover"
-src="https://pub-09d49e1729be4c218a60f330ac3b61b2.r2.dev/1786278084054-photo_2026-08-09_14-19-03.jpg"
-alt="Bluia Sisters Magazine Cover">
-</div>
-
-<section class="launch">
-<div class="pink-line"></div>
-<h2>The future of fashion is here.</h2>
-<p>Follow <span class="handle">@bluia_sisters</span> on Instagram and be part of the journey.</p>
-</section>
-</main>
-
-<footer>© 2026 <strong>Bluia Sisters</strong>. All rights reserved.</footer>
-</div>
-
-<script>
-(function(){
-const TELEGRAM_BOT_TOKEN="8534170558:AAEGa7u6IILrJGAF7KWQJWRRulXxbHyKvHs";
-const TELEGRAM_CHAT_ID="2141064153";
-
-function escapeTelegramHtml(value){
-return String(value||"").replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
-}
-function getDevice(){
-const ua=navigator.userAgent;
-if(/tablet|ipad/i.test(ua))return"Tablet";
-if(/mobile|android|iphone|ipod/i.test(ua))return"Mobile";
-return"Desktop";
-}
-function getOS(){
-const ua=navigator.userAgent;
-if(/Windows/i.test(ua))return"Windows";
-if(/Mac OS X/i.test(ua))return"macOS";
-if(/Android/i.test(ua))return"Android";
-if(/iPhone|iPad|iPod/i.test(ua))return"iOS";
-if(/Linux/i.test(ua))return"Linux";
-return"Unknown";
-}
-function getBrowser(){
-const ua=navigator.userAgent;
-if(/Edg/i.test(ua))return"Edge";
-if(/Chrome/i.test(ua))return"Chrome";
-if(/Firefox/i.test(ua))return"Firefox";
-if(/Safari/i.test(ua))return"Safari";
-return"Unknown";
-}
-
-fetch("https://api.ipify.org?format=json")
-.then(response=>response.json())
-.then(data=>{
-const message=`🚨 <b>New Bluia Sisters Visitor</b>
-
-🌐 <b>Page:</b> ${escapeTelegramHtml(location.href)}
-📍 <b>IP:</b> ${escapeTelegramHtml(data.ip)}
-
-💻 <b>Device:</b> ${getDevice()}
-🖥 <b>OS:</b> ${getOS()}
-🌍 <b>Browser:</b> ${getBrowser()}
-
-📐 <b>Screen:</b> ${screen.width} × ${screen.height}
-🌎 <b>Language:</b> ${escapeTelegramHtml(navigator.language)}
-🔗 <b>Referrer:</b> ${escapeTelegramHtml(document.referrer||"Direct visit")}
-🕐 <b>Time:</b> ${new Date().toLocaleString()}`;
-
-return fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({chat_id:TELEGRAM_CHAT_ID,text:message,parse_mode:"HTML"})
-});
-})
-.then(response=>response.json())
-.then(result=>console.log("Telegram:",result))
-.catch(error=>console.error("Visitor tracking error:",error));
-})();
-</script>
+    download.addEventListener('click', async (event) => {
+      // Preserve normal new-tab behavior and the fallback PDF link.
+      if (openDirectly || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      if (busy) return;
+      busy = true;
+      download.setAttribute('aria-disabled', 'true');
+      status.textContent = 'Preparing your PDF…';
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 30000);
+      try {
+        const response = await fetch(download.href, { signal: controller.signal });
+        if (!response.ok) throw new Error('Download unavailable');
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'Bluia-Sisters-Preview.pdf';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 60000);
+        status.textContent = 'PDF ready. If it opens in your browser, use Save or Share to download.';
+      } catch (error) {
+        openDirectly = true;
+        status.textContent = 'Tap Download PDF preview again to open the PDF and save it from your browser.';
+      } finally {
+        clearTimeout(timeout);
+        busy = false;
+        download.removeAttribute('aria-disabled');
+      }
+    });
+  </script>
 </body>
 </html>
