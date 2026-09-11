@@ -1,0 +1,700 @@
+
+
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <title>Bluia Sisters — Digital Magazine</title>
+   <meta name="description" content="40 pages. One Bluia Sisters escape. Explore the digital fashion magazine, look inside and make it yours.">
+
+   <style>
+     * { box-sizing: border-box }
+
+     :root {
+       color-scheme: light;
+       --ink: #272021;
+       --muted: #786569;
+       --pink: #a33759;
+       --line: #dfd1d2;
+     }
+
+     body {
+       margin: 0;
+       background: #faf6f3;
+       color: var(--ink);
+       font-family: Arial, Helvetica, sans-serif;
+       -webkit-font-smoothing: antialiased;
+     }
+
+     a { color: inherit }
+
+     .background {
+       position: fixed;
+       inset: 0;
+       z-index: -1;
+       overflow: hidden;
+       pointer-events: none;
+       background: #faf6f3;
+     }
+
+     .orb {
+       position: absolute;
+       width: 65vw;
+       height: 65vw;
+       border-radius: 50%;
+       filter: blur(75px);
+       opacity: .32;
+       animation: drift 22s ease-in-out infinite alternate;
+     }
+
+     .one {
+       top: -38vw;
+       right: -12vw;
+       background: #edb2c3;
+     }
+
+     .two {
+       bottom: -42vw;
+       left: -20vw;
+       background: #f1c5cd;
+       animation-delay: -11s;
+     }
+
+     .topbar {
+       max-width: 1320px;
+       margin: auto;
+       padding: 24px 5%;
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+       border-bottom: 1px solid var(--line);
+       gap: 16px;
+     }
+
+     .wordmark {
+       text-decoration: none;
+       font: 26px Georgia, serif;
+       letter-spacing: -1px;
+     }
+
+     .wordmark em {
+       color: var(--pink);
+     }
+
+     .nav {
+       display: flex;
+       align-items: center;
+       gap: 28px;
+     }
+
+     .nav a {
+       text-decoration: none;
+       font-size: 10px;
+       letter-spacing: 1.7px;
+       text-transform: uppercase;
+     }
+
+     .nav a:hover {
+       color: var(--pink);
+     }
+
+     main {
+       max-width: 1140px;
+       margin: auto;
+       padding: 52px 42px 48px;
+     }
+
+     .edition-line {
+       display: flex;
+       align-items: center;
+       gap: 18px;
+       color: var(--muted);
+       font-size: 9px;
+       letter-spacing: 2px;
+       text-transform: uppercase;
+       margin-bottom: 30px;
+     }
+
+     .edition-line:after {
+       content: '';
+       height: 1px;
+       background: var(--line);
+       flex: 1;
+     }
+
+     .editorial {
+       display: grid;
+       grid-template-columns: 1fr 1fr;
+       align-items: center;
+       gap: clamp(36px, 6vw, 88px);
+     }
+
+     .cover-frame {
+       position: relative;
+       margin: 0;
+       padding: 12px;
+       background: #fff;
+       border: 1px solid #e7dddd;
+       box-shadow: 0 18px 38px #3e182312;
+       transform: rotate(-2deg);
+     }
+
+     .cover {
+       display: block;
+       width: 100%;
+       height: auto;
+     }
+
+     .cover-caption {
+       display: flex;
+       justify-content: space-between;
+       gap: 16px;
+       padding-top: 12px;
+       font-size: 8px;
+       color: var(--muted);
+       letter-spacing: 1.8px;
+       text-transform: uppercase;
+     }
+
+     .content {
+       padding: 20px 0;
+     }
+
+     .eyebrow {
+       margin: 0 0 21px;
+       color: var(--pink);
+       font-size: 10px;
+       letter-spacing: 2.8px;
+       text-transform: uppercase;
+     }
+
+     h1 {
+       margin: 0;
+       font: 400 clamp(58px, 6.9vw, 88px)/.98 Georgia, 'Times New Roman', serif;
+       letter-spacing: -4px;
+     }
+
+     h1 span {
+       display: block;
+       font-style: italic;
+       color: var(--pink);
+     }
+
+     .intro {
+       max-width: 300px;
+       margin: 25px 0 30px;
+       font-size: 13px;
+       line-height: 1.8;
+       color: var(--muted);
+     }
+
+     .product-meta {
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+       gap: 14px;
+       border-top: 1px solid var(--line);
+       border-bottom: 1px solid var(--line);
+       padding: 17px 0;
+       margin-bottom: 20px;
+     }
+
+     .product-meta span {
+       font-size: 10px;
+       letter-spacing: 1.5px;
+       text-transform: uppercase;
+     }
+
+     .price {
+       font: 24px Georgia, serif;
+     }
+
+     .price small {
+       font: 10px Arial, sans-serif;
+       color: var(--muted);
+       margin-right: 6px;
+     }
+
+     .actions {
+       display: grid;
+       gap: 10px;
+     }
+
+     .button {
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       gap: 10px;
+       min-height: 52px;
+       padding: 14px;
+       border: 1px solid var(--line);
+       background: transparent;
+       font-size: 11px;
+       letter-spacing: .5px;
+       text-decoration: none;
+       text-align: center;
+       transition: background .2s, color .2s, transform .2s;
+     }
+
+     .button svg {
+       width: 17px;
+       height: 17px;
+       flex-shrink: 0;
+     }
+
+     .button:hover {
+       background: #f1e5e6;
+     }
+
+     .buy {
+       background: var(--ink);
+       border-color: var(--ink);
+       color: #fff;
+       justify-content: space-between;
+       padding-inline: 20px;
+     }
+
+     .buy:hover {
+       background: var(--pink);
+       border-color: var(--pink);
+     }
+
+     .arrow {
+       font-size: 20px;
+       font-weight: 400;
+     }
+
+     .button[aria-disabled="true"] {
+       opacity: .6;
+       cursor: wait;
+     }
+
+     .note,
+     .status {
+       font-size: 10px;
+       line-height: 1.7;
+       color: var(--muted);
+       margin: 12px 0 0;
+     }
+
+     .status:empty {
+       display: none;
+     }
+
+     .instagram {
+       display: inline-flex;
+       align-items: center;
+       gap: 9px;
+       margin-top: 27px;
+       font-size: 11px;
+       text-decoration: none;
+     }
+
+     .instagram svg {
+       width: 16px;
+       height: 16px;
+     }
+
+     .instagram:hover {
+       color: var(--pink);
+     }
+
+     a:focus-visible {
+       outline: 2px solid var(--pink);
+       outline-offset: 5px;
+     }
+
+     .footer {
+       max-width: 1236px;
+       margin: 0 auto;
+       padding: 22px 42px;
+       border-top: 1px solid var(--line);
+       display: flex;
+       justify-content: space-between;
+       gap: 15px;
+       font-size: 9px;
+       letter-spacing: 1.6px;
+       text-transform: uppercase;
+       color: var(--muted);
+     }
+
+     @keyframes drift {
+       to {
+         transform: translate(-8vw, 6vw) scale(1.15);
+       }
+     }
+
+     @media (min-width: 1500px) {
+       main {
+         padding-top: 70px;
+         padding-bottom: 70px;
+       }
+     }
+
+     @media (max-width: 700px) {
+       .topbar {
+         padding: 20px 23px;
+       }
+
+       .wordmark {
+         font-size: 23px;
+       }
+
+       .nav {
+         gap: 16px;
+       }
+
+       .nav a {
+         font-size: 9px;
+         letter-spacing: 1px;
+       }
+
+       .nav .magazine-link {
+         display: none;
+       }
+
+       main {
+         padding: 28px 24px 36px;
+       }
+
+       .edition-line {
+         font-size: 8px;
+         margin-bottom: 25px;
+       }
+
+       .editorial {
+         grid-template-columns: 1fr;
+         gap: 32px;
+       }
+
+       .cover-frame {
+         width: min(100%, 380px);
+         margin: auto;
+         transform: rotate(-1deg);
+       }
+
+       .content {
+         padding: 0;
+         max-width: 440px;
+         width: 100%;
+         margin: auto;
+       }
+
+       h1 {
+         font-size: 64px;
+         letter-spacing: -3px;
+       }
+
+       h1 span {
+         display: inline;
+       }
+
+       .eyebrow {
+         margin-bottom: 15px;
+       }
+
+       .intro {
+         max-width: 100%;
+         margin: 18px 0 24px;
+       }
+
+       .footer {
+         padding: 20px 24px;
+         font-size: 8px;
+         letter-spacing: 1px;
+       }
+     }
+
+     @media (max-width: 360px) {
+       h1 {
+         font-size: 54px;
+       }
+
+       .nav a {
+         font-size: 8px;
+       }
+     }
+
+     @media (prefers-reduced-motion: reduce) {
+       *,
+       *::before,
+       *::after {
+         animation: none !important;
+         transition: none !important;
+       }
+     }
+
+     /* Conversion edits: clear hierarchy, readable copy and a shorter mobile journey. */
+     *, *::before, *::after { box-shadow: none !important; }
+     .background { background: #fff7f9; }
+     .orb { display: none; }
+     .cover-frame { transform: none; }
+     .cover { max-height: 620px; object-fit: contain; }
+     .intro { max-width: 420px; font-size: 16px; line-height: 1.65; }
+     .eyebrow, .nav a, .product-meta span { font-size: 12px; }
+     .price small { font-size: 13px; }
+     .buy { background: var(--pink); border-color: var(--pink); font-size: 15px; justify-content: center; }
+     .buy:hover { background: #812942; }
+     .preview-link { display: flex; align-items: center; justify-content: center; gap: 9px; min-height: 48px; font-size: 14px; text-underline-offset: 4px; }
+     .preview-link svg { width: 18px; height: 18px; }
+     .note { font-size: 13px; }
+     .instagram { font-size: 14px; }
+     .mobile-buy { display: none; }
+     @media (max-width: 700px) {
+       body { padding-bottom: calc(82px + env(safe-area-inset-bottom)); }
+       main { padding-top: 20px; }
+       .editorial { gap: 24px; }
+       .content { grid-row: 1; }
+       h1 { font-size: clamp(46px, 12vw, 64px); letter-spacing: -2px; }
+       .eyebrow { margin-bottom: 12px; }
+       .intro { margin: 16px 0 20px; }
+       .product-meta { margin-bottom: 16px; padding: 14px 0; }
+       .mobile-buy { display: block; position: fixed; bottom: 0; left: 0; right: 0; z-index: 10; background: #fff7f9; border-top: 1px solid var(--line); padding: 12px 20px calc(12px + env(safe-area-inset-bottom)); }
+     }
+
+     html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+     h2 { font: 400 clamp(32px, 4vw, 52px)/1.12 Georgia, serif; letter-spacing: -1.5px; margin: 0; }
+     h2 em { color: var(--pink); font-weight: 400; }
+     h3 { font: 400 25px/1.2 Georgia, serif; margin: 0 0 12px; }
+     button { font-family: inherit; cursor: pointer; }
+     button:focus-visible, summary:focus-visible { outline: 2px solid var(--pink); outline-offset: 5px; }
+     .inside-section { border-top: 1px solid var(--line); padding-top: 56px; margin-top: 64px; }
+     .section-top { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: end; margin-bottom: 30px; }
+     .section-copy, .preview-intro p, .details-grid p, .faq p { color: var(--muted); font-size: 15px; line-height: 1.75; }
+     .preview-panel { border: 1px solid var(--line); background: #f6e8ec; padding: 32px; }
+     .preview-intro { display: grid; grid-template-columns: .6fr 1fr; align-items: center; gap: 32px; }
+     .large-number { font: 400 clamp(110px, 15vw, 200px)/1 Georgia,serif; letter-spacing: -8px; color: var(--pink); text-align: center; }
+     .preview-toggle { border-color: var(--pink); color: var(--pink); font-size: 14px; width: 100%; }
+     .external-preview { display: inline-block; font-size: 13px; margin-top: 16px; text-underline-offset: 4px; }
+     #pdf-preview { margin-top: 24px; }
+     #pdf-preview iframe { width: 100%; height: 680px; border: 1px solid var(--line); background: white; }
+     .details-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; padding: 48px 0; border-bottom: 1px solid var(--line); }
+     .detail-index { display: block; font-size: 10px; letter-spacing: 1.5px; color: var(--pink); margin-bottom: 20px; }
+     .faq { max-width: 760px; margin: 56px auto; }
+     .faq h2 { font-size: 34px; margin-bottom: 28px; }
+     .faq details { border-bottom: 1px solid var(--line); }
+     .faq summary { cursor: pointer; padding: 20px 0; font-size: 16px; }
+     .faq p { margin: 0 0 22px; }
+     .closing { text-align: center; padding: 48px 24px; background: #f6e8ec; border: 1px solid var(--line); }
+     .closing > p { line-height: 1.7; }
+     .closing .buy { max-width: 380px; margin: 24px auto 0; }
+     @media(max-width:700px) {
+       .section-top, .details-grid { grid-template-columns: 1fr; gap: 24px; }
+       .inside-section { margin-top: 36px; padding-top: 32px; }
+       .preview-panel { padding: 20px; }
+       .preview-intro { grid-template-columns: 1fr; gap: 16px; }
+       .large-number { text-align: left; font-size: 96px; letter-spacing: -5px; }
+       .details-grid { padding: 32px 0; }
+       .details-grid p { margin-bottom: 0; }
+       #pdf-preview iframe { height: 480px; }
+       .closing { padding: 32px 18px; }
+     }
+     @media(prefers-reduced-motion:reduce) { html { scroll-behavior: auto; } }
+   </style>
+ </head>
+
+ <body>
+
+ <div class="background" aria-hidden="true">
+   <div class="orb one"></div>
+   <div class="orb two"></div>
+ </div>
+
+ <header class="topbar">
+   <a class="wordmark" href="https://bluia.online/">
+     Bluia <em>Sisters</em>
+   </a>
+
+   <nav class="nav" aria-label="Main navigation">
+     <a class="magazine-link" href="#magazine">The magazine</a>
+
+     <a
+       href="https://www.instagram.com/bluia_sisters/"
+       target="_blank"
+       rel="noopener noreferrer"
+     >
+       Instagram ↗
+     </a>
+   </nav>
+ </header>
+
+ <main id="magazine" aria-label="Bluia Sisters magazine">
+
+   <div class="edition-line">
+     The Bluia edit <span> / </span> 40-page digital magazine
+   </div>
+
+   <div class="editorial">
+
+     <figure class="cover-frame">
+       <img
+         class="cover"
+         src="https://pub-09d49e1729be4c218a60f330ac3b61b2.r2.dev/1786278084054-photo_2026-08-09_14-19-03.jpg"
+         alt="Bluia Sisters magazine cover"
+         fetchpriority="high"
+         decoding="async"
+       >
+
+       <figcaption class="cover-caption">
+         <span>Bluia Sisters</span>
+         <span>The magazine</span>
+       </figcaption>
+     </figure>
+
+     <section class="content" aria-labelledby="magazine-title">
+
+       <p class="eyebrow">
+         For the love of Bluia
+       </p>
+
+       <h1 id="magazine-title">
+         40 pages.<span>All Bluia.</span>
+       </h1>
+
+       <p class="intro">
+         Love the Bluia look? Make time for the magazine.<br>
+         Settle into 40 pages of fashion, beauty and the world of Bluia Sisters—a little escape, one page at a time.
+       </p>
+
+       <div class="product-meta">
+         <span>40 pages · Digital PDF</span>
+
+         <div class="price">
+           US$1
+         </div>
+       </div>
+
+       <div class="actions">
+
+         <!-- Existing Stripe payment link. Advertised price: US$1. Payment and download delivery are handled by the existing checkout. -->
+         <a
+           class="button buy"
+           href="https://buy.stripe.com/28E7sD0Vq5Dwa5b6RhbAs02"
+         >
+           Get my 40-page copy — US$1
+           <span class="arrow" aria-hidden="true">↗</span>
+         </a>
+
+         <a
+           class="preview-link"
+           id="download"
+           href="#preview"
+         >
+           <svg
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="1.7"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             aria-hidden="true"
+           >
+             <path d="M12 3v12m-5-5 5 5 5-5M4 16v4h16v-4"/>
+           </svg>
+
+           Take a peek before you buy
+         </a>
+
+       </div>
+
+       <p class="note">
+         After payment, you’ll see a link to download your magazine.<br>40-page PDF · US$1 · Checkout with Stripe.
+       </p>
+
+       <a
+         class="instagram"
+         href="https://www.instagram.com/bluia_sisters/"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Follow Bluia Sisters on Instagram"
+       >
+         <svg
+           viewBox="0 0 24 24"
+           fill="none"
+           stroke="currentColor"
+           stroke-width="1.7"
+           aria-hidden="true"
+         >
+           <rect x="3" y="3" width="18" height="18" rx="5"/>
+           <circle cx="12" cy="12" r="4"/>
+           <circle
+             cx="17.5"
+             cy="6.5"
+             r="1"
+             fill="currentColor"
+             stroke="none"
+           />
+         </svg>
+
+         @bluia_sisters
+       </a>
+
+     </section>
+   </div>
+
+   <section class="inside-section" id="preview" aria-labelledby="preview-title">
+     <div class="section-top">
+       <div><p class="eyebrow">A little look inside</p><h2 id="preview-title">Let the pages<br><em>do the talking.</em></h2></div>
+       <p class="section-copy">Your taste comes first. Explore the PDF preview and see whether the Bluia mood is yours.</p>
+     </div>
+     <div class="preview-panel">
+       <div class="preview-intro">
+         <span class="large-number" aria-hidden="true">40</span>
+         <div><h3>A magazine to spend a moment with.</h3><p>The full edition brings together 40 pages in one digital PDF. Start with a look inside.</p>
+         <button class="button preview-toggle" id="show-preview" type="button" aria-expanded="false" aria-controls="pdf-preview">Explore the PDF preview <span aria-hidden="true">↓</span></button>
+         <a class="external-preview" href="https://files.catbox.moe/5a17f6.pdf" target="_blank" rel="noopener noreferrer">Open preview in a new tab ↗</a></div>
+       </div>
+       <div id="pdf-preview" hidden>
+         <iframe title="Bluia Sisters magazine PDF preview" data-src="https://files.catbox.moe/5a17f6.pdf" loading="lazy"></iframe>
+         <p class="note">If your browser cannot display the PDF, use “Open preview in a new tab” above.</p>
+       </div>
+     </div>
+   </section>
+   <section class="details-grid" aria-label="Your magazine at a glance">
+     <div><span class="detail-index">01 / THE EDITION</span><h3>40 pages to explore.</h3><p>A full digital magazine dedicated to the world of Bluia Sisters.</p></div>
+     <div><span class="detail-index">02 / THE FORMAT</span><h3>A place on your screen.</h3><p>A PDF edition you can read with a compatible PDF reader on your phone, tablet or computer.</p></div>
+     <div><span class="detail-index">03 / YOUR NEXT STEP</span><h3>See it. Love it. Get it.</h3><p>Explore the preview, buy your copy through Stripe, then use the download link shown after payment.</p></div>
+   </section>
+   <section class="faq" aria-labelledby="faq-title">
+     <h2 id="faq-title">Before you make it yours.</h2>
+     <details><summary>What am I buying?</summary><p>The full 40-page Bluia Sisters digital magazine in PDF format. This is a digital edition, not a printed magazine.</p></details>
+     <details><summary>Can I see inside first?</summary><p>Yes. Use the preview above to get a feel for the magazine before deciding.</p></details>
+     <details><summary>How do I get my magazine?</summary><p>After you complete payment, you’ll see a download link for your magazine. Open that link and save the PDF to your device.</p></details>
+     <details><summary>Where do I pay?</summary><p>The purchase button takes you to Stripe checkout, where you can review your US$1 order before paying.</p></details>
+   </section>
+   <section class="closing" aria-labelledby="closing-title">
+     <p class="eyebrow">Your next little escape</p>
+     <h2 id="closing-title">Make a little room<br>for <em>Bluia.</em></h2>
+     <p>40 pages. Fashion, beauty and a mood to get lost in.</p>
+     <a class="button buy" href="https://buy.stripe.com/28E7sD0Vq5Dwa5b6RhbAs02">Get my 40-page copy — US$1 <span aria-hidden="true">↗</span></a>
+     <p class="note">After payment, your magazine download link appears.</p>
+   </section>
+ </main>
+
+ <footer class="footer">
+   <span>Bluia Sisters</span>
+   <span>Fashion, with a personal touch.</span>
+ </footer>
+
+
+
+ <div class="mobile-buy">
+   <a class="button buy" href="https://buy.stripe.com/28E7sD0Vq5Dwa5b6RhbAs02">Get my 40-page copy — US$1 ↗</a>
+ </div>
+ <script>
+ (() => {
+   const button = document.getElementById('show-preview');
+   const panel = document.getElementById('pdf-preview');
+   button.addEventListener('click', () => {
+     const open = button.getAttribute('aria-expanded') !== 'true';
+     button.setAttribute('aria-expanded', String(open));
+     panel.hidden = !open;
+     button.textContent = open ? 'Close preview ↑' : 'Explore the PDF preview ↓';
+     const frame = panel.querySelector('iframe');
+     if (open && !frame.getAttribute('src')) frame.src = frame.dataset.src;
+   });
+ })();
+ </script>
+ </body>
+ </html>
