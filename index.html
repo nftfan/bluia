@@ -472,6 +472,19 @@
     }
 
     .bluia-card{min-width:0}
+    .bluia-tagline{margin:5px 2px 0;color:var(--pink-dark);font-size:12px;line-height:1.4}
+    .message-cover{position:relative;isolation:isolate;overflow:hidden;min-height:120px;display:grid;place-items:center;padding:18px;border-radius:18px;background:linear-gradient(135deg,#382833,#272329)}
+    .message-invitation{position:relative;z-index:1;text-align:center;color:#ffe4f1;font-size:14px;line-height:1.5;font-weight:600;max-width:190px;text-shadow:0 1px 8px #251820}
+    .heart-cloud{position:absolute;inset:0;pointer-events:none}
+    .heart-cloud i{position:absolute;color:#ff9aca;opacity:.18;font-size:32px;font-style:normal;animation:softHearts 5s ease-in-out infinite alternate}
+    .heart-cloud i:nth-child(1){left:6%;top:12%}
+    .heart-cloud i:nth-child(2){left:33%;top:55%;font-size:24px;animation-delay:-2s}
+    .heart-cloud i:nth-child(3){left:65%;top:6%;font-size:40px;animation-delay:-1s}
+    .heart-cloud i:nth-child(4){left:80%;top:65%;font-size:20px;animation-delay:-3s}
+    .heart-cloud i:nth-child(5){left:48%;top:30%;font-size:26px;animation-delay:-4s}
+    @keyframes softHearts{from{transform:translateY(7px) scale(.9);opacity:.12}to{transform:translateY(-9px) scale(1.1);opacity:.3}}
+    .clickable-post:focus-visible,.bluia-card:focus-visible{outline:2px solid var(--pink);outline-offset:5px}
+    @media(prefers-reduced-motion:reduce){.heart-cloud i{animation:none;opacity:.22}}
 
     .bluia-card img{
       width:100%;
@@ -804,7 +817,7 @@
       <p>Take a feel-good break with beautiful Bluia Sisters. A private membership designed to bring more calm, positive energy and mindful pauses into your day.</p>
       <div class="hero-actions">
         <a class="subscribe subscription-link hero-primary" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04">
-          <span class="material-icons">play_circle</span> Buy Bluia Sisters Monthly Subscription
+          <span class="material-icons">play_circle</span> Watch beautiful Bluias
         </a>
         <button class="hero-link" type="button" data-target-tab="bluias">
           Meet the Bluias <span class="material-icons">arrow_forward</span>
@@ -877,122 +890,122 @@
         <article class="review-card">
           <div class="review-stars" aria-label="Five stars">★★★★★</div>
           <blockquote>“Bluia gives me a quick mental break after work. The experience feels positive, simple and private.”</blockquote>
-          <div class="review-meta"><span>Daniel, 34</span><span class="demo-badge">Customer review</span></div>
+          <div class="review-meta"><span>Daniel, 34</span><span class="demo-badge">Customer's review</span></div>
         </article>
         <article class="review-card">
           <div class="review-stars" aria-label="Five stars">★★★★★</div>
           <blockquote>“I replaced random scrolling with a short Bluia pause. It feels much more intentional and relaxing.”</blockquote>
-          <div class="review-meta"><span>Mark, 41</span><span class="demo-badge">Customer review</span></div>
+          <div class="review-meta"><span>Mark, 41</span><span class="demo-badge">Customer's review</span></div>
         </article>
         <article class="review-card">
           <div class="review-stars" aria-label="Five stars">★★★★★</div>
           <blockquote>“The Bluia Sisters make the membership feel fresh and uplifting. I enjoy seeing new profiles appear.”</blockquote>
-          <div class="review-meta"><span>Alex, 29</span><span class="demo-badge">Customer review</span></div>
+          <div class="review-meta"><span>Alex, 29</span><span class="demo-badge">Customer's review</span></div>
         </article>
       </div>
     </section>
 
     <div class="wellness-disclaimer">
-      Bluia Healing Therapy is a wellness and entertainment experience, and medical care. Viewing face images of new beautiful women everyday is proven to extend lifespan, and improve heart health.
+      Bluia Healing Therapy is a wellness and entertainment experience, not medical care. Viewing face images of beautiful women everyday is a proven to extend lifespan, improve heart health. 
     </div>
 
 
   </section>
 
   <section class="feed tab-panel active" id="postsPanel" role="tabpanel" aria-labelledby="postsTab">
-    <article class="post clickable-post"
-      data-title="Innocent Mommy"
+    <article class="post clickable-post" role="button" tabindex="0" aria-label="Click to see the Bluia’s message"
+      data-title="A Little Tenderness"
       data-image="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/c17f5d56-c34a-4f68-8eb9-90fb97985dc6.png"
-      data-content="Soft, calm and effortlessly confident. Innocent Mommy is about gentle energy, quiet style and the kind of presence that feels warm without trying too hard.">
+      data-content="Come closer to this quiet moment, darling. Let your shoulders soften and the day settle. Imagine a warm smile across the room and a gentle kiss goodnight. You deserve tenderness, even on the days that feel unfinished.">
       <div class="post-image">
-        <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/c17f5d56-c34a-4f68-8eb9-90fb97985dc6.png" alt="Innocent Mommy">
+        <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/c17f5d56-c34a-4f68-8eb9-90fb97985dc6.png" alt="Bluia portrait">
       </div>
-      <div class="post-copy">
-        <h2>Innocent Mommy</h2>
-        <p>Soft energy, quiet confidence and a look that feels effortlessly warm.</p>
+      <div class="post-copy message-cover">
+        <span class="heart-cloud" aria-hidden="true"><i>♥</i><i>♥</i><i>♥</i><i>♥</i><i>♥</i></span>
+        <span class="message-invitation">Click to see the Bluia’s message</span>
       </div>
     </article>
 
-    <article class="post clickable-post"
-      data-title="Naughty Interview"
+    <article class="post clickable-post" role="button" tabindex="0" aria-label="Click to see the Bluia’s message"
+      data-title="If I Could Steal a Moment"
       data-image="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/f43bf471-a03c-4cef-90ab-d8d8bf6120cc.png"
-      data-content="A playful interview mood with confidence, attitude and a little mischief. Sometimes the best conversations are the ones that do not feel too serious.">
+      data-content="If I could steal a moment from your busy day, I would fill it with a smile, a little laughter and a look that lingers. No perfect words needed. Just the sweetness of being here, with nowhere to rush.">
       <div class="post-image">
-        <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/f43bf471-a03c-4cef-90ab-d8d8bf6120cc.png" alt="Naughty Interview">
+        <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/f43bf471-a03c-4cef-90ab-d8d8bf6120cc.png" alt="Bluia portrait">
       </div>
-      <div class="post-copy">
-        <h2>Naughty Interview</h2>
-        <p>A playful mood, a little attitude and just enough mischief to keep things interesting.</p>
+      <div class="post-copy message-cover">
+        <span class="heart-cloud" aria-hidden="true"><i>♥</i><i>♥</i><i>♥</i><i>♥</i><i>♥</i></span>
+        <span class="message-invitation">Click to see the Bluia’s message</span>
       </div>
     </article>
 
 
 
-    <article class="post clickable-post"
-      data-title="Look Into My Eyes"
+    <article class="post clickable-post" role="button" tabindex="0" aria-label="Click to see the Bluia’s message"
+      data-title="Where Words Become a Whisper"
       data-image="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ed75e4dd-e905-47e0-88d2-96e174359484.png"
-      data-content="Sometimes a look says more than words. Confidence, calm and presence can completely change the way a moment feels.">
+      data-content="Imagine our eyes meeting in the hush of the evening. Nothing to prove, nothing to explain. Just a tender glance and the lovely possibility of a conversation that lasts long after sunset.">
       <div class="post-image">
-        <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ed75e4dd-e905-47e0-88d2-96e174359484.png" alt="Look Into My Eyes">
+        <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ed75e4dd-e905-47e0-88d2-96e174359484.png" alt="Bluia portrait">
       </div>
-      <div class="post-copy">
-        <h2>Look Into My Eyes</h2>
-        <p>Sometimes a look says more than words. Confidence starts with presence.</p>
+      <div class="post-copy message-cover">
+        <span class="heart-cloud" aria-hidden="true"><i>♥</i><i>♥</i><i>♥</i><i>♥</i><i>♥</i></span>
+        <span class="message-invitation">Click to see the Bluia’s message</span>
       </div>
     </article>
 
-    <article class="post clickable-post"
-      data-title="Two Are Always Better"
+    <article class="post clickable-post" role="button" tabindex="0" aria-label="Click to see the Bluia’s message"
+      data-title="A Seat Beside You"
       data-image="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/d96b42bb-bd58-41fd-b80a-fba38c30aff4.png"
-      data-content="Some moments are simply better shared. Two personalities, two energies and one stronger story together.">
+      data-content="There is something beautiful about an ordinary evening shared: two cups, a little music, a hand resting near yours. Let this be a small love note to those simple moments that make a day feel softer.">
       <div class="post-image">
-        <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/d96b42bb-bd58-41fd-b80a-fba38c30aff4.png" alt="Two Are Always Better">
+        <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/d96b42bb-bd58-41fd-b80a-fba38c30aff4.png" alt="Bluia portrait">
       </div>
-      <div class="post-copy">
-        <h2>Two Are Always Better</h2>
-        <p>Some moments are better shared. Two energies can make one stronger story.</p>
+      <div class="post-copy message-cover">
+        <span class="heart-cloud" aria-hidden="true"><i>♥</i><i>♥</i><i>♥</i><i>♥</i><i>♥</i></span>
+        <span class="message-invitation">Click to see the Bluia’s message</span>
       </div>
     </article>
 
 
 
-    <article class="post clickable-post"
-      data-title="The Art of Relaxing"
+    <article class="post clickable-post" role="button" tabindex="0" aria-label="Click to see the Bluia’s message"
+      data-title="Stay for One More Sunset"
       data-image="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/e7015a91-b1b2-4582-ab54-bbba87ab64d0.png"
-      data-content="Relaxing is not doing nothing. It is giving your mind and body space to reset. Slow down, breathe deeply, step away from the noise and enjoy a quiet moment without pressure.">
+      data-content="Let the evening be gentle with you, sweetheart. Picture golden light, a soft blanket and a quiet smile. Tomorrow can wait a little; for now, take a breath and enjoy this tender pause.">
       <div class="post-image">
-        <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/e7015a91-b1b2-4582-ab54-bbba87ab64d0.png" alt="Bluia relaxing post">
+        <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/e7015a91-b1b2-4582-ab54-bbba87ab64d0.png" alt="Bluia portrait">
       </div>
-      <div class="post-copy">
-        <h2>The Art of Relaxing</h2>
-        <p>Slow down, breathe and give yourself space to reset. Rest is part of feeling strong.</p>
+      <div class="post-copy message-cover">
+        <span class="heart-cloud" aria-hidden="true"><i>♥</i><i>♥</i><i>♥</i><i>♥</i><i>♥</i></span>
+        <span class="message-invitation">Click to see the Bluia’s message</span>
       </div>
     </article>
 
 
-    <article class="post clickable-post"
-      data-title="Move Strong, Feel Good"
+    <article class="post clickable-post" role="button" tabindex="0" aria-label="Click to see the Bluia’s message"
+      data-title="The Sweetness in Your Smile"
       data-image="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/d3c2163b-0452-40f9-bfc9-efa47d7bcb1b.png"
-      data-content="Fitness is not about being perfect. It is about moving your body, building strength and feeling better every day. A short walk, a quick workout or a simple stretch can make a real difference when you stay consistent.">
+      data-content="You do not have to carry every moment with perfect strength. There is beauty in your laughter, your kindness and the way you begin again. Here is a little warmth for your day, wrapped in a smile.">
       <div class="post-image">
-        <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/d3c2163b-0452-40f9-bfc9-efa47d7bcb1b.png" alt="Bluia fitness post">
+        <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/d3c2163b-0452-40f9-bfc9-efa47d7bcb1b.png" alt="Bluia portrait">
       </div>
-      <div class="post-copy">
-        <h2>Move Strong, Feel Good</h2>
-        <p>Fitness is about consistency, not perfection. Move, build strength and feel better every day.</p>
+      <div class="post-copy message-cover">
+        <span class="heart-cloud" aria-hidden="true"><i>♥</i><i>♥</i><i>♥</i><i>♥</i><i>♥</i></span>
+        <span class="message-invitation">Click to see the Bluia’s message</span>
       </div>
     </article>
 
-    <article class="post clickable-post"
-      data-title="Basketball Energy"
+    <article class="post clickable-post" role="button" tabindex="0" aria-label="Click to see the Bluia’s message"
+      data-title="Meet Me in a Daydream"
       data-image="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/2f09de46-430c-44b7-bcc1-22a2d7357297.png"
-      data-content="Basketball is movement, focus and confidence. Whether you play for fun or train seriously, every session builds strength, coordination and energy. Keep moving, stay sharp and enjoy the game.">
+      data-content="Imagine a playful afternoon becoming a slow walk home, our laughter lingering in the air. A shy smile, a brush of hands, a beautiful little maybe. Some of the sweetest stories begin that simply.">
       <div class="post-image">
-        <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/2f09de46-430c-44b7-bcc1-22a2d7357297.png" alt="Bluia basketball post">
+        <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/2f09de46-430c-44b7-bcc1-22a2d7357297.png" alt="Bluia portrait">
       </div>
-      <div class="post-copy">
-        <h2>Basketball Energy</h2>
-        <p>Basketball builds strength, focus and confidence. Keep moving, stay sharp and enjoy the game.</p>
+      <div class="post-copy message-cover">
+        <span class="heart-cloud" aria-hidden="true"><i>♥</i><i>♥</i><i>♥</i><i>♥</i><i>♥</i></span>
+        <span class="message-invitation">Click to see the Bluia’s message</span>
       </div>
     </article>
 
@@ -1004,18 +1017,22 @@
       <article class="bluia-card" role="button" tabindex="0" aria-label="View Kaya Bluia" data-content="A closer look at Kaya: the delicate lines of her face, the curve of her lips and the details around her eyes.">
         <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ChatGPT%20Image%20Sep%2012%2C%202026%2C%2001_50_48%20PM.png" alt="Kaya Bluia" loading="lazy">
         <h2>Kaya Bluia</h2>
+        <p class="bluia-tagline">A whisper of warmth</p>
       </article>
       <article class="bluia-card" role="button" tabindex="0" aria-label="View Kiara Bluia" data-content="Meet Kiara up close. Take a moment with the contours of her cheeks, the shape of her brows and the details of her expression.">
         <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ChatGPT%20Image%20Sep%2012%2C%202026%2C%2001_51_01%20PM.png" alt="Kiara Bluia" loading="lazy">
         <h2>Kiara Bluia</h2>
+        <p class="bluia-tagline">A little playful sparkle</p>
       </article>
       <article class="bluia-card" role="button" tabindex="0" aria-label="View Kiana Bluia" data-content="Kiana, in a little more detail: the outline of her face, the lines around her eyes and the gentle curve of her lips.">
         <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ChatGPT%20Image%20Sep%2012%2C%202026%2C%2001_51_12%20PM.png" alt="Kiana Bluia" loading="lazy">
         <h2>Kiana Bluia</h2>
+        <p class="bluia-tagline">Soft as a daydream</p>
       </article>
       <article class="bluia-card" role="button" tabindex="0" aria-label="View Kora Bluia" data-content="A quiet portrait of Kora. Explore the contours of her face, her brows and the small details that make her look her own.">
         <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ChatGPT%20Image%20Sep%2012%2C%202026%2C%2001_51_28%20PM.png" alt="Kora Bluia" loading="lazy">
         <h2>Kora Bluia</h2>
+        <p class="bluia-tagline">A quiet kind of romance</p>
       </article>
     </div>
     <div class="bluias-subscribe">
@@ -1125,6 +1142,12 @@
 
   document.querySelectorAll(".clickable-post").forEach(post=>{
     post.addEventListener("click",()=>openPost(post));
+    post.addEventListener("keydown",event=>{
+      if(event.key === "Enter" || event.key === " "){
+        event.preventDefault();
+        openPost(post);
+      }
+    });
   });
 
   postClose.addEventListener("click",closePost);
