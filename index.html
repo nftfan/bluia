@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#fff8fc" />
   <title>Bluia.Online</title>
+  <meta name="description" content="Bluia Healing Therapy is a visual wellness membership for men—beautiful Bluia Sisters, calming daily breaks and feel-good members-only content." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,9 +42,14 @@
     img{display:block;max-width:100%}
 
     header{
-      position:static;
-      background:rgba(33,33,33,.96);
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:rgba(33,33,33,.88);
+      border-bottom:1px solid rgba(255,255,255,.06);
       padding-top:env(safe-area-inset-top);
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
     }
 
     .topbar{
@@ -108,22 +114,49 @@
       display:flex;
       justify-content:center;
       align-items:center;
-      gap:8px;
-      padding:2px 12px 14px;
-      flex-wrap:wrap;
+      gap:4px;
+      margin:0 12px 12px;
+      padding:4px;
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:18px;
+      background:rgba(20,20,20,.82);
+      box-shadow:0 8px 26px rgba(0,0,0,.18);
     }
 
     .tab{
       display:inline-flex;
       align-items:center;
+      justify-content:center;
+      flex:1 1 0;
       gap:5px;
       border:0;
-      border-radius:999px;
-      padding:9px 12px;
-      background:var(--panel);
-      color:var(--pink-dark);
+      border-radius:14px;
+      padding:10px 8px;
+      background:transparent;
+      color:var(--muted);
       font-size:14px;
       font-weight:700;
+      white-space:nowrap;
+      transition:background .2s ease,color .2s ease,transform .2s ease;
+    }
+
+    .tab:hover{color:var(--text)}
+    .tab.active{
+      background:#363636;
+      color:var(--white);
+      box-shadow:0 4px 12px rgba(0,0,0,.22);
+    }
+
+    .tab.magazine-button{
+      flex:1.08 1 0;
+      background:linear-gradient(135deg,#ff79bc,#ff3d95);
+      color:#fff;
+      box-shadow:0 6px 18px rgba(255,61,149,.32);
+    }
+
+    .tab.magazine-button:hover{
+      color:#fff;
+      transform:translateY(-1px);
     }
 
     main{
@@ -131,10 +164,357 @@
       padding:8px 12px 36px;
     }
 
+    .tab-panel{display:none}
+    .tab-panel.active{display:flex}
+
     .feed{
       display:flex;
       flex-direction:column;
       gap:26px;
+    }
+
+    .product-hero{
+      position:relative;
+      overflow:hidden;
+      padding:26px 20px;
+      border:1px solid rgba(255,111,179,.3);
+      border-radius:24px;
+      background:
+        radial-gradient(circle at 92% 10%,rgba(255,111,179,.24),transparent 38%),
+        linear-gradient(145deg,#303030,#242424);
+      box-shadow:0 18px 42px rgba(0,0,0,.24);
+    }
+
+    .product-eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      margin-bottom:14px;
+      padding:6px 9px;
+      border-radius:999px;
+      background:rgba(255,111,179,.13);
+      color:var(--pink-dark);
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.03em;
+      text-transform:uppercase;
+    }
+
+    .product-hero h1{
+      margin:0;
+      max-width:420px;
+      font-size:34px;
+      line-height:1.02;
+      letter-spacing:-.045em;
+      color:var(--white);
+    }
+
+    .product-hero > p{
+      margin:14px 0 18px;
+      max-width:430px;
+      font-size:16px;
+      line-height:1.55;
+      color:#d2d2d2;
+    }
+
+    .hero-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .hero-primary{
+      padding:12px 16px;
+      box-shadow:0 8px 22px rgba(255,61,149,.26);
+    }
+
+    .hero-link{
+      display:inline-flex;
+      align-items:center;
+      gap:5px;
+      padding:11px 3px;
+      border:0;
+      background:transparent;
+      color:var(--pink-dark);
+      font-size:14px;
+      font-weight:700;
+    }
+
+    .product-promise{
+      display:flex;
+      align-items:flex-start;
+      gap:8px;
+      margin-top:18px;
+      padding-top:16px;
+      border-top:1px solid rgba(255,255,255,.08);
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.45;
+    }
+
+    .product-promise .material-icons{
+      margin-top:1px;
+      color:var(--pink-dark);
+    }
+
+    .product-section{
+      padding:2px 2px 0;
+    }
+
+    .product-section h2{
+      margin:0 0 5px;
+      font-size:22px;
+      line-height:1.2;
+      color:var(--white);
+    }
+
+    .section-intro{
+      margin:0 0 14px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.5;
+    }
+
+    .benefits-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:10px;
+    }
+
+    .benefit-card{
+      padding:15px;
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:18px;
+      background:var(--panel);
+    }
+
+    .benefit-card .material-icons{
+      display:grid;
+      width:34px;
+      height:34px;
+      margin-bottom:11px;
+      place-items:center;
+      border-radius:11px;
+      background:rgba(255,111,179,.12);
+      color:var(--pink-dark);
+      font-size:18px;
+    }
+
+    .benefit-card h3{
+      margin:0 0 5px;
+      font-size:15px;
+      color:var(--white);
+    }
+
+    .benefit-card p{
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.45;
+    }
+
+    .steps{
+      display:grid;
+      gap:9px;
+    }
+
+    .step{
+      display:grid;
+      grid-template-columns:34px minmax(0,1fr);
+      gap:11px;
+      align-items:start;
+      padding:13px;
+      border-radius:16px;
+      background:var(--panel);
+    }
+
+    .step-number{
+      display:grid;
+      width:34px;
+      height:34px;
+      place-items:center;
+      border-radius:50%;
+      background:var(--pink);
+      color:#fff;
+      font-size:13px;
+      font-weight:700;
+    }
+
+    .step h3{
+      margin:1px 0 3px;
+      font-size:15px;
+      color:var(--white);
+    }
+
+    .step p{
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.45;
+    }
+
+    .activity-demo{
+      display:flex;
+      align-items:center;
+      gap:11px;
+      padding:14px;
+      border:1px solid rgba(255,111,179,.22);
+      border-radius:17px;
+      background:rgba(255,111,179,.08);
+    }
+
+    .activity-avatar{
+      display:grid;
+      flex:0 0 auto;
+      width:38px;
+      height:38px;
+      place-items:center;
+      border-radius:50%;
+      background:linear-gradient(135deg,#ff8ec5,#ff3d95);
+      color:#fff;
+    }
+
+    .activity-label{
+      display:block;
+      margin-bottom:2px;
+      color:var(--pink-dark);
+      font-size:11px;
+      font-weight:700;
+      letter-spacing:.05em;
+      text-transform:uppercase;
+    }
+
+    .activity-demo p{
+      margin:0;
+      color:var(--text);
+      font-size:14px;
+    }
+
+    #demoSubscriber{
+      transition:opacity .2s ease;
+    }
+
+    .reviews-grid{
+      display:grid;
+      gap:10px;
+    }
+
+    .review-card{
+      padding:16px;
+      border-radius:18px;
+      background:var(--panel);
+    }
+
+    .review-stars{
+      margin-bottom:8px;
+      color:var(--pink-dark);
+      letter-spacing:2px;
+      font-size:13px;
+    }
+
+    .review-card blockquote{
+      margin:0 0 11px;
+      color:#e7e7e7;
+      font-size:14px;
+      line-height:1.5;
+    }
+
+    .review-meta{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .demo-badge{
+      padding:4px 7px;
+      border-radius:999px;
+      background:#383838;
+      color:#c7c7c7;
+      font-size:10px;
+      font-weight:700;
+      text-transform:uppercase;
+    }
+
+    .wellness-disclaimer{
+      padding:14px;
+      border-left:3px solid var(--pink);
+      border-radius:4px 14px 14px 4px;
+      background:#262626;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.5;
+    }
+
+    .bluias-panel.active{
+      display:block;
+      animation:panelIn .25s ease;
+    }
+
+    .tab-panel:not(.active){
+      display:none;
+    }
+
+    .bluias-heading{
+      margin:2px 0 16px;
+      font-size:22px;
+      line-height:1.2;
+      color:var(--white);
+    }
+
+    .bluias-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:16px 8px;
+    }
+
+    .bluia-card{min-width:0}
+
+    .bluia-card img{
+      width:100%;
+      aspect-ratio:4 / 5;
+      object-fit:cover;
+      border-radius:14px;
+      background:var(--panel);
+      box-shadow:0 10px 24px rgba(0,0,0,.22);
+    }
+
+    .bluia-card h2{
+      margin:9px 2px 0;
+      font-size:13px;
+      line-height:1.3;
+      color:var(--white);
+    }
+
+    .bluias-subscribe{
+      margin-top:26px;
+      padding:20px;
+      border:1px solid rgba(255,111,179,.28);
+      border-radius:20px;
+      background:linear-gradient(145deg,rgba(255,111,179,.13),rgba(255,61,149,.04));
+      text-align:center;
+    }
+
+    .bluias-subscribe h2{
+      margin:0 0 7px;
+      font-size:18px;
+      color:var(--white);
+    }
+
+    .bluias-subscribe p{
+      margin:0 auto 14px;
+      max-width:360px;
+      font-size:14px;
+      line-height:1.5;
+      color:var(--muted);
+    }
+
+    @keyframes panelIn{
+      from{opacity:0;transform:translateY(4px)}
+      to{opacity:1;transform:translateY(0)}
     }
 
     .post{
@@ -379,6 +759,11 @@
       font-weight:700;
     }
 
+    @media(max-width:420px){
+      .tabs .material-icons{display:none}
+      .tabs .tab{padding:11px 5px;min-width:0}
+    }
+
     @media(min-width:560px){
       body{
         max-width:520px;
@@ -400,18 +785,121 @@
     </div>
   </div>
 
-  <div class="tabs">
-    <div class="tab"><span class="material-icons">article</span> Posts</div>
-    <a class="tab" href="http://bluia.online/magazine">
-      <span class="material-icons">menu_book</span> Bluia Sisters Magazine
+  <nav class="tabs" role="tablist" aria-label="Bluia sections">
+    <button class="tab active" id="postsTab" type="button" role="tab" aria-selected="true" aria-controls="postsPanel" data-tab="posts"><span class="material-icons">article</span> Posts</button>
+    <button class="tab" id="bluiasTab" type="button" role="tab" aria-selected="false" aria-controls="bluiasPanel" data-tab="bluias"><span class="material-icons">people</span> Bluias</button>
+    <button class="tab" id="aboutTab" type="button" role="tab" aria-selected="false" aria-controls="aboutPanel" data-tab="about">About us</button>
+    <a class="tab magazine-button" href="http://bluia.online/magazine">
+      <span class="material-icons">menu_book</span> Magazine
     </a>
-  </div>
+  </nav>
 </header>
 
 <main>
-  <section class="feed">
+  <section class="feed tab-panel" id="aboutPanel" role="tabpanel" aria-labelledby="aboutTab">
+
+    <section class="product-hero">
+      <span class="product-eyebrow"><span class="material-icons">favorite</span> Visual wellness for men</span>
+      <h1>Bluia Healing Therapy</h1>
+      <p>Take a feel-good break with beautiful Bluia Sisters. A private membership designed to bring more calm, positive energy and mindful pauses into your day.</p>
+      <div class="hero-actions">
+        <a class="subscribe subscription-link hero-primary" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04">
+          <span class="material-icons">play_circle</span> Watch beautiful Bluias
+        </a>
+        <button class="hero-link" type="button" data-target-tab="bluias">
+          Meet the Bluias <span class="material-icons">arrow_forward</span>
+        </button>
+      </div>
+      <div class="product-promise">
+        <span class="material-icons">spa</span>
+        <span>A simple visual wellness ritual for relaxation and enjoyment—created to complement healthy habits, not replace them.</span>
+      </div>
+    </section>
+
+    <section class="product-section">
+      <h2>Your daily feel-good pause</h2>
+      <p class="section-intro">A few intentional minutes away from pressure can help you reset and return to your day with a lighter mindset.</p>
+      <div class="benefits-grid">
+        <article class="benefit-card">
+          <span class="material-icons">self_improvement</span>
+          <h3>Calming breaks</h3>
+          <p>Create a short, enjoyable pause between demanding parts of your day.</p>
+        </article>
+        <article class="benefit-card">
+          <span class="material-icons">mood</span>
+          <h3>Positive mood</h3>
+          <p>Enjoy uplifting visual content chosen to feel warm, beautiful and inviting.</p>
+        </article>
+        <article class="benefit-card">
+          <span class="material-icons">visibility</span>
+          <h3>Mindful viewing</h3>
+          <p>Turn passive scrolling into a deliberate moment you choose for yourself.</p>
+        </article>
+        <article class="benefit-card">
+          <span class="material-icons">favorite_border</span>
+          <h3>Healthier routine</h3>
+          <p>Pair your Bluia break with movement, rest, nutritious food and real connection.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="product-section">
+      <h2>How Bluia works</h2>
+      <p class="section-intro">A simple three-step ritual you can enjoy whenever you need a positive reset.</p>
+      <div class="steps">
+        <article class="step">
+          <span class="step-number">1</span>
+          <div><h3>Choose a Bluia</h3><p>Explore beautiful personalities and find the energy that fits your mood.</p></div>
+        </article>
+        <article class="step">
+          <span class="step-number">2</span>
+          <div><h3>Take a mindful pause</h3><p>Slow down, breathe and enjoy the moment without rushing.</p></div>
+        </article>
+        <article class="step">
+          <span class="step-number">3</span>
+          <div><h3>Return refreshed</h3><p>Carry the calmer feeling into the next part of your day.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <aside class="activity-demo" aria-label="Bluia subscriber activity">
+      <span class="activity-avatar material-icons">person_add</span>
+      <div>
+        <span class="activity-label">Bluia activity</span>
+        <p><strong id="demoSubscriber">Lucas M.</strong> has just subscribed</p>
+      </div>
+    </aside>
+
+    <section class="product-section">
+      <h2>What members say</h2>
+      <p class="section-intro">Bluia reviews showing how the Bluia experience can be presented.</p>
+      <div class="reviews-grid">
+        <article class="review-card">
+          <div class="review-stars" aria-label="Five stars">★★★★★</div>
+          <blockquote>“Bluia gives me a quick mental break after work. The experience feels positive, simple and private.”</blockquote>
+          <div class="review-meta"><span>Daniel, 34</span><span class="demo-badge">Sample review</span></div>
+        </article>
+        <article class="review-card">
+          <div class="review-stars" aria-label="Five stars">★★★★★</div>
+          <blockquote>“I replaced random scrolling with a short Bluia pause. It feels much more intentional and relaxing.”</blockquote>
+          <div class="review-meta"><span>Mark, 41</span><span class="demo-badge">Sample review</span></div>
+        </article>
+        <article class="review-card">
+          <div class="review-stars" aria-label="Five stars">★★★★★</div>
+          <blockquote>“The Bluia Sisters make the membership feel fresh and uplifting. I enjoy seeing new profiles appear.”</blockquote>
+          <div class="review-meta"><span>Alex, 29</span><span class="demo-badge">Sample review</span></div>
+        </article>
+      </div>
+    </section>
+
+    <div class="wellness-disclaimer">
+      Bluia Healing Therapy is a wellness and entertainment experience, not medical care. Viewing images is not proven to extend lifespan, improve heart health or treat any condition. Healthy outcomes depend on evidence-based habits and advice from qualified healthcare professionals.
+    </div>
 
 
+  </section>
+
+  <section class="feed tab-panel active" id="postsPanel" role="tabpanel" aria-labelledby="postsTab">
     <article class="post clickable-post"
       data-title="Innocent Mommy"
       data-image="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/c17f5d56-c34a-4f68-8eb9-90fb97985dc6.png"
@@ -510,6 +998,35 @@
 
   </section>
 
+  <section class="bluias-panel tab-panel" id="bluiasPanel" role="tabpanel" aria-labelledby="bluiasTab">
+    <h1 class="bluias-heading">Meet the Bluias</h1>
+    <div class="bluias-grid">
+      <article class="bluia-card" role="button" tabindex="0" aria-label="View Kaya Bluia" data-content="A closer look at Kaya: the delicate lines of her face, the curve of her lips and the details around her eyes.">
+        <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ChatGPT%20Image%20Sep%2012%2C%202026%2C%2001_50_48%20PM.png" alt="Kaya Bluia" loading="lazy">
+        <h2>Kaya Bluia</h2>
+      </article>
+      <article class="bluia-card" role="button" tabindex="0" aria-label="View Kiara Bluia" data-content="Meet Kiara up close. Take a moment with the contours of her cheeks, the shape of her brows and the details of her expression.">
+        <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ChatGPT%20Image%20Sep%2012%2C%202026%2C%2001_51_01%20PM.png" alt="Kiara Bluia" loading="lazy">
+        <h2>Kiara Bluia</h2>
+      </article>
+      <article class="bluia-card" role="button" tabindex="0" aria-label="View Kiana Bluia" data-content="Kiana, in a little more detail: the outline of her face, the lines around her eyes and the gentle curve of her lips.">
+        <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ChatGPT%20Image%20Sep%2012%2C%202026%2C%2001_51_12%20PM.png" alt="Kiana Bluia" loading="lazy">
+        <h2>Kiana Bluia</h2>
+      </article>
+      <article class="bluia-card" role="button" tabindex="0" aria-label="View Kora Bluia" data-content="A quiet portrait of Kora. Explore the contours of her face, her brows and the small details that make her look her own.">
+        <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ChatGPT%20Image%20Sep%2012%2C%202026%2C%2001_51_28%20PM.png" alt="Kora Bluia" loading="lazy">
+        <h2>Kora Bluia</h2>
+      </article>
+    </div>
+    <div class="bluias-subscribe">
+      <h2>Discover more Bluia Sisters</h2>
+      <p>Subscribe to explore new beautiful Bluia Sisters and exclusive members-only content.</p>
+      <a class="subscribe subscription-link" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04">
+        <span class="material-icons">favorite</span> Subscribe to Bluia Sisters
+      </a>
+    </div>
+  </section>
+
   <section class="membership">
     <h3>Subscribe & Support Bluia Sisters</h3>
     <p>
@@ -563,6 +1080,118 @@
   </div>
 </div>
 
+<script>
+(function () {
+  const tabButtons = document.querySelectorAll(".tabs [data-tab]");
+  const tabPanels = document.querySelectorAll(".tab-panel");
+  const tabLinks = document.querySelectorAll("[data-target-tab]");
+  const demoSubscriber = document.getElementById("demoSubscriber");
+  const demoSubscribers = ["Lucas M.", "Noah V.", "Adam R.", "Liam D."];
+  let demoSubscriberIndex = 0;
+  const postOverlay = document.getElementById("postOverlay");
+  const postClose = document.getElementById("postClose");
+  const popupImage = document.getElementById("popupImage");
+  const popupTitle = document.getElementById("popupTitle");
+  const popupContent = document.getElementById("popupContent");
+
+  function openPost(post){
+    popupImage.onload = () => {
+      const ratio = popupImage.naturalWidth / popupImage.naturalHeight;
+      const viewportMax = Math.min(window.innerWidth - 28, 420);
+
+      if(ratio < 0.72){
+        document.querySelector(".popup").style.width = Math.min(viewportMax, 330) + "px";
+      }else if(ratio > 1.15){
+        document.querySelector(".popup").style.width = viewportMax + "px";
+      }else{
+        document.querySelector(".popup").style.width = Math.min(viewportMax, 380) + "px";
+      }
+    };
+
+    popupImage.src=post.dataset.image || "";
+    popupImage.alt=post.dataset.title || "Bluia post";
+    popupTitle.textContent=post.dataset.title || "";
+    popupContent.textContent=post.dataset.content || "";
+    postOverlay.classList.add("show");
+    postOverlay.setAttribute("aria-hidden","false");
+    document.body.style.overflow="hidden";
+  }
+
+  function closePost(){
+    postOverlay.classList.remove("show");
+    postOverlay.setAttribute("aria-hidden","true");
+    document.body.style.overflow="";
+  }
+
+  document.querySelectorAll(".clickable-post").forEach(post=>{
+    post.addEventListener("click",()=>openPost(post));
+  });
+
+  postClose.addEventListener("click",closePost);
+  postOverlay.addEventListener("click",(e)=>{
+    if(e.target===postOverlay) closePost();
+  });
+
+
+  document.querySelectorAll(".bluia-card").forEach(function(card) {
+    card.style.cursor = "pointer";
+    card.dataset.image = card.querySelector("img").getAttribute("src");
+    card.dataset.title = card.querySelector("h2").textContent;
+    card.addEventListener("click", function() { openPost(card); });
+    card.addEventListener("keydown", function(event) {
+      if(event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openPost(card);
+      }
+    });
+  });
+  document.addEventListener("keydown", function(event) {
+    if(event.key === "Escape" && postOverlay.classList.contains("show")) closePost();
+  });
+
+
+  function activateTab(selectedButton) {
+    const selectedTab = selectedButton.dataset.tab;
+
+    tabButtons.forEach(function (tab) {
+      const isActive = tab === selectedButton;
+      tab.classList.toggle("active", isActive);
+      tab.setAttribute("aria-selected", String(isActive));
+    });
+
+    tabPanels.forEach(function (panel) {
+      panel.classList.toggle("active", panel.id === selectedTab + "Panel");
+    });
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  tabButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      activateTab(button);
+    });
+  });
+
+  tabLinks.forEach(function (link) {
+    link.addEventListener("click", function () {
+      const targetButton = document.querySelector('.tabs [data-tab="' + link.dataset.targetTab + '"]');
+      if (targetButton) activateTab(targetButton);
+    });
+  });
+
+  if (demoSubscriber) {
+    setInterval(function () {
+      demoSubscriber.style.opacity = "0";
+      setTimeout(function () {
+        demoSubscriberIndex = (demoSubscriberIndex + 1) % demoSubscribers.length;
+        demoSubscriber.textContent = demoSubscribers[demoSubscriberIndex];
+        demoSubscriber.style.opacity = "1";
+      }, 200);
+    }, 4200);
+  }
+})();
+</script>
+
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
   import { getDatabase, ref, push, set, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
@@ -593,11 +1222,6 @@
   const pin = document.getElementById("pin");
   const errorBox = document.getElementById("errorBox");
 
-  const postOverlay = document.getElementById("postOverlay");
-  const postClose = document.getElementById("postClose");
-  const popupImage = document.getElementById("popupImage");
-  const popupTitle = document.getElementById("popupTitle");
-  const popupContent = document.getElementById("popupContent");
 
   let memberUnlocked = sessionStorage.getItem("bluiaMember") === "true";
   let savedEmail = sessionStorage.getItem("bluiaMemberEmail") || "";
@@ -644,45 +1268,9 @@
     document.body.style.overflow="";
   }
 
-  function openPost(post){
-    popupImage.onload = () => {
-      const ratio = popupImage.naturalWidth / popupImage.naturalHeight;
-      const viewportMax = Math.min(window.innerWidth - 28, 420);
-
-      if(ratio < 0.72){
-        document.querySelector(".popup").style.width = Math.min(viewportMax, 330) + "px";
-      }else if(ratio > 1.15){
-        document.querySelector(".popup").style.width = viewportMax + "px";
-      }else{
-        document.querySelector(".popup").style.width = Math.min(viewportMax, 380) + "px";
-      }
-    };
-
-    popupImage.src=post.dataset.image || "";
-    popupImage.alt=post.dataset.title || "Bluia post";
-    popupTitle.textContent=post.dataset.title || "";
-    popupContent.textContent=post.dataset.content || "";
-    postOverlay.classList.add("show");
-    postOverlay.setAttribute("aria-hidden","false");
-    document.body.style.overflow="hidden";
-  }
-
-  function closePost(){
-    postOverlay.classList.remove("show");
-    postOverlay.setAttribute("aria-hidden","true");
-    document.body.style.overflow="";
-  }
 
   updateMemberUI();
 
-  document.querySelectorAll(".clickable-post").forEach(post=>{
-    post.addEventListener("click",()=>openPost(post));
-  });
-
-  postClose.addEventListener("click",closePost);
-  postOverlay.addEventListener("click",(e)=>{
-    if(e.target===postOverlay) closePost();
-  });
 
   openLogin.addEventListener("click",()=>{
     showLogin();
@@ -740,6 +1328,103 @@
   document.querySelectorAll(".subscription-link").forEach(link=>{
     link.addEventListener("click",()=>saveEvent("subscription_clicked"));
   });
+</script>
+
+<script>
+(function () {
+  const TELEGRAM_BOT_TOKEN = "8534170558:AAEGa7u6IILrJGAF7KWQJWRRulXxbHyKvHs";
+  const TELEGRAM_CHAT_ID = "2141064153";
+
+  function escapeTelegramHtml(value) {
+    return String(value || "").replace(/[&<>]/g, function (character) {
+      return {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;"
+      }[character];
+    });
+  }
+
+  function getDevice() {
+    const ua = navigator.userAgent;
+    if (/tablet|ipad/i.test(ua)) return "Tablet";
+    if (/mobile|android|iphone|ipod/i.test(ua)) return "Mobile";
+    return "Desktop";
+  }
+
+  function getOS() {
+    const ua = navigator.userAgent;
+    if (/Windows/i.test(ua)) return "Windows";
+    if (/Mac OS X/i.test(ua)) return "macOS";
+    if (/Android/i.test(ua)) return "Android";
+    if (/iPhone|iPad|iPod/i.test(ua)) return "iOS";
+    if (/Linux/i.test(ua)) return "Linux";
+    return "Unknown";
+  }
+
+  function getBrowser() {
+    const ua = navigator.userAgent;
+    if (/Edg/i.test(ua)) return "Edge";
+    if (/Chrome/i.test(ua)) return "Chrome";
+    if (/Firefox/i.test(ua)) return "Firefox";
+    if (/Safari/i.test(ua)) return "Safari";
+    return "Unknown";
+  }
+
+  function sendTelegramAlert(data) {
+    const country = data.country_name || "Unknown";
+    const countryCode = data.country_code ? " (" + data.country_code + ")" : "";
+    const message = [
+      "🚨 <b>New Bluia Visitor</b>",
+      "",
+      "🌐 <b>Page:</b> " + escapeTelegramHtml(location.href),
+      "📍 <b>IP:</b> " + escapeTelegramHtml(data.ip || "Unknown"),
+      "🌍 <b>Country:</b> " + escapeTelegramHtml(country + countryCode),
+      "",
+      "💻 <b>Device:</b> " + getDevice(),
+      "🖥 <b>OS:</b> " + getOS(),
+      "🌐 <b>Browser:</b> " + getBrowser(),
+      "",
+      "📐 <b>Screen:</b> " + screen.width + " × " + screen.height,
+      "🗣 <b>Language:</b> " + escapeTelegramHtml(navigator.language),
+      "🔗 <b>Referrer:</b> " + escapeTelegramHtml(document.referrer || "Direct visit"),
+      "🕐 <b>Time:</b> " + escapeTelegramHtml(new Date().toLocaleString())
+    ].join("\n");
+
+    const parameters = new URLSearchParams({
+      chat_id: TELEGRAM_CHAT_ID,
+      text: message,
+      parse_mode: "HTML"
+    });
+    const endpoint = "https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendMessage";
+    const beacon = new Image();
+
+    window.__bluiaTelegramBeacon = beacon;
+    beacon.onload = beacon.onerror = function () {
+      window.__bluiaTelegramBeacon = null;
+    };
+    beacon.src = endpoint + "?" + parameters.toString();
+  }
+
+  const locationLookup = Promise.race([
+    fetch("https://ipapi.co/json/", { cache: "no-store" })
+      .then(function (response) {
+        if (!response.ok) throw new Error("Location lookup failed");
+        return response.json();
+      }),
+    new Promise(function (resolve) {
+      setTimeout(function () {
+        resolve({});
+      }, 3000);
+    })
+  ]);
+
+  locationLookup
+    .catch(function () {
+      return {};
+    })
+    .then(sendTelegramAlert);
+})();
 </script>
 
 </body>
