@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#15141c">
 <meta name="description" content="Midnight Letters by Bluia. A romantic magazine of fictional letters and AI portraits. Membership: $5 USD per month.">
-<title>Bluia . Online</title>
+<title>Midnight Letters — by Bluia</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=DM+Sans:wght@400&display=swap" rel="stylesheet">
@@ -46,13 +46,24 @@ html.viewer-open{overflow:hidden}
 @media(max-width:760px){.header-inner{min-height:64px}.brand{font-size:22px}.header-actions .button{padding:7px 11px;font-size:11px}.intro h1{font-size:40px}.copy h2{font-size:30px}.copy p{font-size:13px}.membership h2{font-size:28px}.image-open{border-radius:20px}}
 @media(max-width:380px){.brand{font-size:20px}.header-actions{gap:6px}.header-actions .button{padding:7px 9px;font-size:10px}.intro h1{font-size:36px}}
 @media(prefers-reduced-motion:reduce){.image-viewer[open],.image-viewer[open]::backdrop{animation:none}}
+
+.member-dialog{max-height:90dvh;overflow:auto;padding:30px;position:relative}
+.member-dialog h2{font-size:30px;margin:8px 0 18px}.member-dialog .dismiss{position:absolute;right:12px;top:10px;background:none;border:0;color:var(--muted);font-size:25px;margin:0;padding:5px 10px}
+.member-dialog label{display:block;font-size:12px;margin:16px 0 6px;color:var(--muted)}
+.member-dialog input{display:block;width:100%;min-height:44px;border:1px solid var(--line);border-radius:9px;background:#201a24;color:var(--ink);font:16px 'DM Sans',sans-serif;padding:10px 12px}
+.member-dialog input:focus-visible{outline:1px solid var(--rose);outline-offset:2px}
+.member-dialog .button{min-height:38px;padding:9px 16px;font-size:12px}.member-dialog .error{color:#ffbac6;font-size:12px;min-height:20px;margin-top:8px}
+.member-dialog .dialog-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:22px}.dialog-actions button{margin-top:0}.member-dialog .quiet{border:0;background:none;color:var(--muted);font-size:12px;padding:10px}
+#account-email{overflow-wrap:anywhere}.member-dialog[open]{animation:viewer-in .5s ease-out}
+[hidden]{display:none!important}
+@media(prefers-reduced-motion:reduce){.member-dialog[open]{animation:none}}
 </style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to stories</a>
 <header><div class="wrap header-inner"><a class="brand" href="#main" aria-label="Midnight Letters home">Midnight Letters<small>by Bluia</small></a><nav class="header-actions" aria-label="Membership"><a class="button" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04">Subscribe · $5</a><button class="button button-outline" id="login" type="button">Login</button></nav></div></header>
 <main class="wrap" id="main">
-<section class="intro"><h1>Bluia<em> Sisters</em></h1></section>
+<section class="intro"><h1>A little romance,<br><em>before you sleep.</em></h1></section>
 <div class="timeline" id="stories">
 <article class="chapter" aria-labelledby="letter-1">
 <figure><button class="image-open" type="button" aria-label="Open full image"><img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/c17f5d56-c34a-4f68-8eb9-90fb97985dc6.png" alt="AI-created Bluia portrait accompanying A Little Tenderness" width="800" height="1000" fetchpriority="high" decoding="async"></button></figure>
@@ -84,18 +95,106 @@ html.viewer-open{overflow:hidden}
 </main>
 <footer><div class="wrap footer-row">Bluia . Online</div></footer>
 <dialog class="image-viewer" id="image-viewer" aria-label="Full image"><button class="viewer-close" type="button" aria-label="Close image" autofocus>×</button><img id="viewer-image" alt=""></dialog>
-<dialog id="login-dialog" aria-labelledby="login-title"><h2 id="login-title">Member login</h2><p>Member login is not available yet. Please check back when the member area opens.</p><form method="dialog"><button class="button">Close</button></form></dialog>
+<dialog class="member-dialog" id="login-dialog" aria-labelledby="login-title">
+<button class="dismiss" type="button" data-close="login-dialog" aria-label="Close login">×</button>
+<h2 id="login-title">Member login</h2>
+<form id="member-form">
+<label for="member-email">Email address</label><input id="member-email" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="you@example.com">
+<label for="member-pin">Member PIN</label><input id="member-pin" name="pin" type="password" inputmode="numeric" pattern="[0-9]{6}" minlength="6" maxlength="6" autocomplete="off" required placeholder="6-digit PIN" aria-describedby="login-error">
+<p class="error" id="login-error" role="alert"></p><button class="button" type="submit">Login</button>
+</form>
+<div id="member-account" hidden><p id="account-email"></p><div class="dialog-actions"><button class="button" type="button" data-close="login-dialog">Continue reading</button><button class="quiet" id="logout" type="button">Log out</button></div></div>
+</dialog>
+<dialog class="member-dialog" id="subscribe-reminder" aria-labelledby="reminder-title">
+<button class="dismiss" type="button" data-close="subscribe-reminder" aria-label="Close subscription reminder">×</button>
+<span class="eyebrow">Meet more of the Bluia sisters</span><h2 id="reminder-title">A little more <em>to fall for.</em></h2>
+<p>Subscribe to unlock more beautiful Bluia sisters, portraits and romantic letters.</p>
+<div class="dialog-actions"><a class="button" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04">Subscribe · $5 / month ↗</a><button class="quiet" type="button" data-close="subscribe-reminder">Maybe later</button></div>
+</dialog>
 <script>
-// Set this to your real member sign-in URL once an authentication service is connected.
-const LOGIN_URL = "";
-// The existing Stripe link is preserved. Update its Stripe price to $5/month before launch.
+// Shared-PIN convenience login only: client-side code cannot verify payment or protect premium files.
+// Any valid email + this PIN is accepted. Replace with server authentication for paid access.
+const MEMBER_PIN = "000555";
+const session = {
+  get(key) { try { return sessionStorage.getItem(key); } catch { return null; } },
+  set(key, value) { try { sessionStorage.setItem(key, value); } catch {} },
+  remove(key) { try { sessionStorage.removeItem(key); } catch {} }
+};
+let memberEmail = session.get("bluia-member-email") || "";
+let reminderShown = session.get("bluia-reminder-shown") === "yes";
 const loginButton = document.getElementById("login");
 const loginDialog = document.getElementById("login-dialog");
+const memberForm = document.getElementById("member-form");
+const emailInput = document.getElementById("member-email");
+const pinInput = document.getElementById("member-pin");
+const loginError = document.getElementById("login-error");
+const reminder = document.getElementById("subscribe-reminder");
+function updateMemberUI() {
+  loginButton.textContent = memberEmail ? "Account" : "Login";
+  document.getElementById("login-title").textContent = memberEmail ? "Welcome back" : "Member login";
+  memberForm.hidden = Boolean(memberEmail);
+  document.getElementById("member-account").hidden = !memberEmail;
+  document.getElementById("account-email").textContent = memberEmail;
+}
+updateMemberUI();
 loginButton.addEventListener("click", () => {
-  if (LOGIN_URL) window.location.assign(LOGIN_URL);
-  else loginDialog.showModal();
+  loginError.textContent = "";
+  loginDialog.showModal();
+  if (!memberEmail) emailInput.focus();
 });
-loginDialog.addEventListener("close", () => loginButton.focus());
+memberForm.addEventListener("submit", event => {
+  event.preventDefault();
+  if (!memberForm.reportValidity()) return;
+  if (pinInput.value !== MEMBER_PIN) {
+    loginError.textContent = "That PIN is incorrect. Please try again.";
+    pinInput.setAttribute("aria-invalid", "true");
+    pinInput.focus();
+    return;
+  }
+  memberEmail = emailInput.value.trim();
+  session.set("bluia-member-email", memberEmail);
+  pinInput.value = "";
+  loginError.textContent = "";
+  updateMemberUI();
+  loginDialog.querySelector('#member-account button').focus();
+});
+pinInput.addEventListener("input", () => {
+  pinInput.removeAttribute("aria-invalid");
+  loginError.textContent = "";
+});
+document.getElementById("logout").addEventListener("click", () => {
+  memberEmail = "";
+  session.remove("bluia-member-email");
+  memberForm.reset();
+  updateMemberUI();
+  emailInput.focus();
+});
+document.querySelectorAll("[data-close]").forEach(button => {
+  button.addEventListener("click", () => document.getElementById(button.dataset.close).close());
+});
+loginDialog.addEventListener("close", () => {
+  pinInput.value = "";
+  pinInput.removeAttribute("aria-invalid");
+  loginButton.focus({ preventScroll: true });
+});
+let reminderFocus = null;
+let hasScrolled = false;
+const visitStarted = Date.now();
+function maybeShowReminder() {
+  if (!hasScrolled || memberEmail || reminderShown || document.hidden || Date.now() - visitStarted < 8000) return;
+  if (document.querySelector("dialog[open]")) return;
+  const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+  if (scrollable <= 0 || window.scrollY / scrollable < 0.3) return;
+  reminderShown = true;
+  session.set("bluia-reminder-shown", "yes");
+  reminderFocus = document.activeElement;
+  reminder.showModal();
+}
+window.addEventListener("scroll", () => { hasScrolled = true; maybeShowReminder(); }, { passive: true });
+window.setTimeout(maybeShowReminder, 8100);
+reminder.addEventListener("close", () => {
+  if (reminderFocus && reminderFocus !== document.body) reminderFocus.focus({ preventScroll: true });
+});
 
 const viewer = document.getElementById("image-viewer");
 const viewerImage = document.getElementById("viewer-image");
