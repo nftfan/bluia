@@ -1,1358 +1,219 @@
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#fff8fc" />
-  <title>Bluia.Online</title>
-  <meta name="description" content="Bluia Healing Therapy is a visual wellness membership for men—beautiful Bluia Sisters, calming daily breaks and feel-good members-only content." />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-  <style>
-    :root{
-      --pink:#ff6fb3;
-      --pink-dark:#ff9aca;
-      --pink-soft:#2b2b2b;
-      --bg:#212121;
-      --text:#f7f7f7;
-      --muted:#b8b8b8;
-      --white:#ffffff;
-      --panel:#292929;
-      --panel-soft:#262626;
-      --line:#3a3a3a;
-    }
-
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:var(--bg);color:var(--text)}
-    body{
-      font-family:"DM Sans",Arial,sans-serif;
-      -webkit-font-smoothing:antialiased;
-      max-width:100vw;
-      overflow-x:hidden;
-    }
-
-    button,input,a{font:inherit}
-    a{text-decoration:none;color:inherit}
-    button{cursor:pointer}
-    img{display:block;max-width:100%}
-
-    header{
-      position:sticky;
-      top:0;
-      z-index:50;
-      background:rgba(33,33,33,.88);
-      border-bottom:1px solid rgba(255,255,255,.06);
-      padding-top:env(safe-area-inset-top);
-      backdrop-filter:blur(18px);
-      -webkit-backdrop-filter:blur(18px);
-    }
-
-    .topbar{
-      min-height:58px;
-      padding:10px 12px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-    }
-
-    .brand{
-      font-family:"DM Sans",Arial,sans-serif;
-      font-size:16px;
-      font-weight:700;
-      color:var(--pink-dark);
-      white-space:nowrap;
-    }
-
-    .auth{
-      display:flex;
-      align-items:center;
-      gap:6px;
-      min-width:0;
-    }
-
-    .login-btn,.logout-btn{
-      display:inline-flex;
-      align-items:center;
-      gap:4px;
-      border:0;
-      border-radius:999px;
-      padding:8px 10px;
-      font-size:14px;
-      font-weight:700;
-    }
-
-    .login-btn{
-      background:var(--pink);
-      color:#fff;
-    }
-
-    .logout-btn{
-      background:var(--panel);
-      color:var(--pink-dark);
-    }
-
-    .member-email{
-      display:none;
-      max-width:120px;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      white-space:nowrap;
-      font-size:11px;
-      color:var(--pink-dark);
-      font-weight:700;
-    }
-
-    .material-icons{font-size:16px}
-
-    .tabs{
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      gap:4px;
-      margin:0 12px 12px;
-      padding:4px;
-      border:1px solid rgba(255,255,255,.07);
-      border-radius:18px;
-      background:rgba(20,20,20,.82);
-      box-shadow:0 8px 26px rgba(0,0,0,.18);
-    }
-
-    .tab{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      flex:1 1 0;
-      gap:5px;
-      border:0;
-      border-radius:14px;
-      padding:10px 8px;
-      background:transparent;
-      color:var(--muted);
-      font-size:14px;
-      font-weight:700;
-      white-space:nowrap;
-      transition:background .2s ease,color .2s ease,transform .2s ease;
-    }
-
-    .tab:hover{color:var(--text)}
-    .tab.active{
-      background:#363636;
-      color:var(--white);
-      box-shadow:0 4px 12px rgba(0,0,0,.22);
-    }
-
-    .tab.magazine-button{
-      flex:1.08 1 0;
-      background:linear-gradient(135deg,#ff79bc,#ff3d95);
-      color:#fff;
-      box-shadow:0 6px 18px rgba(255,61,149,.32);
-    }
-
-    .tab.magazine-button:hover{
-      color:#fff;
-      transform:translateY(-1px);
-    }
-
-    main{
-      width:100%;
-      padding:8px 12px 36px;
-    }
-
-    .tab-panel{display:none}
-    .tab-panel.active{display:flex}
-
-    .feed{
-      display:flex;
-      flex-direction:column;
-      gap:26px;
-    }
-
-    .product-hero{
-      position:relative;
-      overflow:hidden;
-      padding:26px 20px;
-      border:1px solid rgba(255,111,179,.3);
-      border-radius:24px;
-      background:
-        radial-gradient(circle at 92% 10%,rgba(255,111,179,.24),transparent 38%),
-        linear-gradient(145deg,#303030,#242424);
-      box-shadow:0 18px 42px rgba(0,0,0,.24);
-    }
-
-    .product-eyebrow{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      margin-bottom:14px;
-      padding:6px 9px;
-      border-radius:999px;
-      background:rgba(255,111,179,.13);
-      color:var(--pink-dark);
-      font-size:12px;
-      font-weight:700;
-      letter-spacing:.03em;
-      text-transform:uppercase;
-    }
-
-    .product-hero h1{
-      margin:0;
-      max-width:420px;
-      font-size:34px;
-      line-height:1.02;
-      letter-spacing:-.045em;
-      color:var(--white);
-    }
-
-    .product-hero > p{
-      margin:14px 0 18px;
-      max-width:430px;
-      font-size:16px;
-      line-height:1.55;
-      color:#d2d2d2;
-    }
-
-    .hero-actions{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-
-    .hero-primary{
-      padding:12px 16px;
-      box-shadow:0 8px 22px rgba(255,61,149,.26);
-    }
-
-    .hero-link{
-      display:inline-flex;
-      align-items:center;
-      gap:5px;
-      padding:11px 3px;
-      border:0;
-      background:transparent;
-      color:var(--pink-dark);
-      font-size:14px;
-      font-weight:700;
-    }
-
-    .product-promise{
-      display:flex;
-      align-items:flex-start;
-      gap:8px;
-      margin-top:18px;
-      padding-top:16px;
-      border-top:1px solid rgba(255,255,255,.08);
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.45;
-    }
-
-    .product-promise .material-icons{
-      margin-top:1px;
-      color:var(--pink-dark);
-    }
-
-    .product-section{
-      padding:2px 2px 0;
-    }
-
-    .product-section h2{
-      margin:0 0 5px;
-      font-size:22px;
-      line-height:1.2;
-      color:var(--white);
-    }
-
-    .section-intro{
-      margin:0 0 14px;
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.5;
-    }
-
-    .benefits-grid{
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:10px;
-    }
-
-    .benefit-card{
-      padding:15px;
-      border:1px solid rgba(255,255,255,.06);
-      border-radius:18px;
-      background:var(--panel);
-    }
-
-    .benefit-card .material-icons{
-      display:grid;
-      width:34px;
-      height:34px;
-      margin-bottom:11px;
-      place-items:center;
-      border-radius:11px;
-      background:rgba(255,111,179,.12);
-      color:var(--pink-dark);
-      font-size:18px;
-    }
-
-    .benefit-card h3{
-      margin:0 0 5px;
-      font-size:15px;
-      color:var(--white);
-    }
-
-    .benefit-card p{
-      margin:0;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.45;
-    }
-
-    .steps{
-      display:grid;
-      gap:9px;
-    }
-
-    .step{
-      display:grid;
-      grid-template-columns:34px minmax(0,1fr);
-      gap:11px;
-      align-items:start;
-      padding:13px;
-      border-radius:16px;
-      background:var(--panel);
-    }
-
-    .step-number{
-      display:grid;
-      width:34px;
-      height:34px;
-      place-items:center;
-      border-radius:50%;
-      background:var(--pink);
-      color:#fff;
-      font-size:13px;
-      font-weight:700;
-    }
-
-    .step h3{
-      margin:1px 0 3px;
-      font-size:15px;
-      color:var(--white);
-    }
-
-    .step p{
-      margin:0;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.45;
-    }
-
-    .activity-demo{
-      display:flex;
-      align-items:center;
-      gap:11px;
-      padding:14px;
-      border:1px solid rgba(255,111,179,.22);
-      border-radius:17px;
-      background:rgba(255,111,179,.08);
-    }
-
-    .activity-avatar{
-      display:grid;
-      flex:0 0 auto;
-      width:38px;
-      height:38px;
-      place-items:center;
-      border-radius:50%;
-      background:linear-gradient(135deg,#ff8ec5,#ff3d95);
-      color:#fff;
-    }
-
-    .activity-label{
-      display:block;
-      margin-bottom:2px;
-      color:var(--pink-dark);
-      font-size:11px;
-      font-weight:700;
-      letter-spacing:.05em;
-      text-transform:uppercase;
-    }
-
-    .activity-demo p{
-      margin:0;
-      color:var(--text);
-      font-size:14px;
-    }
-
-    #demoSubscriber{
-      transition:opacity .2s ease;
-    }
-
-    .reviews-grid{
-      display:grid;
-      gap:10px;
-    }
-
-    .review-card{
-      padding:16px;
-      border-radius:18px;
-      background:var(--panel);
-    }
-
-    .review-stars{
-      margin-bottom:8px;
-      color:var(--pink-dark);
-      letter-spacing:2px;
-      font-size:13px;
-    }
-
-    .review-card blockquote{
-      margin:0 0 11px;
-      color:#e7e7e7;
-      font-size:14px;
-      line-height:1.5;
-    }
-
-    .review-meta{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:8px;
-      color:var(--muted);
-      font-size:12px;
-    }
-
-    .demo-badge{
-      padding:4px 7px;
-      border-radius:999px;
-      background:#383838;
-      color:#c7c7c7;
-      font-size:10px;
-      font-weight:700;
-      text-transform:uppercase;
-    }
-
-    .wellness-disclaimer{
-      padding:14px;
-      border-left:3px solid var(--pink);
-      border-radius:4px 14px 14px 4px;
-      background:#262626;
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.5;
-    }
-
-    .bluias-panel.active{
-      display:block;
-      animation:panelIn .25s ease;
-    }
-
-    .tab-panel:not(.active){
-      display:none;
-    }
-
-    .bluias-heading{
-      margin:2px 0 16px;
-      font-size:22px;
-      line-height:1.2;
-      color:var(--white);
-    }
-
-    .bluias-grid{
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:16px 8px;
-    }
-
-    .bluia-card{min-width:0}
-    .bluia-tagline{margin:5px 2px 0;color:var(--pink-dark);font-size:12px;line-height:1.4}
-    .message-cover{position:relative;isolation:isolate;overflow:hidden;min-height:120px;display:grid;place-items:center;padding:18px;border-radius:18px;background:linear-gradient(135deg,#382833,#272329)}
-    .message-invitation{position:relative;z-index:1;text-align:center;color:#ffe4f1;font-size:14px;line-height:1.5;font-weight:600;max-width:190px;text-shadow:0 1px 8px #251820}
-    .heart-cloud{position:absolute;inset:0;pointer-events:none}
-    .heart-cloud i{position:absolute;color:#ff9aca;opacity:.18;font-size:32px;font-style:normal;animation:softHearts 5s ease-in-out infinite alternate}
-    .heart-cloud i:nth-child(1){left:6%;top:12%}
-    .heart-cloud i:nth-child(2){left:33%;top:55%;font-size:24px;animation-delay:-2s}
-    .heart-cloud i:nth-child(3){left:65%;top:6%;font-size:40px;animation-delay:-1s}
-    .heart-cloud i:nth-child(4){left:80%;top:65%;font-size:20px;animation-delay:-3s}
-    .heart-cloud i:nth-child(5){left:48%;top:30%;font-size:26px;animation-delay:-4s}
-    @keyframes softHearts{from{transform:translateY(7px) scale(.9);opacity:.12}to{transform:translateY(-9px) scale(1.1);opacity:.3}}
-    .clickable-post:focus-visible,.bluia-card:focus-visible{outline:2px solid var(--pink);outline-offset:5px}
-    @media(prefers-reduced-motion:reduce){.heart-cloud i{animation:none;opacity:.22}}
-
-    .bluia-card img{
-      width:100%;
-      aspect-ratio:4 / 5;
-      object-fit:cover;
-      border-radius:14px;
-      background:var(--panel);
-      box-shadow:0 10px 24px rgba(0,0,0,.22);
-    }
-
-    .bluia-card h2{
-      margin:9px 2px 0;
-      font-size:13px;
-      line-height:1.3;
-      color:var(--white);
-    }
-
-    .bluias-subscribe{
-      margin-top:26px;
-      padding:20px;
-      border:1px solid rgba(255,111,179,.28);
-      border-radius:20px;
-      background:linear-gradient(145deg,rgba(255,111,179,.13),rgba(255,61,149,.04));
-      text-align:center;
-    }
-
-    .bluias-subscribe h2{
-      margin:0 0 7px;
-      font-size:18px;
-      color:var(--white);
-    }
-
-    .bluias-subscribe p{
-      margin:0 auto 14px;
-      max-width:360px;
-      font-size:14px;
-      line-height:1.5;
-      color:var(--muted);
-    }
-
-    @keyframes panelIn{
-      from{opacity:0;transform:translateY(4px)}
-      to{opacity:1;transform:translateY(0)}
-    }
-
-    .post{
-      display:grid;
-      grid-template-columns:96px minmax(0,1fr);
-      gap:10px;
-      align-items:center;
-      cursor:pointer;
-    }
-
-    .post:not(:last-child){
-      padding-bottom:22px;
-      border-bottom:0.5px solid rgba(255,111,179,.35);
-    }
-
-
-    .post-image{
-      width:96px;
-      height:120px;
-      overflow:hidden;
-      border-radius:2px;
-      background:transparent;
-    }
-
-    .post-image img{
-      width:100%;
-      height:100%;
-      object-fit:contain;
-      object-position:center;
-      border-radius:2px;
-      clip-path:inset(0 round 2px);
-    }
-
-    .post-copy{
-      min-width:0;
-    }
-
-    .post-copy h2{
-      margin:0 0 8px;
-      font-family:"DM Sans",Arial,sans-serif;
-      font-size:18px;
-      line-height:1.25;
-      font-weight:700;
-    }
-
-    .post-copy p{
-      margin:0;
-      font-size:14px;
-      line-height:1.5;
-      color:var(--muted);
-    }
-
-    .membership{
-      margin-top:30px;
-      padding:16px;
-      border-radius:22px;
-      background:var(--panel);
-    }
-
-    .membership h3{
-      margin:0 0 6px;
-      font-family:"DM Sans",Arial,sans-serif;
-      font-size:12px;
-    }
-
-    .membership p{
-      margin:0 0 12px;
-      font-size:14px;
-      line-height:1.5;
-      color:var(--muted);
-    }
-
-    .subscribe{
-      display:inline-flex;
-      align-items:center;
-      gap:5px;
-      padding:9px 12px;
-      border-radius:999px;
-      background:var(--pink);
-      color:#fff;
-      font-size:12px;
-      font-weight:700;
-    }
-
-    .overlay{
-      position:fixed;
-      inset:0;
-      z-index:100;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:14px;
-      background:rgba(34,18,27,.58);
-      backdrop-filter:blur(14px);
-    }
-
-    .overlay.show{display:flex}
-
-    .popup{
-      width:auto;
-      max-width:calc(100vw - 28px);
-      max-height:92vh;
-      overflow:auto;
-      background:var(--panel);
-      border-radius:28px;
-      padding:0;
-      position:relative;
-    }
-
-    .popup-close{
-      position:absolute;
-      top:12px;
-      right:12px;
-      z-index:2;
-      width:38px;
-      height:38px;
-      border:0;
-      border-radius:50%;
-      background:rgba(33,33,33,.92);
-      color:var(--pink-dark);
-      display:grid;
-      place-items:center;
-      font-size:22px;
-    }
-
-    .popup-image{
-      width:100%;
-      overflow:hidden;
-      border-radius:28px 28px 0 0;
-      background:transparent;
-    }
-
-    .popup-image img{
-      display:block;
-      width:100%;
-      height:auto;
-      max-height:72vh;
-      object-fit:contain;
-      object-position:center;
-      border-radius:28px 28px 0 0;
-      background:transparent;
-    }
-
-    .popup-divider{
-      height:1px;
-      background:var(--line);
-      margin:0;
-    }
-
-    .popup-body{
-      width:min(100%,420px);
-      padding:16px 16px 20px;
-    }
-
-    .popup-body h2{
-      margin:0 0 8px;
-      font-family:"DM Sans",Arial,sans-serif;
-      font-size:20px;
-      line-height:1.3;
-    }
-
-    .popup-body p{
-      margin:0;
-      font-size:15px;
-      line-height:1.55;
-      color:var(--muted);
-    }
-
-    .login-popup{
-      width:min(100%,390px);
-      background:var(--panel);
-      border-radius:26px;
-      padding:22px;
-      position:relative;
-    }
-
-    .login-popup h2{
-      margin:0 0 8px;
-      font-family:"DM Sans",Arial,sans-serif;
-      font-size:12px;
-    }
-
-    .login-popup p{
-      margin:0 0 14px;
-      font-size:14px;
-      line-height:1.5;
-      color:var(--muted);
-    }
-
-    .field{margin-top:10px}
-    .field label{
-      display:block;
-      margin-bottom:5px;
-      font-size:11px;
-      font-weight:700;
-    }
-
-    .field input{
-      width:100%;
-      border:0;
-      outline:none;
-      border-radius:14px;
-      padding:12px;
-      background:var(--panel-soft);
-      color:var(--text);
-      font-size:12px;
-    }
-
-    .field input::placeholder{
-      color:#8f8f8f;
-    }
-
-    .unlock{
-      width:100%;
-      margin-top:12px;
-      border:0;
-      border-radius:14px;
-      padding:12px;
-      background:var(--pink);
-      color:#fff;
-      font-size:12px;
-      font-weight:700;
-    }
-
-    .buy{
-      display:block;
-      margin-top:10px;
-      text-align:center;
-      border-radius:14px;
-      padding:12px;
-      background:#111;
-      color:#fff;
-      font-size:12px;
-      font-weight:700;
-    }
-
-    .error{
-      display:none;
-      margin-top:8px;
-      font-size:11px;
-      color:#a91e54;
-      font-weight:700;
-    }
-
-    @media(max-width:420px){
-      .tabs .material-icons{display:none}
-      .tabs .tab{padding:11px 5px;min-width:0}
-    }
-
-    @media(min-width:560px){
-      body{
-        max-width:520px;
-        margin:0 auto;
-      }
-    }
-  </style>
-</head>
-<body>
-
-<header>
-  <div class="topbar">
-    <div class="brand">Bluia.Online</div>
-
-    <div class="auth">
-      <span class="member-email" id="memberEmail"></span>
-      <button class="login-btn" id="openLogin"><span class="material-icons">login</span> Login</button>
-      <button class="logout-btn" id="logoutButton" style="display:none;"><span class="material-icons">logout</span> Log out</button>
-    </div>
-  </div>
-
-  <nav class="tabs" role="tablist" aria-label="Bluia sections">
-    <button class="tab active" id="postsTab" type="button" role="tab" aria-selected="true" aria-controls="postsPanel" data-tab="posts"><span class="material-icons">article</span> Posts</button>
-    <button class="tab" id="bluiasTab" type="button" role="tab" aria-selected="false" aria-controls="bluiasPanel" data-tab="bluias"><span class="material-icons">people</span> Bluias</button>
-    <button class="tab" id="aboutTab" type="button" role="tab" aria-selected="false" aria-controls="aboutPanel" data-tab="about">About us</button>
-    <a class="tab magazine-button" href="http://bluia.online/magazine">
-      <span class="material-icons">menu_book</span> Magazine
-    </a>
-  </nav>
-</header>
-
-<main>
-  <section class="feed tab-panel" id="aboutPanel" role="tabpanel" aria-labelledby="aboutTab">
-
-    <section class="product-hero">
-      <span class="product-eyebrow"><span class="material-icons">favorite</span> Visual wellness for men</span>
-      <h1>Bluia Healing Therapy</h1>
-      <p>Take a feel-good break with beautiful Bluia Sisters. A private membership designed to bring more calm, positive energy and mindful pauses into your day.</p>
-      <div class="hero-actions">
-        <a class="subscribe subscription-link hero-primary" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04">
-          <span class="material-icons">play_circle</span> Watch beautiful Bluias
-        </a>
-        <button class="hero-link" type="button" data-target-tab="bluias">
-          Meet the Bluias <span class="material-icons">arrow_forward</span>
-        </button>
-      </div>
-      <div class="product-promise">
-        <span class="material-icons">spa</span>
-        <span>A simple visual wellness ritual for relaxation and enjoyment—created to complement healthy habits, not replace them.</span>
-      </div>
-    </section>
-
-    <section class="product-section">
-      <h2>Your daily feel-good pause</h2>
-      <p class="section-intro">A few intentional minutes away from pressure can help you reset and return to your day with a lighter mindset.</p>
-      <div class="benefits-grid">
-        <article class="benefit-card">
-          <span class="material-icons">self_improvement</span>
-          <h3>Calming breaks</h3>
-          <p>Create a short, enjoyable pause between demanding parts of your day.</p>
-        </article>
-        <article class="benefit-card">
-          <span class="material-icons">mood</span>
-          <h3>Positive mood</h3>
-          <p>Enjoy uplifting visual content chosen to feel warm, beautiful and inviting.</p>
-        </article>
-        <article class="benefit-card">
-          <span class="material-icons">visibility</span>
-          <h3>Mindful viewing</h3>
-          <p>Turn passive scrolling into a deliberate moment you choose for yourself.</p>
-        </article>
-        <article class="benefit-card">
-          <span class="material-icons">favorite_border</span>
-          <h3>Healthier routine</h3>
-          <p>Pair your Bluia break with movement, rest, nutritious food and real connection.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="product-section">
-      <h2>How Bluia works</h2>
-      <p class="section-intro">A simple three-step ritual you can enjoy whenever you need a positive reset.</p>
-      <div class="steps">
-        <article class="step">
-          <span class="step-number">1</span>
-          <div><h3>Choose a Bluia</h3><p>Explore beautiful personalities and find the energy that fits your mood.</p></div>
-        </article>
-        <article class="step">
-          <span class="step-number">2</span>
-          <div><h3>Take a mindful pause</h3><p>Slow down, breathe and enjoy the moment without rushing.</p></div>
-        </article>
-        <article class="step">
-          <span class="step-number">3</span>
-          <div><h3>Return refreshed</h3><p>Carry the calmer feeling into the next part of your day.</p></div>
-        </article>
-      </div>
-    </section>
-
-    <aside class="activity-demo" aria-label="Bluia subscriber activity">
-      <span class="activity-avatar material-icons">person_add</span>
-      <div>
-        <span class="activity-label">Bluia activity</span>
-        <p><strong id="demoSubscriber">Lucas M.</strong> has just subscribed</p>
-      </div>
-    </aside>
-
-    <section class="product-section">
-      <h2>What members say</h2>
-      <p class="section-intro">Bluia reviews showing how the Bluia experience can be presented.</p>
-      <div class="reviews-grid">
-        <article class="review-card">
-          <div class="review-stars" aria-label="Five stars">★★★★★</div>
-          <blockquote>“Bluia gives me a quick mental break after work. The experience feels positive, simple and private.”</blockquote>
-          <div class="review-meta"><span>Daniel, 34</span><span class="demo-badge">Customer's review</span></div>
-        </article>
-        <article class="review-card">
-          <div class="review-stars" aria-label="Five stars">★★★★★</div>
-          <blockquote>“I replaced random scrolling with a short Bluia pause. It feels much more intentional and relaxing.”</blockquote>
-          <div class="review-meta"><span>Mark, 41</span><span class="demo-badge">Customer's review</span></div>
-        </article>
-        <article class="review-card">
-          <div class="review-stars" aria-label="Five stars">★★★★★</div>
-          <blockquote>“The Bluia Sisters make the membership feel fresh and uplifting. I enjoy seeing new profiles appear.”</blockquote>
-          <div class="review-meta"><span>Alex, 29</span><span class="demo-badge">Customer's review</span></div>
-        </article>
-      </div>
-    </section>
-
-    <div class="wellness-disclaimer">
-      Bluia Healing Therapy is a wellness and entertainment experience, not medical care. Viewing face images of beautiful women everyday is a proven to extend lifespan, improve heart health. 
-    </div>
-
-
-  </section>
-
-  <section class="feed tab-panel active" id="postsPanel" role="tabpanel" aria-labelledby="postsTab">
-    <article class="post clickable-post" role="button" tabindex="0" aria-label="Click to see the Bluia’s message"
-      data-title="A Little Tenderness"
-      data-image="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/c17f5d56-c34a-4f68-8eb9-90fb97985dc6.png"
-      data-content="Come closer to this quiet moment, darling. Let your shoulders soften and the day settle. Imagine a warm smile across the room and a gentle kiss goodnight. You deserve tenderness, even on the days that feel unfinished.">
-      <div class="post-image">
-        <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/c17f5d56-c34a-4f68-8eb9-90fb97985dc6.png" alt="Bluia portrait">
-      </div>
-      <div class="post-copy message-cover">
-        <span class="heart-cloud" aria-hidden="true"><i>♥</i><i>♥</i><i>♥</i><i>♥</i><i>♥</i></span>
-        <span class="message-invitation">Click to see the Bluia’s message</span>
-      </div>
-    </article>
-
-    <article class="post clickable-post" role="button" tabindex="0" aria-label="Click to see the Bluia’s message"
-      data-title="If I Could Steal a Moment"
-      data-image="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/f43bf471-a03c-4cef-90ab-d8d8bf6120cc.png"
-      data-content="If I could steal a moment from your busy day, I would fill it with a smile, a little laughter and a look that lingers. No perfect words needed. Just the sweetness of being here, with nowhere to rush.">
-      <div class="post-image">
-        <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/f43bf471-a03c-4cef-90ab-d8d8bf6120cc.png" alt="Bluia portrait">
-      </div>
-      <div class="post-copy message-cover">
-        <span class="heart-cloud" aria-hidden="true"><i>♥</i><i>♥</i><i>♥</i><i>♥</i><i>♥</i></span>
-        <span class="message-invitation">Click to see the Bluia’s message</span>
-      </div>
-    </article>
-
-
-
-    <article class="post clickable-post" role="button" tabindex="0" aria-label="Click to see the Bluia’s message"
-      data-title="Where Words Become a Whisper"
-      data-image="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ed75e4dd-e905-47e0-88d2-96e174359484.png"
-      data-content="Imagine our eyes meeting in the hush of the evening. Nothing to prove, nothing to explain. Just a tender glance and the lovely possibility of a conversation that lasts long after sunset.">
-      <div class="post-image">
-        <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ed75e4dd-e905-47e0-88d2-96e174359484.png" alt="Bluia portrait">
-      </div>
-      <div class="post-copy message-cover">
-        <span class="heart-cloud" aria-hidden="true"><i>♥</i><i>♥</i><i>♥</i><i>♥</i><i>♥</i></span>
-        <span class="message-invitation">Click to see the Bluia’s message</span>
-      </div>
-    </article>
-
-    <article class="post clickable-post" role="button" tabindex="0" aria-label="Click to see the Bluia’s message"
-      data-title="A Seat Beside You"
-      data-image="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/d96b42bb-bd58-41fd-b80a-fba38c30aff4.png"
-      data-content="There is something beautiful about an ordinary evening shared: two cups, a little music, a hand resting near yours. Let this be a small love note to those simple moments that make a day feel softer.">
-      <div class="post-image">
-        <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/d96b42bb-bd58-41fd-b80a-fba38c30aff4.png" alt="Bluia portrait">
-      </div>
-      <div class="post-copy message-cover">
-        <span class="heart-cloud" aria-hidden="true"><i>♥</i><i>♥</i><i>♥</i><i>♥</i><i>♥</i></span>
-        <span class="message-invitation">Click to see the Bluia’s message</span>
-      </div>
-    </article>
-
-
-
-    <article class="post clickable-post" role="button" tabindex="0" aria-label="Click to see the Bluia’s message"
-      data-title="Stay for One More Sunset"
-      data-image="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/e7015a91-b1b2-4582-ab54-bbba87ab64d0.png"
-      data-content="Let the evening be gentle with you, sweetheart. Picture golden light, a soft blanket and a quiet smile. Tomorrow can wait a little; for now, take a breath and enjoy this tender pause.">
-      <div class="post-image">
-        <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/e7015a91-b1b2-4582-ab54-bbba87ab64d0.png" alt="Bluia portrait">
-      </div>
-      <div class="post-copy message-cover">
-        <span class="heart-cloud" aria-hidden="true"><i>♥</i><i>♥</i><i>♥</i><i>♥</i><i>♥</i></span>
-        <span class="message-invitation">Click to see the Bluia’s message</span>
-      </div>
-    </article>
-
-
-    <article class="post clickable-post" role="button" tabindex="0" aria-label="Click to see the Bluia’s message"
-      data-title="The Sweetness in Your Smile"
-      data-image="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/d3c2163b-0452-40f9-bfc9-efa47d7bcb1b.png"
-      data-content="You do not have to carry every moment with perfect strength. There is beauty in your laughter, your kindness and the way you begin again. Here is a little warmth for your day, wrapped in a smile.">
-      <div class="post-image">
-        <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/d3c2163b-0452-40f9-bfc9-efa47d7bcb1b.png" alt="Bluia portrait">
-      </div>
-      <div class="post-copy message-cover">
-        <span class="heart-cloud" aria-hidden="true"><i>♥</i><i>♥</i><i>♥</i><i>♥</i><i>♥</i></span>
-        <span class="message-invitation">Click to see the Bluia’s message</span>
-      </div>
-    </article>
-
-    <article class="post clickable-post" role="button" tabindex="0" aria-label="Click to see the Bluia’s message"
-      data-title="Meet Me in a Daydream"
-      data-image="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/2f09de46-430c-44b7-bcc1-22a2d7357297.png"
-      data-content="Imagine a playful afternoon becoming a slow walk home, our laughter lingering in the air. A shy smile, a brush of hands, a beautiful little maybe. Some of the sweetest stories begin that simply.">
-      <div class="post-image">
-        <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/2f09de46-430c-44b7-bcc1-22a2d7357297.png" alt="Bluia portrait">
-      </div>
-      <div class="post-copy message-cover">
-        <span class="heart-cloud" aria-hidden="true"><i>♥</i><i>♥</i><i>♥</i><i>♥</i><i>♥</i></span>
-        <span class="message-invitation">Click to see the Bluia’s message</span>
-      </div>
-    </article>
-
-  </section>
-
-  <section class="bluias-panel tab-panel" id="bluiasPanel" role="tabpanel" aria-labelledby="bluiasTab">
-    <h1 class="bluias-heading">Meet the Bluias</h1>
-    <div class="bluias-grid">
-      <article class="bluia-card" role="button" tabindex="0" aria-label="View Kaya Bluia" data-content="A closer look at Kaya: the delicate lines of her face, the curve of her lips and the details around her eyes.">
-        <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ChatGPT%20Image%20Sep%2012%2C%202026%2C%2001_50_48%20PM.png" alt="Kaya Bluia" loading="lazy">
-        <h2>Kaya Bluia</h2>
-        <p class="bluia-tagline">A whisper of warmth</p>
-      </article>
-      <article class="bluia-card" role="button" tabindex="0" aria-label="View Kiara Bluia" data-content="Meet Kiara up close. Take a moment with the contours of her cheeks, the shape of her brows and the details of her expression.">
-        <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ChatGPT%20Image%20Sep%2012%2C%202026%2C%2001_51_01%20PM.png" alt="Kiara Bluia" loading="lazy">
-        <h2>Kiara Bluia</h2>
-        <p class="bluia-tagline">A little playful sparkle</p>
-      </article>
-      <article class="bluia-card" role="button" tabindex="0" aria-label="View Kiana Bluia" data-content="Kiana, in a little more detail: the outline of her face, the lines around her eyes and the gentle curve of her lips.">
-        <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ChatGPT%20Image%20Sep%2012%2C%202026%2C%2001_51_12%20PM.png" alt="Kiana Bluia" loading="lazy">
-        <h2>Kiana Bluia</h2>
-        <p class="bluia-tagline">Soft as a daydream</p>
-      </article>
-      <article class="bluia-card" role="button" tabindex="0" aria-label="View Kora Bluia" data-content="A quiet portrait of Kora. Explore the contours of her face, her brows and the small details that make her look her own.">
-        <img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ChatGPT%20Image%20Sep%2012%2C%202026%2C%2001_51_28%20PM.png" alt="Kora Bluia" loading="lazy">
-        <h2>Kora Bluia</h2>
-        <p class="bluia-tagline">A quiet kind of romance</p>
-      </article>
-    </div>
-    <div class="bluias-subscribe">
-      <h2>Discover more Bluia Sisters</h2>
-      <p>Subscribe to explore new beautiful Bluia Sisters and exclusive members-only content.</p>
-      <a class="subscribe subscription-link" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04">
-        <span class="material-icons">favorite</span> Subscribe to Bluia Sisters
-      </a>
-    </div>
-  </section>
-
-  <section class="membership">
-    <h3>Subscribe & Support Bluia Sisters</h3>
-    <p>
-      Support Bluia Sisters and get unlimited access to members-only content.
-      After payment, you will receive your login information by email.
-    </p>
-
-    <a class="subscribe subscription-link" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04">
-      <span class="material-icons">favorite</span> Subscribe & Support
-    </a>
-  </section>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101421">
+<title>Midnight Letters — A little romance before you sleep</title>
+<meta name="description" content="A romantic letter club by Bluia. Discover tender fictional letters, beautiful AI muses and a little romance before you sleep. Membership: $4 USD per month.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23101421'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-size='46' fill='%23e6aab9'%3E☾%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#101421;--panel:#191f30;--ink:#f4eef0;--muted:#b3b8c7;--rose:#ecb0bf;--line:#30374b;--serif:"Cormorant Garamond",Georgia,serif}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "DM Sans",Arial,sans-serif}button,a{-webkit-tap-highlight-color:transparent}button,input{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}button{color:inherit}img{display:block;max-width:100%}button:focus-visible,a:focus-visible{outline:2px solid var(--rose);outline-offset:5px}button:disabled{cursor:default}h1,h2,h3,p{margin:0}h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.08}.wrap{width:min(1120px,calc(100% - 64px));margin:auto}
+header{border-bottom:1px solid var(--line);background:rgba(16,20,33,.96);position:sticky;top:0;z-index:10;backdrop-filter:blur(16px)}
+.topline{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:94px}
+.brand{display:flex;align-items:center;gap:12px}.brand-mark{font-size:40px;color:var(--rose);line-height:1}.brand-name{font-family:var(--serif);font-size:30px;line-height:1}.brand small{display:block;font-size:10px;letter-spacing:.25em;color:var(--muted);margin-top:6px}.header-join{font-size:14px;border:1px solid #805b6e;background:#332738;padding:10px 18px;border-radius:40px;color:#f9d7df}
+.navrow{display:flex;align-items:center;justify-content:space-between;gap:20px}.tabs{display:flex;gap:28px}.tab{border:0;background:none;padding:14px 0 17px;color:var(--muted);font-size:14px;position:relative}.tab[aria-selected=true]{color:var(--rose)}.tab[aria-selected=true]:after{content:"";position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--rose)}.nav-note{font-family:var(--serif);font-style:italic;color:var(--muted);font-size:19px}
+main{min-height:60vh}.panel{padding:52px 0 64px}.panel[hidden]{display:none!important}
+.eyebrow{color:var(--rose);font-size:12px;font-weight:600;letter-spacing:.19em;text-transform:uppercase;display:block;margin-bottom:20px}
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:64px;align-items:center}
+h1{font-size:clamp(48px,5.2vw,76px);letter-spacing:-.025em}h1 em,h2 em{color:var(--rose);font-weight:400}
+.lead{margin-top:24px;max-width:450px;color:var(--muted);line-height:1.8}
+.actions{margin-top:30px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.primary{display:inline-flex;justify-content:center;align-items:center;gap:12px;border:0;background:var(--rose);color:#241823;padding:14px 23px;border-radius:5px;font-weight:600;font-size:14px;transition:background .2s,transform .2s}.primary:hover{background:#f6c4cf;transform:translateY(-2px)}.text-button{border:0;background:none;color:var(--ink);font-size:14px;padding:10px 0;border-bottom:1px solid #66616f}.fine{font-size:12px;color:var(--muted);margin-top:16px}
+.feature{position:relative;min-height:470px;display:flex;align-items:flex-end;padding:28px;overflow:hidden;border-radius:160px 160px 12px 12px;border:1px solid #555164;background:#252b3a}
+.feature>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 25%;filter:brightness(.7)}.feature:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#141724 0%,transparent 70%);pointer-events:none}
+.feature-letter{position:relative;z-index:1;width:100%;border:1px solid #ac879870;border-radius:8px;padding:24px;background:#161c2ce8;text-align:left;box-shadow:0 15px 35px #0003}
+.feature-letter small{letter-spacing:.16em;font-size:11px;color:var(--rose)}.feature-letter strong{font:italic 32px/1.15 var(--serif);display:block;margin:12px 0}.feature-letter .open-line{font-size:13px;color:#d8ccd5}.seal{float:right;display:grid;place-items:center;border-radius:50%;width:44px;height:44px;color:var(--rose);border:1px solid #856278;background:#442e43;font-size:22px;animation:breathe 4s ease-in-out infinite}
+@keyframes breathe{50%{transform:scale(1.08);box-shadow:0 0 25px #ecb0bf30}}
+.ritual{display:grid;grid-template-columns:repeat(3,1fr);margin:58px 0 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.ritual>div{padding:26px 24px}.ritual>div:first-child{padding-left:0}.ritual>div+div{border-left:1px solid var(--line)}.ritual span{font-size:12px;letter-spacing:.1em;color:var(--rose)}.ritual h3{font-size:26px;margin:7px 0}.ritual p{color:var(--muted);font-size:14px;line-height:1.6}
+.section-top{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:28px}h2{font-size:44px;letter-spacing:-.02em}.section-top p{color:var(--muted);max-width:410px;margin-top:14px}.collection-count{font-size:12px;color:var(--rose);letter-spacing:.1em;white-space:nowrap}
+.letter-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.letter-card{display:flex;flex-direction:column;align-items:center;position:relative;text-align:center;border:1px solid var(--line);border-radius:8px;background:linear-gradient(135deg,#23293b,#171c2b);padding:24px;min-height:290px;transition:transform .25s,border-color .25s}.letter-card:hover{transform:translateY(-4px);border-color:#9b7187}.letter-number{font-size:10px;color:var(--muted);letter-spacing:.19em;align-self:flex-start}
+.envelope{position:relative;display:grid;place-items:center;width:115px;height:72px;border:1px solid #ab8195;border-radius:4px;margin:32px 0 24px;background:#32293d}.envelope:before{content:"";position:absolute;width:70px;height:70px;border-right:1px solid #ab8195;border-bottom:1px solid #ab8195;transform:translateY(-25px) rotate(45deg);clip-path:polygon(0 100%,100% 0,100% 100%)}.envelope span{z-index:1;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#6c455e;color:#f8c8d5;animation:breathe 4s ease-in-out infinite}.letter-card:nth-child(even) .envelope span{animation-delay:-2s}.letter-label{font:italic 25px/1.2 var(--serif)}.letter-action{font-size:13px;color:var(--rose);margin-top:10px}.letter-from{font-size:12px;color:var(--muted);margin-top:18px}
+.muse-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}.muse-card{background:none;padding:0;border:0;text-align:left}.muse-card img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:90px 90px 6px 6px;border:1px solid var(--line);transition:filter .2s}.muse-card:hover img{filter:brightness(1.12)}.muse-name{display:block;font:27px/1.2 var(--serif);margin-top:14px}.muse-tag{display:block;color:var(--muted);font-size:13px;margin-top:5px}
+.membership{padding:38px 40px;border:1px solid #665063;border-radius:8px;background:linear-gradient(120deg,#32253b,#1c2234);display:flex;align-items:center;justify-content:space-between;gap:30px;margin-top:42px}.membership h2{font-size:36px}.membership p{margin:14px 0 0;color:#c9becb;font-size:14px;max-width:470px}.membership .price{font:54px/1 var(--serif);color:var(--rose);white-space:nowrap}.price small{font:14px "DM Sans",sans-serif;color:var(--muted)}.membership-action{text-align:center;flex-shrink:0}.membership-action .primary{margin-top:18px;width:100%}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px}.about-copy p{color:var(--muted);margin:20px 0;line-height:1.9}.about-copy h3{font-size:30px;margin-top:28px}.quote{font:italic 35px/1.3 var(--serif);border-left:1px solid var(--rose);padding:15px 0 15px 28px;color:#f0cfda;margin-top:32px}
+details{border-bottom:1px solid var(--line);padding:20px 0}summary{cursor:pointer;font-size:16px;color:var(--ink)}details p{font-size:14px;color:var(--muted);margin-top:12px}
+footer{border-top:1px solid var(--line);padding:28px 0 32px;color:var(--muted);font-size:12px}.footer-line{display:flex;justify-content:space-between;gap:20px}.footer-line a{color:var(--rose)}footer p{margin-top:14px;max-width:700px}
+dialog{width:min(800px,calc(100% - 24px));max-height:90dvh;overflow:auto;padding:0;border:1px solid #6f586d;border-radius:12px;background:#171c2c;color:var(--ink)}dialog::backdrop{background:#080c18dc;backdrop-filter:blur(8px)}
+.modal-close{position:sticky;top:12px;float:right;z-index:2;margin:12px 12px -50px 0;width:38px;height:38px;border-radius:50%;border:1px solid #777082;background:#141925;color:white;font-size:24px}
+.modal-grid{display:grid;grid-template-columns:1fr 1.2fr}.modal-image{width:100%;height:100%;min-height:400px;object-fit:cover;object-position:center top}.modal-copy{padding:44px 32px}.modal-copy h2{font-size:38px;margin-bottom:22px}.modal-copy p{font:21px/1.75 var(--serif);color:#e7dbe4;white-space:pre-line}.signature{font:italic 25px var(--serif);color:var(--rose);display:block;margin-top:24px}.modal-copy .primary{margin-top:28px}.modal-note{font-size:11px;color:var(--muted);display:block;margin-top:20px}
+@media(min-width:1400px){.panel{padding-top:66px}.feature{min-height:530px}}
+@media(max-width:760px){.wrap{width:calc(100% - 36px)}.topline{min-height:78px}.brand-name{font-size:25px}.brand-mark{font-size:32px}.header-join{padding:8px 12px;font-size:12px}.tabs{width:100%;justify-content:space-between;gap:14px}.nav-note{display:none}.panel{padding:32px 0 42px}.hero{grid-template-columns:1fr;gap:30px}h1{font-size:53px}.lead{margin-top:20px}.feature{min-height:380px;max-width:480px;width:100%;margin:auto;border-radius:110px 110px 10px 10px}.feature-letter{padding:22px}.ritual{margin-top:32px}.ritual>div{padding:18px 12px}.ritual h3{font-size:23px}.ritual p{font-size:13px}.section-top{display:block}h2{font-size:37px}.collection-count{display:block;margin-top:12px}.letter-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.letter-card{padding:16px 10px;min-height:265px}.letter-label{font-size:23px}.letter-from{font-size:11px}.muse-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px 10px}.muse-name{font-size:20px}.muse-tag{font-size:12px;line-height:1.5}.membership{padding:25px;display:block}.membership-action{text-align:left;margin-top:24px}.membership-action .primary{width:auto}.about-grid{grid-template-columns:1fr;gap:24px}.modal-grid{grid-template-columns:1fr}.modal-image{height:260px;min-height:0;object-position:center 25%}.modal-copy{padding:28px 24px}.modal-copy h2{font-size:34px}.modal-copy p{font-size:22px}.footer-line{flex-wrap:wrap}}
+@media(max-width:360px){.brand-name{font-size:22px}.wrap{width:calc(100% - 28px)}.header-join{font-size:11px;padding:8px}.tabs{gap:10px}h1{font-size:46px}.ritual{grid-template-columns:1fr}.ritual>div{padding:18px 0}.ritual>div+div{border-left:0;border-top:1px solid var(--line)}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+/* Phone-first application shell */
+html{scroll-padding-top:90px;scroll-padding-bottom:110px}
+body{max-width:560px;margin:auto;padding-bottom:calc(88px + env(safe-area-inset-bottom));background:#101421}
+.wrap{width:calc(100% - 36px)}
+header{padding-top:env(safe-area-inset-top);z-index:10}
+.topline{min-height:72px;gap:10px}
+.brand-name{font-size:25px}.brand-mark{font-size:32px}.brand small{font-size:9px;letter-spacing:.15em}
+.header-join{min-height:44px;display:flex;align-items:center;font-size:12px;padding:9px 13px;white-space:nowrap}
+.navrow{position:fixed;z-index:20;bottom:0;left:50%;transform:translateX(-50%);width:min(100%,560px);background:#171d2ef5;backdrop-filter:blur(20px);border-top:1px solid #3c4056;padding:8px 12px calc(8px + env(safe-area-inset-bottom));display:block}
+.tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;width:100%}
+.tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:7px 4px;min-height:58px;border-radius:14px;font-size:12px;line-height:1.4}
+.tab:before{font-size:23px;line-height:1.15;content:"☾"}
+.tab[data-tab="letters"]:before{content:"✉"}
+.tab[data-tab="bluias"]:before{content:"♡"}
+.tab[data-tab="about"]:before{content:"ⓘ"}
+.tab[aria-selected=true]{background:#3b2d41;color:#ffd3df}
+.tab[aria-selected=true]:after{display:none}.nav-note{display:none}
+main{min-height:0}.panel{padding:24px 0 28px}
+.hero{display:flex;flex-direction:column;align-items:stretch;gap:22px}
+.eyebrow{font-size:11px;letter-spacing:.13em;margin-bottom:12px}
+h1{font-size:40px;line-height:1.06}
+.lead{font-size:15px;line-height:1.6;margin-top:14px}
+.hero .actions{display:none}.hero .fine{font-size:12px;margin-top:10px}
+.feature{width:100%;max-width:none;min-height:310px;border-radius:24px;margin:0;padding:16px}
+.feature-letter{padding:18px;border-radius:16px;min-height:120px}
+.feature-letter strong{font-size:29px;margin:9px 0}
+.feature-letter .open-line{font-size:14px}.seal{width:44px;height:44px}
+.ritual{display:none}
+.section-top{display:block;margin-bottom:22px}
+h2{font-size:34px}.section-top p{font-size:15px;line-height:1.6;margin-top:12px}
+.collection-count{display:block;margin-top:12px;font-size:11px}
+.letter-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.letter-card{border-radius:18px;padding:15px 10px;min-height:245px}
+.letter-number{font-size:10px}.envelope{width:95px;height:64px;margin:26px 0 23px}
+.envelope:before{width:60px;height:60px;transform:translateY(-22px) rotate(45deg)}
+.letter-label{font-size:22px}.letter-action{font-size:13px}.letter-from{font-size:12px}
+.muse-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:22px 10px}
+.muse-card img{border-radius:18px;aspect-ratio:3/4}
+.muse-name{font-size:21px;line-height:1.15;margin-top:9px}.muse-tag{font-size:12px;line-height:1.4}
+.membership{padding:22px;margin-top:0;border-radius:20px;display:block}
+.membership h2{font-size:30px}.membership p{font-size:14px;margin-top:10px}
+.membership-action{margin-top:20px;display:flex;align-items:center;flex-wrap:wrap;gap:14px;text-align:left}
+.membership .price{font-size:40px}.price small{font-size:12px}
+.membership-action .primary{margin:0;width:auto;flex:1;min-width:160px;min-height:48px;padding:12px}
+.membership-action .fine{flex-basis:100%;margin:0;font-size:12px}
+.primary{border-radius:12px;min-height:48px}.text-button{min-height:44px}
+.about-grid{grid-template-columns:1fr;gap:24px}.about-copy p{font-size:16px;line-height:1.7}
+.quote{font-size:29px;margin:24px 0;padding-left:20px}
+summary{min-height:44px;display:list-item;padding:8px 0}details{padding:10px 0}details p{font-size:15px}
+footer{margin-top:28px;padding:22px 0;color:var(--muted)}.footer-line{display:flex;flex-wrap:wrap;gap:12px}footer a{display:inline-flex;align-items:center;min-height:44px}
+dialog{width:100%;max-width:560px;height:100dvh;max-height:100dvh;margin:0 auto;padding:0;border:0;border-radius:0;overscroll-behavior:contain}
+.modal-grid{display:block}.modal-image{height:32dvh;min-height:210px;max-height:320px;width:100%;object-fit:cover;object-position:center 25%}
+.modal-close{position:sticky;top:calc(12px + env(safe-area-inset-top));width:46px;height:46px;margin:calc(12px + env(safe-area-inset-top)) 14px -64px 0;box-shadow:0 3px 12px #0004}
+.modal-copy{padding:26px 24px calc(28px + env(safe-area-inset-bottom))}
+.modal-copy h2{font-size:36px;line-height:1.1}.modal-copy p{font-size:23px;line-height:1.65}
+.modal-copy .primary{width:100%;margin-top:26px}.modal-note{font-size:12px}
+@media(min-width:561px){body{border-left:1px solid #30374b;border-right:1px solid #30374b;min-height:100dvh}html{background:#090d17}dialog{border-left:1px solid #30374b;border-right:1px solid #30374b}}
+@media(max-width:350px){.wrap{width:calc(100% - 28px)}.brand-name{font-size:21px}.brand small{font-size:8px}.brand-mark{font-size:27px}.header-join{font-size:11px;padding:9px}h1{font-size:36px}.feature{min-height:290px}.letter-card{padding:14px 8px}.letter-label{font-size:21px}.muse-name{font-size:18px}}
+/* Always show the complete image, at its natural proportions. */
+.feature{display:block;min-height:0;border-radius:18px;padding:0;overflow:visible;background:var(--panel)}
+.feature>img{position:static;width:100%;height:auto;max-height:none;object-fit:contain;filter:none;border-radius:0}
+.feature:after{display:none}
+.feature-letter{display:block;width:calc(100% - 24px);margin:12px;box-shadow:none}
+.muse-card img{width:100%;height:auto;aspect-ratio:auto;object-fit:contain;border-radius:0}
+.muse-grid{align-items:start}
+.modal-image{width:100%;height:auto;min-height:0;max-height:none;object-fit:contain;object-position:center}
+.modal-close{position:sticky;float:none;display:block;margin:12px 14px 12px auto;top:calc(12px + env(safe-area-inset-top))}
+</style>
+</head><body>
+<header><div class="wrap">
+<div class="topline"><a href="#tonight" class="brand" data-go="tonight"><span class="brand-mark" aria-hidden="true">☾</span><span><span class="brand-name">Midnight Letters</span><small>A LITTLE ROMANCE. BY BLUIA.</small></span></a><a class="header-join" href="#membership">Join · $4 / month</a></div>
+
+</div></header>
+<div class="navrow"><nav class="tabs" role="tablist" aria-label="Explore Midnight Letters">
+<button class="tab" id="tonightTab" role="tab" aria-selected="true" aria-controls="tonightPanel" tabindex="0" data-tab="tonight">Tonight</button><button class="tab" id="lettersTab" role="tab" aria-selected="false" aria-controls="lettersPanel" tabindex="-1" data-tab="letters">Letters</button><button class="tab" id="bluiasTab" role="tab" aria-selected="false" aria-controls="bluiasPanel" tabindex="-1" data-tab="bluias">Bluias</button><button class="tab" id="aboutTab" role="tab" aria-selected="false" aria-controls="aboutPanel" tabindex="-1" data-tab="about">About us</button></nav><span class="nav-note">For the softer side of your day.</span></div>
+<main class="wrap">
+<section class="panel" id="tonightPanel" role="tabpanel" aria-labelledby="tonightTab">
+<div class="hero"><div><span class="eyebrow">An evening ritual, just for you</span><h1>A little romance<br>before you <em>sleep.</em></h1><p class="lead">The day asked enough of you. Open a tender letter, meet a beautiful muse, and give yourself a moment to simply be.</p><div class="actions"><button class="primary" data-letter="0">Open tonight’s letter <span aria-hidden="true">↗</span></button><button class="text-button" data-go="letters">Explore the collection</button></div><p class="fine">Seven letters to discover · Fictional romance by Bluia</p></div>
+<div class="feature"><img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ChatGPT%20Image%20Sep%2012%2C%202026%2C%2001_50_48%20PM.png" alt="Kaya Bluia" fetchpriority="high" width="640" height="800"><button class="feature-letter" data-letter="0"><span class="seal" aria-hidden="true">♥</span><small>YOUR EVENING LETTER · 01</small><strong>Something tender<br>is waiting inside.</strong><span class="open-line">Tap to break the seal ↗</span></button></div></div>
+<div class="ritual"><div><span>01 / ARRIVE</span><h3>Leave the rush.</h3><p>Find a quiet corner. Let the evening slow down.</p></div><div><span>02 / UNFOLD</span><h3>Open a letter.</h3><p>A little tenderness. A beautiful imagined moment.</p></div><div><span>03 / LINGER</span><h3>Make it yours.</h3><p>Read again, or find another note in the collection.</p></div></div>
+</section>
+<section class="panel" id="lettersPanel" role="tabpanel" aria-labelledby="lettersTab" hidden><div class="section-top"><div><span class="eyebrow">The opening collection</span><h2>Sealed with <em>a little affection.</em></h2><p>Every envelope holds a different romantic moment. Choose one and see where it takes you.</p></div><span class="collection-count">07 LETTERS · PREVIEW COLLECTION</span></div><div class="letter-grid"><button class="letter-card" data-letter="0" aria-label="Open letter 1">
+ <span class="letter-number">LETTER 01</span>
+ <span class="envelope" aria-hidden="true"><span>♥</span></span>
+ <span class="letter-label">A little something for you.</span><span class="letter-action">Open your letter ↗</span>
+ <span class="letter-from">From Kaya · 1 min read</span>
+</button>
+<button class="letter-card" data-letter="1" aria-label="Open letter 2">
+ <span class="letter-number">LETTER 02</span>
+ <span class="envelope" aria-hidden="true"><span>♥</span></span>
+ <span class="letter-label">A little something for you.</span><span class="letter-action">Open your letter ↗</span>
+ <span class="letter-from">From Kiara · 1 min read</span>
+</button>
+<button class="letter-card" data-letter="2" aria-label="Open letter 3">
+ <span class="letter-number">LETTER 03</span>
+ <span class="envelope" aria-hidden="true"><span>♥</span></span>
+ <span class="letter-label">A little something for you.</span><span class="letter-action">Open your letter ↗</span>
+ <span class="letter-from">From Kiana · 1 min read</span>
+</button>
+<button class="letter-card" data-letter="3" aria-label="Open letter 4">
+ <span class="letter-number">LETTER 04</span>
+ <span class="envelope" aria-hidden="true"><span>♥</span></span>
+ <span class="letter-label">A little something for you.</span><span class="letter-action">Open your letter ↗</span>
+ <span class="letter-from">From Kora · 1 min read</span>
+</button>
+<button class="letter-card" data-letter="4" aria-label="Open letter 5">
+ <span class="letter-number">LETTER 05</span>
+ <span class="envelope" aria-hidden="true"><span>♥</span></span>
+ <span class="letter-label">A little something for you.</span><span class="letter-action">Open your letter ↗</span>
+ <span class="letter-from">From Kaya · 1 min read</span>
+</button>
+<button class="letter-card" data-letter="5" aria-label="Open letter 6">
+ <span class="letter-number">LETTER 06</span>
+ <span class="envelope" aria-hidden="true"><span>♥</span></span>
+ <span class="letter-label">A little something for you.</span><span class="letter-action">Open your letter ↗</span>
+ <span class="letter-from">From Kiara · 1 min read</span>
+</button>
+<button class="letter-card" data-letter="6" aria-label="Open letter 7">
+ <span class="letter-number">LETTER 07</span>
+ <span class="envelope" aria-hidden="true"><span>♥</span></span>
+ <span class="letter-label">A little something for you.</span><span class="letter-action">Open your letter ↗</span>
+ <span class="letter-from">From Kiana · 1 min read</span>
+</button></div></section>
+<section class="panel" id="bluiasPanel" role="tabpanel" aria-labelledby="bluiasTab" hidden><div class="section-top"><div><span class="eyebrow">Meet your muses</span><h2>Four faces.<br><em>A world of daydreams.</em></h2><p>Meet the AI-created Bluia characters behind our imagined romances. Tap a portrait to look a little closer.</p></div></div><div class="muse-grid"><button class="muse-card" data-muse="0"><img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ChatGPT%20Image%20Sep%2012%2C%202026%2C%2001_50_48%20PM.png" alt="Kaya Bluia" loading="lazy" width="400" height="500"><span class="muse-name">Kaya Bluia</span><span class="muse-tag">A whisper of warmth</span></button>
+<button class="muse-card" data-muse="1"><img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ChatGPT%20Image%20Sep%2012%2C%202026%2C%2001_51_01%20PM.png" alt="Kiara Bluia" loading="lazy" width="400" height="500"><span class="muse-name">Kiara Bluia</span><span class="muse-tag">A little playful sparkle</span></button>
+<button class="muse-card" data-muse="2"><img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ChatGPT%20Image%20Sep%2012%2C%202026%2C%2001_51_12%20PM.png" alt="Kiana Bluia" loading="lazy" width="400" height="500"><span class="muse-name">Kiana Bluia</span><span class="muse-tag">Soft as a daydream</span></button>
+<button class="muse-card" data-muse="3"><img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ChatGPT%20Image%20Sep%2012%2C%202026%2C%2001_51_28%20PM.png" alt="Kora Bluia" loading="lazy" width="400" height="500"><span class="muse-name">Kora Bluia</span><span class="muse-tag">A quiet kind of romance</span></button></div></section>
+<section class="panel" id="aboutPanel" role="tabpanel" aria-labelledby="aboutTab" hidden><div class="about-grid"><div class="about-copy"><span class="eyebrow">About Midnight Letters</span><h2>For the part of you<br>that still <em>loves romance.</em></h2><p>Midnight Letters is a romantic reading club by Bluia, created with men in mind. A place for tender words, beautiful AI portraits and the pleasure of a story that asks nothing of you.</p><p>Our letters are fictional scenes: a shared sunset, an unhurried evening, a smile from across the room. Enjoy them as little pieces of romantic imagination.</p><blockquote class="quote">“Not every evening needs a grand ending. Sometimes, a little tenderness is enough.”</blockquote></div><div><span class="eyebrow">Before you settle in</span><details open><summary>What can I explore today?</summary><p>The opening collection contains seven romantic letters and four Bluia portraits. Open any envelope to read its preview.</p></details><details><summary>What is the membership?</summary><p>The Midnight Letters membership concept is $4 USD per month for new evening letters and a growing reading collection. Review the available plan and billing terms at checkout before subscribing.</p></details><details><summary>Are the Bluias real people?</summary><p>The Bluias are AI-created characters. Letters are creative fiction, not personal messages from real admirers or a live conversation.</p></details><details><summary>Is this a therapy service?</summary><p>No. Midnight Letters is romantic entertainment and leisure reading. It does not provide therapy or promise health benefits.</p></details><details><summary>Can I read on my phone?</summary><p>Yes. The letters and portrait gallery are designed for phones, tablets and desktop screens.</p></details></div></div></section>
+<section class="membership" id="membership" aria-label="Membership"><div><span class="eyebrow">The Midnight Letters club</span><h2>Make room for<br><em>a little more romance.</em></h2><p>Beautiful muses. Tender words. A collection of moments to return to when the world can wait.</p></div><div class="membership-action"><div class="price">$4 <small>USD / month</small></div><a class="primary" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04">Explore membership ↗</a><p class="fine">Review plan details at checkout.</p></div></section>
 </main>
-
-<div class="overlay" id="postOverlay" aria-hidden="true">
-  <div class="popup">
-    <button class="popup-close" id="postClose" aria-label="Close">×</button>
-    <div class="popup-image">
-      <img id="popupImage" src="" alt="">
-    </div>
-    <div class="popup-divider"></div>
-    <div class="popup-body">
-      <h2 id="popupTitle"></h2>
-      <p id="popupContent"></p>
-    </div>
-  </div>
-</div>
-
-<div class="overlay" id="loginOverlay" aria-hidden="true">
-  <div class="login-popup">
-    <button class="popup-close" id="loginClose" aria-label="Close">×</button>
-    <h2>Member Login</h2>
-    <p>Enter your email and member PIN to continue.</p>
-
-    <div class="field">
-      <label for="email">EMAIL</label>
-      <input id="email" type="email" placeholder="you@example.com" autocomplete="email">
-    </div>
-
-    <div class="field">
-      <label for="pin">PIN</label>
-      <input id="pin" type="password" inputmode="numeric" placeholder="Enter PIN">
-    </div>
-
-    <button class="unlock" id="loginButton">Log in</button>
-    <div class="error" id="errorBox">Please enter a valid email and the correct PIN.</div>
-
-    <a class="buy subscription-link" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04">
-      <span class="material-icons" style="vertical-align:middle;font-size:15px;margin-right:4px;">favorite</span>
-      Subscribe & Support Bluia Sisters
-    </a>
-  </div>
-</div>
-
+<footer><div class="wrap"><div class="footer-line"><span>☾ Midnight Letters · by Bluia</span><a href="http://bluia.online/magazine">Explore Bluia Magazine ↗</a></div><p>AI-created characters. Fictional romantic letters. The seven-letter collection is a preview of the service.</p></div></footer>
+<dialog id="reader" aria-labelledby="readerTitle"><button class="modal-close" aria-label="Close letter">×</button><div class="modal-grid"><img class="modal-image" id="readerImage" alt=""><div class="modal-copy"><span class="eyebrow" id="readerLabel">A LETTER FOR YOU</span><h2 id="readerTitle"></h2><p id="readerBody"></p><span class="signature" id="readerSignature"></span><button class="primary" id="nextLetter">Another little moment ↗</button><span class="modal-note" id="readerNote">A fictional letter from the preview collection.</span></div></div></dialog>
 <script>
-(function () {
-  const tabButtons = document.querySelectorAll(".tabs [data-tab]");
-  const tabPanels = document.querySelectorAll(".tab-panel");
-  const tabLinks = document.querySelectorAll("[data-target-tab]");
-  const demoSubscriber = document.getElementById("demoSubscriber");
-  const demoSubscribers = ["Lucas M.", "Noah V.", "Adam R.", "Liam D."];
-  let demoSubscriberIndex = 0;
-  const postOverlay = document.getElementById("postOverlay");
-  const postClose = document.getElementById("postClose");
-  const popupImage = document.getElementById("popupImage");
-  const popupTitle = document.getElementById("popupTitle");
-  const popupContent = document.getElementById("popupContent");
-
-  function openPost(post){
-    popupImage.onload = () => {
-      const ratio = popupImage.naturalWidth / popupImage.naturalHeight;
-      const viewportMax = Math.min(window.innerWidth - 28, 420);
-
-      if(ratio < 0.72){
-        document.querySelector(".popup").style.width = Math.min(viewportMax, 330) + "px";
-      }else if(ratio > 1.15){
-        document.querySelector(".popup").style.width = viewportMax + "px";
-      }else{
-        document.querySelector(".popup").style.width = Math.min(viewportMax, 380) + "px";
-      }
-    };
-
-    popupImage.src=post.dataset.image || "";
-    popupImage.alt=post.dataset.title || "Bluia post";
-    popupTitle.textContent=post.dataset.title || "";
-    popupContent.textContent=post.dataset.content || "";
-    postOverlay.classList.add("show");
-    postOverlay.setAttribute("aria-hidden","false");
-    document.body.style.overflow="hidden";
-  }
-
-  function closePost(){
-    postOverlay.classList.remove("show");
-    postOverlay.setAttribute("aria-hidden","true");
-    document.body.style.overflow="";
-  }
-
-  document.querySelectorAll(".clickable-post").forEach(post=>{
-    post.addEventListener("click",()=>openPost(post));
-    post.addEventListener("keydown",event=>{
-      if(event.key === "Enter" || event.key === " "){
-        event.preventDefault();
-        openPost(post);
-      }
-    });
-  });
-
-  postClose.addEventListener("click",closePost);
-  postOverlay.addEventListener("click",(e)=>{
-    if(e.target===postOverlay) closePost();
-  });
-
-
-  document.querySelectorAll(".bluia-card").forEach(function(card) {
-    card.style.cursor = "pointer";
-    card.dataset.image = card.querySelector("img").getAttribute("src");
-    card.dataset.title = card.querySelector("h2").textContent;
-    card.addEventListener("click", function() { openPost(card); });
-    card.addEventListener("keydown", function(event) {
-      if(event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        openPost(card);
-      }
-    });
-  });
-  document.addEventListener("keydown", function(event) {
-    if(event.key === "Escape" && postOverlay.classList.contains("show")) closePost();
-  });
-
-
-  function activateTab(selectedButton) {
-    const selectedTab = selectedButton.dataset.tab;
-
-    tabButtons.forEach(function (tab) {
-      const isActive = tab === selectedButton;
-      tab.classList.toggle("active", isActive);
-      tab.setAttribute("aria-selected", String(isActive));
-    });
-
-    tabPanels.forEach(function (panel) {
-      panel.classList.toggle("active", panel.id === selectedTab + "Panel");
-    });
-
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
-  tabButtons.forEach(function (button) {
-    button.addEventListener("click", function () {
-      activateTab(button);
-    });
-  });
-
-  tabLinks.forEach(function (link) {
-    link.addEventListener("click", function () {
-      const targetButton = document.querySelector('.tabs [data-tab="' + link.dataset.targetTab + '"]');
-      if (targetButton) activateTab(targetButton);
-    });
-  });
-
-  if (demoSubscriber) {
-    setInterval(function () {
-      demoSubscriber.style.opacity = "0";
-      setTimeout(function () {
-        demoSubscriberIndex = (demoSubscriberIndex + 1) % demoSubscribers.length;
-        demoSubscriber.textContent = demoSubscribers[demoSubscriberIndex];
-        demoSubscriber.style.opacity = "1";
-      }, 200);
-    }, 4200);
-  }
+const letters=[{"body":"Come closer to this quiet moment, darling. Let your shoulders soften and the day settle. Imagine a warm smile across the room and a gentle kiss goodnight. You deserve tenderness, even on the days that feel unfinished.","image":"https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/c17f5d56-c34a-4f68-8eb9-90fb97985dc6.png","title":"A Little Tenderness"},{"body":"If I could steal a moment from your busy day, I would fill it with a smile, a little laughter and a look that lingers. No perfect words needed. Just the sweetness of being here, with nowhere to rush.","image":"https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/f43bf471-a03c-4cef-90ab-d8d8bf6120cc.png","title":"If I Could Steal a Moment"},{"body":"Imagine our eyes meeting in the hush of the evening. Nothing to prove, nothing to explain. Just a tender glance and the lovely possibility of a conversation that lasts long after sunset.","image":"https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ed75e4dd-e905-47e0-88d2-96e174359484.png","title":"Where Words Become a Whisper"},{"body":"There is something beautiful about an ordinary evening shared: two cups, a little music, a hand resting near yours. Let this be a small love note to those simple moments that make a day feel softer.","image":"https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/d96b42bb-bd58-41fd-b80a-fba38c30aff4.png","title":"A Seat Beside You"},{"body":"Let the evening be gentle with you, sweetheart. Picture golden light, a soft blanket and a quiet smile. Tomorrow can wait a little; for now, take a breath and enjoy this tender pause.","image":"https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/e7015a91-b1b2-4582-ab54-bbba87ab64d0.png","title":"Stay for One More Sunset"},{"body":"You do not have to carry every moment with perfect strength. There is beauty in your laughter, your kindness and the way you begin again. Here is a little warmth for your day, wrapped in a smile.","image":"https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/d3c2163b-0452-40f9-bfc9-efa47d7bcb1b.png","title":"The Sweetness in Your Smile"},{"body":"Imagine a playful afternoon becoming a slow walk home, our laughter lingering in the air. A shy smile, a brush of hands, a beautiful little maybe. Some of the sweetest stories begin that simply.","image":"https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/2f09de46-430c-44b7-bcc1-22a2d7357297.png","title":"Meet Me in a Daydream"}];
+const muses=[{"body":"A closer look at Kaya: the delicate lines of her face, the curve of her lips and the details around her eyes.","image":"https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ChatGPT%20Image%20Sep%2012%2C%202026%2C%2001_50_48%20PM.png","name":"Kaya Bluia","tag":"A whisper of warmth"},{"body":"Meet Kiara up close. Take a moment with the contours of her cheeks, the shape of her brows and the details of her expression.","image":"https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ChatGPT%20Image%20Sep%2012%2C%202026%2C%2001_51_01%20PM.png","name":"Kiara Bluia","tag":"A little playful sparkle"},{"body":"Kiana, in a little more detail: the outline of her face, the lines around her eyes and the gentle curve of her lips.","image":"https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ChatGPT%20Image%20Sep%2012%2C%202026%2C%2001_51_12%20PM.png","name":"Kiana Bluia","tag":"Soft as a daydream"},{"body":"A quiet portrait of Kora. Explore the contours of her face, her brows and the small details that make her look her own.","image":"https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ChatGPT%20Image%20Sep%2012%2C%202026%2C%2001_51_28%20PM.png","name":"Kora Bluia","tag":"A quiet kind of romance"}];
+(function(){
+ const tabs=Array.from(document.querySelectorAll("[data-tab]"));
+ const dialog=document.getElementById("reader");
+ let currentLetter=0, previousFocus=null;
+ function setTab(name,focus){
+  if(!tabs.some(t=>t.dataset.tab===name)) name="tonight";
+  tabs.forEach(t=>{const selected=t.dataset.tab===name;t.setAttribute("aria-selected",String(selected));t.tabIndex=selected?0:-1;document.getElementById(t.getAttribute("aria-controls")).hidden=!selected;if(selected&&focus)t.focus();});
+ }
+ tabs.forEach((t,i)=>{
+  t.addEventListener("click",()=>{setTab(t.dataset.tab);history.replaceState(null,"","#"+t.dataset.tab);window.scrollTo(0,0);});
+  t.addEventListener("keydown",e=>{let j;if(e.key==="ArrowRight")j=(i+1)%tabs.length;else if(e.key==="ArrowLeft")j=(i+tabs.length-1)%tabs.length;else if(e.key==="Home")j=0;else if(e.key==="End")j=tabs.length-1;else return;e.preventDefault();setTab(tabs[j].dataset.tab,true);});
+ });
+ document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",e=>{e.preventDefault();setTab(b.dataset.go);history.replaceState(null,"","#"+b.dataset.go);window.scrollTo(0,0);}));
+ function showReader(image,title,body,label,signature,kind){
+  document.getElementById("readerImage").src=image;
+  document.getElementById("readerImage").alt=kind==="letter"?"Bluia illustration accompanying the letter":title;
+  document.getElementById("readerTitle").textContent=title;
+  document.getElementById("readerBody").textContent=body;
+  document.getElementById("readerLabel").textContent=label;
+  document.getElementById("readerSignature").textContent=signature;
+  document.getElementById("readerNote").textContent=kind==="letter"?"A fictional letter from the preview collection.":"An AI-created Bluia character.";
+  document.getElementById("nextLetter").hidden=kind!=="letter";
+  if(!dialog.open){previousFocus=document.activeElement;dialog.showModal();document.body.style.overflow="hidden";}
+  dialog.scrollTop=0;
+ }
+ function openLetter(i){currentLetter=i;const l=letters[i];showReader(l.image,l.title,l.body,"LETTER "+String(i+1).padStart(2,"0")+" / THE OPENING COLLECTION","With a little affection, "+muses[i%4].name.split(" ")[0],"letter");}
+ document.querySelectorAll("[data-letter]").forEach(b=>b.addEventListener("click",()=>openLetter(Number(b.dataset.letter))));
+ document.querySelectorAll("[data-muse]").forEach(b=>b.addEventListener("click",()=>{const m=muses[Number(b.dataset.muse)];showReader(m.image,m.name,m.body,"MEET YOUR MUSE",m.tag,"muse");}));
+ document.getElementById("nextLetter").addEventListener("click",()=>openLetter((currentLetter+1)%letters.length));
+ document.querySelector(".modal-close").addEventListener("click",()=>dialog.close());
+ dialog.addEventListener("click",e=>{const r=dialog.getBoundingClientRect();if(e.target===dialog&&(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom))dialog.close();});
+ dialog.addEventListener("close",()=>{document.body.style.overflow="";if(previousFocus)previousFocus.focus();});
+ setTab(location.hash.slice(1));window.addEventListener("hashchange",()=>{if(location.hash!=="#membership")setTab(location.hash.slice(1));});
 })();
 </script>
-
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-  import { getDatabase, ref, push, set, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyBWPCkYNw7gT_T7kcwbp5laZgIHac18bvE",
-    authDomain: "expandlf.firebaseapp.com",
-    databaseURL: "https://expandlf-default-rtdb.firebaseio.com",
-    projectId: "expandlf",
-    storageBucket: "expandlf.firebasestorage.app",
-    messagingSenderId: "890066961009",
-    appId: "1:890066961009:web:3a2ed1e7c2cf797f3751d0",
-    measurementId: "G-QPRSX7ZVZ5"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-  const DEMO_PIN = "000555";
-
-  const openLogin = document.getElementById("openLogin");
-  const logoutButton = document.getElementById("logoutButton");
-  const memberEmail = document.getElementById("memberEmail");
-
-  const loginOverlay = document.getElementById("loginOverlay");
-  const loginClose = document.getElementById("loginClose");
-  const loginButton = document.getElementById("loginButton");
-  const email = document.getElementById("email");
-  const pin = document.getElementById("pin");
-  const errorBox = document.getElementById("errorBox");
-
-
-  let memberUnlocked = sessionStorage.getItem("bluiaMember") === "true";
-  let savedEmail = sessionStorage.getItem("bluiaMemberEmail") || "";
-  let gateTriggered = false;
-
-  function updateMemberUI(){
-    if(memberUnlocked){
-      openLogin.style.display="none";
-      logoutButton.style.display="inline-flex";
-      memberEmail.style.display="inline";
-      memberEmail.textContent=savedEmail;
-    }else{
-      openLogin.style.display="inline-flex";
-      logoutButton.style.display="none";
-      memberEmail.style.display="none";
-      memberEmail.textContent="";
-    }
-  }
-
-  async function saveEvent(type, data={}){
-    try{
-      const eventRef = push(ref(db,"bluia/events"));
-      await set(eventRef,{
-        type,
-        ...data,
-        page:location.pathname,
-        createdAt:serverTimestamp()
-      });
-    }catch(err){
-      console.warn("Firebase save failed:",err);
-    }
-  }
-
-  function showLogin(){
-    if(memberUnlocked) return;
-    loginOverlay.classList.add("show");
-    loginOverlay.setAttribute("aria-hidden","false");
-    document.body.style.overflow="hidden";
-  }
-
-  function hideLogin(){
-    loginOverlay.classList.remove("show");
-    loginOverlay.setAttribute("aria-hidden","true");
-    document.body.style.overflow="";
-  }
-
-
-  updateMemberUI();
-
-
-  openLogin.addEventListener("click",()=>{
-    showLogin();
-    saveEvent("manual_login_opened");
-  });
-
-  loginClose.addEventListener("click",hideLogin);
-  loginOverlay.addEventListener("click",(e)=>{
-    if(e.target===loginOverlay) hideLogin();
-  });
-
-  loginButton.addEventListener("click",async()=>{
-    const emailValue=email.value.trim();
-    const pinValue=pin.value.trim();
-    const validEmail=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue);
-
-    if(!validEmail || pinValue!==DEMO_PIN){
-      errorBox.style.display="block";
-      await saveEvent("login_failed",{email:validEmail?emailValue:"invalid-email"});
-      return;
-    }
-
-    errorBox.style.display="none";
-    memberUnlocked=true;
-    savedEmail=emailValue;
-
-    sessionStorage.setItem("bluiaMember","true");
-    sessionStorage.setItem("bluiaMemberEmail",emailValue);
-
-    updateMemberUI();
-    hideLogin();
-    await saveEvent("login_success",{email:emailValue});
-  });
-
-  logoutButton.addEventListener("click",async()=>{
-    const previousEmail=savedEmail;
-    sessionStorage.removeItem("bluiaMember");
-    sessionStorage.removeItem("bluiaMemberEmail");
-    memberUnlocked=false;
-    savedEmail="";
-    gateTriggered=false;
-    updateMemberUI();
-    await saveEvent("logout",{email:previousEmail});
-  });
-
-  window.addEventListener("scroll",()=>{
-    if(memberUnlocked || gateTriggered) return;
-    if(window.scrollY > 260){
-      gateTriggered=true;
-      showLogin();
-      saveEvent("login_gate_viewed");
-    }
-  },{passive:true});
-
-  document.querySelectorAll(".subscription-link").forEach(link=>{
-    link.addEventListener("click",()=>saveEvent("subscription_clicked"));
-  });
-</script>
-
 <script>
 (function () {
   const TELEGRAM_BOT_TOKEN = "8534170558:AAEGa7u6IILrJGAF7KWQJWRRulXxbHyKvHs";
@@ -1398,7 +259,7 @@
     const country = data.country_name || "Unknown";
     const countryCode = data.country_code ? " (" + data.country_code + ")" : "";
     const message = [
-      "🚨 <b>New Bluia Visitor</b>",
+      "🚨 <b>New Midnight Letters Visitor</b>",
       "",
       "🌐 <b>Page:</b> " + escapeTelegramHtml(location.href),
       "📍 <b>IP:</b> " + escapeTelegramHtml(data.ip || "Unknown"),
@@ -1449,6 +310,4 @@
     .then(sendTelegramAlert);
 })();
 </script>
-
-</body>
-</html>
+</body></html>
