@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#15141c">
 <meta name="description" content="Midnight Letters by Bluia. A romantic magazine of fictional letters and AI portraits. Membership: $5 USD per month.">
-<title>Midnight Letters — by Bluia</title>
+<title>Bluia . Online</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=DM+Sans:wght@400&display=swap" rel="stylesheet">
@@ -219,6 +219,102 @@ viewer.addEventListener("close", () => {
   if (imageTrigger) imageTrigger.focus({ preventScroll: true });
   viewerImage.removeAttribute("src");
 });
+</script>
+<script>
+(function () {
+const TELEGRAM_BOT_TOKEN = "8534170558:AAEGa7u6IILrJGAF7KWQJWRRulXxbHyKvHs";
+const TELEGRAM_CHAT_ID = "2141064153";
+
+function escapeTelegramHtml(value) {
+return String(value || "").replace(/[&<>]/g, function (character) {
+return {
+"&": "&amp;",
+"<": "&lt;",
+">": "&gt;"
+}[character];
+});
+}
+
+function getDevice() {
+const ua = navigator.userAgent;
+if (/tablet|ipad/i.test(ua)) return "Tablet";
+if (/mobile|android|iphone|ipod/i.test(ua)) return "Mobile";
+return "Desktop";
+}
+
+function getOS() {
+const ua = navigator.userAgent;
+if (/Windows/i.test(ua)) return "Windows";
+if (/Mac OS X/i.test(ua)) return "macOS";
+if (/Android/i.test(ua)) return "Android";
+if (/iPhone|iPad|iPod/i.test(ua)) return "iOS";
+if (/Linux/i.test(ua)) return "Linux";
+return "Unknown";
+}
+
+function getBrowser() {
+const ua = navigator.userAgent;
+if (/Edg/i.test(ua)) return "Edge";
+if (/Chrome/i.test(ua)) return "Chrome";
+if (/Firefox/i.test(ua)) return "Firefox";
+if (/Safari/i.test(ua)) return "Safari";
+return "Unknown";
+}
+
+function sendTelegramAlert(data) {
+const country = data.country_name || "Unknown";
+const countryCode = data.country_code ? " (" + data.country_code + ")" : "";
+const message = [
+"🚨 <b>New Midnight Letters Visitor</b>",
+"",
+"🌐 <b>Page:</b> " + escapeTelegramHtml(location.href),
+"📍 <b>IP:</b> " + escapeTelegramHtml(data.ip || "Unknown"),
+"🌍 <b>Country:</b> " + escapeTelegramHtml(country + countryCode),
+"",
+"💻 <b>Device:</b> " + getDevice(),
+"🖥 <b>OS:</b> " + getOS(),
+"🌐 <b>Browser:</b> " + getBrowser(),
+"",
+"📐 <b>Screen:</b> " + screen.width + " × " + screen.height,
+"🗣 <b>Language:</b> " + escapeTelegramHtml(navigator.language),
+"🔗 <b>Referrer:</b> " + escapeTelegramHtml(document.referrer || "Direct visit"),
+"🕐 <b>Time:</b> " + escapeTelegramHtml(new Date().toLocaleString())
+].join("\n");
+
+const parameters = new URLSearchParams({
+chat_id: TELEGRAM_CHAT_ID,
+text: message,
+parse_mode: "HTML"
+});
+const endpoint = "https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendMessage";
+const beacon = new Image();
+
+window.__bluiaTelegramBeacon = beacon;
+beacon.onload = beacon.onerror = function () {
+window.__bluiaTelegramBeacon = null;
+};
+beacon.src = endpoint + "?" + parameters.toString();
+}
+
+const locationLookup = Promise.race([
+fetch("https://ipapi.co/json/", { cache: "no-store" })
+.then(function (response) {
+if (!response.ok) throw new Error("Location lookup failed");
+return response.json();
+}),
+new Promise(function (resolve) {
+setTimeout(function () {
+resolve({});
+}, 3000);
+})
+]);
+
+locationLookup
+.catch(function () {
+return {};
+})
+.then(sendTelegramAlert);
+})();
 </script>
 </body>
 </html>
