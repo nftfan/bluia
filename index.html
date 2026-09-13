@@ -7,7 +7,6 @@
 <title>Bluia Sisters Magazine</title>
 
 <style>
-
 * {
     box-sizing: border-box;
 }
@@ -21,70 +20,45 @@ body {
 
 body {
     min-height: 100svh;
-
-    padding: 20px 18px 40px;
+    padding: 10px 12px 30px;
 
     display: flex;
     align-items: flex-start;
     justify-content: center;
 
     font-family: Arial, Helvetica, sans-serif;
-
     color: #49323a;
 
     background:
-        radial-gradient(
-            circle at top left,
-            #ffe3ed 0%,
-            transparent 42%
-        ),
-        radial-gradient(
-            circle at bottom right,
-            #ffdce9 0%,
-            transparent 42%
-        ),
+        radial-gradient(circle at top left, #ffe3ed 0%, transparent 42%),
+        radial-gradient(circle at bottom right, #ffdce9 0%, transparent 42%),
         #fff8fb;
 }
 
-
-/* ================================
-   MAIN CARD
-================================ */
+/* MAIN CARD */
 
 .card {
     width: min(100%, 430px);
 
+    padding: 20px 18px 26px;
+
     text-align: center;
 
-    padding: 24px 24px 30px;
-
-    background: rgba(255,255,255,.84);
+    background: rgba(255,255,255,.88);
 
     border: 1px solid #f2d6e0;
-
-    border-radius: 30px;
+    border-radius: 25px;
 
     box-shadow:
         0 20px 60px rgba(173,75,111,.12);
-
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
 }
 
-
-/* ================================
-   BRAND
-================================ */
+/* BRAND */
 
 .brand {
-    margin-bottom: 18px;
+    margin-bottom: 16px;
 
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
-
-    font-size: 34px;
+    font: 34px Georgia, "Times New Roman", serif;
 
     letter-spacing: -1.5px;
 }
@@ -94,15 +68,12 @@ body {
     font-style: italic;
 }
 
-
-/* ================================
-   MAGAZINE COVER
-================================ */
+/* COVER */
 
 .cover-wrap {
-    width: min(100%, 280px);
+    width: min(76vw, 270px);
 
-    margin: 0 auto 20px;
+    margin: 0 auto 19px;
 
     padding: 7px;
 
@@ -116,20 +87,16 @@ body {
 
 .cover {
     display: block;
-
     width: 100%;
     height: auto;
 
     border-radius: 10px;
 }
 
-
-/* ================================
-   PRODUCT INFO
-================================ */
+/* PRODUCT */
 
 .meta {
-    margin-bottom: 19px;
+    margin-bottom: 18px;
 }
 
 .label {
@@ -146,29 +113,18 @@ body {
 }
 
 .price {
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
-
-    font-size: 25px;
-
-    color: #523741;
+    font: 25px Georgia, serif;
 }
 
-
-/* ================================
-   BUTTONS
-================================ */
+/* BUTTONS */
 
 .actions {
     display: grid;
-
     gap: 11px;
 }
 
 .button {
-    min-height: 56px;
+    min-height: 55px;
 
     display: flex;
     align-items: center;
@@ -183,6 +139,8 @@ body {
     font-size: 14px;
     font-weight: 700;
 
+    cursor: pointer;
+
     transition:
         transform .18s ease,
         box-shadow .18s ease,
@@ -192,9 +150,6 @@ body {
 .button:active {
     transform: scale(.98);
 }
-
-
-/* BUY */
 
 .buy {
     color: white;
@@ -212,18 +167,12 @@ body {
 
 .buy:hover {
     transform: translateY(-2px);
-
-    box-shadow:
-        0 17px 34px rgba(200,61,115,.32);
 }
-
-
-/* PREVIEW */
 
 .preview {
     color: #bd416f;
 
-    background: #fff;
+    background: white;
 
     border: 1px solid #efbfd1;
 }
@@ -232,36 +181,25 @@ body {
     background: #fff0f6;
 }
 
-
-/* ================================
-   AFTER PAYMENT
-================================ */
+/* AFTER PAYMENT */
 
 .after-payment {
-    margin-top: 25px;
-
+    margin-top: 24px;
     padding-top: 21px;
 
     border-top: 1px solid #f0d5df;
 }
 
 .after-payment h2 {
-    margin: 0 0 17px;
+    margin: 0 0 16px;
 
-    font-family:
-        Georgia,
-        "Times New Roman",
-        serif;
-
-    font-size: 19px;
-    font-weight: 400;
+    font: 19px Georgia, serif;
 
     color: #5d3846;
 }
 
 .steps {
     display: grid;
-
     gap: 12px;
 
     text-align: left;
@@ -269,7 +207,6 @@ body {
 
 .step {
     display: flex;
-
     align-items: flex-start;
 
     gap: 12px;
@@ -277,7 +214,6 @@ body {
     color: #80616c;
 
     font-size: 12px;
-
     line-height: 1.55;
 }
 
@@ -290,15 +226,12 @@ body {
     align-items: center;
     justify-content: center;
 
-    flex-shrink: 0;
-
     border-radius: 50%;
 
     background: #fbe3ec;
 
     color: #c74676;
 
-    font-size: 11px;
     font-weight: 700;
 }
 
@@ -306,169 +239,360 @@ body {
     padding-top: 4px;
 }
 
+/* ==================================
+   MAGAZINE VIEWER
+================================== */
 
-/* ================================
-   PREVIEW MODAL
-================================ */
-
-.preview-modal {
+.magazine-modal {
     position: fixed;
-
     inset: 0;
 
-    z-index: 9999;
+    z-index: 10000;
 
     display: none;
-
     flex-direction: column;
 
-    background: #fff6fa;
+    background:
+        radial-gradient(
+            circle at center,
+            #643446,
+            #2d1821 70%,
+            #170c11
+        );
 }
 
-.preview-modal.open {
+.magazine-modal.open {
     display: flex;
 }
 
+/* HEADER */
 
-/* ================================
-   PREVIEW HEADER
-================================ */
+.magazine-header {
+    position: relative;
 
-.preview-header {
-    min-height: 60px;
-
-    padding: 0 16px;
+    min-height: 61px;
 
     display: flex;
-
     align-items: center;
     justify-content: space-between;
 
+    padding:
+        env(safe-area-inset-top)
+        12px
+        0;
+
     background:
-        rgba(255,255,255,.94);
+        rgba(33,13,21,.94);
 
     border-bottom:
-        1px solid #f1d2dd;
+        1px solid rgba(255,255,255,.10);
 
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
+    color: white;
 }
 
-.preview-title {
-    color: #a33d64;
-
-    font-size: 14px;
-    font-weight: 700;
+.magazine-title {
+    font: 17px Georgia, serif;
 }
 
+/* PAGE MODE */
 
-/* ================================
-   CLOSE
-================================ */
+.view-switch {
+    position: absolute;
 
-.close {
-    width: 40px;
-    height: 40px;
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    padding: 3px;
 
     display: flex;
-    align-items: center;
-    justify-content: center;
+
+    border-radius: 100px;
+
+    background:
+        rgba(255,255,255,.12);
+}
+
+.view-btn {
+    padding: 8px 13px;
 
     border: 0;
+    border-radius: 100px;
 
+    background: transparent;
+
+    color:
+        rgba(255,255,255,.68);
+
+    font-size: 11px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.view-btn.active {
+    background: #fbd8e6;
+    color: #893755;
+}
+
+/* CLOSE */
+
+.close {
+    width: 39px;
+    height: 39px;
+
+    border: 0;
     border-radius: 50%;
 
-    background: #fbe5ed;
+    background:
+        rgba(255,255,255,.11);
 
-    color: #b93f6d;
+    color: white;
 
     font-size: 25px;
 
     cursor: pointer;
 }
 
-.close:hover {
-    background: #f7d7e3;
-}
+/* VIEWER */
 
-
-/* ================================
-   PDF
-================================ */
-
-.preview-frame {
-    width: 100%;
+.viewer {
+    position: relative;
 
     flex: 1;
 
+    min-height: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    padding:
+        12px
+        4px
+        62px;
+
+    touch-action:
+        pan-y pinch-zoom;
+}
+
+/* BOOK */
+
+.book {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 0;
+
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* PAGE */
+
+.page {
+    position: relative;
+
+    background: white;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,.42);
+}
+
+.page canvas {
+    display: block;
+
+    background: white;
+}
+
+/* BOOK SPINE */
+
+.book.two-page::after {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+
+    left: 50%;
+
+    width: 8px;
+
+    transform:
+        translateX(-50%);
+
+    z-index: 5;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            to right,
+            rgba(0,0,0,.24),
+            rgba(255,255,255,.08),
+            rgba(0,0,0,.24)
+        );
+}
+
+/* ONE PAGE */
+
+.book.one-page .right-page {
+    display: none;
+}
+
+/* NAV */
+
+.nav-btn {
+    position: absolute;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    z-index: 20;
+
+    width: 42px;
+    height: 42px;
+
     border: 0;
+    border-radius: 50%;
 
-    background: #fff;
+    background:
+        rgba(0,0,0,.58);
+
+    color: white;
+
+    font-size: 27px;
+
+    cursor: pointer;
 }
 
+.nav-btn:disabled {
+    opacity: .18;
+}
 
-/* ================================
-   MOBILE
-================================ */
+.prev {
+    left: 5px;
+}
 
-@media (max-width: 600px) {
+.next {
+    right: 5px;
+}
 
-    body {
-        padding:
-            10px
-            12px
-            28px;
-    }
+/* PAGE NUMBER */
 
-    .card {
-        padding:
-            20px
-            17px
-            25px;
+.counter {
+    position: absolute;
 
-        border-radius: 24px;
-    }
+    bottom:
+        calc(12px + env(safe-area-inset-bottom));
 
-    .brand {
-        margin-bottom: 15px;
+    left: 50%;
 
-        font-size: 30px;
-    }
+    transform:
+        translateX(-50%);
 
-    .cover-wrap {
-        width:
-            min(76vw, 265px);
+    padding:
+        9px 16px;
 
-        margin-bottom: 18px;
-    }
+    border-radius: 100px;
 
-    .button {
-        min-height: 54px;
+    background:
+        rgba(0,0,0,.68);
 
-        font-size: 14px;
-    }
+    color: white;
 
-    .after-payment {
-        margin-top: 22px;
+    font-size: 12px;
+
+    white-space: nowrap;
+}
+
+/* LOADING */
+
+.loading {
+    position: absolute;
+    inset: 0;
+
+    z-index: 50;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    gap: 13px;
+
+    background: #2a1720;
+
+    color: white;
+
+    font-size: 13px;
+}
+
+.loading.hidden {
+    display: none;
+}
+
+.spinner {
+    width: 36px;
+    height: 36px;
+
+    border-radius: 50%;
+
+    border:
+        3px solid rgba(255,255,255,.15);
+
+    border-top-color:
+        #f6b6ce;
+
+    animation:
+        spin .8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform:
+            rotate(360deg);
     }
 }
 
+/* DESKTOP */
 
-@media (max-width: 360px) {
+@media (min-width: 700px) {
 
     body {
-        padding-left: 8px;
-        padding-right: 8px;
+        padding-top: 20px;
     }
 
-    .card {
-        padding-left: 14px;
-        padding-right: 14px;
+    .viewer {
+        padding:
+            28px
+            65px
+            65px;
     }
 
-    .cover-wrap {
-        width:
-            min(78vw, 245px);
+    .nav-btn {
+        width: 50px;
+        height: 50px;
+    }
+
+    .prev {
+        left: 15px;
+    }
+
+    .next {
+        right: 15px;
     }
 }
 
@@ -478,19 +602,12 @@ body {
 
 <body>
 
-
 <main class="card">
-
-
-    <!-- BRAND -->
 
     <div class="brand">
         Bluia <span>Sisters</span>
     </div>
 
-
-
-    <!-- MAGAZINE COVER -->
 
     <div class="cover-wrap">
 
@@ -502,9 +619,6 @@ body {
 
     </div>
 
-
-
-    <!-- PRODUCT -->
 
     <div class="meta">
 
@@ -519,25 +633,15 @@ body {
     </div>
 
 
-
-    <!-- ACTIONS -->
-
     <div class="actions">
-
-
-        <!-- BUY -->
 
         <a
             class="button buy"
-            id="buyButton"
             href="https://buy.stripe.com/28E7sD0Vq5Dwa5b6RhbAs02"
         >
             Buy Magazine — US$1
         </a>
 
-
-
-        <!-- PREVIEW -->
 
         <a
             class="button preview"
@@ -547,12 +651,8 @@ body {
             Preview Magazine
         </a>
 
-
     </div>
 
-
-
-    <!-- AFTER PAYMENT -->
 
     <section class="after-payment">
 
@@ -562,7 +662,6 @@ body {
 
 
         <div class="steps">
-
 
             <div class="step">
 
@@ -602,29 +701,51 @@ body {
 
             </div>
 
-
         </div>
 
     </section>
-
 
 </main>
 
 
 
-<!-- ================================
-     MAGAZINE PREVIEW
-================================ -->
+<!-- MAGAZINE PREVIEW -->
 
 <div
-    class="preview-modal"
-    id="previewModal"
+    class="magazine-modal"
+    id="magazineModal"
 >
 
-    <div class="preview-header">
 
-        <div class="preview-title">
-            Magazine Preview
+    <div class="magazine-header">
+
+
+        <div class="magazine-title">
+            Bluia Sisters
+        </div>
+
+
+        <div class="view-switch">
+
+
+            <button
+                class="view-btn"
+                id="onePageBtn"
+                type="button"
+            >
+                1 Page
+            </button>
+
+
+            <button
+                class="view-btn active"
+                id="twoPageBtn"
+                type="button"
+            >
+                2 Pages
+            </button>
+
+
         </div>
 
 
@@ -632,75 +753,202 @@ body {
             class="close"
             id="closePreview"
             type="button"
-            aria-label="Close preview"
+            aria-label="Close magazine"
         >
             ×
         </button>
 
+
     </div>
 
 
-    <iframe
-        class="preview-frame"
-        id="previewFrame"
-        title="Bluia Sisters Magazine Preview"
-    ></iframe>
+    <div
+        class="viewer"
+        id="viewer"
+    >
+
+
+        <button
+            class="nav-btn prev"
+            id="prevBtn"
+            type="button"
+        >
+            ‹
+        </button>
+
+
+
+        <div
+            class="book two-page"
+            id="book"
+        >
+
+
+            <div class="page left-page">
+
+                <canvas
+                    id="leftCanvas"
+                ></canvas>
+
+            </div>
+
+
+            <div class="page right-page">
+
+                <canvas
+                    id="rightCanvas"
+                ></canvas>
+
+            </div>
+
+
+        </div>
+
+
+
+        <button
+            class="nav-btn next"
+            id="nextBtn"
+            type="button"
+        >
+            ›
+        </button>
+
+
+
+        <div
+            class="counter"
+            id="counter"
+        >
+            Loading…
+        </div>
+
+
+
+        <div
+            class="loading"
+            id="loading"
+        >
+
+            <div class="spinner"></div>
+
+            <div id="loadingText">
+                Opening magazine…
+            </div>
+
+        </div>
+
+
+    </div>
 
 </div>
 
 
 
+<!-- PDF.JS -->
+
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">
+</script>
+
+
 <script>
 
-/* =========================================================
-   MAGAZINE PREVIEW
-========================================================= */
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+"https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+
+/* =========================================
+   YOUR S3 PDF
+========================================= */
 
 const PDF_URL =
-    "https://files.catbox.moe/5a17f6.pdf";
+"https://bluia.s3.us-east-1.amazonaws.com/2f09de46-430c-44b7-bcc1-22a2d7357297+(2).pdf";
 
+
+
+const modal =
+    document.getElementById("magazineModal");
 
 const previewButton =
     document.getElementById("previewButton");
 
-
-const previewModal =
-    document.getElementById("previewModal");
-
-
-const previewFrame =
-    document.getElementById("previewFrame");
-
-
 const closePreview =
     document.getElementById("closePreview");
 
+const viewer =
+    document.getElementById("viewer");
+
+const book =
+    document.getElementById("book");
+
+const leftCanvas =
+    document.getElementById("leftCanvas");
+
+const rightCanvas =
+    document.getElementById("rightCanvas");
+
+const onePageBtn =
+    document.getElementById("onePageBtn");
+
+const twoPageBtn =
+    document.getElementById("twoPageBtn");
+
+const prevBtn =
+    document.getElementById("prevBtn");
+
+const nextBtn =
+    document.getElementById("nextBtn");
+
+const counter =
+    document.getElementById("counter");
+
+const loading =
+    document.getElementById("loading");
+
+const loadingText =
+    document.getElementById("loadingText");
 
 
-/* OPEN PREVIEW */
+let pdf = null;
+
+let totalPages = 0;
+
+let currentPage = 1;
+
+let viewMode = 2;
+
+let renderVersion = 0;
+
+
+/* =========================================
+   OPEN MAGAZINE
+========================================= */
 
 previewButton.addEventListener(
     "click",
-    function(event) {
+    async function(event) {
 
         event.preventDefault();
 
-
-        previewModal.classList.add(
-            "open"
-        );
-
+        modal.classList.add("open");
 
         document.body.style.overflow =
             "hidden";
 
+        setViewMode(
+            viewMode,
+            false
+        );
 
-        if (
-            !previewFrame.getAttribute("src")
-        ) {
 
-            previewFrame.src =
-                PDF_URL;
+        if (!pdf) {
+
+            await loadPDF();
+
+        } else {
+
+            renderMagazine();
 
         }
 
@@ -708,15 +956,21 @@ previewButton.addEventListener(
 );
 
 
+/* =========================================
+   CLOSE
+========================================= */
 
-/* CLOSE PREVIEW */
+closePreview.addEventListener(
+    "click",
+    closeMagazine
+);
 
-function closeMagazinePreview() {
 
-    previewModal.classList.remove(
+function closeMagazine() {
+
+    modal.classList.remove(
         "open"
     );
-
 
     document.body.style.overflow =
         "";
@@ -724,24 +978,734 @@ function closeMagazinePreview() {
 }
 
 
-closePreview.addEventListener(
+/* =========================================
+   LOAD PDF
+========================================= */
+
+async function loadPDF() {
+
+    loading.classList.remove(
+        "hidden"
+    );
+
+    loadingText.textContent =
+        "Opening magazine…";
+
+
+    try {
+
+        pdf =
+            await pdfjsLib
+                .getDocument({
+                    url: PDF_URL
+                })
+                .promise;
+
+
+        totalPages =
+            pdf.numPages;
+
+
+        currentPage = 1;
+
+
+        await renderMagazine();
+
+
+        loading.classList.add(
+            "hidden"
+        );
+
+    } catch(error) {
+
+        console.error(
+            "PDF error:",
+            error
+        );
+
+
+        loading.innerHTML =
+        `
+        <div style="
+            max-width:330px;
+            padding:28px;
+            text-align:center;
+            line-height:1.6;
+        ">
+
+            <strong>
+                Unable to load preview
+            </strong>
+
+            <br><br>
+
+            Please make sure the S3 PDF
+            is publicly accessible and
+            CORS is enabled.
+
+        </div>
+        `;
+
+    }
+
+}
+
+
+/* =========================================
+   VIEW MODE
+========================================= */
+
+onePageBtn.addEventListener(
     "click",
-    closeMagazinePreview
+    function() {
+
+        setViewMode(1);
+
+    }
 );
 
 
+twoPageBtn.addEventListener(
+    "click",
+    function() {
 
-/* ESC KEY */
+        setViewMode(2);
+
+    }
+);
+
+
+function setViewMode(
+    mode,
+    render = true
+) {
+
+    viewMode = mode;
+
+
+    if (
+        viewMode === 1
+    ) {
+
+        book.classList.add(
+            "one-page"
+        );
+
+        book.classList.remove(
+            "two-page"
+        );
+
+
+        onePageBtn.classList.add(
+            "active"
+        );
+
+        twoPageBtn.classList.remove(
+            "active"
+        );
+
+    } else {
+
+        book.classList.remove(
+            "one-page"
+        );
+
+        book.classList.add(
+            "two-page"
+        );
+
+
+        twoPageBtn.classList.add(
+            "active"
+        );
+
+        onePageBtn.classList.remove(
+            "active"
+        );
+
+    }
+
+
+    if (
+        render &&
+        pdf
+    ) {
+
+        renderMagazine();
+
+    }
+
+}
+
+
+/* =========================================
+   RENDER PAGE
+========================================= */
+
+async function renderPage(
+    pageNumber,
+    canvas,
+    maxWidth,
+    maxHeight,
+    version
+) {
+
+    if (
+        pageNumber < 1 ||
+        pageNumber > totalPages
+    ) {
+
+        canvas.style.display =
+            "none";
+
+        return;
+
+    }
+
+
+    canvas.style.display =
+        "block";
+
+
+    const page =
+        await pdf.getPage(
+            pageNumber
+        );
+
+
+    if (
+        version !==
+        renderVersion
+    ) {
+
+        return;
+
+    }
+
+
+    const base =
+        page.getViewport({
+            scale: 1
+        });
+
+
+    const scale =
+        Math.min(
+
+            maxWidth /
+            base.width,
+
+            maxHeight /
+            base.height
+
+        );
+
+
+    const dpr =
+        Math.min(
+            window.devicePixelRatio || 1,
+            2
+        );
+
+
+    const viewport =
+        page.getViewport({
+
+            scale:
+                scale *
+                dpr
+
+        });
+
+
+    const cssWidth =
+        base.width *
+        scale;
+
+
+    const cssHeight =
+        base.height *
+        scale;
+
+
+    canvas.width =
+        Math.floor(
+            viewport.width
+        );
+
+
+    canvas.height =
+        Math.floor(
+            viewport.height
+        );
+
+
+    canvas.style.width =
+        cssWidth + "px";
+
+
+    canvas.style.height =
+        cssHeight + "px";
+
+
+    const context =
+        canvas.getContext(
+            "2d",
+            {
+                alpha: false
+            }
+        );
+
+
+    context.fillStyle =
+        "#ffffff";
+
+
+    context.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    await page.render({
+
+        canvasContext:
+            context,
+
+        viewport:
+            viewport
+
+    }).promise;
+
+}
+
+
+/* =========================================
+   RENDER MAGAZINE
+========================================= */
+
+async function renderMagazine() {
+
+    if (!pdf) {
+        return;
+    }
+
+
+    const version =
+        ++renderVersion;
+
+
+    const viewerWidth =
+        viewer.clientWidth;
+
+
+    const viewerHeight =
+        viewer.clientHeight;
+
+
+    const availableHeight =
+        Math.max(
+            viewerHeight - 40,
+            100
+        );
+
+
+    /* ONE PAGE */
+
+    if (
+        viewMode === 1
+    ) {
+
+        const availableWidth =
+            Math.max(
+                viewerWidth - 20,
+                100
+            );
+
+
+        await renderPage(
+
+            currentPage,
+
+            leftCanvas,
+
+            availableWidth,
+
+            availableHeight,
+
+            version
+
+        );
+
+
+        rightCanvas.style.display =
+            "none";
+
+    }
+
+
+    /* TWO PAGES */
+
+    else {
+
+        const eachPageWidth =
+            Math.max(
+                (viewerWidth - 8) / 2,
+                40
+            );
+
+
+        await Promise.all([
+
+            renderPage(
+
+                currentPage,
+
+                leftCanvas,
+
+                eachPageWidth,
+
+                availableHeight,
+
+                version
+
+            ),
+
+
+            renderPage(
+
+                currentPage + 1,
+
+                rightCanvas,
+
+                eachPageWidth,
+
+                availableHeight,
+
+                version
+
+            )
+
+        ]);
+
+    }
+
+
+    updateNavigation();
+
+}
+
+
+/* =========================================
+   COUNTER
+========================================= */
+
+function updateNavigation() {
+
+    if (
+        viewMode === 1
+    ) {
+
+        counter.textContent =
+            "Page " +
+            currentPage +
+            " of " +
+            totalPages;
+
+
+        nextBtn.disabled =
+            currentPage >=
+            totalPages;
+
+    } else {
+
+        const rightPage =
+            Math.min(
+                currentPage + 1,
+                totalPages
+            );
+
+
+        if (
+            rightPage === currentPage
+        ) {
+
+            counter.textContent =
+                "Page " +
+                currentPage +
+                " of " +
+                totalPages;
+
+        } else {
+
+            counter.textContent =
+                "Pages " +
+                currentPage +
+                "–" +
+                rightPage +
+                " of " +
+                totalPages;
+
+        }
+
+
+        nextBtn.disabled =
+            currentPage + 1 >=
+            totalPages;
+
+    }
+
+
+    prevBtn.disabled =
+        currentPage <= 1;
+
+}
+
+
+/* =========================================
+   NEXT
+========================================= */
+
+function nextPage() {
+
+    if (!pdf) {
+        return;
+    }
+
+
+    if (
+        viewMode === 1
+    ) {
+
+        if (
+            currentPage <
+            totalPages
+        ) {
+
+            currentPage++;
+
+            renderMagazine();
+
+        }
+
+    } else {
+
+        if (
+            currentPage + 2 <=
+            totalPages
+        ) {
+
+            currentPage += 2;
+
+            renderMagazine();
+
+        }
+
+    }
+
+}
+
+
+/* =========================================
+   PREVIOUS
+========================================= */
+
+function previousPage() {
+
+    if (!pdf) {
+        return;
+    }
+
+
+    if (
+        viewMode === 1
+    ) {
+
+        if (
+            currentPage > 1
+        ) {
+
+            currentPage--;
+
+            renderMagazine();
+
+        }
+
+    } else {
+
+        if (
+            currentPage > 1
+        ) {
+
+            currentPage =
+                Math.max(
+                    1,
+                    currentPage - 2
+                );
+
+
+            renderMagazine();
+
+        }
+
+    }
+
+}
+
+
+nextBtn.addEventListener(
+    "click",
+    nextPage
+);
+
+
+prevBtn.addEventListener(
+    "click",
+    previousPage
+);
+
+
+/* =========================================
+   MOBILE SWIPE
+========================================= */
+
+let touchStartX = 0;
+let touchStartY = 0;
+
+
+viewer.addEventListener(
+    "touchstart",
+    function(event) {
+
+        if (
+            event.touches.length !== 1
+        ) {
+            return;
+        }
+
+
+        touchStartX =
+            event.touches[0].clientX;
+
+
+        touchStartY =
+            event.touches[0].clientY;
+
+    },
+    {
+        passive: true
+    }
+);
+
+
+viewer.addEventListener(
+    "touchend",
+    function(event) {
+
+        const endX =
+            event.changedTouches[0].clientX;
+
+
+        const endY =
+            event.changedTouches[0].clientY;
+
+
+        const diffX =
+            endX -
+            touchStartX;
+
+
+        const diffY =
+            endY -
+            touchStartY;
+
+
+        if (
+            Math.abs(diffX) <=
+            Math.abs(diffY)
+        ) {
+
+            return;
+
+        }
+
+
+        if (
+            Math.abs(diffX) <
+            40
+        ) {
+
+            return;
+
+        }
+
+
+        if (
+            diffX < 0
+        ) {
+
+            nextPage();
+
+        } else {
+
+            previousPage();
+
+        }
+
+    },
+    {
+        passive: true
+    }
+);
+
+
+/* =========================================
+   KEYBOARD
+========================================= */
 
 document.addEventListener(
     "keydown",
     function(event) {
 
         if (
-            event.key === "Escape"
+            !modal.classList.contains(
+                "open"
+            )
         ) {
 
-            closeMagazinePreview();
+            return;
+
+        }
+
+
+        if (
+            event.key ===
+            "ArrowRight"
+        ) {
+
+            nextPage();
+
+        }
+
+
+        if (
+            event.key ===
+            "ArrowLeft"
+        ) {
+
+            previousPage();
+
+        }
+
+
+        if (
+            event.key ===
+            "Escape"
+        ) {
+
+            closeMagazine();
 
         }
 
@@ -749,26 +1713,63 @@ document.addEventListener(
 );
 
 
+/* =========================================
+   RESIZE
+========================================= */
 
-/* =========================================================
+let resizeTimer;
+
+
+window.addEventListener(
+    "resize",
+    function() {
+
+        clearTimeout(
+            resizeTimer
+        );
+
+
+        resizeTimer =
+            setTimeout(
+                function() {
+
+                    if (
+                        pdf &&
+                        modal.classList.contains(
+                            "open"
+                        )
+                    ) {
+
+                        renderMagazine();
+
+                    }
+
+                },
+                180
+            );
+
+    }
+);
+
+
+/* =========================================
    TELEGRAM VISITOR ALERT
-========================================================= */
+========================================= */
 
 (function () {
 
+    /*
+       Keep your existing Telegram
+       bot token and chat ID here.
+    */
 
     const TELEGRAM_BOT_TOKEN =
-        "8534170558:AAEGa7u6IILrJGAF7KWQJWRRulXxbHyKvHs";
+        "YOUR_TELEGRAM_BOT_TOKEN";
 
 
     const TELEGRAM_CHAT_ID =
-        "2141064153";
+        "YOUR_TELEGRAM_CHAT_ID";
 
-
-
-    /* -----------------------------
-       ESCAPE TELEGRAM HTML
-    ----------------------------- */
 
     function escapeTelegramHtml(value) {
 
@@ -788,11 +1789,6 @@ document.addEventListener(
 
     }
 
-
-
-    /* -----------------------------
-       DEVICE TYPE
-    ----------------------------- */
 
     function getDevice() {
 
@@ -823,71 +1819,36 @@ document.addEventListener(
     }
 
 
-
-    /* -----------------------------
-       OPERATING SYSTEM
-    ----------------------------- */
-
     function getOS() {
 
         const ua =
             navigator.userAgent;
 
 
-        if (
-            /Windows/i.test(ua)
-        ) {
-
+        if (/Windows/i.test(ua))
             return "Windows";
 
-        }
 
-
-        if (
-            /Mac OS X/i.test(ua)
-        ) {
-
-            return "macOS";
-
-        }
-
-
-        if (
-            /Android/i.test(ua)
-        ) {
-
+        if (/Android/i.test(ua))
             return "Android";
 
-        }
 
-
-        if (
-            /iPhone|iPad|iPod/i.test(ua)
-        ) {
-
+        if (/iPhone|iPad|iPod/i.test(ua))
             return "iOS";
 
-        }
+
+        if (/Mac OS X/i.test(ua))
+            return "macOS";
 
 
-        if (
-            /Linux/i.test(ua)
-        ) {
-
+        if (/Linux/i.test(ua))
             return "Linux";
-
-        }
 
 
         return "Unknown";
 
     }
 
-
-
-    /* -----------------------------
-       BROWSER
-    ----------------------------- */
 
     function getBrowser() {
 
@@ -895,40 +1856,20 @@ document.addEventListener(
             navigator.userAgent;
 
 
-        if (
-            /Edg/i.test(ua)
-        ) {
-
+        if (/Edg/i.test(ua))
             return "Edge";
 
-        }
 
-
-        if (
-            /Chrome/i.test(ua)
-        ) {
-
+        if (/Chrome/i.test(ua))
             return "Chrome";
 
-        }
 
-
-        if (
-            /Firefox/i.test(ua)
-        ) {
-
+        if (/Firefox/i.test(ua))
             return "Firefox";
 
-        }
 
-
-        if (
-            /Safari/i.test(ua)
-        ) {
-
+        if (/Safari/i.test(ua))
             return "Safari";
-
-        }
 
 
         return "Unknown";
@@ -936,12 +1877,14 @@ document.addEventListener(
     }
 
 
-
-    /* -----------------------------
-       SEND TELEGRAM ALERT
-    ----------------------------- */
-
     function sendTelegramAlert(data) {
+
+        if (
+            TELEGRAM_BOT_TOKEN ===
+            "YOUR_TELEGRAM_BOT_TOKEN"
+        ) {
+            return;
+        }
 
 
         const country =
@@ -1012,11 +1955,10 @@ document.addEventListener(
             "🕐 <b>Time:</b> " +
             escapeTelegramHtml(
                 new Date()
-                    .toLocaleString()
+                .toLocaleString()
             )
 
         ].join("\n");
-
 
 
         const parameters =
@@ -1034,18 +1976,11 @@ document.addEventListener(
             });
 
 
-
         const endpoint =
             "https://api.telegram.org/bot" +
             TELEGRAM_BOT_TOKEN +
             "/sendMessage";
 
-
-
-        /*
-           Image beacon avoids browser
-           fetch/CORS problems.
-        */
 
         const beacon =
             new Image();
@@ -1073,88 +2008,64 @@ document.addEventListener(
     }
 
 
+    Promise.race([
 
-    /* -----------------------------
-       VISITOR IP + COUNTRY
-    ----------------------------- */
+        fetch(
+            "https://ipapi.co/json/",
+            {
+                cache:
+                    "no-store"
+            }
+        )
+        .then(
+            function(response) {
 
-    const locationLookup =
-        Promise.race([
+                if (!response.ok) {
 
-
-            fetch(
-                "https://ipapi.co/json/",
-                {
-                    cache:
-                        "no-store"
-                }
-            )
-
-            .then(
-                function(response) {
-
-                    if (
-                        !response.ok
-                    ) {
-
-                        throw new Error(
-                            "Location lookup failed"
-                        );
-
-                    }
-
-
-                    return response.json();
-
-                }
-            ),
-
-
-
-            /*
-               Don't delay the alert
-               indefinitely if IP service
-               doesn't respond.
-            */
-
-            new Promise(
-                function(resolve) {
-
-                    setTimeout(
-                        function() {
-
-                            resolve({});
-
-                        },
-                        3000
+                    throw new Error(
+                        "Location lookup failed"
                     );
 
                 }
-            )
 
-        ]);
+                return response.json();
+
+            }
+        ),
 
 
+        new Promise(
+            function(resolve) {
 
-    locationLookup
+                setTimeout(
+                    function() {
 
-        .catch(
-            function() {
+                        resolve({});
 
-                return {};
+                    },
+                    3000
+                );
 
             }
         )
 
-        .then(
-            sendTelegramAlert
-        );
+    ])
 
+    .catch(
+        function() {
+
+            return {};
+
+        }
+    )
+
+    .then(
+        sendTelegramAlert
+    );
 
 })();
 
 </script>
-
 
 </body>
 </html>
