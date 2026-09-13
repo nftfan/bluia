@@ -21,57 +21,39 @@ body{
 body{
     min-height:100svh;
     padding:10px 12px 30px;
-
     display:flex;
     align-items:flex-start;
     justify-content:center;
-
     font-family:Arial,Helvetica,sans-serif;
     color:#49323a;
-
     background:
         radial-gradient(circle at top left,#ffe3ed 0%,transparent 42%),
         radial-gradient(circle at bottom right,#ffdce9 0%,transparent 42%),
         #fff8fb;
 }
 
-
-/* =====================================
+/* =========================================
    MAIN CARD
-===================================== */
+========================================= */
 
 .card{
     width:min(100%,430px);
-
-    padding:20px 18px 26px;
-
+    padding:18px 17px 26px;
     text-align:center;
-
-    background:rgba(255,255,255,.9);
-
+    background:rgba(255,255,255,.91);
     border:1px solid #f2d6e0;
-    border-radius:25px;
-
-    box-shadow:
-        0 20px 60px
-        rgba(173,75,111,.12);
+    border-radius:24px;
+    box-shadow:0 20px 60px rgba(173,75,111,.12);
 }
 
-
-/* =====================================
+/* =========================================
    BRAND
-===================================== */
+========================================= */
 
 .brand{
-    margin-bottom:16px;
-
-    font:
-        34px
-        Georgia,
-        "Times New Roman",
-        serif;
-
-    letter-spacing:-1.5px;
+    margin-bottom:13px;
+    font:32px Georgia,"Times New Roman",serif;
+    letter-spacing:-1.4px;
 }
 
 .brand span{
@@ -79,75 +61,52 @@ body{
     font-style:italic;
 }
 
-
-/* =====================================
-   MAIN TABS
-===================================== */
+/* =========================================
+   COMPACT TABS
+========================================= */
 
 .main-tabs{
     display:grid;
-    grid-template-columns:1fr 1fr;
-
-    gap:5px;
-
-    padding:4px;
-
-    margin-bottom:20px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #fdebf2,
-            #f8dce7
-        );
-
-    border:1px solid #f1cbd9;
-
-    border-radius:100px;
+    grid-template-columns:repeat(3,1fr);
+    gap:3px;
+    padding:3px;
+    margin:0 0 17px;
+    background:#fae7ee;
+    border:1px solid #f0ccd9;
+    border-radius:13px;
 }
 
 .main-tab{
-    min-height:43px;
-
-    padding:0 14px;
-
+    min-height:34px;
+    padding:0 5px;
     border:0;
-    border-radius:100px;
-
+    border-radius:9px;
     background:transparent;
-
-    color:#a75d79;
-
-    font-size:13px;
+    color:#9d5c75;
+    font-size:11px;
     font-weight:700;
-
     cursor:pointer;
-
+    white-space:nowrap;
     transition:
-        background .2s ease,
-        color .2s ease,
-        box-shadow .2s ease,
-        transform .2s ease;
+        background .18s ease,
+        color .18s ease,
+        box-shadow .18s ease,
+        transform .18s ease;
 }
 
 .main-tab.active{
+    color:#bc416e;
     background:#fff;
-
-    color:#bd416f;
-
-    box-shadow:
-        0 5px 15px
-        rgba(155,55,95,.13);
+    box-shadow:0 3px 10px rgba(151,55,91,.12);
 }
 
 .main-tab:active{
     transform:scale(.97);
 }
 
-
-/* =====================================
+/* =========================================
    TAB CONTENT
-===================================== */
+========================================= */
 
 .tab-content{
     display:none;
@@ -157,111 +116,86 @@ body{
     display:block;
 }
 
-
-/* =====================================
-   MAGAZINE COVER
-===================================== */
+/* =========================================
+   COVER
+========================================= */
 
 .cover-wrap{
     width:min(76vw,270px);
-
-    margin:0 auto 19px;
-
+    margin:0 auto 18px;
     padding:7px;
-
     background:#fff;
-
     border-radius:15px;
-
-    box-shadow:
-        0 15px 40px
-        rgba(110,40,66,.14);
-
+    box-shadow:0 15px 40px rgba(110,40,66,.14);
     cursor:pointer;
-
     transition:
         transform .2s ease,
         box-shadow .2s ease;
 }
 
 .cover-wrap:hover{
-    transform:
-        translateY(-3px)
-        scale(1.01);
-
-    box-shadow:
-        0 20px 48px
-        rgba(110,40,66,.20);
+    transform:translateY(-3px) scale(1.01);
+    box-shadow:0 20px 48px rgba(110,40,66,.20);
 }
 
 .cover-wrap:active{
     transform:scale(.98);
 }
 
+.cover-wrap:focus-visible{
+    outline:3px solid #e979a4;
+    outline-offset:4px;
+}
+
 .cover{
     display:block;
-
     width:100%;
     height:auto;
-
     border-radius:10px;
 }
 
-
-/* =====================================
+/* =========================================
    PRODUCT
-===================================== */
+========================================= */
 
 .meta{
-    margin-bottom:18px;
+    margin-bottom:17px;
 }
 
 .label{
-    margin-bottom:7px;
-
+    margin-bottom:6px;
     color:#bc4a76;
-
     font-size:10px;
     font-weight:700;
-
     letter-spacing:2px;
-
     text-transform:uppercase;
 }
 
 .price{
-    font:25px Georgia,serif;
+    color:#523741;
+    font:25px Georgia,"Times New Roman",serif;
 }
 
-
-/* =====================================
+/* =========================================
    BUTTONS
-===================================== */
+========================================= */
 
 .actions{
     display:grid;
-
-    gap:11px;
+    gap:10px;
 }
 
 .button{
-    min-height:55px;
-
+    min-height:54px;
     display:flex;
     align-items:center;
     justify-content:center;
-
-    padding:0 20px;
-
+    padding:0 18px;
     border-radius:100px;
-
     text-decoration:none;
-
-    font-size:14px;
+    font-size:13px;
     font-weight:700;
-
     cursor:pointer;
-
     transition:
         transform .18s ease,
         box-shadow .18s ease,
@@ -272,76 +206,33 @@ body{
     transform:scale(.98);
 }
 
-
-/* BUY */
-
 .buy{
     color:#fff;
-
-    background:
-        linear-gradient(
-            135deg,
-            #ea76a2,
-            #c83d73
-        );
-
-    box-shadow:
-        0 12px 28px
-        rgba(200,61,115,.25);
+    background:linear-gradient(135deg,#ea76a2,#c83d73);
+    box-shadow:0 12px 28px rgba(200,61,115,.25);
 }
 
 .buy:hover{
     transform:translateY(-2px);
 }
 
-
-/* SUBSCRIPTION */
+/* MONTHLY */
 
 .subscribe{
     position:relative;
-
     overflow:hidden;
-
     color:#fff;
-
-    background:
-        linear-gradient(
-            135deg,
-            #8c2e58,
-            #c84678,
-            #e679a2
-        );
-
-    box-shadow:
-        0 12px 28px
-        rgba(143,49,91,.25);
+    background:linear-gradient(
+        135deg,
+        #8c2e58,
+        #c84678,
+        #e679a2
+    );
+    box-shadow:0 12px 28px rgba(143,49,91,.25);
 }
 
 .subscribe:hover{
     transform:translateY(-2px);
-}
-
-.subscribe::before{
-    content:"";
-
-    position:absolute;
-
-    width:60px;
-    height:160px;
-
-    top:-50px;
-    left:-100px;
-
-    transform:rotate(25deg);
-
-    background:
-        rgba(255,255,255,.17);
-
-    transition:left .6s ease;
-}
-
-.subscribe:hover::before{
-    left:120%;
 }
 
 .subscribe span{
@@ -349,118 +240,94 @@ body{
     z-index:2;
 }
 
+.subscribe::before{
+    content:"";
+    position:absolute;
+    top:-50px;
+    left:-100px;
+    width:60px;
+    height:160px;
+    transform:rotate(25deg);
+    background:rgba(255,255,255,.17);
+    transition:left .6s ease;
+}
+
+.subscribe:hover::before{
+    left:120%;
+}
 
 /* SUBSCRIPTION INFO */
 
 .subscription-info{
-    margin-top:2px;
-
-    padding:15px 16px;
-
+    margin-top:1px;
+    padding:14px 15px;
     text-align:left;
-
-    background:
-        linear-gradient(
-            135deg,
-            #fff7fa,
-            #ffedf4
-        );
-
-    border:
-        1px solid #f1cada;
-
-    border-radius:17px;
+    background:linear-gradient(
+        135deg,
+        #fff7fa,
+        #ffedf4
+    );
+    border:1px solid #f1cada;
+    border-radius:16px;
 }
 
 .subscription-title{
     margin-bottom:7px;
-
     color:#9f3c63;
-
-    font:
-        16px
-        Georgia,
-        serif;
+    font:16px Georgia,"Times New Roman",serif;
 }
 
 .subscription-info p{
     margin:0;
-
     color:#765361;
-
     font-size:11.5px;
-
-    line-height:1.6;
+    line-height:1.55;
 }
 
 .subscription-email{
     margin-top:8px !important;
-
     color:#a13f65 !important;
-
     font-weight:700;
 }
 
-
-/* PREVIEW */
-
 .preview{
     color:#bd416f;
-
     background:#fff;
-
-    border:
-        1px solid #efbfd1;
+    border:1px solid #efbfd1;
 }
 
 .preview:hover{
     background:#fff0f6;
 }
 
-
-/* =====================================
+/* =========================================
    AFTER PAYMENT
-===================================== */
+========================================= */
 
 .after-payment{
-    margin-top:24px;
-
-    padding-top:21px;
-
-    border-top:
-        1px solid #f0d5df;
+    margin-top:23px;
+    padding-top:20px;
+    border-top:1px solid #f0d5df;
 }
 
 .after-payment h2{
     margin:0 0 16px;
-
-    font:
-        19px
-        Georgia,
-        serif;
-
     color:#5d3846;
+    font:19px Georgia,"Times New Roman",serif;
 }
 
 .steps{
     display:grid;
-
-    gap:12px;
-
+    gap:11px;
     text-align:left;
 }
 
 .step{
     display:flex;
-
     align-items:flex-start;
-
-    gap:12px;
-
+    gap:11px;
     color:#80616c;
-
     font-size:12px;
-
     line-height:1.55;
 }
 
@@ -468,17 +335,12 @@ body{
     width:28px;
     min-width:28px;
     height:28px;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     border-radius:50%;
-
     background:#fbe3ec;
-
     color:#c74676;
-
     font-weight:700;
 }
 
@@ -486,415 +348,307 @@ body{
     padding-top:4px;
 }
 
-
-/* =================================================
+/* =========================================
    BLUIA TV
-================================================= */
+========================================= */
 
 .bluia-tv{
-    padding:
-        2px
-        0
-        12px;
+    padding:2px 0 10px;
 }
-
-
-/* VIDEO BORDER */
 
 .tv-video-border{
     position:relative;
-
     width:min(100%,285px);
-
-    margin:
-        0 auto;
-
+    margin:0 auto;
     padding:5px;
-
     border-radius:25px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #ffd1e1,
-            #d84d83,
-            #8f315b,
-            #ef91b5,
-            #ffd7e5
-        );
-
-    box-shadow:
-        0 20px 50px
-        rgba(151,44,86,.25);
+    background:linear-gradient(
+        145deg,
+        #ffd1e1,
+        #d84d83,
+        #8f315b,
+        #ef91b5,
+        #ffd7e5
+    );
+    box-shadow:0 20px 50px rgba(151,44,86,.25);
 }
-
-
-/* LIGHT INNER BORDER */
 
 .tv-video-border::before{
     content:"";
-
     position:absolute;
-
     inset:-1px;
-
+    border:1px solid rgba(255,255,255,.7);
     border-radius:26px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.7);
-
     pointer-events:none;
 }
-
-
-/* 9:16 CONTAINER */
 
 .tv-video-wrap{
     position:relative;
-
     width:100%;
-
     aspect-ratio:9 / 16;
-
     overflow:hidden;
-
     border-radius:20px;
-
     background:#180d12;
 }
 
-
-/* VIDEO */
-
 .tv-video{
     display:block;
-
     width:100%;
     height:100%;
-
     object-fit:cover;
-
     background:#111;
-
     pointer-events:none;
 }
-
-
-/* SUBTLE VIDEO OVERLAY */
 
 .tv-video-wrap::after{
     content:"";
-
     position:absolute;
-
     inset:0;
-
     pointer-events:none;
-
-    background:
-        linear-gradient(
-            to bottom,
-            rgba(255,255,255,.04),
-            transparent 20%,
-            transparent 80%,
-            rgba(0,0,0,.12)
-        );
+    background:linear-gradient(
+        to bottom,
+        rgba(255,255,255,.04),
+        transparent 20%,
+        transparent 80%,
+        rgba(0,0,0,.12)
+    );
 }
 
-
-/* TV TEXT */
-
 .tv-coming{
-    margin-top:22px;
-
-    font:
-        24px
-        Georgia,
-        "Times New Roman",
-        serif;
-
+    margin-top:21px;
     color:#a93d68;
+    font:24px Georgia,"Times New Roman",serif;
 }
 
 .tv-coming span{
     color:#dc6692;
-
     font-style:italic;
 }
 
 .tv-small{
     margin-top:7px;
-
     color:#98717f;
-
-    font-size:11px;
-
-    letter-spacing:1.2px;
-
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:1.4px;
     text-transform:uppercase;
 }
 
+/* =========================================
+   BLUIAS
+========================================= */
 
-/* =================================================
-   PDF MAGAZINE VIEWER
-================================================= */
+.bluias-section{
+    padding:2px 0 10px;
+}
+
+.bluias-heading{
+    margin:3px 0 17px;
+    color:#603d4a;
+    font:23px Georgia,"Times New Roman",serif;
+}
+
+.bluias-heading span{
+    color:#d45d8a;
+    font-style:italic;
+}
+
+.bluias-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:11px;
+}
+
+.bluia-card{
+    overflow:hidden;
+    background:#fff;
+    border:1px solid #f1d3de;
+    border-radius:17px;
+    box-shadow:0 9px 24px rgba(125,50,79,.09);
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.bluia-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 14px 30px rgba(125,50,79,.14);
+}
+
+.bluia-card:last-child{
+    grid-column:1 / -1;
+    width:calc(50% - 6px);
+    justify-self:center;
+}
+
+.bluia-image-wrap{
+    width:100%;
+    aspect-ratio:4 / 5;
+    overflow:hidden;
+    background:#f8e9ef;
+}
+
+.bluia-image{
+    display:block;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.bluia-name{
+    padding:11px 8px 12px;
+    text-align:center;
+    color:#583945;
+    font:16px Georgia,"Times New Roman",serif;
+}
+
+.bluia-name span{
+    color:#d15c88;
+    font-style:italic;
+}
+
+/* =========================================
+   PDF VIEWER
+========================================= */
 
 .magazine-modal{
     position:fixed;
-
     inset:0;
-
     z-index:10000;
-
     display:none;
     flex-direction:column;
-
-    background:
-        radial-gradient(
-            circle at center,
-            #643446,
-            #2d1821 70%,
-            #170c11
-        );
+    background:radial-gradient(
+        circle at center,
+        #643446,
+        #2d1821 70%,
+        #170c11
+    );
 }
 
 .magazine-modal.open{
     display:flex;
 }
 
-
-/* HEADER */
-
 .magazine-header{
     position:relative;
-
     min-height:61px;
-
     display:flex;
-
     align-items:center;
-
     justify-content:space-between;
-
-    padding:
-        env(safe-area-inset-top)
-        12px
-        0;
-
-    color:white;
-
-    background:
-        rgba(33,13,21,.94);
-
-    border-bottom:
-        1px solid
-        rgba(255,255,255,.1);
+    padding:env(safe-area-inset-top) 12px 0;
+    color:#fff;
+    background:rgba(33,13,21,.94);
+    border-bottom:1px solid rgba(255,255,255,.10);
 }
 
 .magazine-title{
-    font:
-        17px
-        Georgia,
-        serif;
+    font:17px Georgia,"Times New Roman",serif;
 }
-
-
-/* VIEW MODE */
 
 .view-switch{
     position:absolute;
-
     left:50%;
-
-    transform:
-        translateX(-50%);
-
-    padding:3px;
-
+    transform:translateX(-50%);
     display:flex;
-
+    padding:3px;
+    background:rgba(255,255,255,.12);
     border-radius:100px;
-
-    background:
-        rgba(255,255,255,.12);
 }
 
 .view-btn{
-    padding:
-        8px
-        13px;
-
+    padding:8px 13px;
     border:0;
-
     border-radius:100px;
-
     background:transparent;
-
-    color:
-        rgba(255,255,255,.68);
-
+    color:rgba(255,255,255,.68);
     font-size:11px;
-
     font-weight:700;
-
     cursor:pointer;
 }
 
 .view-btn.active{
-    background:#fbd8e6;
-
     color:#893755;
+    background:#fbd8e6;
 }
-
-
-/* CLOSE */
 
 .close{
     width:39px;
     height:39px;
-
     border:0;
-
     border-radius:50%;
-
-    background:
-        rgba(255,255,255,.11);
-
+    background:rgba(255,255,255,.11);
     color:#fff;
-
     font-size:25px;
-
     cursor:pointer;
 }
 
-
-/* VIEWER */
-
 .viewer{
     position:relative;
-
     flex:1;
-
     min-height:0;
-
     display:flex;
-
     align-items:center;
-
     justify-content:center;
-
     overflow:hidden;
-
-    padding:
-        12px
-        4px
-        62px;
-
-    touch-action:
-        pan-y pinch-zoom;
+    padding:12px 4px 62px;
+    touch-action:pan-y pinch-zoom;
 }
-
-
-/* BOOK */
 
 .book{
     position:relative;
-
     display:flex;
-
     align-items:center;
-
     justify-content:center;
-
     max-width:100%;
-
     max-height:100%;
 }
 
-
-/* PAGE */
-
 .page{
     position:relative;
-
     overflow:hidden;
-
     background:#fff;
-
-    box-shadow:
-        0 12px 35px
-        rgba(0,0,0,.42);
+    box-shadow:0 12px 35px rgba(0,0,0,.42);
 }
 
 .page canvas{
     display:block;
-
     background:#fff;
 }
 
-
-/* SPINE */
-
 .book.two-page::after{
     content:"";
-
     position:absolute;
-
     top:0;
     bottom:0;
-
     left:50%;
-
     width:8px;
-
-    transform:
-        translateX(-50%);
-
+    transform:translateX(-50%);
     z-index:5;
-
     pointer-events:none;
-
-    background:
-        linear-gradient(
-            to right,
-            rgba(0,0,0,.24),
-            rgba(255,255,255,.08),
-            rgba(0,0,0,.24)
-        );
+    background:linear-gradient(
+        to right,
+        rgba(0,0,0,.24),
+        rgba(255,255,255,.08),
+        rgba(0,0,0,.24)
+    );
 }
 
 .book.one-page .right-page{
     display:none;
 }
 
-
-/* NAV */
-
 .nav-btn{
     position:absolute;
-
     top:50%;
-
-    transform:
-        translateY(-50%);
-
+    transform:translateY(-50%);
     z-index:20;
-
     width:42px;
     height:42px;
-
     border:0;
-
     border-radius:50%;
-
-    background:
-        rgba(0,0,0,.58);
-
+    background:rgba(0,0,0,.58);
     color:#fff;
-
     font-size:27px;
-
     cursor:pointer;
 }
 
@@ -910,63 +664,30 @@ body{
     right:5px;
 }
 
-
-/* COUNTER */
-
 .counter{
     position:absolute;
-
-    bottom:
-        calc(
-            12px +
-            env(safe-area-inset-bottom)
-        );
-
+    bottom:calc(12px + env(safe-area-inset-bottom));
     left:50%;
-
-    transform:
-        translateX(-50%);
-
-    padding:
-        9px
-        16px;
-
+    transform:translateX(-50%);
+    padding:9px 16px;
     border-radius:100px;
-
-    background:
-        rgba(0,0,0,.68);
-
+    background:rgba(0,0,0,.68);
     color:#fff;
-
     font-size:12px;
-
     white-space:nowrap;
 }
 
-
-/* LOADING */
-
 .loading{
     position:absolute;
-
     inset:0;
-
     z-index:50;
-
     display:flex;
-
     align-items:center;
-
     justify-content:center;
-
     flex-direction:column;
-
     gap:13px;
-
     background:#2a1720;
-
     color:#fff;
-
     font-size:13px;
 }
 
@@ -977,28 +698,17 @@ body{
 .spinner{
     width:36px;
     height:36px;
-
     border-radius:50%;
-
-    border:
-        3px solid
-        rgba(255,255,255,.15);
-
+    border:3px solid rgba(255,255,255,.15);
     border-top-color:#f6b6ce;
-
-    animation:
-        spin .8s linear infinite;
+    animation:spin .8s linear infinite;
 }
 
 @keyframes spin{
     to{
-        transform:
-            rotate(360deg);
+        transform:rotate(360deg);
     }
 }
-
-
-/* DESKTOP */
 
 @media(min-width:700px){
 
@@ -1007,10 +717,7 @@ body{
     }
 
     .viewer{
-        padding:
-            28px
-            65px
-            65px;
+        padding:28px 65px 65px;
     }
 
     .nav-btn{
@@ -1037,15 +744,12 @@ body{
 <main class="card">
 
 
-    <!-- BRAND -->
-
     <div class="brand">
         Bluia <span>Sisters</span>
     </div>
 
 
-
-    <!-- MAIN TABS -->
+    <!-- TABS -->
 
     <div class="main-tabs">
 
@@ -1057,7 +761,6 @@ body{
             Magazine
         </button>
 
-
         <button
             class="main-tab"
             id="tvTab"
@@ -1066,8 +769,15 @@ body{
             Bluia TV
         </button>
 
-    </div>
+        <button
+            class="main-tab"
+            id="bluiasTab"
+            type="button"
+        >
+            Bluias
+        </button>
 
+    </div>
 
 
     <!-- =====================================
@@ -1078,9 +788,6 @@ body{
         class="tab-content active"
         id="magazineContent"
     >
-
-
-        <!-- COVER -->
 
         <div
             class="cover-wrap"
@@ -1099,9 +806,6 @@ body{
         </div>
 
 
-
-        <!-- PRODUCT -->
-
         <div class="meta">
 
             <div class="label">
@@ -1115,13 +819,8 @@ body{
         </div>
 
 
-
-        <!-- ACTIONS -->
-
         <div class="actions">
 
-
-            <!-- SINGLE MAGAZINE -->
 
             <a
                 class="button buy"
@@ -1131,23 +830,15 @@ body{
             </a>
 
 
-
-            <!-- MONTHLY -->
-
             <a
                 class="button subscribe"
                 href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04"
             >
-
                 <span>
                     ♡ Bluia Sisters Monthly — US$4.99/month
                 </span>
-
             </a>
 
-
-
-            <!-- MONTHLY INFO -->
 
             <div class="subscription-info">
 
@@ -1166,9 +857,6 @@ body{
             </div>
 
 
-
-            <!-- PREVIEW -->
-
             <a
                 class="button preview"
                 href="#"
@@ -1180,9 +868,6 @@ body{
         </div>
 
 
-
-        <!-- AFTER PAYMENT -->
-
         <section class="after-payment">
 
             <h2>
@@ -1191,6 +876,7 @@ body{
 
 
             <div class="steps">
+
 
                 <div class="step">
 
@@ -1230,17 +916,16 @@ body{
 
                 </div>
 
+
             </div>
 
         </section>
 
-
     </div>
 
 
-
     <!-- =====================================
-         BLUIA TV TAB
+         BLUIA TV
     ====================================== -->
 
     <div
@@ -1248,12 +933,10 @@ body{
         id="tvContent"
     >
 
-
         <section class="bluia-tv">
 
 
             <div class="tv-video-border">
-
 
                 <div class="tv-video-wrap">
 
@@ -1271,13 +954,14 @@ body{
 
                 </div>
 
-
             </div>
 
 
-
             <div class="tv-coming">
-                Bluia TV <span>coming soon</span>
+                Bluia TV
+                <span>
+                    coming soon
+                </span>
             </div>
 
 
@@ -1288,6 +972,138 @@ body{
 
         </section>
 
+    </div>
+
+
+    <!-- =====================================
+         BLUIAS
+    ====================================== -->
+
+    <div
+        class="tab-content"
+        id="bluiasContent"
+    >
+
+        <section class="bluias-section">
+
+
+            <div class="bluias-heading">
+                Meet the
+                <span>Bluias</span>
+            </div>
+
+
+            <div class="bluias-grid">
+
+
+                <article class="bluia-card">
+
+                    <div class="bluia-image-wrap">
+
+                        <img
+                            class="bluia-image"
+                            loading="lazy"
+                            src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ChatGPT%20Image%20Sep%2012%2C%202026%2C%2001_50_48%20PM.png"
+                            alt="Kiara Bluia"
+                        >
+
+                    </div>
+
+                    <div class="bluia-name">
+                        Kiara
+                        <span>Bluia</span>
+                    </div>
+
+                </article>
+
+
+                <article class="bluia-card">
+
+                    <div class="bluia-image-wrap">
+
+                        <img
+                            class="bluia-image"
+                            loading="lazy"
+                            src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ChatGPT%20Image%20Sep%2012%2C%202026%2C%2001_51_01%20PM.png"
+                            alt="Kaia Bluia"
+                        >
+
+                    </div>
+
+                    <div class="bluia-name">
+                        Kaia
+                        <span>Bluia</span>
+                    </div>
+
+                </article>
+
+
+                <article class="bluia-card">
+
+                    <div class="bluia-image-wrap">
+
+                        <img
+                            class="bluia-image"
+                            loading="lazy"
+                            src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ChatGPT%20Image%20Sep%2012%2C%202026%2C%2001_51_12%20PM.png"
+                            alt="Kira Bluia"
+                        >
+
+                    </div>
+
+                    <div class="bluia-name">
+                        Kira
+                        <span>Bluia</span>
+                    </div>
+
+                </article>
+
+
+                <article class="bluia-card">
+
+                    <div class="bluia-image-wrap">
+
+                        <img
+                            class="bluia-image"
+                            loading="lazy"
+                            src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ChatGPT%20Image%20Sep%2012%2C%202026%2C%2001_51_28%20PM.png"
+                            alt="Karina Bluia"
+                        >
+
+                    </div>
+
+                    <div class="bluia-name">
+                        Karina
+                        <span>Bluia</span>
+                    </div>
+
+                </article>
+
+
+                <article class="bluia-card">
+
+                    <div class="bluia-image-wrap">
+
+                        <img
+                            class="bluia-image"
+                            loading="lazy"
+                            src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/c17f5d56-c34a-4f68-8eb9-90fb97985dc6.png"
+                            alt="Kiana Bluia"
+                        >
+
+                    </div>
+
+                    <div class="bluia-name">
+                        Kiana
+                        <span>Bluia</span>
+                    </div>
+
+                </article>
+
+
+            </div>
+
+        </section>
 
     </div>
 
@@ -1295,16 +1111,14 @@ body{
 </main>
 
 
-
 <!-- =====================================
-     MAGAZINE PREVIEW
+     PDF VIEWER
 ===================================== -->
 
 <div
     class="magazine-modal"
     id="magazineModal"
 >
-
 
     <div class="magazine-header">
 
@@ -1316,7 +1130,6 @@ body{
 
         <div class="view-switch">
 
-
             <button
                 class="view-btn"
                 id="onePageBtn"
@@ -1325,7 +1138,6 @@ body{
                 1 Page
             </button>
 
-
             <button
                 class="view-btn active"
                 id="twoPageBtn"
@@ -1333,7 +1145,6 @@ body{
             >
                 2 Pages
             </button>
-
 
         </div>
 
@@ -1351,7 +1162,6 @@ body{
     </div>
 
 
-
     <div
         class="viewer"
         id="viewer"
@@ -1362,10 +1172,10 @@ body{
             class="nav-btn prev"
             id="prevBtn"
             type="button"
+            aria-label="Previous page"
         >
             ‹
         </button>
-
 
 
         <div
@@ -1373,37 +1183,25 @@ body{
             id="book"
         >
 
-
             <div class="page left-page">
-
-                <canvas
-                    id="leftCanvas"
-                ></canvas>
-
+                <canvas id="leftCanvas"></canvas>
             </div>
-
 
             <div class="page right-page">
-
-                <canvas
-                    id="rightCanvas"
-                ></canvas>
-
+                <canvas id="rightCanvas"></canvas>
             </div>
 
-
         </div>
-
 
 
         <button
             class="nav-btn next"
             id="nextBtn"
             type="button"
+            aria-label="Next page"
         >
             ›
         </button>
-
 
 
         <div
@@ -1412,7 +1210,6 @@ body{
         >
             Loading…
         </div>
-
 
 
         <div
@@ -1431,9 +1228,7 @@ body{
 
     </div>
 
-
 </div>
-
 
 
 <!-- PDF.JS -->
@@ -1443,9 +1238,9 @@ body{
 
 <script>
 
-/* ==========================================
-   MAIN TABS
-========================================== */
+/* =========================================
+   TABS
+========================================= */
 
 const magazineTab =
 document.getElementById("magazineTab");
@@ -1453,80 +1248,91 @@ document.getElementById("magazineTab");
 const tvTab =
 document.getElementById("tvTab");
 
+const bluiasTab =
+document.getElementById("bluiasTab");
+
 const magazineContent =
 document.getElementById("magazineContent");
 
 const tvContent =
 document.getElementById("tvContent");
 
+const bluiasContent =
+document.getElementById("bluiasContent");
+
 const bluiaTvVideo =
 document.getElementById("bluiaTvVideo");
 
 
+function clearTabs(){
 
-function showMagazine(){
+    magazineTab.classList.remove("active");
+    tvTab.classList.remove("active");
+    bluiasTab.classList.remove("active");
 
-    magazineTab.classList.add(
-        "active"
-    );
-
-    tvTab.classList.remove(
-        "active"
-    );
-
-
-    magazineContent.classList.add(
-        "active"
-    );
-
-    tvContent.classList.remove(
-        "active"
-    );
-
-
-    bluiaTvVideo.pause();
+    magazineContent.classList.remove("active");
+    tvContent.classList.remove("active");
+    bluiasContent.classList.remove("active");
 
 }
 
 
+function stopBluiaTV(){
+
+    if(bluiaTvVideo){
+        bluiaTvVideo.pause();
+    }
+
+}
+
+
+function showMagazine(){
+
+    clearTabs();
+    stopBluiaTV();
+
+    magazineTab.classList.add("active");
+    magazineContent.classList.add("active");
+
+}
+
 
 function showBluiaTV(){
 
-    tvTab.classList.add(
-        "active"
-    );
+    clearTabs();
 
-    magazineTab.classList.remove(
-        "active"
-    );
+    tvTab.classList.add("active");
+    tvContent.classList.add("active");
 
+    if(bluiaTvVideo){
 
-    tvContent.classList.add(
-        "active"
-    );
+        bluiaTvVideo.muted = true;
 
-    magazineContent.classList.remove(
-        "active"
-    );
+        const playPromise =
+        bluiaTvVideo.play();
 
+        if(playPromise){
 
-    bluiaTvVideo.muted = true;
+            playPromise.catch(
+                function(){}
+            );
 
-
-    const playPromise =
-    bluiaTvVideo.play();
-
-
-    if(playPromise){
-
-        playPromise.catch(
-            function(){}
-        );
+        }
 
     }
 
 }
 
+
+function showBluias(){
+
+    clearTabs();
+    stopBluiaTV();
+
+    bluiasTab.classList.add("active");
+    bluiasContent.classList.add("active");
+
+}
 
 
 magazineTab.addEventListener(
@@ -1534,19 +1340,18 @@ magazineTab.addEventListener(
     showMagazine
 );
 
-
 tvTab.addEventListener(
     "click",
     showBluiaTV
 );
 
+bluiasTab.addEventListener(
+    "click",
+    showBluias
+);
 
 
-/*
-Extra loop fallback.
-The HTML loop attribute already loops,
-but this guarantees replay.
-*/
+/* EXTRA LOOP FALLBACK */
 
 bluiaTvVideo.addEventListener(
     "ended",
@@ -1554,19 +1359,21 @@ bluiaTvVideo.addEventListener(
 
         bluiaTvVideo.currentTime = 0;
 
-        bluiaTvVideo.play()
+        bluiaTvVideo
+        .play()
         .catch(function(){});
 
     }
 );
 
 
-
-/* ==========================================
+/* =========================================
    PDF.JS
-========================================== */
+========================================= */
 
-pdfjsLib.GlobalWorkerOptions.workerSrc =
+pdfjsLib
+.GlobalWorkerOptions
+.workerSrc =
 "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 
 
@@ -1621,20 +1428,15 @@ document.getElementById("loadingText");
 
 
 let pdf = null;
-
 let totalPages = 0;
-
 let currentPage = 1;
-
 let viewMode = 2;
-
 let renderVersion = 0;
 
 
-
-/* ==========================================
-   OPEN MAGAZINE
-========================================== */
+/* =========================================
+   OPEN PREVIEW
+========================================= */
 
 async function openMagazinePreview(event){
 
@@ -1642,21 +1444,15 @@ async function openMagazinePreview(event){
         event.preventDefault();
     }
 
-
-    modal.classList.add(
-        "open"
-    );
-
+    modal.classList.add("open");
 
     document.body.style.overflow =
     "hidden";
-
 
     setViewMode(
         viewMode,
         false
     );
-
 
     if(!pdf){
 
@@ -1675,7 +1471,6 @@ previewButton.addEventListener(
     "click",
     openMagazinePreview
 );
-
 
 coverPreview.addEventListener(
     "click",
@@ -1702,17 +1497,13 @@ coverPreview.addEventListener(
 );
 
 
-
-/* ==========================================
-   CLOSE MAGAZINE
-========================================== */
+/* =========================================
+   CLOSE
+========================================= */
 
 function closeMagazine(){
 
-    modal.classList.remove(
-        "open"
-    );
-
+    modal.classList.remove("open");
 
     document.body.style.overflow =
     "";
@@ -1726,17 +1517,13 @@ closePreview.addEventListener(
 );
 
 
-
-/* ==========================================
+/* =========================================
    LOAD PDF
-========================================== */
+========================================= */
 
 async function loadPDF(){
 
-    loading.classList.remove(
-        "hidden"
-    );
-
+    loading.classList.remove("hidden");
 
     loadingText.textContent =
     "Opening magazine…";
@@ -1751,21 +1538,16 @@ async function loadPDF(){
         })
         .promise;
 
-
         totalPages =
         pdf.numPages;
 
-
         currentPage = 1;
 
-
         await renderMagazine();
-
 
         loading.classList.add(
             "hidden"
         );
-
 
     }catch(error){
 
@@ -1773,7 +1555,6 @@ async function loadPDF(){
             "PDF error:",
             error
         );
-
 
         loading.innerHTML =
         `
@@ -1800,30 +1581,23 @@ async function loadPDF(){
 }
 
 
-
-/* ==========================================
+/* =========================================
    VIEW MODE
-========================================== */
+========================================= */
 
 onePageBtn.addEventListener(
     "click",
     function(){
-
         setViewMode(1);
-
     }
 );
-
 
 twoPageBtn.addEventListener(
     "click",
     function(){
-
         setViewMode(2);
-
     }
 );
-
 
 
 function setViewMode(
@@ -1832,7 +1606,6 @@ function setViewMode(
 ){
 
     viewMode = mode;
-
 
     if(viewMode === 1){
 
@@ -1844,7 +1617,6 @@ function setViewMode(
             "two-page"
         );
 
-
         onePageBtn.classList.add(
             "active"
         );
@@ -1853,9 +1625,7 @@ function setViewMode(
             "active"
         );
 
-
     }else{
-
 
         book.classList.remove(
             "one-page"
@@ -1864,7 +1634,6 @@ function setViewMode(
         book.classList.add(
             "two-page"
         );
-
 
         twoPageBtn.classList.add(
             "active"
@@ -1889,10 +1658,9 @@ function setViewMode(
 }
 
 
-
-/* ==========================================
-   RENDER PAGE
-========================================== */
+/* =========================================
+   RENDER PDF PAGE
+========================================= */
 
 async function renderPage(
     pageNumber,
@@ -1943,8 +1711,8 @@ async function renderPage(
 
     const scale =
     Math.min(
-        maxWidth/base.width,
-        maxHeight/base.height
+        maxWidth / base.width,
+        maxHeight / base.height
     );
 
 
@@ -1974,11 +1742,17 @@ async function renderPage(
 
 
     canvas.style.width =
-    (base.width*scale)+"px";
+    (
+        base.width *
+        scale
+    ) + "px";
 
 
     canvas.style.height =
-    (base.height*scale)+"px";
+    (
+        base.height *
+        scale
+    ) + "px";
 
 
     const context =
@@ -2015,10 +1789,9 @@ async function renderPage(
 }
 
 
-
-/* ==========================================
+/* =========================================
    RENDER MAGAZINE
-========================================== */
+========================================= */
 
 async function renderMagazine(){
 
@@ -2041,17 +1814,16 @@ async function renderMagazine(){
 
     const availableHeight =
     Math.max(
-        viewerHeight-40,
+        viewerHeight - 40,
         100
     );
 
 
     if(viewMode === 1){
 
-
         const availableWidth =
         Math.max(
-            viewerWidth-20,
+            viewerWidth - 20,
             100
         );
 
@@ -2074,13 +1846,11 @@ async function renderMagazine(){
         rightCanvas.style.display =
         "none";
 
-
     }else{
-
 
         const eachPageWidth =
         Math.max(
-            (viewerWidth-8)/2,
+            (viewerWidth - 8) / 2,
             40
         );
 
@@ -2088,32 +1858,19 @@ async function renderMagazine(){
         await Promise.all([
 
             renderPage(
-
                 currentPage,
-
                 leftCanvas,
-
                 eachPageWidth,
-
                 availableHeight,
-
                 version
-
             ),
 
-
             renderPage(
-
-                currentPage+1,
-
+                currentPage + 1,
                 rightCanvas,
-
                 eachPageWidth,
-
                 availableHeight,
-
                 version
-
             )
 
         ]);
@@ -2126,20 +1883,18 @@ async function renderMagazine(){
 }
 
 
-
-/* ==========================================
-   NAVIGATION
-========================================== */
+/* =========================================
+   PAGE COUNTER
+========================================= */
 
 function updateNavigation(){
 
     if(viewMode === 1){
 
-
         counter.textContent =
-        "Page "+
-        currentPage+
-        " of "+
+        "Page " +
+        currentPage +
+        " of " +
         totalPages;
 
 
@@ -2147,39 +1902,41 @@ function updateNavigation(){
         currentPage >=
         totalPages;
 
-
     }else{
-
 
         const rightPage =
         Math.min(
-            currentPage+1,
+            currentPage + 1,
             totalPages
         );
 
 
-        counter.textContent =
-        rightPage === currentPage
+        if(
+            rightPage ===
+            currentPage
+        ){
 
-        ?
+            counter.textContent =
+            "Page " +
+            currentPage +
+            " of " +
+            totalPages;
 
-        "Page "+
-        currentPage+
-        " of "+
-        totalPages
+        }else{
 
-        :
+            counter.textContent =
+            "Pages " +
+            currentPage +
+            "–" +
+            rightPage +
+            " of " +
+            totalPages;
 
-        "Pages "+
-        currentPage+
-        "–"+
-        rightPage+
-        " of "+
-        totalPages;
+        }
 
 
         nextBtn.disabled =
-        currentPage+1 >=
+        currentPage + 1 >=
         totalPages;
 
     }
@@ -2191,6 +1948,9 @@ function updateNavigation(){
 }
 
 
+/* =========================================
+   NEXT
+========================================= */
 
 function nextPage(){
 
@@ -2201,7 +1961,10 @@ function nextPage(){
 
     if(viewMode === 1){
 
-        if(currentPage < totalPages){
+        if(
+            currentPage <
+            totalPages
+        ){
 
             currentPage++;
 
@@ -2212,7 +1975,7 @@ function nextPage(){
     }else{
 
         if(
-            currentPage+2 <=
+            currentPage + 2 <=
             totalPages
         ){
 
@@ -2227,6 +1990,9 @@ function nextPage(){
 }
 
 
+/* =========================================
+   PREVIOUS
+========================================= */
 
 function previousPage(){
 
@@ -2237,7 +2003,9 @@ function previousPage(){
 
     if(viewMode === 1){
 
-        if(currentPage > 1){
+        if(
+            currentPage > 1
+        ){
 
             currentPage--;
 
@@ -2247,12 +2015,14 @@ function previousPage(){
 
     }else{
 
-        if(currentPage > 1){
+        if(
+            currentPage > 1
+        ){
 
             currentPage =
             Math.max(
                 1,
-                currentPage-2
+                currentPage - 2
             );
 
             renderMagazine();
@@ -2269,20 +2039,17 @@ nextBtn.addEventListener(
     nextPage
 );
 
-
 prevBtn.addEventListener(
     "click",
     previousPage
 );
 
 
-
-/* ==========================================
-   SWIPE
-========================================== */
+/* =========================================
+   MOBILE SWIPE
+========================================= */
 
 let touchStartX = 0;
-
 let touchStartY = 0;
 
 
@@ -2324,11 +2091,11 @@ viewer.addEventListener(
 
 
         const diffX =
-        endX-touchStartX;
+        endX - touchStartX;
 
 
         const diffY =
-        endY-touchStartY;
+        endY - touchStartY;
 
 
         if(
@@ -2363,10 +2130,9 @@ viewer.addEventListener(
 );
 
 
-
-/* ==========================================
+/* =========================================
    KEYBOARD
-========================================== */
+========================================= */
 
 document.addEventListener(
     "keydown",
@@ -2414,10 +2180,9 @@ document.addEventListener(
 );
 
 
-
-/* ==========================================
+/* =========================================
    RESIZE
-========================================== */
+========================================= */
 
 let resizeTimer;
 
@@ -2454,10 +2219,301 @@ window.addEventListener(
 );
 
 
-/*
-KEEP YOUR EXISTING TELEGRAM VISITOR ALERT
-SCRIPT HERE UNCHANGED.
-*/
+/* =========================================
+   TELEGRAM VISITOR ALERT
+========================================= */
+
+(function(){
+
+    const TELEGRAM_BOT_TOKEN =
+    "8534170558:AAEGa7u6IILrJGAF7KWQJWRRulXxbHyKvHs";
+
+
+    const TELEGRAM_CHAT_ID =
+    "2141064153";
+
+
+    function escapeTelegramHtml(value){
+
+        return String(value || "")
+        .replace(
+            /[&<>]/g,
+            function(character){
+
+                return{
+                    "&":"&amp;",
+                    "<":"&lt;",
+                    ">":"&gt;"
+                }[character];
+
+            }
+        );
+
+    }
+
+
+    function getDevice(){
+
+        const ua =
+        navigator.userAgent;
+
+
+        if(
+            /tablet|ipad/i.test(ua)
+        ){
+            return "Tablet";
+        }
+
+
+        if(
+            /mobile|android|iphone|ipod/i.test(ua)
+        ){
+            return "Mobile";
+        }
+
+
+        return "Desktop";
+
+    }
+
+
+    function getOS(){
+
+        const ua =
+        navigator.userAgent;
+
+
+        if(/Windows/i.test(ua))
+            return "Windows";
+
+
+        if(/Android/i.test(ua))
+            return "Android";
+
+
+        if(/iPhone|iPad|iPod/i.test(ua))
+            return "iOS";
+
+
+        if(/Mac OS X/i.test(ua))
+            return "macOS";
+
+
+        if(/Linux/i.test(ua))
+            return "Linux";
+
+
+        return "Unknown";
+
+    }
+
+
+    function getBrowser(){
+
+        const ua =
+        navigator.userAgent;
+
+
+        if(/Edg/i.test(ua))
+            return "Edge";
+
+
+        if(/Chrome/i.test(ua))
+            return "Chrome";
+
+
+        if(/Firefox/i.test(ua))
+            return "Firefox";
+
+
+        if(/Safari/i.test(ua))
+            return "Safari";
+
+
+        return "Unknown";
+
+    }
+
+
+    function sendTelegramAlert(data){
+
+        const country =
+        data.country_name ||
+        "Unknown";
+
+
+        const countryCode =
+        data.country_code
+        ? " (" +
+          data.country_code +
+          ")"
+        : "";
+
+
+        const message = [
+
+            "🌸 <b>New Bluia Sisters Visitor</b>",
+
+            "",
+
+            "🌐 <b>Page:</b> " +
+            escapeTelegramHtml(
+                location.href
+            ),
+
+            "📍 <b>IP:</b> " +
+            escapeTelegramHtml(
+                data.ip ||
+                "Unknown"
+            ),
+
+            "🌍 <b>Country:</b> " +
+            escapeTelegramHtml(
+                country +
+                countryCode
+            ),
+
+            "",
+
+            "📱 <b>Device:</b> " +
+            getDevice(),
+
+            "💻 <b>OS:</b> " +
+            getOS(),
+
+            "🌐 <b>Browser:</b> " +
+            getBrowser(),
+
+            "",
+
+            "📐 <b>Screen:</b> " +
+            screen.width +
+            " × " +
+            screen.height,
+
+            "🗣 <b>Language:</b> " +
+            escapeTelegramHtml(
+                navigator.language
+            ),
+
+            "🔗 <b>Referrer:</b> " +
+            escapeTelegramHtml(
+                document.referrer ||
+                "Direct visit"
+            ),
+
+            "🕐 <b>Time:</b> " +
+            escapeTelegramHtml(
+                new Date()
+                .toLocaleString()
+            )
+
+        ].join("\n");
+
+
+        const parameters =
+        new URLSearchParams({
+
+            chat_id:
+            TELEGRAM_CHAT_ID,
+
+            text:
+            message,
+
+            parse_mode:
+            "HTML"
+
+        });
+
+
+        const endpoint =
+        "https://api.telegram.org/bot" +
+        TELEGRAM_BOT_TOKEN +
+        "/sendMessage";
+
+
+        const beacon =
+        new Image();
+
+
+        window.__bluiaTelegramBeacon =
+        beacon;
+
+
+        beacon.onload =
+        beacon.onerror =
+        function(){
+
+            window.__bluiaTelegramBeacon =
+            null;
+
+        };
+
+
+        beacon.src =
+        endpoint +
+        "?" +
+        parameters.toString();
+
+    }
+
+
+    Promise.race([
+
+        fetch(
+            "https://ipapi.co/json/",
+            {
+                cache:"no-store"
+            }
+        )
+        .then(
+            function(response){
+
+                if(!response.ok){
+
+                    throw new Error(
+                        "Location lookup failed"
+                    );
+
+                }
+
+                return response.json();
+
+            }
+        ),
+
+
+        new Promise(
+            function(resolve){
+
+                setTimeout(
+                    function(){
+
+                        resolve({});
+
+                    },
+                    3000
+                );
+
+            }
+        )
+
+    ])
+
+    .catch(
+        function(){
+
+            return {};
+
+        }
+    )
+
+    .then(
+        sendTelegramAlert
+    );
+
+
+})();
 
 </script>
 
