@@ -35,13 +35,12 @@ body {
         #fff8fb;
 }
 
+
 /* MAIN CARD */
 
 .card {
     width: min(100%, 430px);
-
     padding: 20px 18px 26px;
-
     text-align: center;
 
     background: rgba(255,255,255,.88);
@@ -52,6 +51,7 @@ body {
     box-shadow:
         0 20px 60px rgba(173,75,111,.12);
 }
+
 
 /* BRAND */
 
@@ -68,6 +68,7 @@ body {
     font-style: italic;
 }
 
+
 /* COVER */
 
 .cover-wrap {
@@ -83,15 +84,39 @@ body {
 
     box-shadow:
         0 15px 40px rgba(110,40,66,.14);
+
+    cursor: pointer;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.cover-wrap:hover {
+    transform: translateY(-3px) scale(1.01);
+
+    box-shadow:
+        0 20px 48px rgba(110,40,66,.20);
+}
+
+.cover-wrap:active {
+    transform: scale(.98);
+}
+
+.cover-wrap:focus-visible {
+    outline: 3px solid #e979a4;
+    outline-offset: 4px;
 }
 
 .cover {
     display: block;
+
     width: 100%;
     height: auto;
 
     border-radius: 10px;
 }
+
 
 /* PRODUCT */
 
@@ -115,6 +140,7 @@ body {
 .price {
     font: 25px Georgia, serif;
 }
+
 
 /* BUTTONS */
 
@@ -181,6 +207,7 @@ body {
     background: #fff0f6;
 }
 
+
 /* AFTER PAYMENT */
 
 .after-payment {
@@ -239,6 +266,7 @@ body {
     padding-top: 4px;
 }
 
+
 /* ==================================
    MAGAZINE VIEWER
 ================================== */
@@ -264,6 +292,7 @@ body {
 .magazine-modal.open {
     display: flex;
 }
+
 
 /* HEADER */
 
@@ -293,6 +322,7 @@ body {
 .magazine-title {
     font: 17px Georgia, serif;
 }
+
 
 /* PAGE MODE */
 
@@ -336,6 +366,7 @@ body {
     color: #893755;
 }
 
+
 /* CLOSE */
 
 .close {
@@ -355,13 +386,13 @@ body {
     cursor: pointer;
 }
 
+
 /* VIEWER */
 
 .viewer {
     position: relative;
 
     flex: 1;
-
     min-height: 0;
 
     display: flex;
@@ -379,6 +410,7 @@ body {
         pan-y pinch-zoom;
 }
 
+
 /* BOOK */
 
 .book {
@@ -395,6 +427,7 @@ body {
     max-height: 100%;
 }
 
+
 /* PAGE */
 
 .page {
@@ -410,9 +443,9 @@ body {
 
 .page canvas {
     display: block;
-
     background: white;
 }
+
 
 /* BOOK SPINE */
 
@@ -444,13 +477,15 @@ body {
         );
 }
 
+
 /* ONE PAGE */
 
 .book.one-page .right-page {
     display: none;
 }
 
-/* NAV */
+
+/* NAVIGATION */
 
 .nav-btn {
     position: absolute;
@@ -490,7 +525,8 @@ body {
     right: 5px;
 }
 
-/* PAGE NUMBER */
+
+/* PAGE COUNTER */
 
 .counter {
     position: absolute;
@@ -503,8 +539,7 @@ body {
     transform:
         translateX(-50%);
 
-    padding:
-        9px 16px;
+    padding: 9px 16px;
 
     border-radius: 100px;
 
@@ -517,6 +552,7 @@ body {
 
     white-space: nowrap;
 }
+
 
 /* LOADING */
 
@@ -562,10 +598,10 @@ body {
 
 @keyframes spin {
     to {
-        transform:
-            rotate(360deg);
+        transform: rotate(360deg);
     }
 }
+
 
 /* DESKTOP */
 
@@ -599,8 +635,8 @@ body {
 </style>
 </head>
 
-
 <body>
+
 
 <main class="card">
 
@@ -609,7 +645,15 @@ body {
     </div>
 
 
-    <div class="cover-wrap">
+    <!-- CLICKABLE COVER -->
+
+    <div
+        class="cover-wrap"
+        id="coverPreview"
+        role="button"
+        tabindex="0"
+        aria-label="Preview Bluia Sisters Magazine"
+    >
 
         <img
             class="cover"
@@ -709,7 +753,7 @@ body {
 
 
 
-<!-- MAGAZINE PREVIEW -->
+<!-- MAGAZINE VIEWER -->
 
 <div
     class="magazine-modal"
@@ -727,7 +771,6 @@ body {
 
         <div class="view-switch">
 
-
             <button
                 class="view-btn"
                 id="onePageBtn"
@@ -744,7 +787,6 @@ body {
             >
                 2 Pages
             </button>
-
 
         </div>
 
@@ -772,10 +814,10 @@ body {
             class="nav-btn prev"
             id="prevBtn"
             type="button"
+            aria-label="Previous page"
         >
             ‹
         </button>
-
 
 
         <div
@@ -805,15 +847,14 @@ body {
         </div>
 
 
-
         <button
             class="nav-btn next"
             id="nextBtn"
             type="button"
+            aria-label="Next page"
         >
             ›
         </button>
-
 
 
         <div
@@ -822,7 +863,6 @@ body {
         >
             Loading…
         </div>
-
 
 
         <div
@@ -847,9 +887,7 @@ body {
 
 <!-- PDF.JS -->
 
-<script
-src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
 
 <script>
@@ -858,13 +896,12 @@ pdfjsLib.GlobalWorkerOptions.workerSrc =
 "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 
 
-/* =========================================
-   YOUR S3 PDF
-========================================= */
+/* =====================================
+   MAGAZINE PDF
+===================================== */
 
 const PDF_URL =
 "https://bluia.s3.us-east-1.amazonaws.com/2f09de46-430c-44b7-bcc1-22a2d7357297+(2).pdf";
-
 
 
 const modal =
@@ -872,6 +909,9 @@ const modal =
 
 const previewButton =
     document.getElementById("previewButton");
+
+const coverPreview =
+    document.getElementById("coverPreview");
 
 const closePreview =
     document.getElementById("closePreview");
@@ -921,34 +961,75 @@ let viewMode = 2;
 let renderVersion = 0;
 
 
-/* =========================================
-   OPEN MAGAZINE
-========================================= */
+/* =====================================
+   OPEN PREVIEW
+===================================== */
+
+async function openMagazinePreview(event) {
+
+    if (event) {
+        event.preventDefault();
+    }
+
+
+    modal.classList.add(
+        "open"
+    );
+
+
+    document.body.style.overflow =
+        "hidden";
+
+
+    setViewMode(
+        viewMode,
+        false
+    );
+
+
+    if (!pdf) {
+
+        await loadPDF();
+
+    } else {
+
+        renderMagazine();
+
+    }
+
+}
+
+
+/* PREVIEW BUTTON */
 
 previewButton.addEventListener(
     "click",
-    async function(event) {
-
-        event.preventDefault();
-
-        modal.classList.add("open");
-
-        document.body.style.overflow =
-            "hidden";
-
-        setViewMode(
-            viewMode,
-            false
-        );
+    openMagazinePreview
+);
 
 
-        if (!pdf) {
+/* COVER IMAGE */
 
-            await loadPDF();
+coverPreview.addEventListener(
+    "click",
+    openMagazinePreview
+);
 
-        } else {
 
-            renderMagazine();
+/* KEYBOARD ON COVER */
+
+coverPreview.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Enter" ||
+            event.key === " "
+        ) {
+
+            event.preventDefault();
+
+            openMagazinePreview();
 
         }
 
@@ -956,15 +1037,9 @@ previewButton.addEventListener(
 );
 
 
-/* =========================================
-   CLOSE
-========================================= */
-
-closePreview.addEventListener(
-    "click",
-    closeMagazine
-);
-
+/* =====================================
+   CLOSE PREVIEW
+===================================== */
 
 function closeMagazine() {
 
@@ -972,21 +1047,29 @@ function closeMagazine() {
         "open"
     );
 
+
     document.body.style.overflow =
         "";
 
 }
 
 
-/* =========================================
+closePreview.addEventListener(
+    "click",
+    closeMagazine
+);
+
+
+/* =====================================
    LOAD PDF
-========================================= */
+===================================== */
 
 async function loadPDF() {
 
     loading.classList.remove(
         "hidden"
     );
+
 
     loadingText.textContent =
         "Opening magazine…";
@@ -1039,9 +1122,8 @@ async function loadPDF() {
 
             <br><br>
 
-            Please make sure the S3 PDF
-            is publicly accessible and
-            CORS is enabled.
+            Please make sure the S3 PDF is publicly accessible
+            and CORS is enabled for bluia.online.
 
         </div>
         `;
@@ -1051,9 +1133,9 @@ async function loadPDF() {
 }
 
 
-/* =========================================
-   VIEW MODE
-========================================= */
+/* =====================================
+   PAGE MODE
+===================================== */
 
 onePageBtn.addEventListener(
     "click",
@@ -1083,13 +1165,12 @@ function setViewMode(
     viewMode = mode;
 
 
-    if (
-        viewMode === 1
-    ) {
+    if (viewMode === 1) {
 
         book.classList.add(
             "one-page"
         );
+
 
         book.classList.remove(
             "two-page"
@@ -1099,6 +1180,7 @@ function setViewMode(
         onePageBtn.classList.add(
             "active"
         );
+
 
         twoPageBtn.classList.remove(
             "active"
@@ -1110,6 +1192,7 @@ function setViewMode(
             "one-page"
         );
 
+
         book.classList.add(
             "two-page"
         );
@@ -1118,6 +1201,7 @@ function setViewMode(
         twoPageBtn.classList.add(
             "active"
         );
+
 
         onePageBtn.classList.remove(
             "active"
@@ -1138,9 +1222,9 @@ function setViewMode(
 }
 
 
-/* =========================================
+/* =====================================
    RENDER PAGE
-========================================= */
+===================================== */
 
 async function renderPage(
     pageNumber,
@@ -1191,13 +1275,8 @@ async function renderPage(
 
     const scale =
         Math.min(
-
-            maxWidth /
-            base.width,
-
-            maxHeight /
-            base.height
-
+            maxWidth / base.width,
+            maxHeight / base.height
         );
 
 
@@ -1210,22 +1289,17 @@ async function renderPage(
 
     const viewport =
         page.getViewport({
-
             scale:
-                scale *
-                dpr
-
+                scale * dpr
         });
 
 
     const cssWidth =
-        base.width *
-        scale;
+        base.width * scale;
 
 
     const cssHeight =
-        base.height *
-        scale;
+        base.height * scale;
 
 
     canvas.width =
@@ -1282,9 +1356,9 @@ async function renderPage(
 }
 
 
-/* =========================================
+/* =====================================
    RENDER MAGAZINE
-========================================= */
+===================================== */
 
 async function renderMagazine() {
 
@@ -1312,11 +1386,7 @@ async function renderMagazine() {
         );
 
 
-    /* ONE PAGE */
-
-    if (
-        viewMode === 1
-    ) {
+    if (viewMode === 1) {
 
         const availableWidth =
             Math.max(
@@ -1343,12 +1413,9 @@ async function renderMagazine() {
         rightCanvas.style.display =
             "none";
 
-    }
 
+    } else {
 
-    /* TWO PAGES */
-
-    else {
 
         const eachPageWidth =
             Math.max(
@@ -1398,15 +1465,13 @@ async function renderMagazine() {
 }
 
 
-/* =========================================
+/* =====================================
    COUNTER
-========================================= */
+===================================== */
 
 function updateNavigation() {
 
-    if (
-        viewMode === 1
-    ) {
+    if (viewMode === 1) {
 
         counter.textContent =
             "Page " +
@@ -1419,7 +1484,9 @@ function updateNavigation() {
             currentPage >=
             totalPages;
 
+
     } else {
+
 
         const rightPage =
             Math.min(
@@ -1429,7 +1496,8 @@ function updateNavigation() {
 
 
         if (
-            rightPage === currentPage
+            rightPage ===
+            currentPage
         ) {
 
             counter.textContent =
@@ -1464,9 +1532,9 @@ function updateNavigation() {
 }
 
 
-/* =========================================
-   NEXT
-========================================= */
+/* =====================================
+   NEXT PAGE
+===================================== */
 
 function nextPage() {
 
@@ -1475,9 +1543,7 @@ function nextPage() {
     }
 
 
-    if (
-        viewMode === 1
-    ) {
+    if (viewMode === 1) {
 
         if (
             currentPage <
@@ -1490,7 +1556,9 @@ function nextPage() {
 
         }
 
+
     } else {
+
 
         if (
             currentPage + 2 <=
@@ -1508,9 +1576,9 @@ function nextPage() {
 }
 
 
-/* =========================================
-   PREVIOUS
-========================================= */
+/* =====================================
+   PREVIOUS PAGE
+===================================== */
 
 function previousPage() {
 
@@ -1519,9 +1587,7 @@ function previousPage() {
     }
 
 
-    if (
-        viewMode === 1
-    ) {
+    if (viewMode === 1) {
 
         if (
             currentPage > 1
@@ -1533,7 +1599,9 @@ function previousPage() {
 
         }
 
+
     } else {
+
 
         if (
             currentPage > 1
@@ -1567,9 +1635,9 @@ prevBtn.addEventListener(
 );
 
 
-/* =========================================
+/* =====================================
    MOBILE SWIPE
-========================================= */
+===================================== */
 
 let touchStartX = 0;
 let touchStartY = 0;
@@ -1613,38 +1681,29 @@ viewer.addEventListener(
 
 
         const diffX =
-            endX -
-            touchStartX;
+            endX - touchStartX;
 
 
         const diffY =
-            endY -
-            touchStartY;
+            endY - touchStartY;
 
 
         if (
             Math.abs(diffX) <=
             Math.abs(diffY)
         ) {
-
             return;
-
         }
 
 
         if (
-            Math.abs(diffX) <
-            40
+            Math.abs(diffX) < 40
         ) {
-
             return;
-
         }
 
 
-        if (
-            diffX < 0
-        ) {
+        if (diffX < 0) {
 
             nextPage();
 
@@ -1661,9 +1720,9 @@ viewer.addEventListener(
 );
 
 
-/* =========================================
+/* =====================================
    KEYBOARD
-========================================= */
+===================================== */
 
 document.addEventListener(
     "keydown",
@@ -1674,9 +1733,7 @@ document.addEventListener(
                 "open"
             )
         ) {
-
             return;
-
         }
 
 
@@ -1713,9 +1770,9 @@ document.addEventListener(
 );
 
 
-/* =========================================
-   RESIZE
-========================================= */
+/* =====================================
+   WINDOW RESIZE
+===================================== */
 
 let resizeTimer;
 
@@ -1752,20 +1809,19 @@ window.addEventListener(
 );
 
 
-/* =========================================
+/* =====================================
    TELEGRAM VISITOR ALERT
-========================================= */
+===================================== */
 
 (function () {
 
     /*
-       Keep your existing Telegram
-       bot token and chat ID here.
+      Put your existing Telegram bot token
+      and chat ID here.
     */
 
     const TELEGRAM_BOT_TOKEN =
         "YOUR_TELEGRAM_BOT_TOKEN";
-
 
     const TELEGRAM_CHAT_ID =
         "YOUR_TELEGRAM_CHAT_ID";
@@ -1799,18 +1855,14 @@ window.addEventListener(
         if (
             /tablet|ipad/i.test(ua)
         ) {
-
             return "Tablet";
-
         }
 
 
         if (
             /mobile|android|iphone|ipod/i.test(ua)
         ) {
-
             return "Mobile";
-
         }
 
 
@@ -1828,18 +1880,14 @@ window.addEventListener(
         if (/Windows/i.test(ua))
             return "Windows";
 
-
         if (/Android/i.test(ua))
             return "Android";
-
 
         if (/iPhone|iPad|iPod/i.test(ua))
             return "iOS";
 
-
         if (/Mac OS X/i.test(ua))
             return "macOS";
-
 
         if (/Linux/i.test(ua))
             return "Linux";
@@ -1859,14 +1907,11 @@ window.addEventListener(
         if (/Edg/i.test(ua))
             return "Edge";
 
-
         if (/Chrome/i.test(ua))
             return "Chrome";
 
-
         if (/Firefox/i.test(ua))
             return "Firefox";
-
 
         if (/Safari/i.test(ua))
             return "Safari";
@@ -1955,7 +2000,7 @@ window.addEventListener(
             "🕐 <b>Time:</b> " +
             escapeTelegramHtml(
                 new Date()
-                .toLocaleString()
+                    .toLocaleString()
             )
 
         ].join("\n");
@@ -2028,6 +2073,7 @@ window.addEventListener(
 
                 }
 
+
                 return response.json();
 
             }
@@ -2062,6 +2108,7 @@ window.addEventListener(
     .then(
         sendTelegramAlert
     );
+
 
 })();
 
