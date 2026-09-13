@@ -3,12 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bluia Sisters Magazine</title>
+
+<title>Bluia Sisters</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+    box-sizing:border-box;
+}
 
-html,body{
+html,
+body{
     margin:0;
     padding:0;
     min-height:100%;
@@ -17,34 +21,56 @@ html,body{
 body{
     min-height:100svh;
     padding:10px 12px 30px;
+
     display:flex;
     align-items:flex-start;
     justify-content:center;
+
     font-family:Arial,Helvetica,sans-serif;
     color:#49323a;
+
     background:
         radial-gradient(circle at top left,#ffe3ed 0%,transparent 42%),
         radial-gradient(circle at bottom right,#ffdce9 0%,transparent 42%),
         #fff8fb;
 }
 
-/* MAIN CARD */
+
+/* =====================================
+   MAIN CARD
+===================================== */
 
 .card{
     width:min(100%,430px);
+
     padding:20px 18px 26px;
+
     text-align:center;
-    background:rgba(255,255,255,.88);
+
+    background:rgba(255,255,255,.9);
+
     border:1px solid #f2d6e0;
     border-radius:25px;
-    box-shadow:0 20px 60px rgba(173,75,111,.12);
+
+    box-shadow:
+        0 20px 60px
+        rgba(173,75,111,.12);
 }
 
-/* BRAND */
+
+/* =====================================
+   BRAND
+===================================== */
 
 .brand{
     margin-bottom:16px;
-    font:34px Georgia,"Times New Roman",serif;
+
+    font:
+        34px
+        Georgia,
+        "Times New Roman",
+        serif;
+
     letter-spacing:-1.5px;
 }
 
@@ -53,41 +79,138 @@ body{
     font-style:italic;
 }
 
-/* COVER */
+
+/* =====================================
+   MAIN TABS
+===================================== */
+
+.main-tabs{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+
+    gap:5px;
+
+    padding:4px;
+
+    margin-bottom:20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fdebf2,
+            #f8dce7
+        );
+
+    border:1px solid #f1cbd9;
+
+    border-radius:100px;
+}
+
+.main-tab{
+    min-height:43px;
+
+    padding:0 14px;
+
+    border:0;
+    border-radius:100px;
+
+    background:transparent;
+
+    color:#a75d79;
+
+    font-size:13px;
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:
+        background .2s ease,
+        color .2s ease,
+        box-shadow .2s ease,
+        transform .2s ease;
+}
+
+.main-tab.active{
+    background:#fff;
+
+    color:#bd416f;
+
+    box-shadow:
+        0 5px 15px
+        rgba(155,55,95,.13);
+}
+
+.main-tab:active{
+    transform:scale(.97);
+}
+
+
+/* =====================================
+   TAB CONTENT
+===================================== */
+
+.tab-content{
+    display:none;
+}
+
+.tab-content.active{
+    display:block;
+}
+
+
+/* =====================================
+   MAGAZINE COVER
+===================================== */
 
 .cover-wrap{
     width:min(76vw,270px);
+
     margin:0 auto 19px;
+
     padding:7px;
+
     background:#fff;
+
     border-radius:15px;
-    box-shadow:0 15px 40px rgba(110,40,66,.14);
+
+    box-shadow:
+        0 15px 40px
+        rgba(110,40,66,.14);
+
     cursor:pointer;
-    transition:transform .2s ease,box-shadow .2s ease;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
 }
 
 .cover-wrap:hover{
-    transform:translateY(-3px) scale(1.01);
-    box-shadow:0 20px 48px rgba(110,40,66,.20);
+    transform:
+        translateY(-3px)
+        scale(1.01);
+
+    box-shadow:
+        0 20px 48px
+        rgba(110,40,66,.20);
 }
 
 .cover-wrap:active{
     transform:scale(.98);
 }
 
-.cover-wrap:focus-visible{
-    outline:3px solid #e979a4;
-    outline-offset:4px;
-}
-
 .cover{
     display:block;
+
     width:100%;
     height:auto;
+
     border-radius:10px;
 }
 
-/* PRODUCT */
+
+/* =====================================
+   PRODUCT
+===================================== */
 
 .meta{
     margin-bottom:18px;
@@ -95,10 +218,14 @@ body{
 
 .label{
     margin-bottom:7px;
+
     color:#bc4a76;
+
     font-size:10px;
     font-weight:700;
+
     letter-spacing:2px;
+
     text-transform:uppercase;
 }
 
@@ -106,24 +233,35 @@ body{
     font:25px Georgia,serif;
 }
 
-/* BUTTONS */
+
+/* =====================================
+   BUTTONS
+===================================== */
 
 .actions{
     display:grid;
+
     gap:11px;
 }
 
 .button{
     min-height:55px;
+
     display:flex;
     align-items:center;
     justify-content:center;
+
     padding:0 20px;
+
     border-radius:100px;
+
     text-decoration:none;
+
     font-size:14px;
     font-weight:700;
+
     cursor:pointer;
+
     transition:
         transform .18s ease,
         box-shadow .18s ease,
@@ -134,130 +272,195 @@ body{
     transform:scale(.98);
 }
 
-/* ONE-TIME BUY */
+
+/* BUY */
 
 .buy{
     color:#fff;
-    background:linear-gradient(135deg,#ea76a2,#c83d73);
-    box-shadow:0 12px 28px rgba(200,61,115,.25);
+
+    background:
+        linear-gradient(
+            135deg,
+            #ea76a2,
+            #c83d73
+        );
+
+    box-shadow:
+        0 12px 28px
+        rgba(200,61,115,.25);
 }
 
 .buy:hover{
     transform:translateY(-2px);
-    box-shadow:0 16px 32px rgba(200,61,115,.30);
 }
 
-/* MONTHLY SUBSCRIPTION */
+
+/* SUBSCRIPTION */
 
 .subscribe{
     position:relative;
+
     overflow:hidden;
+
     color:#fff;
+
     background:
         linear-gradient(
             135deg,
-            #8f315b,
-            #c94679 55%,
-            #e77fa5
+            #8c2e58,
+            #c84678,
+            #e679a2
         );
-    box-shadow:0 12px 28px rgba(143,49,91,.24);
+
+    box-shadow:
+        0 12px 28px
+        rgba(143,49,91,.25);
 }
 
 .subscribe:hover{
     transform:translateY(-2px);
-    box-shadow:0 16px 34px rgba(143,49,91,.31);
 }
 
 .subscribe::before{
     content:"";
+
     position:absolute;
-    top:-40px;
-    left:-70px;
-    width:70px;
-    height:140px;
+
+    width:60px;
+    height:160px;
+
+    top:-50px;
+    left:-100px;
+
     transform:rotate(25deg);
-    background:rgba(255,255,255,.17);
-    transition:left .5s ease;
+
+    background:
+        rgba(255,255,255,.17);
+
+    transition:left .6s ease;
 }
 
 .subscribe:hover::before{
-    left:110%;
+    left:120%;
 }
 
-.subscribe-text{
+.subscribe span{
     position:relative;
     z-index:2;
 }
 
+
 /* SUBSCRIPTION INFO */
 
 .subscription-info{
-    margin-top:3px;
+    margin-top:2px;
+
     padding:15px 16px;
+
     text-align:left;
-    background:linear-gradient(135deg,#fff5f9,#ffedf4);
-    border:1px solid #f3cada;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff7fa,
+            #ffedf4
+        );
+
+    border:
+        1px solid #f1cada;
+
     border-radius:17px;
 }
 
 .subscription-title{
     margin-bottom:7px;
+
     color:#9f3c63;
-    font-family:Georgia,"Times New Roman",serif;
-    font-size:16px;
+
+    font:
+        16px
+        Georgia,
+        serif;
 }
 
 .subscription-info p{
     margin:0;
+
     color:#765361;
+
     font-size:11.5px;
+
     line-height:1.6;
 }
 
 .subscription-email{
     margin-top:8px !important;
+
     color:#a13f65 !important;
+
     font-weight:700;
 }
+
 
 /* PREVIEW */
 
 .preview{
     color:#bd416f;
+
     background:#fff;
-    border:1px solid #efbfd1;
+
+    border:
+        1px solid #efbfd1;
 }
 
 .preview:hover{
     background:#fff0f6;
 }
 
-/* AFTER PAYMENT */
+
+/* =====================================
+   AFTER PAYMENT
+===================================== */
 
 .after-payment{
     margin-top:24px;
+
     padding-top:21px;
-    border-top:1px solid #f0d5df;
+
+    border-top:
+        1px solid #f0d5df;
 }
 
 .after-payment h2{
     margin:0 0 16px;
-    font:19px Georgia,serif;
+
+    font:
+        19px
+        Georgia,
+        serif;
+
     color:#5d3846;
 }
 
 .steps{
     display:grid;
+
     gap:12px;
+
     text-align:left;
 }
 
 .step{
     display:flex;
+
     align-items:flex-start;
+
     gap:12px;
+
     color:#80616c;
+
     font-size:12px;
+
     line-height:1.55;
 }
 
@@ -265,12 +468,17 @@ body{
     width:28px;
     min-width:28px;
     height:28px;
+
     display:flex;
     align-items:center;
     justify-content:center;
+
     border-radius:50%;
+
     background:#fbe3ec;
+
     color:#c74676;
+
     font-weight:700;
 }
 
@@ -278,16 +486,170 @@ body{
     padding-top:4px;
 }
 
-/* =================================
-   MAGAZINE VIEWER
-================================= */
+
+/* =================================================
+   BLUIA TV
+================================================= */
+
+.bluia-tv{
+    padding:
+        2px
+        0
+        12px;
+}
+
+
+/* VIDEO BORDER */
+
+.tv-video-border{
+    position:relative;
+
+    width:min(100%,285px);
+
+    margin:
+        0 auto;
+
+    padding:5px;
+
+    border-radius:25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffd1e1,
+            #d84d83,
+            #8f315b,
+            #ef91b5,
+            #ffd7e5
+        );
+
+    box-shadow:
+        0 20px 50px
+        rgba(151,44,86,.25);
+}
+
+
+/* LIGHT INNER BORDER */
+
+.tv-video-border::before{
+    content:"";
+
+    position:absolute;
+
+    inset:-1px;
+
+    border-radius:26px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.7);
+
+    pointer-events:none;
+}
+
+
+/* 9:16 CONTAINER */
+
+.tv-video-wrap{
+    position:relative;
+
+    width:100%;
+
+    aspect-ratio:9 / 16;
+
+    overflow:hidden;
+
+    border-radius:20px;
+
+    background:#180d12;
+}
+
+
+/* VIDEO */
+
+.tv-video{
+    display:block;
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    background:#111;
+
+    pointer-events:none;
+}
+
+
+/* SUBTLE VIDEO OVERLAY */
+
+.tv-video-wrap::after{
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(255,255,255,.04),
+            transparent 20%,
+            transparent 80%,
+            rgba(0,0,0,.12)
+        );
+}
+
+
+/* TV TEXT */
+
+.tv-coming{
+    margin-top:22px;
+
+    font:
+        24px
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    color:#a93d68;
+}
+
+.tv-coming span{
+    color:#dc6692;
+
+    font-style:italic;
+}
+
+.tv-small{
+    margin-top:7px;
+
+    color:#98717f;
+
+    font-size:11px;
+
+    letter-spacing:1.2px;
+
+    text-transform:uppercase;
+}
+
+
+/* =================================================
+   PDF MAGAZINE VIEWER
+================================================= */
 
 .magazine-modal{
     position:fixed;
+
     inset:0;
+
     z-index:10000;
+
     display:none;
     flex-direction:column;
+
     background:
         radial-gradient(
             circle at center,
@@ -301,111 +663,198 @@ body{
     display:flex;
 }
 
+
+/* HEADER */
+
 .magazine-header{
     position:relative;
+
     min-height:61px;
+
     display:flex;
+
     align-items:center;
+
     justify-content:space-between;
-    padding:env(safe-area-inset-top) 12px 0;
-    background:rgba(33,13,21,.94);
-    border-bottom:1px solid rgba(255,255,255,.10);
-    color:#fff;
+
+    padding:
+        env(safe-area-inset-top)
+        12px
+        0;
+
+    color:white;
+
+    background:
+        rgba(33,13,21,.94);
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.1);
 }
 
 .magazine-title{
-    font:17px Georgia,serif;
+    font:
+        17px
+        Georgia,
+        serif;
 }
 
-/* PAGE MODE */
+
+/* VIEW MODE */
 
 .view-switch{
     position:absolute;
+
     left:50%;
-    transform:translateX(-50%);
+
+    transform:
+        translateX(-50%);
+
     padding:3px;
+
     display:flex;
+
     border-radius:100px;
-    background:rgba(255,255,255,.12);
+
+    background:
+        rgba(255,255,255,.12);
 }
 
 .view-btn{
-    padding:8px 13px;
+    padding:
+        8px
+        13px;
+
     border:0;
+
     border-radius:100px;
+
     background:transparent;
-    color:rgba(255,255,255,.68);
+
+    color:
+        rgba(255,255,255,.68);
+
     font-size:11px;
+
     font-weight:700;
+
     cursor:pointer;
 }
 
 .view-btn.active{
     background:#fbd8e6;
+
     color:#893755;
 }
+
 
 /* CLOSE */
 
 .close{
     width:39px;
     height:39px;
+
     border:0;
+
     border-radius:50%;
-    background:rgba(255,255,255,.11);
-    color:white;
+
+    background:
+        rgba(255,255,255,.11);
+
+    color:#fff;
+
     font-size:25px;
+
     cursor:pointer;
 }
+
 
 /* VIEWER */
 
 .viewer{
     position:relative;
+
     flex:1;
+
     min-height:0;
+
     display:flex;
+
     align-items:center;
+
     justify-content:center;
+
     overflow:hidden;
-    padding:12px 4px 62px;
-    touch-action:pan-y pinch-zoom;
+
+    padding:
+        12px
+        4px
+        62px;
+
+    touch-action:
+        pan-y pinch-zoom;
 }
+
+
+/* BOOK */
 
 .book{
     position:relative;
+
     display:flex;
+
     align-items:center;
+
     justify-content:center;
-    gap:0;
+
     max-width:100%;
+
     max-height:100%;
 }
 
+
+/* PAGE */
+
 .page{
     position:relative;
-    background:#fff;
+
     overflow:hidden;
-    box-shadow:0 12px 35px rgba(0,0,0,.42);
+
+    background:#fff;
+
+    box-shadow:
+        0 12px 35px
+        rgba(0,0,0,.42);
 }
 
 .page canvas{
     display:block;
+
     background:#fff;
 }
 
-/* TWO PAGE SPINE */
+
+/* SPINE */
 
 .book.two-page::after{
     content:"";
+
     position:absolute;
+
     top:0;
     bottom:0;
+
     left:50%;
+
     width:8px;
-    transform:translateX(-50%);
+
+    transform:
+        translateX(-50%);
+
     z-index:5;
+
     pointer-events:none;
+
     background:
         linear-gradient(
             to right,
@@ -419,20 +868,33 @@ body{
     display:none;
 }
 
-/* NAVIGATION */
+
+/* NAV */
 
 .nav-btn{
     position:absolute;
+
     top:50%;
-    transform:translateY(-50%);
+
+    transform:
+        translateY(-50%);
+
     z-index:20;
+
     width:42px;
     height:42px;
+
     border:0;
+
     border-radius:50%;
-    background:rgba(0,0,0,.58);
+
+    background:
+        rgba(0,0,0,.58);
+
     color:#fff;
+
     font-size:27px;
+
     cursor:pointer;
 }
 
@@ -448,34 +910,63 @@ body{
     right:5px;
 }
 
+
 /* COUNTER */
 
 .counter{
     position:absolute;
-    bottom:calc(12px + env(safe-area-inset-bottom));
+
+    bottom:
+        calc(
+            12px +
+            env(safe-area-inset-bottom)
+        );
+
     left:50%;
-    transform:translateX(-50%);
-    padding:9px 16px;
+
+    transform:
+        translateX(-50%);
+
+    padding:
+        9px
+        16px;
+
     border-radius:100px;
-    background:rgba(0,0,0,.68);
+
+    background:
+        rgba(0,0,0,.68);
+
     color:#fff;
+
     font-size:12px;
+
     white-space:nowrap;
 }
+
 
 /* LOADING */
 
 .loading{
     position:absolute;
+
     inset:0;
+
     z-index:50;
+
     display:flex;
+
     align-items:center;
+
     justify-content:center;
+
     flex-direction:column;
+
     gap:13px;
+
     background:#2a1720;
+
     color:#fff;
+
     font-size:13px;
 }
 
@@ -486,15 +977,28 @@ body{
 .spinner{
     width:36px;
     height:36px;
+
     border-radius:50%;
-    border:3px solid rgba(255,255,255,.15);
+
+    border:
+        3px solid
+        rgba(255,255,255,.15);
+
     border-top-color:#f6b6ce;
-    animation:spin .8s linear infinite;
+
+    animation:
+        spin .8s linear infinite;
 }
 
 @keyframes spin{
-    to{transform:rotate(360deg)}
+    to{
+        transform:
+            rotate(360deg);
+    }
 }
+
+
+/* DESKTOP */
 
 @media(min-width:700px){
 
@@ -503,7 +1007,10 @@ body{
     }
 
     .viewer{
-        padding:28px 65px 65px;
+        padding:
+            28px
+            65px
+            65px;
     }
 
     .nav-btn{
@@ -523,169 +1030,292 @@ body{
 </style>
 </head>
 
+
 <body>
 
+
 <main class="card">
+
+
+    <!-- BRAND -->
 
     <div class="brand">
         Bluia <span>Sisters</span>
     </div>
 
-    <!-- CLICKABLE COVER -->
+
+
+    <!-- MAIN TABS -->
+
+    <div class="main-tabs">
+
+        <button
+            class="main-tab active"
+            id="magazineTab"
+            type="button"
+        >
+            Magazine
+        </button>
+
+
+        <button
+            class="main-tab"
+            id="tvTab"
+            type="button"
+        >
+            Bluia TV
+        </button>
+
+    </div>
+
+
+
+    <!-- =====================================
+         MAGAZINE TAB
+    ====================================== -->
 
     <div
-        class="cover-wrap"
-        id="coverPreview"
-        role="button"
-        tabindex="0"
-        aria-label="Preview Bluia Sisters Magazine"
+        class="tab-content active"
+        id="magazineContent"
     >
 
-        <img
-            class="cover"
-            src="https://pub-09d49e1729be4c218a60f330ac3b61b2.r2.dev/1786278084054-photo_2026-08-09_14-19-03.jpg"
-            alt="Bluia Sisters Magazine"
+
+        <!-- COVER -->
+
+        <div
+            class="cover-wrap"
+            id="coverPreview"
+            role="button"
+            tabindex="0"
+            aria-label="Preview Bluia Sisters Magazine"
         >
+
+            <img
+                class="cover"
+                src="https://pub-09d49e1729be4c218a60f330ac3b61b2.r2.dev/1786278084054-photo_2026-08-09_14-19-03.jpg"
+                alt="Bluia Sisters Magazine"
+            >
+
+        </div>
+
+
+
+        <!-- PRODUCT -->
+
+        <div class="meta">
+
+            <div class="label">
+                Digital Magazine
+            </div>
+
+            <div class="price">
+                US$1
+            </div>
+
+        </div>
+
+
+
+        <!-- ACTIONS -->
+
+        <div class="actions">
+
+
+            <!-- SINGLE MAGAZINE -->
+
+            <a
+                class="button buy"
+                href="https://buy.stripe.com/28E7sD0Vq5Dwa5b6RhbAs02"
+            >
+                Buy Magazine — US$1
+            </a>
+
+
+
+            <!-- MONTHLY -->
+
+            <a
+                class="button subscribe"
+                href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04"
+            >
+
+                <span>
+                    ♡ Bluia Sisters Monthly — US$4.99/month
+                </span>
+
+            </a>
+
+
+
+            <!-- MONTHLY INFO -->
+
+            <div class="subscription-info">
+
+                <div class="subscription-title">
+                    Bluia Sisters Monthly
+                </div>
+
+                <p>
+                    Get the latest Bluia Sisters PDF magazines delivered to your email as soon as they are released, plus email updates about Bluia Sisters.
+                </p>
+
+                <p class="subscription-email">
+                    Important: Magazines will only be sent to the email address you use during payment.
+                </p>
+
+            </div>
+
+
+
+            <!-- PREVIEW -->
+
+            <a
+                class="button preview"
+                href="#"
+                id="previewButton"
+            >
+                Preview Magazine
+            </a>
+
+        </div>
+
+
+
+        <!-- AFTER PAYMENT -->
+
+        <section class="after-payment">
+
+            <h2>
+                After payment
+            </h2>
+
+
+            <div class="steps">
+
+                <div class="step">
+
+                    <div class="number">
+                        1
+                    </div>
+
+                    <div class="step-text">
+                        Complete your secure payment with Stripe.
+                    </div>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="number">
+                        2
+                    </div>
+
+                    <div class="step-text">
+                        Open the URL shown after payment.
+                    </div>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="number">
+                        3
+                    </div>
+
+                    <div class="step-text">
+                        Follow the instructions on that page to get your full copy of the Bluia Sisters Magazine.
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
 
     </div>
 
-    <div class="meta">
 
-        <div class="label">
-            Digital Magazine
-        </div>
 
-        <div class="price">
-            US$1
-        </div>
+    <!-- =====================================
+         BLUIA TV TAB
+    ====================================== -->
+
+    <div
+        class="tab-content"
+        id="tvContent"
+    >
+
+
+        <section class="bluia-tv">
+
+
+            <div class="tv-video-border">
+
+
+                <div class="tv-video-wrap">
+
+                    <video
+                        class="tv-video"
+                        id="bluiaTvVideo"
+                        src="https://res.cloudinary.com/dvbwmtdwh/video/upload/v1789311784/grok-video-cf8c13b6-2059-4030-b86b-68d8e78a7615_btfolj.mp4"
+                        autoplay
+                        muted
+                        loop
+                        playsinline
+                        preload="auto"
+                        disablepictureinpicture
+                    ></video>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="tv-coming">
+                Bluia TV <span>coming soon</span>
+            </div>
+
+
+            <div class="tv-small">
+                Bluia Sisters
+            </div>
+
+
+        </section>
+
 
     </div>
 
-    <div class="actions">
-
-        <!-- SINGLE MAGAZINE -->
-
-        <a
-            class="button buy"
-            href="https://buy.stripe.com/28E7sD0Vq5Dwa5b6RhbAs02"
-        >
-            Buy Magazine — US$1
-        </a>
-
-
-        <!-- MONTHLY SUBSCRIPTION -->
-
-        <a
-            class="button subscribe"
-            href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04"
-        >
-            <span class="subscribe-text">
-                ♡ Bluia Sisters Monthly — US$4.99/month
-            </span>
-        </a>
-
-
-        <!-- SUBSCRIPTION DESCRIPTION -->
-
-        <div class="subscription-info">
-
-            <div class="subscription-title">
-                Bluia Sisters Monthly
-            </div>
-
-            <p>
-                Get the latest Bluia Sisters PDF magazines delivered to your email as soon as they are released, plus email updates about Bluia Sisters.
-            </p>
-
-            <p class="subscription-email">
-                Important: Magazines will only be sent to the email address you use during payment.
-            </p>
-
-        </div>
-
-
-        <!-- PREVIEW -->
-
-        <a
-            class="button preview"
-            href="#"
-            id="previewButton"
-        >
-            Preview Magazine
-        </a>
-
-    </div>
-
-
-    <!-- AFTER PAYMENT -->
-
-    <section class="after-payment">
-
-        <h2>
-            After payment
-        </h2>
-
-        <div class="steps">
-
-            <div class="step">
-
-                <div class="number">
-                    1
-                </div>
-
-                <div class="step-text">
-                    Complete your secure payment with Stripe.
-                </div>
-
-            </div>
-
-            <div class="step">
-
-                <div class="number">
-                    2
-                </div>
-
-                <div class="step-text">
-                    Open the URL shown after payment.
-                </div>
-
-            </div>
-
-            <div class="step">
-
-                <div class="number">
-                    3
-                </div>
-
-                <div class="step-text">
-                    Follow the instructions on that page to get your full copy of the Bluia Sisters Magazine.
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
 
 </main>
 
 
-<!-- =================================
-     MAGAZINE VIEWER
-================================= -->
+
+<!-- =====================================
+     MAGAZINE PREVIEW
+===================================== -->
 
 <div
     class="magazine-modal"
     id="magazineModal"
 >
 
+
     <div class="magazine-header">
+
 
         <div class="magazine-title">
             Bluia Sisters
         </div>
 
+
         <div class="view-switch">
+
 
             <button
                 class="view-btn"
@@ -695,6 +1325,7 @@ body{
                 1 Page
             </button>
 
+
             <button
                 class="view-btn active"
                 id="twoPageBtn"
@@ -703,7 +1334,9 @@ body{
                 2 Pages
             </button>
 
+
         </div>
+
 
         <button
             class="close"
@@ -714,7 +1347,9 @@ body{
             ×
         </button>
 
+
     </div>
+
 
 
     <div
@@ -722,14 +1357,15 @@ body{
         id="viewer"
     >
 
+
         <button
             class="nav-btn prev"
             id="prevBtn"
             type="button"
-            aria-label="Previous page"
         >
             ‹
         </button>
+
 
 
         <div
@@ -737,25 +1373,37 @@ body{
             id="book"
         >
 
+
             <div class="page left-page">
-                <canvas id="leftCanvas"></canvas>
+
+                <canvas
+                    id="leftCanvas"
+                ></canvas>
+
             </div>
+
 
             <div class="page right-page">
-                <canvas id="rightCanvas"></canvas>
+
+                <canvas
+                    id="rightCanvas"
+                ></canvas>
+
             </div>
 
+
         </div>
+
 
 
         <button
             class="nav-btn next"
             id="nextBtn"
             type="button"
-            aria-label="Next page"
         >
             ›
         </button>
+
 
 
         <div
@@ -764,6 +1412,7 @@ body{
         >
             Loading…
         </div>
+
 
 
         <div
@@ -779,24 +1428,147 @@ body{
 
         </div>
 
+
     </div>
 
+
 </div>
+
 
 
 <!-- PDF.JS -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
+
 <script>
+
+/* ==========================================
+   MAIN TABS
+========================================== */
+
+const magazineTab =
+document.getElementById("magazineTab");
+
+const tvTab =
+document.getElementById("tvTab");
+
+const magazineContent =
+document.getElementById("magazineContent");
+
+const tvContent =
+document.getElementById("tvContent");
+
+const bluiaTvVideo =
+document.getElementById("bluiaTvVideo");
+
+
+
+function showMagazine(){
+
+    magazineTab.classList.add(
+        "active"
+    );
+
+    tvTab.classList.remove(
+        "active"
+    );
+
+
+    magazineContent.classList.add(
+        "active"
+    );
+
+    tvContent.classList.remove(
+        "active"
+    );
+
+
+    bluiaTvVideo.pause();
+
+}
+
+
+
+function showBluiaTV(){
+
+    tvTab.classList.add(
+        "active"
+    );
+
+    magazineTab.classList.remove(
+        "active"
+    );
+
+
+    tvContent.classList.add(
+        "active"
+    );
+
+    magazineContent.classList.remove(
+        "active"
+    );
+
+
+    bluiaTvVideo.muted = true;
+
+
+    const playPromise =
+    bluiaTvVideo.play();
+
+
+    if(playPromise){
+
+        playPromise.catch(
+            function(){}
+        );
+
+    }
+
+}
+
+
+
+magazineTab.addEventListener(
+    "click",
+    showMagazine
+);
+
+
+tvTab.addEventListener(
+    "click",
+    showBluiaTV
+);
+
+
+
+/*
+Extra loop fallback.
+The HTML loop attribute already loops,
+but this guarantees replay.
+*/
+
+bluiaTvVideo.addEventListener(
+    "ended",
+    function(){
+
+        bluiaTvVideo.currentTime = 0;
+
+        bluiaTvVideo.play()
+        .catch(function(){});
+
+    }
+);
+
+
+
+/* ==========================================
+   PDF.JS
+========================================== */
 
 pdfjsLib.GlobalWorkerOptions.workerSrc =
 "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 
-
-/* =================================
-   PDF URL
-================================= */
 
 const PDF_URL =
 "https://bluia.s3.us-east-1.amazonaws.com/2f09de46-430c-44b7-bcc1-22a2d7357297+(2).pdf";
@@ -849,15 +1621,20 @@ document.getElementById("loadingText");
 
 
 let pdf = null;
+
 let totalPages = 0;
+
 let currentPage = 1;
+
 let viewMode = 2;
+
 let renderVersion = 0;
 
 
-/* =================================
-   OPEN PREVIEW
-================================= */
+
+/* ==========================================
+   OPEN MAGAZINE
+========================================== */
 
 async function openMagazinePreview(event){
 
@@ -865,15 +1642,21 @@ async function openMagazinePreview(event){
         event.preventDefault();
     }
 
-    modal.classList.add("open");
+
+    modal.classList.add(
+        "open"
+    );
+
 
     document.body.style.overflow =
     "hidden";
+
 
     setViewMode(
         viewMode,
         false
     );
+
 
     if(!pdf){
 
@@ -884,6 +1667,7 @@ async function openMagazinePreview(event){
         renderMagazine();
 
     }
+
 }
 
 
@@ -913,13 +1697,15 @@ coverPreview.addEventListener(
             openMagazinePreview();
 
         }
+
     }
 );
 
 
-/* =================================
-   CLOSE
-================================= */
+
+/* ==========================================
+   CLOSE MAGAZINE
+========================================== */
 
 function closeMagazine(){
 
@@ -927,8 +1713,10 @@ function closeMagazine(){
         "open"
     );
 
+
     document.body.style.overflow =
     "";
+
 }
 
 
@@ -938,9 +1726,10 @@ closePreview.addEventListener(
 );
 
 
-/* =================================
+
+/* ==========================================
    LOAD PDF
-================================= */
+========================================== */
 
 async function loadPDF(){
 
@@ -948,8 +1737,10 @@ async function loadPDF(){
         "hidden"
     );
 
+
     loadingText.textContent =
     "Opening magazine…";
+
 
     try{
 
@@ -960,16 +1751,21 @@ async function loadPDF(){
         })
         .promise;
 
+
         totalPages =
         pdf.numPages;
 
+
         currentPage = 1;
 
+
         await renderMagazine();
+
 
         loading.classList.add(
             "hidden"
         );
+
 
     }catch(error){
 
@@ -977,6 +1773,7 @@ async function loadPDF(){
             "PDF error:",
             error
         );
+
 
         loading.innerHTML =
         `
@@ -993,23 +1790,27 @@ async function loadPDF(){
 
             <br><br>
 
-            Please make sure the S3 PDF is publicly accessible
-            and CORS is enabled for bluia.online.
+            Please make sure the S3 PDF is publicly accessible and CORS is enabled for bluia.online.
 
         </div>
         `;
+
     }
+
 }
 
 
-/* =================================
+
+/* ==========================================
    VIEW MODE
-================================= */
+========================================== */
 
 onePageBtn.addEventListener(
     "click",
     function(){
+
         setViewMode(1);
+
     }
 );
 
@@ -1017,9 +1818,12 @@ onePageBtn.addEventListener(
 twoPageBtn.addEventListener(
     "click",
     function(){
+
         setViewMode(2);
+
     }
 );
+
 
 
 function setViewMode(
@@ -1028,6 +1832,7 @@ function setViewMode(
 ){
 
     viewMode = mode;
+
 
     if(viewMode === 1){
 
@@ -1039,6 +1844,7 @@ function setViewMode(
             "two-page"
         );
 
+
         onePageBtn.classList.add(
             "active"
         );
@@ -1047,7 +1853,9 @@ function setViewMode(
             "active"
         );
 
+
     }else{
+
 
         book.classList.remove(
             "one-page"
@@ -1057,6 +1865,7 @@ function setViewMode(
             "two-page"
         );
 
+
         twoPageBtn.classList.add(
             "active"
         );
@@ -1064,20 +1873,26 @@ function setViewMode(
         onePageBtn.classList.remove(
             "active"
         );
+
     }
+
 
     if(
         render &&
         pdf
     ){
+
         renderMagazine();
+
     }
+
 }
 
 
-/* =================================
-   RENDER PDF PAGE
-================================= */
+
+/* ==========================================
+   RENDER PAGE
+========================================== */
 
 async function renderPage(
     pageNumber,
@@ -1096,33 +1911,42 @@ async function renderPage(
         "none";
 
         return;
+
     }
+
 
     canvas.style.display =
     "block";
+
 
     const page =
     await pdf.getPage(
         pageNumber
     );
 
+
     if(
         version !==
         renderVersion
     ){
+
         return;
+
     }
+
 
     const base =
     page.getViewport({
         scale:1
     });
 
+
     const scale =
     Math.min(
-        maxWidth / base.width,
-        maxHeight / base.height
+        maxWidth/base.width,
+        maxHeight/base.height
     );
+
 
     const dpr =
     Math.min(
@@ -1130,32 +1954,32 @@ async function renderPage(
         2
     );
 
+
     const viewport =
     page.getViewport({
         scale:scale*dpr
     });
 
-    const cssWidth =
-    base.width*scale;
-
-    const cssHeight =
-    base.height*scale;
 
     canvas.width =
     Math.floor(
         viewport.width
     );
 
+
     canvas.height =
     Math.floor(
         viewport.height
     );
 
+
     canvas.style.width =
-    cssWidth+"px";
+    (base.width*scale)+"px";
+
 
     canvas.style.height =
-    cssHeight+"px";
+    (base.height*scale)+"px";
+
 
     const context =
     canvas.getContext(
@@ -1165,8 +1989,10 @@ async function renderPage(
         }
     );
 
+
     context.fillStyle =
     "#ffffff";
+
 
     context.fillRect(
         0,
@@ -1174,6 +2000,7 @@ async function renderPage(
         canvas.width,
         canvas.height
     );
+
 
     await page.render({
 
@@ -1184,12 +2011,14 @@ async function renderPage(
         viewport
 
     }).promise;
+
 }
 
 
-/* =================================
+
+/* ==========================================
    RENDER MAGAZINE
-================================= */
+========================================== */
 
 async function renderMagazine(){
 
@@ -1197,14 +2026,18 @@ async function renderMagazine(){
         return;
     }
 
+
     const version =
     ++renderVersion;
+
 
     const viewerWidth =
     viewer.clientWidth;
 
+
     const viewerHeight =
     viewer.clientHeight;
+
 
     const availableHeight =
     Math.max(
@@ -1215,24 +2048,35 @@ async function renderMagazine(){
 
     if(viewMode === 1){
 
+
         const availableWidth =
         Math.max(
             viewerWidth-20,
             100
         );
 
+
         await renderPage(
+
             currentPage,
+
             leftCanvas,
+
             availableWidth,
+
             availableHeight,
+
             version
+
         );
+
 
         rightCanvas.style.display =
         "none";
 
+
     }else{
+
 
         const eachPageWidth =
         Math.max(
@@ -1240,38 +2084,57 @@ async function renderMagazine(){
             40
         );
 
+
         await Promise.all([
 
             renderPage(
+
                 currentPage,
+
                 leftCanvas,
+
                 eachPageWidth,
+
                 availableHeight,
+
                 version
+
             ),
 
+
             renderPage(
+
                 currentPage+1,
+
                 rightCanvas,
+
                 eachPageWidth,
+
                 availableHeight,
+
                 version
+
             )
 
         ]);
+
     }
 
+
     updateNavigation();
+
 }
 
 
-/* =================================
+
+/* ==========================================
    NAVIGATION
-================================= */
+========================================== */
 
 function updateNavigation(){
 
     if(viewMode === 1){
+
 
         counter.textContent =
         "Page "+
@@ -1279,11 +2142,14 @@ function updateNavigation(){
         " of "+
         totalPages;
 
+
         nextBtn.disabled =
         currentPage >=
         totalPages;
 
+
     }else{
+
 
         const rightPage =
         Math.min(
@@ -1291,36 +2157,39 @@ function updateNavigation(){
             totalPages
         );
 
-        if(
-            rightPage ===
-            currentPage
-        ){
 
-            counter.textContent =
-            "Page "+
-            currentPage+
-            " of "+
-            totalPages;
+        counter.textContent =
+        rightPage === currentPage
 
-        }else{
+        ?
 
-            counter.textContent =
-            "Pages "+
-            currentPage+
-            "–"+
-            rightPage+
-            " of "+
-            totalPages;
-        }
+        "Page "+
+        currentPage+
+        " of "+
+        totalPages
+
+        :
+
+        "Pages "+
+        currentPage+
+        "–"+
+        rightPage+
+        " of "+
+        totalPages;
+
 
         nextBtn.disabled =
         currentPage+1 >=
         totalPages;
+
     }
+
 
     prevBtn.disabled =
     currentPage <= 1;
+
 }
+
 
 
 function nextPage(){
@@ -1329,15 +2198,15 @@ function nextPage(){
         return;
     }
 
+
     if(viewMode === 1){
 
-        if(
-            currentPage <
-            totalPages
-        ){
+        if(currentPage < totalPages){
 
             currentPage++;
+
             renderMagazine();
+
         }
 
     }else{
@@ -1348,10 +2217,15 @@ function nextPage(){
         ){
 
             currentPage += 2;
+
             renderMagazine();
+
         }
+
     }
+
 }
+
 
 
 function previousPage(){
@@ -1360,12 +2234,15 @@ function previousPage(){
         return;
     }
 
+
     if(viewMode === 1){
 
         if(currentPage > 1){
 
             currentPage--;
+
             renderMagazine();
+
         }
 
     }else{
@@ -1379,8 +2256,11 @@ function previousPage(){
             );
 
             renderMagazine();
+
         }
+
     }
+
 }
 
 
@@ -1389,17 +2269,20 @@ nextBtn.addEventListener(
     nextPage
 );
 
+
 prevBtn.addEventListener(
     "click",
     previousPage
 );
 
 
-/* =================================
-   MOBILE SWIPE
-================================= */
+
+/* ==========================================
+   SWIPE
+========================================== */
 
 let touchStartX = 0;
+
 let touchStartY = 0;
 
 
@@ -1413,11 +2296,14 @@ viewer.addEventListener(
             return;
         }
 
+
         touchStartX =
         event.touches[0].clientX;
 
+
         touchStartY =
         event.touches[0].clientY;
+
     },
     {
         passive:true
@@ -1432,14 +2318,18 @@ viewer.addEventListener(
         const endX =
         event.changedTouches[0].clientX;
 
+
         const endY =
         event.changedTouches[0].clientY;
+
 
         const diffX =
         endX-touchStartX;
 
+
         const diffY =
         endY-touchStartY;
+
 
         if(
             Math.abs(diffX) <=
@@ -1448,17 +2338,24 @@ viewer.addEventListener(
             return;
         }
 
+
         if(
             Math.abs(diffX) < 40
         ){
             return;
         }
 
+
         if(diffX < 0){
+
             nextPage();
+
         }else{
+
             previousPage();
+
         }
+
     },
     {
         passive:true
@@ -1466,9 +2363,10 @@ viewer.addEventListener(
 );
 
 
-/* =================================
+
+/* ==========================================
    KEYBOARD
-================================= */
+========================================== */
 
 document.addEventListener(
     "keydown",
@@ -1482,35 +2380,47 @@ document.addEventListener(
             return;
         }
 
+
         if(
             event.key ===
             "ArrowRight"
         ){
+
             nextPage();
+
         }
+
 
         if(
             event.key ===
             "ArrowLeft"
         ){
+
             previousPage();
+
         }
+
 
         if(
             event.key ===
             "Escape"
         ){
+
             closeMagazine();
+
         }
+
     }
 );
 
 
-/* =================================
+
+/* ==========================================
    RESIZE
-================================= */
+========================================== */
 
 let resizeTimer;
+
 
 window.addEventListener(
     "resize",
@@ -1519,6 +2429,7 @@ window.addEventListener(
         clearTimeout(
             resizeTimer
         );
+
 
         resizeTimer =
         setTimeout(
@@ -1530,272 +2441,23 @@ window.addEventListener(
                         "open"
                     )
                 ){
+
                     renderMagazine();
+
                 }
+
             },
             180
         );
+
     }
 );
 
 
-/* =================================
-   TELEGRAM VISITOR ALERT
-================================= */
-
-(function(){
-
-    const TELEGRAM_BOT_TOKEN =
-    "8534170558:AAEGa7u6IILrJGAF7KWQJWRRulXxbHyKvHs";
-
-    const TELEGRAM_CHAT_ID =
-    "2141064153";
-
-
-    function escapeTelegramHtml(value){
-
-        return String(value || "")
-        .replace(
-            /[&<>]/g,
-            function(character){
-
-                return{
-                    "&":"&amp;",
-                    "<":"&lt;",
-                    ">":"&gt;"
-                }[character];
-            }
-        );
-    }
-
-
-    function getDevice(){
-
-        const ua =
-        navigator.userAgent;
-
-        if(
-            /tablet|ipad/i.test(ua)
-        ){
-            return "Tablet";
-        }
-
-        if(
-            /mobile|android|iphone|ipod/i.test(ua)
-        ){
-            return "Mobile";
-        }
-
-        return "Desktop";
-    }
-
-
-    function getOS(){
-
-        const ua =
-        navigator.userAgent;
-
-        if(/Windows/i.test(ua))
-            return "Windows";
-
-        if(/Android/i.test(ua))
-            return "Android";
-
-        if(/iPhone|iPad|iPod/i.test(ua))
-            return "iOS";
-
-        if(/Mac OS X/i.test(ua))
-            return "macOS";
-
-        if(/Linux/i.test(ua))
-            return "Linux";
-
-        return "Unknown";
-    }
-
-
-    function getBrowser(){
-
-        const ua =
-        navigator.userAgent;
-
-        if(/Edg/i.test(ua))
-            return "Edge";
-
-        if(/Chrome/i.test(ua))
-            return "Chrome";
-
-        if(/Firefox/i.test(ua))
-            return "Firefox";
-
-        if(/Safari/i.test(ua))
-            return "Safari";
-
-        return "Unknown";
-    }
-
-
-    function sendTelegramAlert(data){
-
-        const country =
-        data.country_name ||
-        "Unknown";
-
-        const countryCode =
-        data.country_code
-        ? " ("+data.country_code+")"
-        : "";
-
-
-        const message = [
-
-            "🌸 <b>New Bluia Sisters Magazine Visitor</b>",
-
-            "",
-
-            "🌐 <b>Page:</b> "+
-            escapeTelegramHtml(
-                location.href
-            ),
-
-            "📍 <b>IP:</b> "+
-            escapeTelegramHtml(
-                data.ip ||
-                "Unknown"
-            ),
-
-            "🌍 <b>Country:</b> "+
-            escapeTelegramHtml(
-                country+
-                countryCode
-            ),
-
-            "",
-
-            "📱 <b>Device:</b> "+
-            getDevice(),
-
-            "💻 <b>OS:</b> "+
-            getOS(),
-
-            "🌐 <b>Browser:</b> "+
-            getBrowser(),
-
-            "",
-
-            "📐 <b>Screen:</b> "+
-            screen.width+
-            " × "+
-            screen.height,
-
-            "🗣 <b>Language:</b> "+
-            escapeTelegramHtml(
-                navigator.language
-            ),
-
-            "🔗 <b>Referrer:</b> "+
-            escapeTelegramHtml(
-                document.referrer ||
-                "Direct visit"
-            ),
-
-            "🕐 <b>Time:</b> "+
-            escapeTelegramHtml(
-                new Date()
-                .toLocaleString()
-            )
-
-        ].join("\n");
-
-
-        const parameters =
-        new URLSearchParams({
-
-            chat_id:
-            TELEGRAM_CHAT_ID,
-
-            text:
-            message,
-
-            parse_mode:
-            "HTML"
-        });
-
-
-        const endpoint =
-        "https://api.telegram.org/bot"+
-        TELEGRAM_BOT_TOKEN+
-        "/sendMessage";
-
-
-        const beacon =
-        new Image();
-
-
-        window.__bluiaTelegramBeacon =
-        beacon;
-
-
-        beacon.onload =
-        beacon.onerror =
-        function(){
-
-            window.__bluiaTelegramBeacon =
-            null;
-        };
-
-
-        beacon.src =
-        endpoint+
-        "?"+
-        parameters.toString();
-    }
-
-
-    Promise.race([
-
-        fetch(
-            "https://ipapi.co/json/",
-            {
-                cache:"no-store"
-            }
-        )
-        .then(function(response){
-
-            if(!response.ok){
-
-                throw new Error(
-                    "Location lookup failed"
-                );
-            }
-
-            return response.json();
-        }),
-
-
-        new Promise(
-            function(resolve){
-
-                setTimeout(
-                    function(){
-                        resolve({});
-                    },
-                    3000
-                );
-            }
-        )
-
-    ])
-
-    .catch(function(){
-        return {};
-    })
-
-    .then(
-        sendTelegramAlert
-    );
-
-})();
+/*
+KEEP YOUR EXISTING TELEGRAM VISITOR ALERT
+SCRIPT HERE UNCHANGED.
+*/
 
 </script>
 
