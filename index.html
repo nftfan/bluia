@@ -1,320 +1,1160 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#15141c">
-<meta name="description" content="Midnight Letters by Bluia. A romantic magazine of fictional letters and AI portraits. Membership: $5 USD per month.">
-<title>Bluia . Online</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&family=DM+Sans:wght@400&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Bluia Sisters Magazine</title>
+
 <style>
-:root{color-scheme:dark;--bg:#15141c;--ink:#f6eee9;--muted:#b9afb7;--rose:#e9b6c3;--line:#43343f;--serif:'Cormorant Garamond',Georgia,serif}
-*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 'DM Sans',Arial,sans-serif}a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer}img{display:block;max-width:100%;height:auto}h1,h2,h3,p,figure{margin:0}h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.05}em{font-weight:400;color:var(--rose)}a:focus-visible,button:focus-visible{outline:2px solid var(--rose);outline-offset:5px}.wrap{width:min(1120px,calc(100% - 64px));margin:auto}.skip{position:absolute;top:-100px;left:16px;background:var(--rose);color:var(--bg);padding:12px;z-index:30}.skip:focus{top:12px}
-header{position:relative;background:#15141cf5;border-bottom:1px solid var(--line)}.header-inner{min-height:88px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{font:30px/1 var(--serif)}.brand small{display:block;margin-top:8px;font:9px/1.3 'DM Sans',sans-serif;letter-spacing:.25em;color:var(--rose);text-transform:uppercase}.header-actions{display:flex;align-items:center;gap:12px}.button{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:10px 22px;border:1px solid var(--rose);border-radius:999px;color:var(--bg);background:var(--rose);font-size:13px;line-height:1.4;transition:background .2s}.button:hover{background:#f8d5df}.button-outline{background:transparent;color:var(--ink);border-color:var(--line)}.button-outline:hover{background:#332631}.eyebrow{display:block;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--rose)}
-.intro{text-align:center;padding:78px 0 68px;max-width:760px;margin:auto}.intro h1{font-size:clamp(54px,7.8vw,94px);letter-spacing:-.035em;margin:24px 0}.intro p{color:var(--muted);max-width:440px;margin:auto;font-size:15px}.intro .scroll{display:inline-block;margin-top:28px;color:var(--rose);font:italic 22px var(--serif)}
-.timeline{position:relative;padding-bottom:20px}.timeline:before{content:'';position:absolute;top:0;bottom:0;left:50%;width:1px;background:var(--line)}.chapter{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:120px;align-items:center;margin-bottom:110px}.chapter:before{content:'';position:absolute;left:50%;top:50%;width:9px;height:9px;border:1px solid var(--rose);background:var(--bg);border-radius:50%;transform:translate(-4px,-50%)}.chapter:after{content:'';position:absolute;left:calc(50% - 34px);top:50%;width:26px;height:1px;background:var(--line)}.chapter:nth-child(even):after{left:calc(50% + 9px)}.chapter:nth-child(even) figure{grid-column:2;grid-row:1}.chapter:nth-child(even) .copy{grid-column:1;grid-row:1}.chapter img{width:100%;height:auto;object-fit:contain;border-radius:26px;background:#29232c}.copy{padding:20px 0}.copy h2{font-size:clamp(36px,4.2vw,56px);letter-spacing:-.025em;margin:20px 0 24px}.copy p{color:var(--muted);font-size:15px;line-height:1.95}
 
-.membership{text-align:center;border:1px solid var(--line);border-radius:28px;background:#201a24;padding:64px 28px;margin:10px 0 70px}.membership h2{font-size:clamp(42px,5vw,64px);margin:20px 0}.membership p{max-width:490px;margin:auto;color:var(--muted);font-size:14px}footer{border-top:1px solid var(--line);padding:28px 0 36px}.footer-row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:12px;color:var(--muted)}footer p{font-size:11px;color:var(--muted);margin-top:14px}footer a{color:var(--rose)}dialog{width:min(440px,calc(100% - 32px));border:1px solid var(--line);border-radius:22px;padding:30px;background:var(--bg);color:var(--ink)}dialog::backdrop{background:#000b}dialog h2{font-size:36px;margin-bottom:15px}dialog p{color:var(--muted);font-size:14px}dialog button{margin-top:24px}
-@media(max-width:760px){.wrap{width:calc(100% - 36px)}.header-inner{min-height:78px;gap:10px}.brand{font-size:25px}.header-actions{gap:7px}.header-actions .button{padding:9px 13px;font-size:12px}.intro{padding:50px 0 44px}.intro h1{font-size:64px}.timeline:before{left:8px}.chapter{grid-template-columns:minmax(0,1fr);gap:0;padding-left:34px;margin-bottom:52px}.chapter:nth-child(even) figure,.chapter:nth-child(even) .copy{grid-column:1;grid-row:auto}.chapter:before{left:8px;top:24px}.chapter:after,.chapter:nth-child(even):after{left:17px;top:24px;width:12px}.chapter img{border-radius:20px;height:auto}.copy{padding:25px 0 0}.copy h2{font-size:42px;margin:13px 0 18px}.copy p{font-size:15px}.membership{padding:42px 22px;margin-bottom:48px}}
-@media(max-width:380px){.brand{font-size:21px}.brand small{font-size:8px}.header-actions .button{padding:8px 10px;font-size:11px}.intro h1{font-size:54px}.copy h2{font-size:36px}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
-/* Minimal editorial spacing. */
-.intro{padding:52px 0 70px}.intro h1{font-size:clamp(48px,6vw,76px);margin:0}
-.chapter{margin-bottom:85px}.copy h2{margin:15px 0 20px}
-.membership{padding:34px 20px;margin:15px 0 45px;background:transparent;border:0;border-top:1px solid var(--line);border-radius:0}
-.membership h2{font-size:38px;margin:8px 0 25px}
-@media(max-width:760px){.intro{padding:36px 0 46px}.intro h1{font-size:48px}.chapter{margin-bottom:45px}.copy h2{font-size:36px}.membership h2{font-size:34px}}
-/* Compact typography and image viewer. */
-body{font-size:14px}.header-inner{min-height:70px}.brand{font-size:25px}.brand small{font-size:8px;margin-top:6px}
-.header-actions{gap:8px}.header-actions .button{min-height:34px;padding:7px 14px;font-size:11px;letter-spacing:.015em;border-radius:8px}
-.intro h1{font-size:clamp(38px,4.8vw,58px)}.copy h2{font-size:clamp(28px,3.2vw,40px)}.copy p{font-size:13px;line-height:1.85}.eyebrow{font-size:9px}.membership h2{font-size:30px}
-.footer-row{justify-content:center;font-size:12px;letter-spacing:.12em}
-.image-open{display:block;width:100%;padding:0;border:0;border-radius:26px;background:transparent;cursor:zoom-in;color:inherit}
-.image-open img{width:100%;height:auto;object-fit:contain}
-html.viewer-open{overflow:hidden}
-.image-viewer{width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;margin:0;padding:54px 18px 18px;border:0;border-radius:0;background:transparent;overflow:hidden}
-.image-viewer[open]{display:flex;align-items:center;justify-content:center;animation:viewer-in .65s ease-out both}
-.image-viewer::backdrop{background:rgba(12,10,16,.94)}
-.image-viewer[open]::backdrop{animation:backdrop-in .65s ease-out both}
-.image-viewer img{display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;border-radius:14px}
-.image-viewer .viewer-close{position:absolute;top:10px;right:14px;margin:0;width:40px;height:40px;padding:0;border:1px solid var(--line);border-radius:50%;background:var(--bg);color:var(--ink);font:26px/1 Arial,sans-serif}
-@keyframes viewer-in{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
-@keyframes backdrop-in{from{opacity:0}to{opacity:1}}
-@media(max-width:760px){.header-inner{min-height:64px}.brand{font-size:22px}.header-actions .button{padding:7px 11px;font-size:11px}.intro h1{font-size:40px}.copy h2{font-size:30px}.copy p{font-size:13px}.membership h2{font-size:28px}.image-open{border-radius:20px}}
-@media(max-width:380px){.brand{font-size:20px}.header-actions{gap:6px}.header-actions .button{padding:7px 9px;font-size:10px}.intro h1{font-size:36px}}
-@media(prefers-reduced-motion:reduce){.image-viewer[open],.image-viewer[open]::backdrop{animation:none}}
+* {
+    box-sizing: border-box;
+}
 
-.member-dialog{max-height:90dvh;overflow:auto;padding:30px;position:relative}
-.member-dialog h2{font-size:30px;margin:8px 0 18px}.member-dialog .dismiss{position:absolute;right:12px;top:10px;background:none;border:0;color:var(--muted);font-size:25px;margin:0;padding:5px 10px}
-.member-dialog label{display:block;font-size:12px;margin:16px 0 6px;color:var(--muted)}
-.member-dialog input{display:block;width:100%;min-height:44px;border:1px solid var(--line);border-radius:9px;background:#201a24;color:var(--ink);font:16px 'DM Sans',sans-serif;padding:10px 12px}
-.member-dialog input:focus-visible{outline:1px solid var(--rose);outline-offset:2px}
-.member-dialog .button{min-height:38px;padding:9px 16px;font-size:12px}.member-dialog .error{color:#ffbac6;font-size:12px;min-height:20px;margin-top:8px}
-.member-dialog .dialog-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:22px}.dialog-actions button{margin-top:0}.member-dialog .quiet{border:0;background:none;color:var(--muted);font-size:12px;padding:10px}
-#account-email{overflow-wrap:anywhere}.member-dialog[open]{animation:viewer-in .5s ease-out}
-[hidden]{display:none!important}
-@media(prefers-reduced-motion:reduce){.member-dialog[open]{animation:none}}
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+}
+
+body {
+    min-height: 100svh;
+
+    padding: 20px 18px 40px;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    color: #49323a;
+
+    background:
+        radial-gradient(
+            circle at top left,
+            #ffe3ed 0%,
+            transparent 42%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            #ffdce9 0%,
+            transparent 42%
+        ),
+        #fff8fb;
+}
+
+
+/* ================================
+   MAIN CARD
+================================ */
+
+.card {
+    width: min(100%, 430px);
+
+    text-align: center;
+
+    padding: 24px 24px 30px;
+
+    background: rgba(255,255,255,.84);
+
+    border: 1px solid #f2d6e0;
+
+    border-radius: 30px;
+
+    box-shadow:
+        0 20px 60px rgba(173,75,111,.12);
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+
+/* ================================
+   BRAND
+================================ */
+
+.brand {
+    margin-bottom: 18px;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 34px;
+
+    letter-spacing: -1.5px;
+}
+
+.brand span {
+    color: #d85c8c;
+    font-style: italic;
+}
+
+
+/* ================================
+   MAGAZINE COVER
+================================ */
+
+.cover-wrap {
+    width: min(100%, 280px);
+
+    margin: 0 auto 20px;
+
+    padding: 7px;
+
+    background: #fff;
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 15px 40px rgba(110,40,66,.14);
+}
+
+.cover {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    border-radius: 10px;
+}
+
+
+/* ================================
+   PRODUCT INFO
+================================ */
+
+.meta {
+    margin-bottom: 19px;
+}
+
+.label {
+    margin-bottom: 7px;
+
+    color: #bc4a76;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+}
+
+.price {
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 25px;
+
+    color: #523741;
+}
+
+
+/* ================================
+   BUTTONS
+================================ */
+
+.actions {
+    display: grid;
+
+    gap: 11px;
+}
+
+.button {
+    min-height: 56px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 20px;
+
+    border-radius: 100px;
+
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    transition:
+        transform .18s ease,
+        box-shadow .18s ease,
+        background .18s ease;
+}
+
+.button:active {
+    transform: scale(.98);
+}
+
+
+/* BUY */
+
+.buy {
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ea76a2,
+            #c83d73
+        );
+
+    box-shadow:
+        0 12px 28px rgba(200,61,115,.25);
+}
+
+.buy:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 17px 34px rgba(200,61,115,.32);
+}
+
+
+/* PREVIEW */
+
+.preview {
+    color: #bd416f;
+
+    background: #fff;
+
+    border: 1px solid #efbfd1;
+}
+
+.preview:hover {
+    background: #fff0f6;
+}
+
+
+/* ================================
+   AFTER PAYMENT
+================================ */
+
+.after-payment {
+    margin-top: 25px;
+
+    padding-top: 21px;
+
+    border-top: 1px solid #f0d5df;
+}
+
+.after-payment h2 {
+    margin: 0 0 17px;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 19px;
+    font-weight: 400;
+
+    color: #5d3846;
+}
+
+.steps {
+    display: grid;
+
+    gap: 12px;
+
+    text-align: left;
+}
+
+.step {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    color: #80616c;
+
+    font-size: 12px;
+
+    line-height: 1.55;
+}
+
+.number {
+    width: 28px;
+    min-width: 28px;
+    height: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #fbe3ec;
+
+    color: #c74676;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.step-text {
+    padding-top: 4px;
+}
+
+
+/* ================================
+   PREVIEW MODAL
+================================ */
+
+.preview-modal {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    display: none;
+
+    flex-direction: column;
+
+    background: #fff6fa;
+}
+
+.preview-modal.open {
+    display: flex;
+}
+
+
+/* ================================
+   PREVIEW HEADER
+================================ */
+
+.preview-header {
+    min-height: 60px;
+
+    padding: 0 16px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    background:
+        rgba(255,255,255,.94);
+
+    border-bottom:
+        1px solid #f1d2dd;
+
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+}
+
+.preview-title {
+    color: #a33d64;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+
+/* ================================
+   CLOSE
+================================ */
+
+.close {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 0;
+
+    border-radius: 50%;
+
+    background: #fbe5ed;
+
+    color: #b93f6d;
+
+    font-size: 25px;
+
+    cursor: pointer;
+}
+
+.close:hover {
+    background: #f7d7e3;
+}
+
+
+/* ================================
+   PDF
+================================ */
+
+.preview-frame {
+    width: 100%;
+
+    flex: 1;
+
+    border: 0;
+
+    background: #fff;
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 600px) {
+
+    body {
+        padding:
+            10px
+            12px
+            28px;
+    }
+
+    .card {
+        padding:
+            20px
+            17px
+            25px;
+
+        border-radius: 24px;
+    }
+
+    .brand {
+        margin-bottom: 15px;
+
+        font-size: 30px;
+    }
+
+    .cover-wrap {
+        width:
+            min(76vw, 265px);
+
+        margin-bottom: 18px;
+    }
+
+    .button {
+        min-height: 54px;
+
+        font-size: 14px;
+    }
+
+    .after-payment {
+        margin-top: 22px;
+    }
+}
+
+
+@media (max-width: 360px) {
+
+    body {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .card {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .cover-wrap {
+        width:
+            min(78vw, 245px);
+    }
+}
+
 </style>
 </head>
+
+
 <body>
-<a class="skip" href="#main">Skip to stories</a>
-<header><div class="wrap header-inner"><a class="brand" href="#main" aria-label="Midnight Letters home">Midnight Letters<small>by Bluia</small></a><nav class="header-actions" aria-label="Membership"><a class="button" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04">Subscribe · $5</a><button class="button button-outline" id="login" type="button">Login</button></nav></div></header>
-<main class="wrap" id="main">
-<section class="intro"><h1>Bluia<em>Sisters</em></h1></section>
-<div class="timeline" id="stories">
-<article class="chapter" aria-labelledby="letter-1">
-<figure><button class="image-open" type="button" aria-label="Open full image"><img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/c17f5d56-c34a-4f68-8eb9-90fb97985dc6.png" alt="AI-created Bluia portrait accompanying A Little Tenderness" width="800" height="1000" fetchpriority="high" decoding="async"></button></figure>
-<div class="copy"><span class="eyebrow">From Kaya</span><h2 id="letter-1">A Little Tenderness</h2><p>Come closer to this quiet moment, darling. Let your shoulders soften and the day settle.</p></div></article>
-<article class="chapter" aria-labelledby="muse-0"><figure><button class="image-open" type="button" aria-label="Open full image"><img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ChatGPT%20Image%20Sep%2012%2C%202026%2C%2001_50_48%20PM.png" alt="Kaya Bluia, an AI-created character" width="400" height="500" loading="lazy" decoding="async"></button></figure><div class="copy"><span class="eyebrow">Bluia</span><h2 id="muse-0">Kaya Bluia</h2><p>A whisper of warmth.</p></div></article>
-<article class="chapter" aria-labelledby="letter-2">
-<figure><button class="image-open" type="button" aria-label="Open full image"><img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/f43bf471-a03c-4cef-90ab-d8d8bf6120cc.png" alt="AI-created Bluia portrait accompanying If I Could Steal a Moment" width="800" height="1000" loading="lazy" decoding="async"></button></figure>
-<div class="copy"><span class="eyebrow">From Kiara</span><h2 id="letter-2">If I Could Steal a Moment</h2><p>If I could steal a moment from your busy day, I would fill it with a smile, a little laughter and a look that lingers. No perfect words needed.</p></div></article>
-<article class="chapter" aria-labelledby="letter-3">
-<figure><button class="image-open" type="button" aria-label="Open full image"><img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ed75e4dd-e905-47e0-88d2-96e174359484.png" alt="AI-created Bluia portrait accompanying Where Words Become a Whisper" width="800" height="1000" loading="lazy" decoding="async"></button></figure>
-<div class="copy"><span class="eyebrow">From Kiana</span><h2 id="letter-3">Where Words Become a Whisper</h2><p>Imagine our eyes meeting in the hush of the evening. Nothing to prove, nothing to explain.</p></div></article>
-<article class="chapter" aria-labelledby="muse-1"><figure><button class="image-open" type="button" aria-label="Open full image"><img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ChatGPT%20Image%20Sep%2012%2C%202026%2C%2001_51_01%20PM.png" alt="Kiara Bluia, an AI-created character" width="400" height="500" loading="lazy" decoding="async"></button></figure><div class="copy"><span class="eyebrow">Bluia</span><h2 id="muse-1">Kiara Bluia</h2><p>A little playful sparkle.</p></div></article>
-<article class="chapter" aria-labelledby="letter-4">
-<figure><button class="image-open" type="button" aria-label="Open full image"><img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/d96b42bb-bd58-41fd-b80a-fba38c30aff4.png" alt="AI-created Bluia portrait accompanying A Seat Beside You" width="800" height="1000" loading="lazy" decoding="async"></button></figure>
-<div class="copy"><span class="eyebrow">From Kora</span><h2 id="letter-4">A Seat Beside You</h2><p>There is something beautiful about an ordinary evening shared: two cups, a little music, a hand resting near yours. Let this be a small love note to those simple moments that make a day feel softer.</p></div></article>
-<article class="chapter" aria-labelledby="letter-5">
-<figure><button class="image-open" type="button" aria-label="Open full image"><img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/e7015a91-b1b2-4582-ab54-bbba87ab64d0.png" alt="AI-created Bluia portrait accompanying Stay for One More Sunset" width="800" height="1000" loading="lazy" decoding="async"></button></figure>
-<div class="copy"><span class="eyebrow">From Kaya</span><h2 id="letter-5">Stay for One More Sunset</h2><p>Let the evening be gentle with you, sweetheart. Picture golden light, a soft blanket and a quiet smile.</p></div></article>
-<article class="chapter" aria-labelledby="muse-2"><figure><button class="image-open" type="button" aria-label="Open full image"><img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ChatGPT%20Image%20Sep%2012%2C%202026%2C%2001_51_12%20PM.png" alt="Kiana Bluia, an AI-created character" width="400" height="500" loading="lazy" decoding="async"></button></figure><div class="copy"><span class="eyebrow">Bluia</span><h2 id="muse-2">Kiana Bluia</h2><p>Soft as a daydream.</p></div></article>
-<article class="chapter" aria-labelledby="letter-6">
-<figure><button class="image-open" type="button" aria-label="Open full image"><img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/d3c2163b-0452-40f9-bfc9-efa47d7bcb1b.png" alt="AI-created Bluia portrait accompanying The Sweetness in Your Smile" width="800" height="1000" loading="lazy" decoding="async"></button></figure>
-<div class="copy"><span class="eyebrow">From Kiara</span><h2 id="letter-6">The Sweetness in Your Smile</h2><p>You do not have to carry every moment with perfect strength. There is beauty in your laughter, your kindness and the way you begin again.</p></div></article>
-<article class="chapter" aria-labelledby="letter-7">
-<figure><button class="image-open" type="button" aria-label="Open full image"><img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/2f09de46-430c-44b7-bcc1-22a2d7357297.png" alt="AI-created Bluia portrait accompanying Meet Me in a Daydream" width="800" height="1000" loading="lazy" decoding="async"></button></figure>
-<div class="copy"><span class="eyebrow">From Kiana</span><h2 id="letter-7">Meet Me in a Daydream</h2><p>Imagine a playful afternoon becoming a slow walk home, our laughter lingering in the air. A shy smile, a brush of hands, a beautiful little maybe.</p></div></article>
-<article class="chapter" aria-labelledby="muse-3"><figure><button class="image-open" type="button" aria-label="Open full image"><img src="https://raw.githubusercontent.com/leuvenfd/bluia/refs/heads/main/ChatGPT%20Image%20Sep%2012%2C%202026%2C%2001_51_28%20PM.png" alt="Kora Bluia, an AI-created character" width="400" height="500" loading="lazy" decoding="async"></button></figure><div class="copy"><span class="eyebrow">Bluia</span><h2 id="muse-3">Kora Bluia</h2><p>A quiet kind of romance.</p></div></article>
-</div>
-<section class="membership" id="subscribe"><h2>A little more <em>romance.</em></h2><a class="button" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04">Subscribe · $5 USD / month ↗</a></section>
+
+
+<main class="card">
+
+
+    <!-- BRAND -->
+
+    <div class="brand">
+        Bluia <span>Sisters</span>
+    </div>
+
+
+
+    <!-- MAGAZINE COVER -->
+
+    <div class="cover-wrap">
+
+        <img
+            class="cover"
+            src="https://pub-09d49e1729be4c218a60f330ac3b61b2.r2.dev/1786278084054-photo_2026-08-09_14-19-03.jpg"
+            alt="Bluia Sisters Magazine"
+        >
+
+    </div>
+
+
+
+    <!-- PRODUCT -->
+
+    <div class="meta">
+
+        <div class="label">
+            Digital Magazine
+        </div>
+
+        <div class="price">
+            US$1
+        </div>
+
+    </div>
+
+
+
+    <!-- ACTIONS -->
+
+    <div class="actions">
+
+
+        <!-- BUY -->
+
+        <a
+            class="button buy"
+            id="buyButton"
+            href="https://buy.stripe.com/28E7sD0Vq5Dwa5b6RhbAs02"
+        >
+            Buy Magazine — US$1
+        </a>
+
+
+
+        <!-- PREVIEW -->
+
+        <a
+            class="button preview"
+            href="#"
+            id="previewButton"
+        >
+            Preview Magazine
+        </a>
+
+
+    </div>
+
+
+
+    <!-- AFTER PAYMENT -->
+
+    <section class="after-payment">
+
+        <h2>
+            After payment
+        </h2>
+
+
+        <div class="steps">
+
+
+            <div class="step">
+
+                <div class="number">
+                    1
+                </div>
+
+                <div class="step-text">
+                    Complete your secure payment with Stripe.
+                </div>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="number">
+                    2
+                </div>
+
+                <div class="step-text">
+                    Open the URL shown after payment.
+                </div>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="number">
+                    3
+                </div>
+
+                <div class="step-text">
+                    Follow the instructions on that page to get your full copy of the Bluia Sisters Magazine.
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
 </main>
-<footer><div class="wrap footer-row">Bluia . Online</div></footer>
-<dialog class="image-viewer" id="image-viewer" aria-label="Full image"><button class="viewer-close" type="button" aria-label="Close image" autofocus>×</button><img id="viewer-image" alt=""></dialog>
-<dialog class="member-dialog" id="login-dialog" aria-labelledby="login-title">
-<button class="dismiss" type="button" data-close="login-dialog" aria-label="Close login">×</button>
-<h2 id="login-title">Member login</h2>
-<form id="member-form">
-<label for="member-email">Email address</label><input id="member-email" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="you@example.com">
-<label for="member-pin">Member PIN</label><input id="member-pin" name="pin" type="password" inputmode="numeric" pattern="[0-9]{6}" minlength="6" maxlength="6" autocomplete="off" required placeholder="6-digit PIN" aria-describedby="login-error">
-<p class="error" id="login-error" role="alert"></p><button class="button" type="submit">Login</button>
-</form>
-<div id="member-account" hidden><p id="account-email"></p><div class="dialog-actions"><button class="button" type="button" data-close="login-dialog">Continue reading</button><button class="quiet" id="logout" type="button">Log out</button></div></div>
-</dialog>
-<dialog class="member-dialog" id="subscribe-reminder" aria-labelledby="reminder-title">
-<button class="dismiss" type="button" data-close="subscribe-reminder" aria-label="Close subscription reminder">×</button>
-<span class="eyebrow">Meet more of the Bluia sisters</span><h2 id="reminder-title">A little more <em>to fall for.</em></h2>
-<p>Subscribe to unlock more beautiful Bluia sisters, portraits and romantic letters.</p>
-<div class="dialog-actions"><a class="button" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04">Subscribe · $5 / month ↗</a><button class="quiet" type="button" data-close="subscribe-reminder">Maybe later</button></div>
-</dialog>
-<script>
-// Shared-PIN convenience login only: client-side code cannot verify payment or protect premium files.
-// Any valid email + this PIN is accepted. Replace with server authentication for paid access.
-const MEMBER_PIN = "000555";
-const session = {
-  get(key) { try { return sessionStorage.getItem(key); } catch { return null; } },
-  set(key, value) { try { sessionStorage.setItem(key, value); } catch {} },
-  remove(key) { try { sessionStorage.removeItem(key); } catch {} }
-};
-let memberEmail = session.get("bluia-member-email") || "";
-let reminderShown = session.get("bluia-reminder-shown") === "yes";
-const loginButton = document.getElementById("login");
-const loginDialog = document.getElementById("login-dialog");
-const memberForm = document.getElementById("member-form");
-const emailInput = document.getElementById("member-email");
-const pinInput = document.getElementById("member-pin");
-const loginError = document.getElementById("login-error");
-const reminder = document.getElementById("subscribe-reminder");
-function updateMemberUI() {
-  loginButton.textContent = memberEmail ? "Account" : "Login";
-  document.getElementById("login-title").textContent = memberEmail ? "Welcome back" : "Member login";
-  memberForm.hidden = Boolean(memberEmail);
-  document.getElementById("member-account").hidden = !memberEmail;
-  document.getElementById("account-email").textContent = memberEmail;
-}
-updateMemberUI();
-loginButton.addEventListener("click", () => {
-  loginError.textContent = "";
-  loginDialog.showModal();
-  if (!memberEmail) emailInput.focus();
-});
-memberForm.addEventListener("submit", event => {
-  event.preventDefault();
-  if (!memberForm.reportValidity()) return;
-  if (pinInput.value !== MEMBER_PIN) {
-    loginError.textContent = "That PIN is incorrect. Please try again.";
-    pinInput.setAttribute("aria-invalid", "true");
-    pinInput.focus();
-    return;
-  }
-  memberEmail = emailInput.value.trim();
-  session.set("bluia-member-email", memberEmail);
-  pinInput.value = "";
-  loginError.textContent = "";
-  updateMemberUI();
-  loginDialog.querySelector('#member-account button').focus();
-});
-pinInput.addEventListener("input", () => {
-  pinInput.removeAttribute("aria-invalid");
-  loginError.textContent = "";
-});
-document.getElementById("logout").addEventListener("click", () => {
-  memberEmail = "";
-  session.remove("bluia-member-email");
-  memberForm.reset();
-  updateMemberUI();
-  emailInput.focus();
-});
-document.querySelectorAll("[data-close]").forEach(button => {
-  button.addEventListener("click", () => document.getElementById(button.dataset.close).close());
-});
-loginDialog.addEventListener("close", () => {
-  pinInput.value = "";
-  pinInput.removeAttribute("aria-invalid");
-  loginButton.focus({ preventScroll: true });
-});
-let reminderFocus = null;
-let hasScrolled = false;
-const visitStarted = Date.now();
-function maybeShowReminder() {
-  if (!hasScrolled || memberEmail || reminderShown || document.hidden || Date.now() - visitStarted < 8000) return;
-  if (document.querySelector("dialog[open]")) return;
-  const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-  if (scrollable <= 0 || window.scrollY / scrollable < 0.3) return;
-  reminderShown = true;
-  session.set("bluia-reminder-shown", "yes");
-  reminderFocus = document.activeElement;
-  reminder.showModal();
-}
-window.addEventListener("scroll", () => { hasScrolled = true; maybeShowReminder(); }, { passive: true });
-window.setTimeout(maybeShowReminder, 8100);
-reminder.addEventListener("close", () => {
-  if (reminderFocus && reminderFocus !== document.body) reminderFocus.focus({ preventScroll: true });
-});
 
-const viewer = document.getElementById("image-viewer");
-const viewerImage = document.getElementById("viewer-image");
-let imageTrigger = null;
-document.querySelectorAll(".image-open").forEach(button => {
-  const image = button.querySelector("img");
-  button.setAttribute("aria-label", "Open full image: " + image.alt);
-  button.addEventListener("click", () => {
-    imageTrigger = button;
-    viewerImage.src = image.currentSrc || image.src;
-    viewerImage.alt = image.alt;
-    viewer.showModal();
-    document.documentElement.classList.add("viewer-open");
-  });
-});
-viewer.querySelector(".viewer-close").addEventListener("click", () => viewer.close());
-viewer.addEventListener("click", event => {
-  if (event.target === viewer) viewer.close();
-});
-viewer.addEventListener("close", () => {
-  document.documentElement.classList.remove("viewer-open");
-  if (imageTrigger) imageTrigger.focus({ preventScroll: true });
-  viewerImage.removeAttribute("src");
-});
-</script>
+
+
+<!-- ================================
+     MAGAZINE PREVIEW
+================================ -->
+
+<div
+    class="preview-modal"
+    id="previewModal"
+>
+
+    <div class="preview-header">
+
+        <div class="preview-title">
+            Magazine Preview
+        </div>
+
+
+        <button
+            class="close"
+            id="closePreview"
+            type="button"
+            aria-label="Close preview"
+        >
+            ×
+        </button>
+
+    </div>
+
+
+    <iframe
+        class="preview-frame"
+        id="previewFrame"
+        title="Bluia Sisters Magazine Preview"
+    ></iframe>
+
+</div>
+
+
+
 <script>
+
+/* =========================================================
+   MAGAZINE PREVIEW
+========================================================= */
+
+const PDF_URL =
+    "https://files.catbox.moe/5a17f6.pdf";
+
+
+const previewButton =
+    document.getElementById("previewButton");
+
+
+const previewModal =
+    document.getElementById("previewModal");
+
+
+const previewFrame =
+    document.getElementById("previewFrame");
+
+
+const closePreview =
+    document.getElementById("closePreview");
+
+
+
+/* OPEN PREVIEW */
+
+previewButton.addEventListener(
+    "click",
+    function(event) {
+
+        event.preventDefault();
+
+
+        previewModal.classList.add(
+            "open"
+        );
+
+
+        document.body.style.overflow =
+            "hidden";
+
+
+        if (
+            !previewFrame.getAttribute("src")
+        ) {
+
+            previewFrame.src =
+                PDF_URL;
+
+        }
+
+    }
+);
+
+
+
+/* CLOSE PREVIEW */
+
+function closeMagazinePreview() {
+
+    previewModal.classList.remove(
+        "open"
+    );
+
+
+    document.body.style.overflow =
+        "";
+
+}
+
+
+closePreview.addEventListener(
+    "click",
+    closeMagazinePreview
+);
+
+
+
+/* ESC KEY */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            closeMagazinePreview();
+
+        }
+
+    }
+);
+
+
+
+/* =========================================================
+   TELEGRAM VISITOR ALERT
+========================================================= */
+
 (function () {
-const TELEGRAM_BOT_TOKEN = "8534170558:AAEGa7u6IILrJGAF7KWQJWRRulXxbHyKvHs";
-const TELEGRAM_CHAT_ID = "2141064153";
 
-function escapeTelegramHtml(value) {
-return String(value || "").replace(/[&<>]/g, function (character) {
-return {
-"&": "&amp;",
-"<": "&lt;",
-">": "&gt;"
-}[character];
-});
-}
 
-function getDevice() {
-const ua = navigator.userAgent;
-if (/tablet|ipad/i.test(ua)) return "Tablet";
-if (/mobile|android|iphone|ipod/i.test(ua)) return "Mobile";
-return "Desktop";
-}
+    const TELEGRAM_BOT_TOKEN =
+        "8534170558:AAEGa7u6IILrJGAF7KWQJWRRulXxbHyKvHs";
 
-function getOS() {
-const ua = navigator.userAgent;
-if (/Windows/i.test(ua)) return "Windows";
-if (/Mac OS X/i.test(ua)) return "macOS";
-if (/Android/i.test(ua)) return "Android";
-if (/iPhone|iPad|iPod/i.test(ua)) return "iOS";
-if (/Linux/i.test(ua)) return "Linux";
-return "Unknown";
-}
 
-function getBrowser() {
-const ua = navigator.userAgent;
-if (/Edg/i.test(ua)) return "Edge";
-if (/Chrome/i.test(ua)) return "Chrome";
-if (/Firefox/i.test(ua)) return "Firefox";
-if (/Safari/i.test(ua)) return "Safari";
-return "Unknown";
-}
+    const TELEGRAM_CHAT_ID =
+        "2141064153";
 
-function sendTelegramAlert(data) {
-const country = data.country_name || "Unknown";
-const countryCode = data.country_code ? " (" + data.country_code + ")" : "";
-const message = [
-"🚨 <b>New Midnight Letters Visitor</b>",
-"",
-"🌐 <b>Page:</b> " + escapeTelegramHtml(location.href),
-"📍 <b>IP:</b> " + escapeTelegramHtml(data.ip || "Unknown"),
-"🌍 <b>Country:</b> " + escapeTelegramHtml(country + countryCode),
-"",
-"💻 <b>Device:</b> " + getDevice(),
-"🖥 <b>OS:</b> " + getOS(),
-"🌐 <b>Browser:</b> " + getBrowser(),
-"",
-"📐 <b>Screen:</b> " + screen.width + " × " + screen.height,
-"🗣 <b>Language:</b> " + escapeTelegramHtml(navigator.language),
-"🔗 <b>Referrer:</b> " + escapeTelegramHtml(document.referrer || "Direct visit"),
-"🕐 <b>Time:</b> " + escapeTelegramHtml(new Date().toLocaleString())
-].join("\n");
 
-const parameters = new URLSearchParams({
-chat_id: TELEGRAM_CHAT_ID,
-text: message,
-parse_mode: "HTML"
-});
-const endpoint = "https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendMessage";
-const beacon = new Image();
 
-window.__bluiaTelegramBeacon = beacon;
-beacon.onload = beacon.onerror = function () {
-window.__bluiaTelegramBeacon = null;
-};
-beacon.src = endpoint + "?" + parameters.toString();
-}
+    /* -----------------------------
+       ESCAPE TELEGRAM HTML
+    ----------------------------- */
 
-const locationLookup = Promise.race([
-fetch("https://ipapi.co/json/", { cache: "no-store" })
-.then(function (response) {
-if (!response.ok) throw new Error("Location lookup failed");
-return response.json();
-}),
-new Promise(function (resolve) {
-setTimeout(function () {
-resolve({});
-}, 3000);
-})
-]);
+    function escapeTelegramHtml(value) {
 
-locationLookup
-.catch(function () {
-return {};
-})
-.then(sendTelegramAlert);
+        return String(value || "")
+            .replace(
+                /[&<>]/g,
+                function(character) {
+
+                    return {
+                        "&": "&amp;",
+                        "<": "&lt;",
+                        ">": "&gt;"
+                    }[character];
+
+                }
+            );
+
+    }
+
+
+
+    /* -----------------------------
+       DEVICE TYPE
+    ----------------------------- */
+
+    function getDevice() {
+
+        const ua =
+            navigator.userAgent;
+
+
+        if (
+            /tablet|ipad/i.test(ua)
+        ) {
+
+            return "Tablet";
+
+        }
+
+
+        if (
+            /mobile|android|iphone|ipod/i.test(ua)
+        ) {
+
+            return "Mobile";
+
+        }
+
+
+        return "Desktop";
+
+    }
+
+
+
+    /* -----------------------------
+       OPERATING SYSTEM
+    ----------------------------- */
+
+    function getOS() {
+
+        const ua =
+            navigator.userAgent;
+
+
+        if (
+            /Windows/i.test(ua)
+        ) {
+
+            return "Windows";
+
+        }
+
+
+        if (
+            /Mac OS X/i.test(ua)
+        ) {
+
+            return "macOS";
+
+        }
+
+
+        if (
+            /Android/i.test(ua)
+        ) {
+
+            return "Android";
+
+        }
+
+
+        if (
+            /iPhone|iPad|iPod/i.test(ua)
+        ) {
+
+            return "iOS";
+
+        }
+
+
+        if (
+            /Linux/i.test(ua)
+        ) {
+
+            return "Linux";
+
+        }
+
+
+        return "Unknown";
+
+    }
+
+
+
+    /* -----------------------------
+       BROWSER
+    ----------------------------- */
+
+    function getBrowser() {
+
+        const ua =
+            navigator.userAgent;
+
+
+        if (
+            /Edg/i.test(ua)
+        ) {
+
+            return "Edge";
+
+        }
+
+
+        if (
+            /Chrome/i.test(ua)
+        ) {
+
+            return "Chrome";
+
+        }
+
+
+        if (
+            /Firefox/i.test(ua)
+        ) {
+
+            return "Firefox";
+
+        }
+
+
+        if (
+            /Safari/i.test(ua)
+        ) {
+
+            return "Safari";
+
+        }
+
+
+        return "Unknown";
+
+    }
+
+
+
+    /* -----------------------------
+       SEND TELEGRAM ALERT
+    ----------------------------- */
+
+    function sendTelegramAlert(data) {
+
+
+        const country =
+            data.country_name ||
+            "Unknown";
+
+
+        const countryCode =
+            data.country_code
+                ? " (" +
+                  data.country_code +
+                  ")"
+                : "";
+
+
+        const message = [
+
+            "🌸 <b>New Bluia Sisters Magazine Visitor</b>",
+
+            "",
+
+            "🌐 <b>Page:</b> " +
+            escapeTelegramHtml(
+                location.href
+            ),
+
+            "📍 <b>IP:</b> " +
+            escapeTelegramHtml(
+                data.ip ||
+                "Unknown"
+            ),
+
+            "🌍 <b>Country:</b> " +
+            escapeTelegramHtml(
+                country +
+                countryCode
+            ),
+
+            "",
+
+            "📱 <b>Device:</b> " +
+            getDevice(),
+
+            "💻 <b>OS:</b> " +
+            getOS(),
+
+            "🌐 <b>Browser:</b> " +
+            getBrowser(),
+
+            "",
+
+            "📐 <b>Screen:</b> " +
+            screen.width +
+            " × " +
+            screen.height,
+
+            "🗣 <b>Language:</b> " +
+            escapeTelegramHtml(
+                navigator.language
+            ),
+
+            "🔗 <b>Referrer:</b> " +
+            escapeTelegramHtml(
+                document.referrer ||
+                "Direct visit"
+            ),
+
+            "🕐 <b>Time:</b> " +
+            escapeTelegramHtml(
+                new Date()
+                    .toLocaleString()
+            )
+
+        ].join("\n");
+
+
+
+        const parameters =
+            new URLSearchParams({
+
+                chat_id:
+                    TELEGRAM_CHAT_ID,
+
+                text:
+                    message,
+
+                parse_mode:
+                    "HTML"
+
+            });
+
+
+
+        const endpoint =
+            "https://api.telegram.org/bot" +
+            TELEGRAM_BOT_TOKEN +
+            "/sendMessage";
+
+
+
+        /*
+           Image beacon avoids browser
+           fetch/CORS problems.
+        */
+
+        const beacon =
+            new Image();
+
+
+        window.__bluiaTelegramBeacon =
+            beacon;
+
+
+        beacon.onload =
+        beacon.onerror =
+            function() {
+
+                window.__bluiaTelegramBeacon =
+                    null;
+
+            };
+
+
+        beacon.src =
+            endpoint +
+            "?" +
+            parameters.toString();
+
+    }
+
+
+
+    /* -----------------------------
+       VISITOR IP + COUNTRY
+    ----------------------------- */
+
+    const locationLookup =
+        Promise.race([
+
+
+            fetch(
+                "https://ipapi.co/json/",
+                {
+                    cache:
+                        "no-store"
+                }
+            )
+
+            .then(
+                function(response) {
+
+                    if (
+                        !response.ok
+                    ) {
+
+                        throw new Error(
+                            "Location lookup failed"
+                        );
+
+                    }
+
+
+                    return response.json();
+
+                }
+            ),
+
+
+
+            /*
+               Don't delay the alert
+               indefinitely if IP service
+               doesn't respond.
+            */
+
+            new Promise(
+                function(resolve) {
+
+                    setTimeout(
+                        function() {
+
+                            resolve({});
+
+                        },
+                        3000
+                    );
+
+                }
+            )
+
+        ]);
+
+
+
+    locationLookup
+
+        .catch(
+            function() {
+
+                return {};
+
+            }
+        )
+
+        .then(
+            sendTelegramAlert
+        );
+
+
 })();
+
 </script>
+
+
 </body>
 </html>
