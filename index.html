@@ -1,285 +1,294 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Bluia Sisters Magazine</title>
 
 <style>
-* {
-    box-sizing: border-box;
+*{box-sizing:border-box}
+
+html,body{
+    margin:0;
+    padding:0;
+    min-height:100%;
 }
 
-html,
-body {
-    margin: 0;
-    padding: 0;
-    min-height: 100%;
-}
-
-body {
-    min-height: 100svh;
-    padding: 10px 12px 30px;
-
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-
-    font-family: Arial, Helvetica, sans-serif;
-    color: #49323a;
-
+body{
+    min-height:100svh;
+    padding:10px 12px 30px;
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+    font-family:Arial,Helvetica,sans-serif;
+    color:#49323a;
     background:
-        radial-gradient(circle at top left, #ffe3ed 0%, transparent 42%),
-        radial-gradient(circle at bottom right, #ffdce9 0%, transparent 42%),
+        radial-gradient(circle at top left,#ffe3ed 0%,transparent 42%),
+        radial-gradient(circle at bottom right,#ffdce9 0%,transparent 42%),
         #fff8fb;
 }
 
-
 /* MAIN CARD */
 
-.card {
-    width: min(100%, 430px);
-    padding: 20px 18px 26px;
-    text-align: center;
-
-    background: rgba(255,255,255,.88);
-
-    border: 1px solid #f2d6e0;
-    border-radius: 25px;
-
-    box-shadow:
-        0 20px 60px rgba(173,75,111,.12);
+.card{
+    width:min(100%,430px);
+    padding:20px 18px 26px;
+    text-align:center;
+    background:rgba(255,255,255,.88);
+    border:1px solid #f2d6e0;
+    border-radius:25px;
+    box-shadow:0 20px 60px rgba(173,75,111,.12);
 }
-
 
 /* BRAND */
 
-.brand {
-    margin-bottom: 16px;
-
-    font: 34px Georgia, "Times New Roman", serif;
-
-    letter-spacing: -1.5px;
+.brand{
+    margin-bottom:16px;
+    font:34px Georgia,"Times New Roman",serif;
+    letter-spacing:-1.5px;
 }
 
-.brand span {
-    color: #d85c8c;
-    font-style: italic;
+.brand span{
+    color:#d85c8c;
+    font-style:italic;
 }
-
 
 /* COVER */
 
-.cover-wrap {
-    width: min(76vw, 270px);
-
-    margin: 0 auto 19px;
-
-    padding: 7px;
-
-    background: #fff;
-
-    border-radius: 15px;
-
-    box-shadow:
-        0 15px 40px rgba(110,40,66,.14);
-
-    cursor: pointer;
-
-    transition:
-        transform .2s ease,
-        box-shadow .2s ease;
+.cover-wrap{
+    width:min(76vw,270px);
+    margin:0 auto 19px;
+    padding:7px;
+    background:#fff;
+    border-radius:15px;
+    box-shadow:0 15px 40px rgba(110,40,66,.14);
+    cursor:pointer;
+    transition:transform .2s ease,box-shadow .2s ease;
 }
 
-.cover-wrap:hover {
-    transform: translateY(-3px) scale(1.01);
-
-    box-shadow:
-        0 20px 48px rgba(110,40,66,.20);
+.cover-wrap:hover{
+    transform:translateY(-3px) scale(1.01);
+    box-shadow:0 20px 48px rgba(110,40,66,.20);
 }
 
-.cover-wrap:active {
-    transform: scale(.98);
+.cover-wrap:active{
+    transform:scale(.98);
 }
 
-.cover-wrap:focus-visible {
-    outline: 3px solid #e979a4;
-    outline-offset: 4px;
+.cover-wrap:focus-visible{
+    outline:3px solid #e979a4;
+    outline-offset:4px;
 }
 
-.cover {
-    display: block;
-
-    width: 100%;
-    height: auto;
-
-    border-radius: 10px;
+.cover{
+    display:block;
+    width:100%;
+    height:auto;
+    border-radius:10px;
 }
-
 
 /* PRODUCT */
 
-.meta {
-    margin-bottom: 18px;
+.meta{
+    margin-bottom:18px;
 }
 
-.label {
-    margin-bottom: 7px;
-
-    color: #bc4a76;
-
-    font-size: 10px;
-    font-weight: 700;
-
-    letter-spacing: 2px;
-
-    text-transform: uppercase;
+.label{
+    margin-bottom:7px;
+    color:#bc4a76;
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:2px;
+    text-transform:uppercase;
 }
 
-.price {
-    font: 25px Georgia, serif;
+.price{
+    font:25px Georgia,serif;
 }
-
 
 /* BUTTONS */
 
-.actions {
-    display: grid;
-    gap: 11px;
+.actions{
+    display:grid;
+    gap:11px;
 }
 
-.button {
-    min-height: 55px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 0 20px;
-
-    border-radius: 100px;
-
-    text-decoration: none;
-
-    font-size: 14px;
-    font-weight: 700;
-
-    cursor: pointer;
-
+.button{
+    min-height:55px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:0 20px;
+    border-radius:100px;
+    text-decoration:none;
+    font-size:14px;
+    font-weight:700;
+    cursor:pointer;
     transition:
         transform .18s ease,
         box-shadow .18s ease,
         background .18s ease;
 }
 
-.button:active {
-    transform: scale(.98);
+.button:active{
+    transform:scale(.98);
 }
 
-.buy {
-    color: white;
+/* ONE-TIME BUY */
 
+.buy{
+    color:#fff;
+    background:linear-gradient(135deg,#ea76a2,#c83d73);
+    box-shadow:0 12px 28px rgba(200,61,115,.25);
+}
+
+.buy:hover{
+    transform:translateY(-2px);
+    box-shadow:0 16px 32px rgba(200,61,115,.30);
+}
+
+/* MONTHLY SUBSCRIPTION */
+
+.subscribe{
+    position:relative;
+    overflow:hidden;
+    color:#fff;
     background:
         linear-gradient(
             135deg,
-            #ea76a2,
-            #c83d73
+            #8f315b,
+            #c94679 55%,
+            #e77fa5
         );
-
-    box-shadow:
-        0 12px 28px rgba(200,61,115,.25);
+    box-shadow:0 12px 28px rgba(143,49,91,.24);
 }
 
-.buy:hover {
-    transform: translateY(-2px);
+.subscribe:hover{
+    transform:translateY(-2px);
+    box-shadow:0 16px 34px rgba(143,49,91,.31);
 }
 
-.preview {
-    color: #bd416f;
-
-    background: white;
-
-    border: 1px solid #efbfd1;
+.subscribe::before{
+    content:"";
+    position:absolute;
+    top:-40px;
+    left:-70px;
+    width:70px;
+    height:140px;
+    transform:rotate(25deg);
+    background:rgba(255,255,255,.17);
+    transition:left .5s ease;
 }
 
-.preview:hover {
-    background: #fff0f6;
+.subscribe:hover::before{
+    left:110%;
 }
 
+.subscribe-text{
+    position:relative;
+    z-index:2;
+}
+
+/* SUBSCRIPTION INFO */
+
+.subscription-info{
+    margin-top:3px;
+    padding:15px 16px;
+    text-align:left;
+    background:linear-gradient(135deg,#fff5f9,#ffedf4);
+    border:1px solid #f3cada;
+    border-radius:17px;
+}
+
+.subscription-title{
+    margin-bottom:7px;
+    color:#9f3c63;
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:16px;
+}
+
+.subscription-info p{
+    margin:0;
+    color:#765361;
+    font-size:11.5px;
+    line-height:1.6;
+}
+
+.subscription-email{
+    margin-top:8px !important;
+    color:#a13f65 !important;
+    font-weight:700;
+}
+
+/* PREVIEW */
+
+.preview{
+    color:#bd416f;
+    background:#fff;
+    border:1px solid #efbfd1;
+}
+
+.preview:hover{
+    background:#fff0f6;
+}
 
 /* AFTER PAYMENT */
 
-.after-payment {
-    margin-top: 24px;
-    padding-top: 21px;
-
-    border-top: 1px solid #f0d5df;
+.after-payment{
+    margin-top:24px;
+    padding-top:21px;
+    border-top:1px solid #f0d5df;
 }
 
-.after-payment h2 {
-    margin: 0 0 16px;
-
-    font: 19px Georgia, serif;
-
-    color: #5d3846;
+.after-payment h2{
+    margin:0 0 16px;
+    font:19px Georgia,serif;
+    color:#5d3846;
 }
 
-.steps {
-    display: grid;
-    gap: 12px;
-
-    text-align: left;
+.steps{
+    display:grid;
+    gap:12px;
+    text-align:left;
 }
 
-.step {
-    display: flex;
-    align-items: flex-start;
-
-    gap: 12px;
-
-    color: #80616c;
-
-    font-size: 12px;
-    line-height: 1.55;
+.step{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    color:#80616c;
+    font-size:12px;
+    line-height:1.55;
 }
 
-.number {
-    width: 28px;
-    min-width: 28px;
-    height: 28px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-
-    background: #fbe3ec;
-
-    color: #c74676;
-
-    font-weight: 700;
+.number{
+    width:28px;
+    min-width:28px;
+    height:28px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:#fbe3ec;
+    color:#c74676;
+    font-weight:700;
 }
 
-.step-text {
-    padding-top: 4px;
+.step-text{
+    padding-top:4px;
 }
 
-
-/* ==================================
+/* =================================
    MAGAZINE VIEWER
-================================== */
+================================= */
 
-.magazine-modal {
-    position: fixed;
-    inset: 0;
-
-    z-index: 10000;
-
-    display: none;
-    flex-direction: column;
-
+.magazine-modal{
+    position:fixed;
+    inset:0;
+    z-index:10000;
+    display:none;
+    flex-direction:column;
     background:
         radial-gradient(
             circle at center,
@@ -289,185 +298,115 @@ body {
         );
 }
 
-.magazine-modal.open {
-    display: flex;
+.magazine-modal.open{
+    display:flex;
 }
 
-
-/* HEADER */
-
-.magazine-header {
-    position: relative;
-
-    min-height: 61px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding:
-        env(safe-area-inset-top)
-        12px
-        0;
-
-    background:
-        rgba(33,13,21,.94);
-
-    border-bottom:
-        1px solid rgba(255,255,255,.10);
-
-    color: white;
+.magazine-header{
+    position:relative;
+    min-height:61px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:env(safe-area-inset-top) 12px 0;
+    background:rgba(33,13,21,.94);
+    border-bottom:1px solid rgba(255,255,255,.10);
+    color:#fff;
 }
 
-.magazine-title {
-    font: 17px Georgia, serif;
+.magazine-title{
+    font:17px Georgia,serif;
 }
-
 
 /* PAGE MODE */
 
-.view-switch {
-    position: absolute;
-
-    left: 50%;
-
-    transform:
-        translateX(-50%);
-
-    padding: 3px;
-
-    display: flex;
-
-    border-radius: 100px;
-
-    background:
-        rgba(255,255,255,.12);
+.view-switch{
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    padding:3px;
+    display:flex;
+    border-radius:100px;
+    background:rgba(255,255,255,.12);
 }
 
-.view-btn {
-    padding: 8px 13px;
-
-    border: 0;
-    border-radius: 100px;
-
-    background: transparent;
-
-    color:
-        rgba(255,255,255,.68);
-
-    font-size: 11px;
-    font-weight: 700;
-
-    cursor: pointer;
+.view-btn{
+    padding:8px 13px;
+    border:0;
+    border-radius:100px;
+    background:transparent;
+    color:rgba(255,255,255,.68);
+    font-size:11px;
+    font-weight:700;
+    cursor:pointer;
 }
 
-.view-btn.active {
-    background: #fbd8e6;
-    color: #893755;
+.view-btn.active{
+    background:#fbd8e6;
+    color:#893755;
 }
-
 
 /* CLOSE */
 
-.close {
-    width: 39px;
-    height: 39px;
-
-    border: 0;
-    border-radius: 50%;
-
-    background:
-        rgba(255,255,255,.11);
-
-    color: white;
-
-    font-size: 25px;
-
-    cursor: pointer;
+.close{
+    width:39px;
+    height:39px;
+    border:0;
+    border-radius:50%;
+    background:rgba(255,255,255,.11);
+    color:white;
+    font-size:25px;
+    cursor:pointer;
 }
-
 
 /* VIEWER */
 
-.viewer {
-    position: relative;
-
-    flex: 1;
-    min-height: 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    overflow: hidden;
-
-    padding:
-        12px
-        4px
-        62px;
-
-    touch-action:
-        pan-y pinch-zoom;
+.viewer{
+    position:relative;
+    flex:1;
+    min-height:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    padding:12px 4px 62px;
+    touch-action:pan-y pinch-zoom;
 }
 
-
-/* BOOK */
-
-.book {
-    position: relative;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    gap: 0;
-
-    max-width: 100%;
-    max-height: 100%;
+.book{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:0;
+    max-width:100%;
+    max-height:100%;
 }
 
-
-/* PAGE */
-
-.page {
-    position: relative;
-
-    background: white;
-
-    overflow: hidden;
-
-    box-shadow:
-        0 12px 35px rgba(0,0,0,.42);
+.page{
+    position:relative;
+    background:#fff;
+    overflow:hidden;
+    box-shadow:0 12px 35px rgba(0,0,0,.42);
 }
 
-.page canvas {
-    display: block;
-    background: white;
+.page canvas{
+    display:block;
+    background:#fff;
 }
 
+/* TWO PAGE SPINE */
 
-/* BOOK SPINE */
-
-.book.two-page::after {
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-    bottom: 0;
-
-    left: 50%;
-
-    width: 8px;
-
-    transform:
-        translateX(-50%);
-
-    z-index: 5;
-
-    pointer-events: none;
-
+.book.two-page::after{
+    content:"";
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:50%;
+    width:8px;
+    transform:translateX(-50%);
+    z-index:5;
+    pointer-events:none;
     background:
         linear-gradient(
             to right,
@@ -477,158 +416,108 @@ body {
         );
 }
 
-
-/* ONE PAGE */
-
-.book.one-page .right-page {
-    display: none;
+.book.one-page .right-page{
+    display:none;
 }
-
 
 /* NAVIGATION */
 
-.nav-btn {
-    position: absolute;
-
-    top: 50%;
-
-    transform:
-        translateY(-50%);
-
-    z-index: 20;
-
-    width: 42px;
-    height: 42px;
-
-    border: 0;
-    border-radius: 50%;
-
-    background:
-        rgba(0,0,0,.58);
-
-    color: white;
-
-    font-size: 27px;
-
-    cursor: pointer;
+.nav-btn{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    z-index:20;
+    width:42px;
+    height:42px;
+    border:0;
+    border-radius:50%;
+    background:rgba(0,0,0,.58);
+    color:#fff;
+    font-size:27px;
+    cursor:pointer;
 }
 
-.nav-btn:disabled {
-    opacity: .18;
+.nav-btn:disabled{
+    opacity:.18;
 }
 
-.prev {
-    left: 5px;
+.prev{
+    left:5px;
 }
 
-.next {
-    right: 5px;
+.next{
+    right:5px;
 }
 
+/* COUNTER */
 
-/* PAGE COUNTER */
-
-.counter {
-    position: absolute;
-
-    bottom:
-        calc(12px + env(safe-area-inset-bottom));
-
-    left: 50%;
-
-    transform:
-        translateX(-50%);
-
-    padding: 9px 16px;
-
-    border-radius: 100px;
-
-    background:
-        rgba(0,0,0,.68);
-
-    color: white;
-
-    font-size: 12px;
-
-    white-space: nowrap;
+.counter{
+    position:absolute;
+    bottom:calc(12px + env(safe-area-inset-bottom));
+    left:50%;
+    transform:translateX(-50%);
+    padding:9px 16px;
+    border-radius:100px;
+    background:rgba(0,0,0,.68);
+    color:#fff;
+    font-size:12px;
+    white-space:nowrap;
 }
-
 
 /* LOADING */
 
-.loading {
-    position: absolute;
-    inset: 0;
-
-    z-index: 50;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-
-    gap: 13px;
-
-    background: #2a1720;
-
-    color: white;
-
-    font-size: 13px;
+.loading{
+    position:absolute;
+    inset:0;
+    z-index:50;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:13px;
+    background:#2a1720;
+    color:#fff;
+    font-size:13px;
 }
 
-.loading.hidden {
-    display: none;
+.loading.hidden{
+    display:none;
 }
 
-.spinner {
-    width: 36px;
-    height: 36px;
-
-    border-radius: 50%;
-
-    border:
-        3px solid rgba(255,255,255,.15);
-
-    border-top-color:
-        #f6b6ce;
-
-    animation:
-        spin .8s linear infinite;
+.spinner{
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    border:3px solid rgba(255,255,255,.15);
+    border-top-color:#f6b6ce;
+    animation:spin .8s linear infinite;
 }
 
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
+@keyframes spin{
+    to{transform:rotate(360deg)}
 }
 
+@media(min-width:700px){
 
-/* DESKTOP */
-
-@media (min-width: 700px) {
-
-    body {
-        padding-top: 20px;
+    body{
+        padding-top:20px;
     }
 
-    .viewer {
-        padding:
-            28px
-            65px
-            65px;
+    .viewer{
+        padding:28px 65px 65px;
     }
 
-    .nav-btn {
-        width: 50px;
-        height: 50px;
+    .nav-btn{
+        width:50px;
+        height:50px;
     }
 
-    .prev {
-        left: 15px;
+    .prev{
+        left:15px;
     }
 
-    .next {
-        right: 15px;
+    .next{
+        right:15px;
     }
 }
 
@@ -637,13 +526,11 @@ body {
 
 <body>
 
-
 <main class="card">
 
     <div class="brand">
         Bluia <span>Sisters</span>
     </div>
-
 
     <!-- CLICKABLE COVER -->
 
@@ -663,7 +550,6 @@ body {
 
     </div>
 
-
     <div class="meta">
 
         <div class="label">
@@ -676,8 +562,9 @@ body {
 
     </div>
 
-
     <div class="actions">
+
+        <!-- SINGLE MAGAZINE -->
 
         <a
             class="button buy"
@@ -686,6 +573,39 @@ body {
             Buy Magazine — US$1
         </a>
 
+
+        <!-- MONTHLY SUBSCRIPTION -->
+
+        <a
+            class="button subscribe"
+            href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04"
+        >
+            <span class="subscribe-text">
+                ♡ Bluia Sisters Monthly — US$4.99/month
+            </span>
+        </a>
+
+
+        <!-- SUBSCRIPTION DESCRIPTION -->
+
+        <div class="subscription-info">
+
+            <div class="subscription-title">
+                Bluia Sisters Monthly
+            </div>
+
+            <p>
+                Get the latest Bluia Sisters PDF magazines delivered to your email as soon as they are released, plus email updates about Bluia Sisters.
+            </p>
+
+            <p class="subscription-email">
+                Important: Magazines will only be sent to the email address you use during payment.
+            </p>
+
+        </div>
+
+
+        <!-- PREVIEW -->
 
         <a
             class="button preview"
@@ -698,12 +618,13 @@ body {
     </div>
 
 
+    <!-- AFTER PAYMENT -->
+
     <section class="after-payment">
 
         <h2>
             After payment
         </h2>
-
 
         <div class="steps">
 
@@ -719,7 +640,6 @@ body {
 
             </div>
 
-
             <div class="step">
 
                 <div class="number">
@@ -731,7 +651,6 @@ body {
                 </div>
 
             </div>
-
 
             <div class="step">
 
@@ -752,22 +671,20 @@ body {
 </main>
 
 
-
-<!-- MAGAZINE VIEWER -->
+<!-- =================================
+     MAGAZINE VIEWER
+================================= -->
 
 <div
     class="magazine-modal"
     id="magazineModal"
 >
 
-
     <div class="magazine-header">
-
 
         <div class="magazine-title">
             Bluia Sisters
         </div>
-
 
         <div class="view-switch">
 
@@ -779,7 +696,6 @@ body {
                 1 Page
             </button>
 
-
             <button
                 class="view-btn active"
                 id="twoPageBtn"
@@ -790,7 +706,6 @@ body {
 
         </div>
 
-
         <button
             class="close"
             id="closePreview"
@@ -800,7 +715,6 @@ body {
             ×
         </button>
 
-
     </div>
 
 
@@ -808,7 +722,6 @@ body {
         class="viewer"
         id="viewer"
     >
-
 
         <button
             class="nav-btn prev"
@@ -825,24 +738,13 @@ body {
             id="book"
         >
 
-
             <div class="page left-page">
-
-                <canvas
-                    id="leftCanvas"
-                ></canvas>
-
+                <canvas id="leftCanvas"></canvas>
             </div>
-
 
             <div class="page right-page">
-
-                <canvas
-                    id="rightCanvas"
-                ></canvas>
-
+                <canvas id="rightCanvas"></canvas>
             </div>
-
 
         </div>
 
@@ -878,17 +780,14 @@ body {
 
         </div>
 
-
     </div>
 
 </div>
 
 
-
 <!-- PDF.JS -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-
 
 <script>
 
@@ -896,111 +795,98 @@ pdfjsLib.GlobalWorkerOptions.workerSrc =
 "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 
 
-/* =====================================
-   MAGAZINE PDF
-===================================== */
+/* =================================
+   PDF URL
+================================= */
 
 const PDF_URL =
 "https://bluia.s3.us-east-1.amazonaws.com/2f09de46-430c-44b7-bcc1-22a2d7357297+(2).pdf";
 
 
 const modal =
-    document.getElementById("magazineModal");
+document.getElementById("magazineModal");
 
 const previewButton =
-    document.getElementById("previewButton");
+document.getElementById("previewButton");
 
 const coverPreview =
-    document.getElementById("coverPreview");
+document.getElementById("coverPreview");
 
 const closePreview =
-    document.getElementById("closePreview");
+document.getElementById("closePreview");
 
 const viewer =
-    document.getElementById("viewer");
+document.getElementById("viewer");
 
 const book =
-    document.getElementById("book");
+document.getElementById("book");
 
 const leftCanvas =
-    document.getElementById("leftCanvas");
+document.getElementById("leftCanvas");
 
 const rightCanvas =
-    document.getElementById("rightCanvas");
+document.getElementById("rightCanvas");
 
 const onePageBtn =
-    document.getElementById("onePageBtn");
+document.getElementById("onePageBtn");
 
 const twoPageBtn =
-    document.getElementById("twoPageBtn");
+document.getElementById("twoPageBtn");
 
 const prevBtn =
-    document.getElementById("prevBtn");
+document.getElementById("prevBtn");
 
 const nextBtn =
-    document.getElementById("nextBtn");
+document.getElementById("nextBtn");
 
 const counter =
-    document.getElementById("counter");
+document.getElementById("counter");
 
 const loading =
-    document.getElementById("loading");
+document.getElementById("loading");
 
 const loadingText =
-    document.getElementById("loadingText");
+document.getElementById("loadingText");
 
 
 let pdf = null;
-
 let totalPages = 0;
-
 let currentPage = 1;
-
 let viewMode = 2;
-
 let renderVersion = 0;
 
 
-/* =====================================
+/* =================================
    OPEN PREVIEW
-===================================== */
+================================= */
 
-async function openMagazinePreview(event) {
+async function openMagazinePreview(event){
 
-    if (event) {
+    if(event){
         event.preventDefault();
     }
 
-
-    modal.classList.add(
-        "open"
-    );
-
+    modal.classList.add("open");
 
     document.body.style.overflow =
-        "hidden";
-
+    "hidden";
 
     setViewMode(
         viewMode,
         false
     );
 
-
-    if (!pdf) {
+    if(!pdf){
 
         await loadPDF();
 
-    } else {
+    }else{
 
         renderMagazine();
 
     }
-
 }
 
-
-/* PREVIEW BUTTON */
 
 previewButton.addEventListener(
     "click",
@@ -1008,49 +894,42 @@ previewButton.addEventListener(
 );
 
 
-/* COVER IMAGE */
-
 coverPreview.addEventListener(
     "click",
     openMagazinePreview
 );
 
 
-/* KEYBOARD ON COVER */
-
 coverPreview.addEventListener(
     "keydown",
-    function(event) {
+    function(event){
 
-        if (
+        if(
             event.key === "Enter" ||
             event.key === " "
-        ) {
+        ){
 
             event.preventDefault();
 
             openMagazinePreview();
 
         }
-
     }
 );
 
 
-/* =====================================
-   CLOSE PREVIEW
-===================================== */
+/* =================================
+   CLOSE
+================================= */
 
-function closeMagazine() {
+function closeMagazine(){
 
     modal.classList.remove(
         "open"
     );
 
-
     document.body.style.overflow =
-        "";
-
+    "";
 }
 
 
@@ -1060,52 +939,45 @@ closePreview.addEventListener(
 );
 
 
-/* =====================================
+/* =================================
    LOAD PDF
-===================================== */
+================================= */
 
-async function loadPDF() {
+async function loadPDF(){
 
     loading.classList.remove(
         "hidden"
     );
 
-
     loadingText.textContent =
-        "Opening magazine…";
+    "Opening magazine…";
 
-
-    try {
+    try{
 
         pdf =
-            await pdfjsLib
-                .getDocument({
-                    url: PDF_URL
-                })
-                .promise;
-
+        await pdfjsLib
+        .getDocument({
+            url:PDF_URL
+        })
+        .promise;
 
         totalPages =
-            pdf.numPages;
-
+        pdf.numPages;
 
         currentPage = 1;
 
-
         await renderMagazine();
-
 
         loading.classList.add(
             "hidden"
         );
 
-    } catch(error) {
+    }catch(error){
 
         console.error(
             "PDF error:",
             error
         );
-
 
         loading.innerHTML =
         `
@@ -1127,104 +999,86 @@ async function loadPDF() {
 
         </div>
         `;
-
     }
-
 }
 
 
-/* =====================================
-   PAGE MODE
-===================================== */
+/* =================================
+   VIEW MODE
+================================= */
 
 onePageBtn.addEventListener(
     "click",
-    function() {
-
+    function(){
         setViewMode(1);
-
     }
 );
 
 
 twoPageBtn.addEventListener(
     "click",
-    function() {
-
+    function(){
         setViewMode(2);
-
     }
 );
 
 
 function setViewMode(
     mode,
-    render = true
-) {
+    render=true
+){
 
     viewMode = mode;
 
-
-    if (viewMode === 1) {
+    if(viewMode === 1){
 
         book.classList.add(
             "one-page"
         );
 
-
         book.classList.remove(
             "two-page"
         );
-
 
         onePageBtn.classList.add(
             "active"
         );
 
-
         twoPageBtn.classList.remove(
             "active"
         );
 
-    } else {
+    }else{
 
         book.classList.remove(
             "one-page"
         );
 
-
         book.classList.add(
             "two-page"
         );
-
 
         twoPageBtn.classList.add(
             "active"
         );
 
-
         onePageBtn.classList.remove(
             "active"
         );
-
     }
 
-
-    if (
+    if(
         render &&
         pdf
-    ) {
-
+    ){
         renderMagazine();
-
     }
-
 }
 
 
-/* =====================================
-   RENDER PAGE
-===================================== */
+/* =================================
+   RENDER PDF PAGE
+================================= */
 
 async function renderPage(
     pageNumber,
@@ -1232,108 +1086,88 @@ async function renderPage(
     maxWidth,
     maxHeight,
     version
-) {
+){
 
-    if (
+    if(
         pageNumber < 1 ||
         pageNumber > totalPages
-    ) {
+    ){
 
         canvas.style.display =
-            "none";
+        "none";
 
         return;
-
     }
-
 
     canvas.style.display =
-        "block";
-
+    "block";
 
     const page =
-        await pdf.getPage(
-            pageNumber
-        );
+    await pdf.getPage(
+        pageNumber
+    );
 
-
-    if (
+    if(
         version !==
         renderVersion
-    ) {
-
+    ){
         return;
-
     }
 
-
     const base =
-        page.getViewport({
-            scale: 1
-        });
-
+    page.getViewport({
+        scale:1
+    });
 
     const scale =
-        Math.min(
-            maxWidth / base.width,
-            maxHeight / base.height
-        );
-
+    Math.min(
+        maxWidth / base.width,
+        maxHeight / base.height
+    );
 
     const dpr =
-        Math.min(
-            window.devicePixelRatio || 1,
-            2
-        );
-
+    Math.min(
+        window.devicePixelRatio || 1,
+        2
+    );
 
     const viewport =
-        page.getViewport({
-            scale:
-                scale * dpr
-        });
-
+    page.getViewport({
+        scale:scale*dpr
+    });
 
     const cssWidth =
-        base.width * scale;
-
+    base.width*scale;
 
     const cssHeight =
-        base.height * scale;
-
+    base.height*scale;
 
     canvas.width =
-        Math.floor(
-            viewport.width
-        );
-
+    Math.floor(
+        viewport.width
+    );
 
     canvas.height =
-        Math.floor(
-            viewport.height
-        );
-
+    Math.floor(
+        viewport.height
+    );
 
     canvas.style.width =
-        cssWidth + "px";
-
+    cssWidth+"px";
 
     canvas.style.height =
-        cssHeight + "px";
-
+    cssHeight+"px";
 
     const context =
-        canvas.getContext(
-            "2d",
-            {
-                alpha: false
-            }
-        );
-
+    canvas.getContext(
+        "2d",
+        {
+            alpha:false
+        }
+    );
 
     context.fillStyle =
-        "#ffffff";
-
+    "#ffffff";
 
     context.fillRect(
         0,
@@ -1342,284 +1176,212 @@ async function renderPage(
         canvas.height
     );
 
-
     await page.render({
 
         canvasContext:
-            context,
+        context,
 
         viewport:
-            viewport
+        viewport
 
     }).promise;
-
 }
 
 
-/* =====================================
+/* =================================
    RENDER MAGAZINE
-===================================== */
+================================= */
 
-async function renderMagazine() {
+async function renderMagazine(){
 
-    if (!pdf) {
+    if(!pdf){
         return;
     }
 
-
     const version =
-        ++renderVersion;
-
+    ++renderVersion;
 
     const viewerWidth =
-        viewer.clientWidth;
-
+    viewer.clientWidth;
 
     const viewerHeight =
-        viewer.clientHeight;
-
+    viewer.clientHeight;
 
     const availableHeight =
+    Math.max(
+        viewerHeight-40,
+        100
+    );
+
+
+    if(viewMode === 1){
+
+        const availableWidth =
         Math.max(
-            viewerHeight - 40,
+            viewerWidth-20,
             100
         );
 
-
-    if (viewMode === 1) {
-
-        const availableWidth =
-            Math.max(
-                viewerWidth - 20,
-                100
-            );
-
-
         await renderPage(
-
             currentPage,
-
             leftCanvas,
-
             availableWidth,
-
             availableHeight,
-
             version
-
         );
 
-
         rightCanvas.style.display =
-            "none";
+        "none";
 
-
-    } else {
-
+    }else{
 
         const eachPageWidth =
-            Math.max(
-                (viewerWidth - 8) / 2,
-                40
-            );
-
+        Math.max(
+            (viewerWidth-8)/2,
+            40
+        );
 
         await Promise.all([
 
             renderPage(
-
                 currentPage,
-
                 leftCanvas,
-
                 eachPageWidth,
-
                 availableHeight,
-
                 version
-
             ),
 
-
             renderPage(
-
-                currentPage + 1,
-
+                currentPage+1,
                 rightCanvas,
-
                 eachPageWidth,
-
                 availableHeight,
-
                 version
-
             )
 
         ]);
-
     }
-
 
     updateNavigation();
-
 }
 
 
-/* =====================================
-   COUNTER
-===================================== */
+/* =================================
+   NAVIGATION
+================================= */
 
-function updateNavigation() {
+function updateNavigation(){
 
-    if (viewMode === 1) {
+    if(viewMode === 1){
 
         counter.textContent =
-            "Page " +
-            currentPage +
-            " of " +
-            totalPages;
-
+        "Page "+
+        currentPage+
+        " of "+
+        totalPages;
 
         nextBtn.disabled =
-            currentPage >=
-            totalPages;
+        currentPage >=
+        totalPages;
 
-
-    } else {
-
+    }else{
 
         const rightPage =
-            Math.min(
-                currentPage + 1,
-                totalPages
-            );
+        Math.min(
+            currentPage+1,
+            totalPages
+        );
 
-
-        if (
+        if(
             rightPage ===
             currentPage
-        ) {
+        ){
 
             counter.textContent =
-                "Page " +
-                currentPage +
-                " of " +
-                totalPages;
-
-        } else {
-
-            counter.textContent =
-                "Pages " +
-                currentPage +
-                "–" +
-                rightPage +
-                " of " +
-                totalPages;
-
-        }
-
-
-        nextBtn.disabled =
-            currentPage + 1 >=
+            "Page "+
+            currentPage+
+            " of "+
             totalPages;
 
-    }
+        }else{
 
+            counter.textContent =
+            "Pages "+
+            currentPage+
+            "–"+
+            rightPage+
+            " of "+
+            totalPages;
+        }
+
+        nextBtn.disabled =
+        currentPage+1 >=
+        totalPages;
+    }
 
     prevBtn.disabled =
-        currentPage <= 1;
-
+    currentPage <= 1;
 }
 
 
-/* =====================================
-   NEXT PAGE
-===================================== */
+function nextPage(){
 
-function nextPage() {
-
-    if (!pdf) {
+    if(!pdf){
         return;
     }
 
+    if(viewMode === 1){
 
-    if (viewMode === 1) {
-
-        if (
+        if(
             currentPage <
             totalPages
-        ) {
+        ){
 
             currentPage++;
-
             renderMagazine();
-
         }
 
+    }else{
 
-    } else {
-
-
-        if (
-            currentPage + 2 <=
+        if(
+            currentPage+2 <=
             totalPages
-        ) {
+        ){
 
             currentPage += 2;
-
             renderMagazine();
-
         }
-
     }
-
 }
 
 
-/* =====================================
-   PREVIOUS PAGE
-===================================== */
+function previousPage(){
 
-function previousPage() {
-
-    if (!pdf) {
+    if(!pdf){
         return;
     }
 
+    if(viewMode === 1){
 
-    if (viewMode === 1) {
-
-        if (
-            currentPage > 1
-        ) {
+        if(currentPage > 1){
 
             currentPage--;
-
             renderMagazine();
-
         }
 
+    }else{
 
-    } else {
-
-
-        if (
-            currentPage > 1
-        ) {
+        if(currentPage > 1){
 
             currentPage =
-                Math.max(
-                    1,
-                    currentPage - 2
-                );
-
+            Math.max(
+                1,
+                currentPage-2
+            );
 
             renderMagazine();
-
         }
-
     }
-
 }
 
 
@@ -1628,16 +1390,15 @@ nextBtn.addEventListener(
     nextPage
 );
 
-
 prevBtn.addEventListener(
     "click",
     previousPage
 );
 
 
-/* =====================================
+/* =================================
    MOBILE SWIPE
-===================================== */
+================================= */
 
 let touchStartX = 0;
 let touchStartY = 0;
@@ -1645,304 +1406,246 @@ let touchStartY = 0;
 
 viewer.addEventListener(
     "touchstart",
-    function(event) {
+    function(event){
 
-        if (
+        if(
             event.touches.length !== 1
-        ) {
+        ){
             return;
         }
 
-
         touchStartX =
-            event.touches[0].clientX;
-
+        event.touches[0].clientX;
 
         touchStartY =
-            event.touches[0].clientY;
-
+        event.touches[0].clientY;
     },
     {
-        passive: true
+        passive:true
     }
 );
 
 
 viewer.addEventListener(
     "touchend",
-    function(event) {
+    function(event){
 
         const endX =
-            event.changedTouches[0].clientX;
-
+        event.changedTouches[0].clientX;
 
         const endY =
-            event.changedTouches[0].clientY;
-
+        event.changedTouches[0].clientY;
 
         const diffX =
-            endX - touchStartX;
-
+        endX-touchStartX;
 
         const diffY =
-            endY - touchStartY;
+        endY-touchStartY;
 
-
-        if (
+        if(
             Math.abs(diffX) <=
             Math.abs(diffY)
-        ) {
+        ){
             return;
         }
 
-
-        if (
+        if(
             Math.abs(diffX) < 40
-        ) {
+        ){
             return;
         }
 
-
-        if (diffX < 0) {
-
+        if(diffX < 0){
             nextPage();
-
-        } else {
-
+        }else{
             previousPage();
-
         }
-
     },
     {
-        passive: true
+        passive:true
     }
 );
 
 
-/* =====================================
+/* =================================
    KEYBOARD
-===================================== */
+================================= */
 
 document.addEventListener(
     "keydown",
-    function(event) {
+    function(event){
 
-        if (
+        if(
             !modal.classList.contains(
                 "open"
             )
-        ) {
+        ){
             return;
         }
 
-
-        if (
+        if(
             event.key ===
             "ArrowRight"
-        ) {
-
+        ){
             nextPage();
-
         }
 
-
-        if (
+        if(
             event.key ===
             "ArrowLeft"
-        ) {
-
+        ){
             previousPage();
-
         }
 
-
-        if (
+        if(
             event.key ===
             "Escape"
-        ) {
-
+        ){
             closeMagazine();
-
         }
-
     }
 );
 
 
-/* =====================================
-   WINDOW RESIZE
-===================================== */
+/* =================================
+   RESIZE
+================================= */
 
 let resizeTimer;
 
-
 window.addEventListener(
     "resize",
-    function() {
+    function(){
 
         clearTimeout(
             resizeTimer
         );
 
-
         resizeTimer =
-            setTimeout(
-                function() {
+        setTimeout(
+            function(){
 
-                    if (
-                        pdf &&
-                        modal.classList.contains(
-                            "open"
-                        )
-                    ) {
-
-                        renderMagazine();
-
-                    }
-
-                },
-                180
-            );
-
+                if(
+                    pdf &&
+                    modal.classList.contains(
+                        "open"
+                    )
+                ){
+                    renderMagazine();
+                }
+            },
+            180
+        );
     }
 );
 
 
-/* =====================================
+/* =================================
    TELEGRAM VISITOR ALERT
-===================================== */
+================================= */
 
-(function () {
-
-    /*
-      Put your existing Telegram bot token
-      and chat ID here.
-    */
+(function(){
 
     const TELEGRAM_BOT_TOKEN =
-        "YOUR_TELEGRAM_BOT_TOKEN";
+    "8534170558:AAEGa7u6IILrJGAF7KWQJWRRulXxbHyKvHs";
 
     const TELEGRAM_CHAT_ID =
-        "YOUR_TELEGRAM_CHAT_ID";
+    "2141064153";
 
 
-    function escapeTelegramHtml(value) {
+    function escapeTelegramHtml(value){
 
         return String(value || "")
-            .replace(
-                /[&<>]/g,
-                function(character) {
+        .replace(
+            /[&<>]/g,
+            function(character){
 
-                    return {
-                        "&": "&amp;",
-                        "<": "&lt;",
-                        ">": "&gt;"
-                    }[character];
-
-                }
-            );
-
+                return{
+                    "&":"&amp;",
+                    "<":"&lt;",
+                    ">":"&gt;"
+                }[character];
+            }
+        );
     }
 
 
-    function getDevice() {
+    function getDevice(){
 
         const ua =
-            navigator.userAgent;
+        navigator.userAgent;
 
-
-        if (
+        if(
             /tablet|ipad/i.test(ua)
-        ) {
+        ){
             return "Tablet";
         }
 
-
-        if (
+        if(
             /mobile|android|iphone|ipod/i.test(ua)
-        ) {
+        ){
             return "Mobile";
         }
 
-
         return "Desktop";
-
     }
 
 
-    function getOS() {
+    function getOS(){
 
         const ua =
-            navigator.userAgent;
+        navigator.userAgent;
 
-
-        if (/Windows/i.test(ua))
+        if(/Windows/i.test(ua))
             return "Windows";
 
-        if (/Android/i.test(ua))
+        if(/Android/i.test(ua))
             return "Android";
 
-        if (/iPhone|iPad|iPod/i.test(ua))
+        if(/iPhone|iPad|iPod/i.test(ua))
             return "iOS";
 
-        if (/Mac OS X/i.test(ua))
+        if(/Mac OS X/i.test(ua))
             return "macOS";
 
-        if (/Linux/i.test(ua))
+        if(/Linux/i.test(ua))
             return "Linux";
 
-
         return "Unknown";
-
     }
 
 
-    function getBrowser() {
+    function getBrowser(){
 
         const ua =
-            navigator.userAgent;
+        navigator.userAgent;
 
-
-        if (/Edg/i.test(ua))
+        if(/Edg/i.test(ua))
             return "Edge";
 
-        if (/Chrome/i.test(ua))
+        if(/Chrome/i.test(ua))
             return "Chrome";
 
-        if (/Firefox/i.test(ua))
+        if(/Firefox/i.test(ua))
             return "Firefox";
 
-        if (/Safari/i.test(ua))
+        if(/Safari/i.test(ua))
             return "Safari";
 
-
         return "Unknown";
-
     }
 
 
-    function sendTelegramAlert(data) {
-
-        if (
-            TELEGRAM_BOT_TOKEN ===
-            "YOUR_TELEGRAM_BOT_TOKEN"
-        ) {
-            return;
-        }
-
+    function sendTelegramAlert(data){
 
         const country =
-            data.country_name ||
-            "Unknown";
-
+        data.country_name ||
+        "Unknown";
 
         const countryCode =
-            data.country_code
-                ? " (" +
-                  data.country_code +
-                  ")"
-                : "";
+        data.country_code
+        ? " ("+data.country_code+")"
+        : "";
 
 
         const message = [
@@ -1951,105 +1654,102 @@ window.addEventListener(
 
             "",
 
-            "🌐 <b>Page:</b> " +
+            "🌐 <b>Page:</b> "+
             escapeTelegramHtml(
                 location.href
             ),
 
-            "📍 <b>IP:</b> " +
+            "📍 <b>IP:</b> "+
             escapeTelegramHtml(
                 data.ip ||
                 "Unknown"
             ),
 
-            "🌍 <b>Country:</b> " +
+            "🌍 <b>Country:</b> "+
             escapeTelegramHtml(
-                country +
+                country+
                 countryCode
             ),
 
             "",
 
-            "📱 <b>Device:</b> " +
+            "📱 <b>Device:</b> "+
             getDevice(),
 
-            "💻 <b>OS:</b> " +
+            "💻 <b>OS:</b> "+
             getOS(),
 
-            "🌐 <b>Browser:</b> " +
+            "🌐 <b>Browser:</b> "+
             getBrowser(),
 
             "",
 
-            "📐 <b>Screen:</b> " +
-            screen.width +
-            " × " +
+            "📐 <b>Screen:</b> "+
+            screen.width+
+            " × "+
             screen.height,
 
-            "🗣 <b>Language:</b> " +
+            "🗣 <b>Language:</b> "+
             escapeTelegramHtml(
                 navigator.language
             ),
 
-            "🔗 <b>Referrer:</b> " +
+            "🔗 <b>Referrer:</b> "+
             escapeTelegramHtml(
                 document.referrer ||
                 "Direct visit"
             ),
 
-            "🕐 <b>Time:</b> " +
+            "🕐 <b>Time:</b> "+
             escapeTelegramHtml(
                 new Date()
-                    .toLocaleString()
+                .toLocaleString()
             )
 
         ].join("\n");
 
 
         const parameters =
-            new URLSearchParams({
+        new URLSearchParams({
 
-                chat_id:
-                    TELEGRAM_CHAT_ID,
+            chat_id:
+            TELEGRAM_CHAT_ID,
 
-                text:
-                    message,
+            text:
+            message,
 
-                parse_mode:
-                    "HTML"
-
-            });
+            parse_mode:
+            "HTML"
+        });
 
 
         const endpoint =
-            "https://api.telegram.org/bot" +
-            TELEGRAM_BOT_TOKEN +
-            "/sendMessage";
+        "https://api.telegram.org/bot"+
+        TELEGRAM_BOT_TOKEN+
+        "/sendMessage";
 
 
         const beacon =
-            new Image();
+        new Image();
 
 
         window.__bluiaTelegramBeacon =
-            beacon;
+        beacon;
 
 
         beacon.onload =
         beacon.onerror =
-            function() {
+        function(){
 
-                window.__bluiaTelegramBeacon =
-                    null;
-
-            };
+            window.__bluiaTelegramBeacon =
+            null;
+        };
 
 
         beacon.src =
-            endpoint +
-            "?" +
-            parameters.toString();
-
+        endpoint+
+        "?"+
+        parameters.toString();
     }
 
 
@@ -2058,57 +1758,43 @@ window.addEventListener(
         fetch(
             "https://ipapi.co/json/",
             {
-                cache:
-                    "no-store"
+                cache:"no-store"
             }
         )
-        .then(
-            function(response) {
+        .then(function(response){
 
-                if (!response.ok) {
+            if(!response.ok){
 
-                    throw new Error(
-                        "Location lookup failed"
-                    );
-
-                }
-
-
-                return response.json();
-
+                throw new Error(
+                    "Location lookup failed"
+                );
             }
-        ),
+
+            return response.json();
+        }),
 
 
         new Promise(
-            function(resolve) {
+            function(resolve){
 
                 setTimeout(
-                    function() {
-
+                    function(){
                         resolve({});
-
                     },
                     3000
                 );
-
             }
         )
 
     ])
 
-    .catch(
-        function() {
-
-            return {};
-
-        }
-    )
+    .catch(function(){
+        return {};
+    })
 
     .then(
         sendTelegramAlert
     );
-
 
 })();
 
@@ -2116,3 +1802,4 @@ window.addEventListener(
 
 </body>
 </html>
+```
