@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -188,6 +189,123 @@ BUTTONS
 .actions{
 display:grid;
 gap:10px;
+}
+
+/* FEATURED PREVIEW ACTIONS */
+.featured-preview-actions{
+display:grid;
+gap:10px;
+margin:0 0 12px;
+}
+
+.featured-preview-label{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:6px;
+margin-bottom:1px;
+color:#9e4568;
+font-size:10px;
+font-weight:900;
+letter-spacing:1.35px;
+text-transform:uppercase;
+}
+
+.featured-preview-label .material-icons-round{
+font-size:16px;
+}
+
+.featured-action{
+min-height:68px;
+display:grid;
+grid-template-columns:42px minmax(0,1fr) 22px;
+align-items:center;
+gap:11px;
+padding:11px 13px;
+border-radius:18px;
+text-align:left;
+text-decoration:none;
+cursor:pointer;
+transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;
+}
+
+.featured-action:hover{
+transform:translateY(-2px);
+}
+
+.featured-action:active{
+transform:scale(.985);
+}
+
+.featured-action-icon{
+width:42px;
+height:42px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:13px;
+}
+
+.featured-action-icon .material-icons-round{
+font-size:24px;
+}
+
+.featured-action-copy strong{
+display:block;
+margin-bottom:3px;
+font-size:13px;
+line-height:1.22;
+}
+
+.featured-action-copy span{
+display:block;
+font-size:10.5px;
+font-weight:600;
+line-height:1.35;
+}
+
+.featured-action-arrow{
+display:flex;
+align-items:center;
+justify-content:flex-end;
+}
+
+.featured-action-arrow .material-icons-round{
+font-size:21px;
+}
+
+.featured-action.pdf-preview{
+color:#743047;
+background:linear-gradient(135deg,#fff4bd,#ffe27a);
+border:1px solid #e9c94f;
+box-shadow:0 12px 28px rgba(194,153,25,.18);
+}
+
+.featured-action.pdf-preview .featured-action-icon{
+color:#8d5f00;
+background:rgba(255,255,255,.56);
+}
+
+.featured-action.pdf-preview .featured-action-copy span,
+.featured-action.pdf-preview .featured-action-arrow{
+color:#8a6816;
+}
+
+.featured-action.photo-preview{
+color:#fff;
+background:linear-gradient(135deg,#dc4f87,#9c315d);
+border:1px solid #96305a;
+box-shadow:0 13px 30px rgba(155,49,92,.24);
+}
+
+.featured-action.photo-preview .featured-action-icon{
+color:#fff;
+background:rgba(255,255,255,.16);
+}
+
+.featured-action.photo-preview .featured-action-copy span,
+.featured-action.photo-preview .featured-action-arrow{
+color:rgba(255,255,255,.82);
 }
 
 .button{
@@ -924,6 +1042,52 @@ US$1
 </div>
 
 
+<div class="featured-preview-actions">
+
+<div class="featured-preview-label">
+<span class="material-icons-round" aria-hidden="true">visibility</span>
+Preview before you buy
+</div>
+
+<a
+class="featured-action pdf-preview"
+href="#"
+id="previewButton"
+aria-label="Preview Bluia Sisters PDF Magazine"
+>
+<span class="featured-action-icon">
+<span class="material-icons-round" aria-hidden="true">picture_as_pdf</span>
+</span>
+<span class="featured-action-copy">
+<strong>Preview PDF Magazine</strong>
+<span>Open the Bluia Sisters magazine preview now</span>
+</span>
+<span class="featured-action-arrow">
+<span class="material-icons-round" aria-hidden="true">arrow_forward</span>
+</span>
+</a>
+
+<a
+class="featured-action photo-preview"
+href="https://photos.google.com/share/AF1QipNRug-AiYUqZxn2SES1rhzUM-tLGk4cMjJx75DSqA1JJDHlLI99wEmXq1IPjUS7Eg?key=akpLNmRSMTVaNGhlRHQ3WmM2Q1dLSzA4dHYyZjdR"
+target="_blank"
+rel="noopener noreferrer"
+aria-label="View my Google Photos samples in high resolution"
+>
+<span class="featured-action-icon">
+<span class="material-icons-round" aria-hidden="true">photo_library</span>
+</span>
+<span class="featured-action-copy">
+<strong>Google Photos — High-Resolution Samples</strong>
+<span>View my Google Photos samples in full quality</span>
+</span>
+<span class="featured-action-arrow">
+<span class="material-icons-round" aria-hidden="true">open_in_new</span>
+</span>
+</a>
+
+</div>
+
 <div class="actions">
 
 
@@ -1015,15 +1179,6 @@ aria-hidden="true"
 <span>
 Get access to selected private Google Photos albums shared with Bluia Sisters subscribers.
 </span>
-<a
-class="photo-samples-link"
-href="https://photos.google.com/share/AF1QipNRug-AiYUqZxn2SES1rhzUM-tLGk4cMjJx75DSqA1JJDHlLI99wEmXq1IPjUS7Eg?key=akpLNmRSMTVaNGhlRHQ3WmM2Q1dLSzA4dHYyZjdR"
-target="_blank"
-rel="noopener noreferrer"
->
-<span class="material-icons-round" aria-hidden="true">high_quality</span>
-View my Google Photos Samples <br> in high resolution
-</a>
 </div>
 
 </li>
@@ -1059,15 +1214,6 @@ Important: subscription content and magazines will be sent to the email address 
 </p>
 
 </div>
-
-
-<a
-class="button preview"
-href="#"
-id="previewButton"
->
-Preview Magazine
-</a>
 
 </div>
 
