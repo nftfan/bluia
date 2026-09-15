@@ -637,25 +637,30 @@ rgba(0,0,0,.12)
 );
 }
 
-.tv-coming{
-margin-top:21px;
-color:#a93d68;
-font:24px Georgia,"Times New Roman",serif;
-}
 
-.tv-coming span{
-color:#dc6692;
-font-style:italic;
-}
-
-.tv-small{
-margin-top:7px;
-color:#98717f;
-font-size:10px;
-font-weight:700;
-letter-spacing:1.4px;
-text-transform:uppercase;
-}
+/* Telegram membership */
+.tv-membership{margin:25px auto 0;text-align:left;padding:22px 18px;border:1px solid #f0c9db;border-radius:22px;background:#fff9fc;}
+.tv-eyebrow{display:flex;align-items:center;gap:8px;color:#257da8;font-size:11px;letter-spacing:1px;text-transform:uppercase;}
+.telegram-icon{width:23px;height:23px;flex-shrink:0;fill:currentColor;}
+.tv-membership h2{margin:13px 0 10px;color:#73364f;font:29px/1.15 Georgia,serif;}
+.tv-membership p{font-size:13px;line-height:1.65;color:#775b68;margin:10px 0;}
+.tv-price{display:flex;align-items:baseline;gap:7px;margin:15px 0;color:#883f5d;}
+.tv-price span{font:42px/1 Georgia,serif;}
+.tv-price small{font-size:13px;}
+.tv-benefits{list-style:none;padding:0;margin:20px 0;display:grid;gap:15px;}
+.tv-benefits li{display:flex;gap:11px;align-items:flex-start;}
+.tv-benefits .material-icons-round{font-size:21px;color:#ae577c;margin-top:2px;}
+.tv-benefit-title{display:block;font-size:14px;font-weight:400;color:#603b4b;}
+.tv-benefit-detail{display:block;font-size:12px;line-height:1.55;color:#876a77;margin-top:3px;}
+.tv-video-border,.telegram-button{background-size:300% 300%;animation:telegramGlow 6s ease-in-out infinite;}
+.telegram-button{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:15px 12px;border:2px solid transparent;border-radius:15px;text-decoration:none;color:#fff;font-size:14px;font-weight:400;background:linear-gradient(#168ac0,#168ac0) padding-box,linear-gradient(110deg,#8be5ff,#ef91b5,#fff,#53ccfa) border-box;background-size:100% 100%,300% 300%;transition:filter .2s;}
+.telegram-button:hover{filter:brightness(1.08);}
+.telegram-button:focus-visible{outline:3px solid #73364f;outline-offset:4px;}
+.tv-membership .tv-payment-note{display:flex;align-items:flex-start;gap:7px;font-size:11px;line-height:1.6;margin:14px 0 0;}
+.tv-payment-note .material-icons-round{font-size:17px;flex-shrink:0;margin-top:2px;color:#62816f;}
+@keyframes telegramGlow{0%,100%{background-position:0% 50%;box-shadow:0 0 8px rgba(53,181,227,.15);}50%{background-position:100% 50%;box-shadow:0 0 19px rgba(217,103,155,.32);}}
+@media(prefers-reduced-motion:reduce){.tv-video-border,.telegram-button{animation:none;}}
+@media(max-width:360px){.tv-membership{padding:18px 13px;}.telegram-button{font-size:12px;}}
 
 /* =========================================
 BLUIAS
@@ -1293,7 +1298,7 @@ id="tvContent"
 <video
 class="tv-video"
 id="bluiaTvVideo"
-src="https://res.cloudinary.com/dvbwmtdwh/video/upload/v1789311784/grok-video-cf8c13b6-2059-4030-b86b-68d8e78a7615_btfolj.mp4"
+src="https://pub-09d49e1729be4c218a60f330ac3b61b2.r2.dev/grok-video-cb0bbaac-4b86-43ef-8d8b-05476a9d6e73.mp4"
 autoplay
 muted
 loop
@@ -1307,18 +1312,26 @@ disablepictureinpicture
 </div>
 
 
-<div class="tv-coming">
-Bluia TV
-<span>
-coming soon
-</span>
+<div class="tv-membership">
+  <div class="tv-eyebrow">
+    <svg class="telegram-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.6 3.3 18.4 20c-.24 1.18-.87 1.47-1.76.91l-4.87-3.59-2.35 2.26c-.26.26-.48.48-.99.48l.35-4.96 9.03-8.16c.4-.35-.09-.55-.61-.2L6.03 13.77l-4.81-1.5c-1.05-.33-1.07-1.05.22-1.56L20.26 3.45c.88-.32 1.65.2 1.34-.15Z"/></svg>
+    Bluia TV · Private Telegram group
+  </div>
+  <h2>Your daily dose of Bluia.</h2>
+  <p>Join my private Telegram group for all Bluia TV episodes in high quality, Bluia Sisters photo shoots, and new Bluias every day.</p>
+  <div class="tv-price"><span>$6</span><small>USD / month</small></div>
+  <ul class="tv-benefits">
+    <li><span class="material-icons-round" aria-hidden="true">high_quality</span><div><span class="tv-benefit-title">Every Bluia TV episode</span><span class="tv-benefit-detail">Watch all episodes in high quality, together in one private group.</span></div></li>
+    <li><span class="material-icons-round" aria-hidden="true">photo_camera</span><div><span class="tv-benefit-title">Bluia Sisters photo shoots</span><span class="tv-benefit-detail">Explore the sisters’ fashion looks and photo collections.</span></div></li>
+    <li><span class="material-icons-round" aria-hidden="true">auto_awesome</span><div><span class="tv-benefit-title">New Bluias every day</span><span class="tv-benefit-detail">Discover fresh faces, new styles, and daily updates.</span></div></li>
+    <li><span class="material-icons-round" aria-hidden="true">devices</span><div><span class="tv-benefit-title">Enjoy it wherever you are</span><span class="tv-benefit-detail">Browse in Telegram on your phone, tablet, or computer.</span></div></li>
+  </ul>
+  <a class="telegram-button" href="https://t.me/+vieXRo_X9rM5NzRk" target="_blank" rel="noopener noreferrer">
+    <svg class="telegram-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.6 3.3 18.4 20c-.24 1.18-.87 1.47-1.76.91l-4.87-3.59-2.35 2.26c-.26.26-.48.48-.99.48l.35-4.96 9.03-8.16c.4-.35-.09-.55-.61-.2L6.03 13.77l-4.81-1.5c-1.05-.33-1.07-1.05.22-1.56L20.26 3.45c.88-.32 1.65.2 1.34-.15Z"/></svg>
+    Join my Telegram · $6/month
+  </a>
+  <p class="tv-payment-note"><span class="material-icons-round" aria-hidden="true">lock</span><span>Open Telegram for subscription and payment instructions. For secure payment, use a trusted checkout and never send card details in chat.</span></p>
 </div>
-
-
-<div class="tv-small">
-Bluia Sisters
-</div>
-
 
 </section>
 
@@ -1919,7 +1932,7 @@ line-height:1.6;
 Unable to load preview
 </strong>
 
-<br><br>
+<br>
 
 Please make sure the S3 PDF is publicly accessible and CORS is enabled for bluia.online.
 
@@ -2569,302 +2582,7 @@ renderMagazine();
 );
 
 
-/* =========================================
-TELEGRAM VISITOR ALERT
-========================================= */
-
-(function(){
-
-const TELEGRAM_BOT_TOKEN =
-"8534170558:AAEGa7u6IILrJGAF7KWQJWRRulXxbHyKvHs";
-
-
-const TELEGRAM_CHAT_ID =
-"2141064153";
-
-
-function escapeTelegramHtml(value){
-
-return String(value || "")
-.replace(
-/[&<>]/g,
-function(character){
-
-return{
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;"
-}[character];
-
-}
-);
-
-}
-
-
-function getDevice(){
-
-const ua =
-navigator.userAgent;
-
-
-if(
-/tablet|ipad/i.test(ua)
-){
-return "Tablet";
-}
-
-
-if(
-/mobile|android|iphone|ipod/i.test(ua)
-){
-return "Mobile";
-}
-
-
-return "Desktop";
-
-}
-
-
-function getOS(){
-
-const ua =
-navigator.userAgent;
-
-
-if(/Windows/i.test(ua))
-return "Windows";
-
-
-if(/Android/i.test(ua))
-return "Android";
-
-
-if(/iPhone|iPad|iPod/i.test(ua))
-return "iOS";
-
-
-if(/Mac OS X/i.test(ua))
-return "macOS";
-
-
-if(/Linux/i.test(ua))
-return "Linux";
-
-
-return "Unknown";
-
-}
-
-
-function getBrowser(){
-
-const ua =
-navigator.userAgent;
-
-
-if(/Edg/i.test(ua))
-return "Edge";
-
-
-if(/Chrome/i.test(ua))
-return "Chrome";
-
-
-if(/Firefox/i.test(ua))
-return "Firefox";
-
-
-if(/Safari/i.test(ua))
-return "Safari";
-
-
-return "Unknown";
-
-}
-
-
-function sendTelegramAlert(data){
-
-const country =
-data.country_name ||
-"Unknown";
-
-
-const countryCode =
-data.country_code
-? " (" +
-data.country_code +
-")"
-: "";
-
-
-const message = [
-
-"🌸 <b>New Bluia Sisters Visitor</b>",
-
-"",
-
-"🌐 <b>Page:</b> " +
-escapeTelegramHtml(
-location.href
-),
-
-"📍 <b>IP:</b> " +
-escapeTelegramHtml(
-data.ip ||
-"Unknown"
-),
-
-"🌍 <b>Country:</b> " +
-escapeTelegramHtml(
-country +
-countryCode
-),
-
-"",
-
-"📱 <b>Device:</b> " +
-getDevice(),
-
-"💻 <b>OS:</b> " +
-getOS(),
-
-"🌐 <b>Browser:</b> " +
-getBrowser(),
-
-"",
-
-"📐 <b>Screen:</b> " +
-screen.width +
-" × " +
-screen.height,
-
-"🗣 <b>Language:</b> " +
-escapeTelegramHtml(
-navigator.language
-),
-
-"🔗 <b>Referrer:</b> " +
-escapeTelegramHtml(
-document.referrer ||
-"Direct visit"
-),
-
-"🕐 <b>Time:</b> " +
-escapeTelegramHtml(
-new Date()
-.toLocaleString()
-)
-
-].join("\n");
-
-
-const parameters =
-new URLSearchParams({
-
-chat_id:
-TELEGRAM_CHAT_ID,
-
-text:
-message,
-
-parse_mode:
-"HTML"
-
-});
-
-
-const endpoint =
-"https://api.telegram.org/bot" +
-TELEGRAM_BOT_TOKEN +
-"/sendMessage";
-
-
-const beacon =
-new Image();
-
-
-window.__bluiaTelegramBeacon =
-beacon;
-
-
-beacon.onload =
-beacon.onerror =
-function(){
-
-window.__bluiaTelegramBeacon =
-null;
-
-};
-
-
-beacon.src =
-endpoint +
-"?" +
-parameters.toString();
-
-}
-
-
-Promise.race([
-
-fetch(
-"https://ipapi.co/json/",
-{
-cache:"no-store"
-}
-)
-.then(
-function(response){
-
-if(!response.ok){
-
-throw new Error(
-"Location lookup failed"
-);
-
-}
-
-return response.json();
-
-}
-),
-
-
-new Promise(
-function(resolve){
-
-setTimeout(
-function(){
-
-resolve({});
-
-},
-3000
-);
-
-}
-)
-
-])
-
-.catch(
-function(){
-
-return {};
-
-}
-)
-
-.then(
-sendTelegramAlert
-);
-
-
-})();
-
+/* Visitor notifications must run on a server with a private bot token. */
 </script>
 
 </body>
