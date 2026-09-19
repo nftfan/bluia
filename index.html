@@ -1,6 +1,7 @@
 
 
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -454,29 +455,6 @@ transparent 80%,
 rgba(0,0,0,.12)
 );
 }
-/* Telegram membership */
-.tv-membership{margin:25px auto 0;text-align:left;padding:22px 18px;border:1px solid #f0c9db;border-radius:22px;background:#fff9fc;}
-.tv-eyebrow{display:flex;align-items:center;gap:8px;color:#257da8;font-size:11px;letter-spacing:1px;text-transform:uppercase;}
-.telegram-icon{width:23px;height:23px;flex-shrink:0;fill:currentColor;}
-.tv-membership h2{margin:13px 0 10px;color:#73364f;font:29px/1.15 Georgia,serif;}
-.tv-membership p{font-size:13px;line-height:1.65;color:#775b68;margin:10px 0;}
-.tv-price{display:flex;align-items:baseline;gap:7px;margin:15px 0;color:#883f5d;}
-.tv-price span{font:42px/1 Georgia,serif;}
-.tv-price small{font-size:13px;}
-.tv-benefits{list-style:none;padding:0;margin:20px 0;display:grid;gap:15px;}
-.tv-benefits li{display:flex;gap:11px;align-items:flex-start;}
-.tv-benefits .material-icons-round{font-size:21px;color:#ae577c;margin-top:2px;}
-.tv-benefit-title{display:block;font-size:14px;font-weight:400;color:#603b4b;}
-.tv-benefit-detail{display:block;font-size:12px;line-height:1.55;color:#876a77;margin-top:3px;}
-.tv-video-border,.telegram-button{background-size:300% 300%;animation:telegramGlow 6s ease-in-out infinite;}
-.telegram-button{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:15px 12px;border:2px solid transparent;border-radius:15px;text-decoration:none;color:#fff;font-size:14px;font-weight:400;background:linear-gradient(#168ac0,#168ac0) padding-box,linear-gradient(110deg,#8be5ff,#ef91b5,#fff,#53ccfa) border-box;background-size:100% 100%,300% 300%;transition:filter .2s;}
-.telegram-button:hover{filter:brightness(1.08);}
-.telegram-button:focus-visible{outline:3px solid #73364f;outline-offset:4px;}
-.tv-membership .tv-payment-note{display:flex;align-items:flex-start;gap:7px;font-size:11px;line-height:1.6;margin:14px 0 0;}
-.tv-payment-note .material-icons-round{font-size:17px;flex-shrink:0;margin-top:2px;color:#62816f;}
-@keyframes telegramGlow{0%,100%{background-position:0% 50%;box-shadow:0 0 8px rgba(53,181,227,.15);}50%{background-position:100% 50%;box-shadow:0 0 19px rgba(217,103,155,.32);}}
-@media(prefers-reduced-motion:reduce){.tv-video-border,.telegram-button{animation:none;}}
-@media(max-width:360px){.tv-membership{padding:18px 13px;}.telegram-button{font-size:12px;}}
 /* =========================================
 PDF VIEWER
 ========================================= */
@@ -685,6 +663,25 @@ right:15px;
 .button:focus-visible,.featured-action:focus-visible{outline:3px solid #8c2e58;outline-offset:4px;}
 @media(max-width:430px){.magazine-title{font-size:13px;max-width:65px;}.view-btn{padding:8px 10px;}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+/* Telegram: two simple options */
+.telegram-options{display:grid;gap:10px;margin:26px 0;padding:13px;background:linear-gradient(135deg,#f2faff,#e5f4ff);border:1px solid #d2eafa;border-radius:21px;}
+.tg-option{display:flex;align-items:center;gap:12px;min-height:80px;padding:15px 13px;border-radius:15px;text-decoration:none;text-align:left;transition:transform .18s ease,box-shadow .18s ease;}
+.tg-free{background:#fff;color:#17628e;border:1px solid #d8ebf8;box-shadow:0 4px 14px rgba(38,133,186,.05);}
+.tg-paid{background:linear-gradient(120deg,#269fdb,#1685c1);color:#fff;border:1px solid #168bc7;box-shadow:0 7px 18px rgba(22,133,193,.18);}
+.tg-icon-wrap{display:flex;align-items:center;justify-content:center;flex:0 0 40px;height:40px;border-radius:50%;background:#eaf6ff;color:#249ed8;}
+.tg-paid .tg-icon-wrap{background:rgba(255,255,255,.19);color:#fff;}
+.tg-symbol{width:22px;height:22px;fill:currentColor;}
+.tg-copy{flex:1;min-width:0;}
+.tg-copy strong{display:block;font-size:14px;line-height:1.3;font-weight:700;}
+.tg-caption{display:block;font-size:11px;line-height:1.4;margin-top:5px;color:#66869b;}
+.tg-stars{display:flex;align-items:center;gap:5px;margin-top:5px;font-size:11px;font-weight:600;line-height:1.4;color:#fff;}
+.tg-star{width:17px;height:17px;fill:#ffdc47;flex:0 0 17px;filter:drop-shadow(0 1px 1px rgba(81,71,0,.15));}
+.tg-arrow{font-size:20px;opacity:.8;}
+.tg-option:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(22,133,193,.18);}
+.tg-option:focus-visible{outline:3px solid #125f91;outline-offset:4px;}
+@media(max-width:350px){.telegram-options{padding:9px;}.tg-option{gap:9px;padding:13px 10px;}.tg-copy strong{font-size:12px;}}
+@media(prefers-reduced-motion:reduce){.tg-option{transition:none;}}
 </style>
 </head>
 <body>
@@ -786,26 +783,10 @@ Preview before you buy
 <span aria-hidden="true" class="material-icons-round">open_in_new</span>
 </span>
 </a>
-</div></section><div class="tv-membership">
-<div class="tv-eyebrow">
-<svg aria-hidden="true" class="telegram-icon" viewbox="0 0 24 24"><path d="M21.6 3.3 18.4 20c-.24 1.18-.87 1.47-1.76.91l-4.87-3.59-2.35 2.26c-.26.26-.48.48-.99.48l.35-4.96 9.03-8.16c.4-.35-.09-.55-.61-.2L6.03 13.77l-4.81-1.5c-1.05-.33-1.07-1.05.22-1.56L20.26 3.45c.88-.32 1.65.2 1.34-.15Z"></path></svg>
-Bluia TV · Private Telegram group
-</div>
-<h2>Your daily dose of Bluia.</h2>
-<p>Join my private Telegram group for all Bluia TV episodes in high quality, Bluia Sisters photo shoots, and new Bluias every day.</p>
-<div class="tv-price"><span>$6</span><small>USD / month</small></div>
-<ul class="tv-benefits">
-<li><span aria-hidden="true" class="material-icons-round">high_quality</span><div><span class="tv-benefit-title">Every Bluia TV episode</span><span class="tv-benefit-detail">Watch all episodes in high quality, together in one private group.</span></div></li>
-<li><span aria-hidden="true" class="material-icons-round">photo_camera</span><div><span class="tv-benefit-title">Bluia Sisters photo shoots</span><span class="tv-benefit-detail">Explore the sisters’ fashion looks and photo collections.</span></div></li>
-<li><span aria-hidden="true" class="material-icons-round">auto_awesome</span><div><span class="tv-benefit-title">New Bluias every day</span><span class="tv-benefit-detail">Discover fresh faces, new styles, and daily updates.</span></div></li>
-<li><span aria-hidden="true" class="material-icons-round">devices</span><div><span class="tv-benefit-title">Enjoy it wherever you are</span><span class="tv-benefit-detail">Browse in Telegram on your phone, tablet, or computer.</span></div></li>
-</ul>
-<a class="telegram-button" href="https://t.me/+vieXRo_X9rM5NzRk" rel="noopener noreferrer" target="_blank">
-<svg aria-hidden="true" class="telegram-icon" viewbox="0 0 24 24"><path d="M21.6 3.3 18.4 20c-.24 1.18-.87 1.47-1.76.91l-4.87-3.59-2.35 2.26c-.26.26-.48.48-.99.48l.35-4.96 9.03-8.16c.4-.35-.09-.55-.61-.2L6.03 13.77l-4.81-1.5c-1.05-.33-1.07-1.05.22-1.56L20.26 3.45c.88-.32 1.65.2 1.34-.15Z"></path></svg>
-Join my Telegram · $6/month
-</a>
-<p class="tv-payment-note"><span aria-hidden="true" class="material-icons-round">lock</span><span>Open Telegram for subscription and payment instructions. For secure payment, use a trusted checkout and never send card details in chat.</span></p>
-</div><section aria-labelledby="magazineHeading" class="magazine-section"><div class="label">Included with your membership</div><h2 id="magazineHeading">The Bluia Sisters Magazine</h2><p>The latest PDF magazines, sent to your subscription email address.</p><div aria-label="Preview Bluia Sisters Magazine" class="cover-wrap" id="coverPreview" role="button" tabindex="0">
+</div></section><section aria-label="Telegram" class="telegram-options">
+<a class="tg-option tg-free" href="https://t.me/vbluia" rel="noopener noreferrer" target="_blank"><span class="tg-icon-wrap"><svg aria-hidden="true" class="tg-symbol" viewBox="0 0 24 24"><path d="M21.8 3.7 18.5 20c-.25 1.15-.9 1.44-1.82.9l-5-3.69-2.41 2.32c-.27.27-.5.5-1.02.5l.36-5.1 9.29-8.39c.4-.36-.09-.56-.63-.2L5.79 13.56.86 12.02c-1.08-.34-1.1-1.08.23-1.6L20.38 3c.9-.33 1.69.2 1.42.7Z"></path></svg></span><span class="tg-copy"><strong>Free Telegram</strong><span class="tg-caption">Free access</span></span><span aria-hidden="true" class="tg-arrow">↗</span></a>
+<a class="tg-option tg-paid" href="https://t.me/+vieXRo_X9rM5NzRk" rel="noopener noreferrer" target="_blank"><span class="tg-icon-wrap"><svg aria-hidden="true" class="tg-symbol" viewBox="0 0 24 24"><path d="M21.8 3.7 18.5 20c-.25 1.15-.9 1.44-1.82.9l-5-3.69-2.41 2.32c-.27.27-.5.5-1.02.5l.36-5.1 9.29-8.39c.4-.36-.09-.56-.63-.2L5.79 13.56.86 12.02c-1.08-.34-1.1-1.08.23-1.6L20.38 3c.9-.33 1.69.2 1.42.7Z"></path></svg></span><span class="tg-copy"><strong>Only Fans Telegram</strong><span class="tg-stars"><svg aria-hidden="true" class="tg-star" viewBox="0 0 24 24"><path d="m12 2.2 3.02 6.12 6.76.98-4.89 4.77 1.15 6.73L12 17.62l-6.04 3.18 1.15-6.73-4.89-4.77 6.76-.98Z"></path></svg>500 Stars / month</span></span><span aria-hidden="true" class="tg-arrow">↗</span></a>
+</section><section aria-labelledby="magazineHeading" class="magazine-section"><div class="label">Included with your membership</div><h2 id="magazineHeading">The Bluia Sisters Magazine</h2><p>The latest PDF magazines, sent to your subscription email address.</p><div aria-label="Preview Bluia Sisters Magazine" class="cover-wrap" id="coverPreview" role="button" tabindex="0">
 <img alt="Bluia Sisters Magazine" class="cover" src="https://pub-09d49e1729be4c218a60f330ac3b61b2.r2.dev/1786278084054-photo_2026-08-09_14-19-03.jpg"/>
 </div><a class="button subscribe" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04">
 <span>♡ Buy Membership — US$4.99/month</span>
