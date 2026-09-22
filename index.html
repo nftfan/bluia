@@ -219,6 +219,54 @@
         transform: none;
       }
     }
+
+    .trailer-transition {
+      position: absolute;
+      inset: 5px;
+      z-index: 2;
+      border-radius: 20px;
+      overflow: hidden;
+      display: grid;
+      place-content: center;
+      gap: 9px;
+      padding: 16px;
+      color: #fff;
+      background: radial-gradient(ellipse at 15% 15%, #ef8fba, transparent 65%),
+        linear-gradient(135deg, #773153, #ca4c87 60%, #ec9abe);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .65s ease, visibility .65s;
+      pointer-events: none;
+    }
+    .trailer-transition.is-visible {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+    .trailer-transition::before {
+      content: "";
+      position: absolute;
+      inset: -100%;
+      background: linear-gradient(115deg, transparent 42%, #ffffff24 50%, transparent 58%);
+      transform: translateX(-35%);
+      pointer-events: none;
+    }
+    .trailer-transition.is-visible::before { animation: trailer-shimmer 2.6s ease-in-out infinite; }
+    .trailer-transition p { margin: 0; position: relative; }
+    .trailer-eyebrow { font: 700 10px/1.4 Arial, sans-serif; letter-spacing: 2px; text-transform: uppercase; }
+    .trailer-title { font: 700 clamp(17px, 5vw, 25px)/1.2 Georgia, serif; }
+    .trailer-progress { height: 3px; width: 110px; margin: 4px auto 0; background: #ffffff35; border-radius: 3px; overflow: hidden; }
+    .trailer-progress::after { content: ""; display: block; height: 100%; background: #fff; transform: scaleX(0); transform-origin: left; }
+    .is-visible .trailer-progress::after { animation: trailer-countdown 2.6s linear forwards; }
+    .trailer-play { position: relative; justify-self: center; border: 1px solid #ffffff80; border-radius: 30px; padding: 9px 18px; background: #fff; color: #873251; font: 700 12px Arial, sans-serif; cursor: pointer; }
+    .trailer-play[hidden] { display: none; }
+    .trailer-play:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
+    @keyframes trailer-shimmer { to { transform: translateX(35%); } }
+    @keyframes trailer-countdown { to { transform: scaleX(1); } }
+    @media (prefers-reduced-motion: reduce) {
+      .trailer-transition { transition: none; }
+      .trailer-transition.is-visible::before, .is-visible .trailer-progress::after { animation: none; }
+    }
   </style>
 </head>
 
@@ -227,12 +275,20 @@
     <div class="brand">Bluia <span>Sisters</span></div>
 
     <div class="video-wrap">
-      <video
+      <video id="trailer-player"
         controls
         playsinline
         preload="metadata"
         src="https://pub-09d49e1729be4c218a60f330ac3b61b2.r2.dev/grok-video-10dd7878-96b4-4946-926b-33e22bc8cb9e.mp4">
       </video>
+      <div class="trailer-transition" id="trailer-transition" aria-hidden="true">
+        <div role="status" aria-live="polite" aria-atomic="true">
+          <p class="trailer-eyebrow" id="trailer-status">Playing next free trailer of</p>
+          <p class="trailer-title">Bluia Sisters Show</p>
+        </div>
+        <div class="trailer-progress" aria-hidden="true"></div>
+        <button class="trailer-play" id="trailer-play" type="button" hidden>Play next trailer</button>
+      </div>
     </div>
 
     <h1>Watch all Bluia Sisters Drama episodes</h1>
@@ -294,6 +350,63 @@
       </a>
     </div>
   </main>
+
+<script>
+
+(() => {
+  const player = document.getElementById('trailer-player');
+  const overlay = document.getElementById('trailer-transition');
+  const status = document.getElementById('trailer-status');
+  const button = document.getElementById('trailer-play');
+  const nextTrailer = 'https://pub-09d49e1729be4c218a60f330ac3b61b2.r2.dev/cgrok-video-ded4afea-ee3c-4c53-b246-290070da4d42.mp4';
+  let advanced = false;
+  let waiting = false;
+  let timeout;
+
+  function offerPlay(message) {
+    if (!waiting) return;
+    clearTimeout(timeout);
+    status.textContent = message;
+    button.hidden = false;
+  }
+  function playNext() {
+    button.hidden = true;
+    status.textContent = 'Playing next free trailer of';
+    clearTimeout(timeout);
+    timeout = setTimeout(() => offerPlay('Tap below to continue watching'), 12000);
+    player.play().catch(() => offerPlay('Your next free trailer is ready'));
+  }
+  player.addEventListener('ended', () => {
+    if (advanced) return;
+    advanced = true;
+    waiting = true;
+    overlay.classList.add('is-visible');
+    overlay.setAttribute('aria-hidden', 'false');
+    // Leave native fullscreen so the transition remains visible on phones.
+    if (player.webkitDisplayingFullscreen && player.webkitExitFullscreen) player.webkitExitFullscreen();
+    if (document.fullscreenElement === player && document.exitFullscreen) document.exitFullscreen().catch(() => {});
+    setTimeout(() => {
+      player.src = nextTrailer;
+      player.load();
+      playNext();
+    }, 2600);
+  });
+  player.addEventListener('playing', () => {
+    if (!waiting) return;
+    waiting = false;
+    clearTimeout(timeout);
+    if (document.activeElement === button) player.focus();
+    overlay.classList.remove('is-visible');
+    overlay.setAttribute('aria-hidden', 'true');
+    button.hidden = true;
+  });
+  player.addEventListener('error', () => offerPlay('Trailer could not load. Tap to retry.'));
+  button.addEventListener('click', () => {
+    if (player.error) player.load();
+    playNext();
+  });
+})();
+</script>
 
 <script>
 (function () {
