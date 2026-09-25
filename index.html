@@ -1,11 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Bluia Sisters</title>
-
   <style>
     * {
       box-sizing: border-box;
@@ -14,36 +12,33 @@
     html,
     body {
       margin: 0;
-      padding: 0;
       min-height: 100%;
     }
 
     body {
       min-height: 100svh;
-      background:
-        radial-gradient(circle at top, #ffe4ef 0, #fff3f8 34%, #ffffff 72%);
-      color: #3d2430;
+      background: #fff8fb;
+      color: #3f3037;
       font-family: Arial, Helvetica, sans-serif;
       display: flex;
       justify-content: center;
-      padding: 18px 14px 34px;
+      padding: 18px 14px 0;
     }
 
     main {
-      width: min(100%, 430px);
+      width: min(100%, 440px);
       text-align: center;
     }
 
     .brand {
-      margin: 4px 0 15px;
-      font: 26px Georgia, "Times New Roman", serif;
-      font-weight: 700;
-      letter-spacing: -1.4px;
-      color: #4a2736;
+      margin: 2px 0 14px;
+      font: 700 22px/1.1 Georgia, "Times New Roman", serif;
+      letter-spacing: -0.8px;
+      color: #472e38;
     }
 
     .brand span {
-      color: #ef4f91;
+      color: #e94f8b;
       font-style: italic;
     }
 
@@ -51,101 +46,99 @@
       position: relative;
       width: 100%;
       margin: 0 auto;
-      padding: 5px;
-      border-radius: 25px;
-      background: linear-gradient(145deg, #ff6da8, #f6a2c5 55%, #ffd7e8);
-      box-shadow: 0 14px 34px rgba(222, 72, 132, .17);
-    }
-
-    .video-wrap::after {
-      content: "";
-      position: absolute;
-      inset: -8px;
-      z-index: -1;
-      border-radius: 31px;
-      background: rgba(255, 147, 189, .16);
-      filter: blur(14px);
+      overflow: hidden;
+      border: 1px solid #efcfdb;
+      border-radius: 16px;
+      background: #111;
     }
 
     video {
       display: block;
       width: 100%;
       height: auto;
-      aspect-ratio: 16 / 9;
+      max-height: 68svh;
       object-fit: contain;
-      border-radius: 20px;
       background: #111;
     }
 
     h1 {
-      max-width: 370px;
-      margin: 16px auto 5px;
-      font: 700 18px/1.28 Georgia, "Times New Roman", serif;
-      color: #512d3d;
-      letter-spacing: -.25px;
+      max-width: 350px;
+      margin: 14px auto 4px;
+      font: 700 16px/1.3 Georgia, "Times New Roman", serif;
+      color: #4d3540;
+      letter-spacing: -0.15px;
     }
 
     .intro {
       max-width: 350px;
-      margin: 0 auto 14px;
-      color: #8b6474;
-      font-size: 11.5px;
-      line-height: 1.55;
+      margin: 0 auto 11px;
+      color: #8b727d;
+      font-size: 10.5px;
+      line-height: 1.45;
     }
 
     .telegram-buttons {
       display: grid;
-      gap: 8px;
-      margin-top: 12px;
+      gap: 7px;
+      margin-top: 10px;
     }
 
     .tg-button {
-      min-height: 58px;
+      min-height: 52px;
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 10px 12px;
-      border-radius: 15px;
+      gap: 10px;
+      padding: 9px 11px;
+      border-radius: 11px;
       text-align: left;
       text-decoration: none;
       font-weight: 700;
+      transition: background-color .15s ease, border-color .15s ease;
     }
 
     .tg-paid {
       color: #fff;
-      background: linear-gradient(135deg, #ee4c8d, #d9367a);
-      border: 1px solid #d83277;
-      box-shadow: 0 10px 24px rgba(217, 54, 122, .22);
+      background: #df4a83;
+      border: 1px solid #df4a83;
     }
 
-    .tg-paid .tg-icon {
-      background: rgba(255, 255, 255, .18);
+    .tg-paid:hover {
+      background: #d8437a;
+      border-color: #d8437a;
     }
 
     .tg-free {
       color: #c43d75;
-      background: rgba(255,255,255,.82);
-      border: 1px solid #f2bfd2;
-      box-shadow: 0 7px 18px rgba(219, 101, 151, .08);
+      background: #fff;
+      border: 1px solid #efc6d6;
     }
 
-    .tg-free .tg-icon {
-      background: #ffe8f1;
-      color: #e44c89;
+    .tg-free:hover {
+      background: #fff4f8;
+      border-color: #e9aec5;
     }
 
     .tg-icon {
-      width: 36px;
-      height: 36px;
-      flex: 0 0 36px;
+      width: 31px;
+      height: 31px;
+      flex: 0 0 31px;
       display: grid;
       place-items: center;
       border-radius: 50%;
     }
 
+    .tg-paid .tg-icon {
+      background: rgba(255,255,255,.14);
+    }
+
+    .tg-free .tg-icon {
+      background: #fff0f5;
+      color: #df4a83;
+    }
+
     .tg-icon svg {
-      width: 20px;
-      height: 20px;
+      width: 17px;
+      height: 17px;
       fill: currentColor;
     }
 
@@ -156,124 +149,164 @@
 
     .tg-copy strong {
       display: block;
-      font-size: 12.5px;
-      line-height: 1.3;
+      font-size: 11.5px;
+      line-height: 1.25;
     }
 
     .tg-copy small {
       display: block;
-      margin-top: 4px;
-      font-size: 10px;
-      line-height: 1.35;
-      font-weight: 600;
+      margin-top: 2px;
+      font-size: 9.5px;
+      line-height: 1.3;
+      font-weight: 500;
       opacity: .86;
     }
 
     .arrow {
-      font-size: 17px;
-      opacity: .8;
+      font-size: 14px;
+      opacity: .72;
     }
 
-    .tg-button:focus-visible {
-      outline: 3px solid #ec5d97;
-      outline-offset: 4px;
-    }
-
-    .tg-button:hover {
-      transform: translateY(-1px);
-    }
-
-    @media (max-width: 360px) {
-      body {
-        padding: 12px 9px 26px;
-      }
-
-      .brand {
-        font-size: 24px;
-      }
-
-      h1 {
-        font-size: 17px;
-      }
-
-      .intro {
-        font-size: 11px;
-      }
-
-      .tg-button {
-        min-height: 54px;
-        padding: 9px 10px;
-      }
-
-      .tg-copy strong {
-        font-size: 12px;
-      }
-
-      .tg-copy small {
-        font-size: 9.5px;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .tg-button:hover {
-        transform: none;
-      }
+    .tg-button:focus-visible,
+    .trailer-play:focus-visible {
+      outline: 2px solid #df4a83;
+      outline-offset: 3px;
     }
 
     .trailer-transition {
       position: absolute;
-      inset: 5px;
+      inset: 0;
       z-index: 2;
-      border-radius: 20px;
       overflow: hidden;
       display: grid;
       place-content: center;
-      gap: 9px;
+      gap: 8px;
       padding: 16px;
       color: #fff;
-      background: radial-gradient(ellipse at 15% 15%, #ef8fba, transparent 65%),
-        linear-gradient(135deg, #773153, #ca4c87 60%, #ec9abe);
+      background: #cf4c7f;
       opacity: 0;
       visibility: hidden;
-      transition: opacity .65s ease, visibility .65s;
+      transition: opacity .45s ease, visibility .45s;
       pointer-events: none;
     }
+
     .trailer-transition.is-visible {
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
     }
-    .trailer-transition::before {
-      content: "";
-      position: absolute;
-      inset: -100%;
-      background: linear-gradient(115deg, transparent 42%, #ffffff24 50%, transparent 58%);
-      transform: translateX(-35%);
-      pointer-events: none;
+
+    .trailer-transition p {
+      margin: 0;
     }
-    .trailer-transition.is-visible::before { animation: trailer-shimmer 2.6s ease-in-out infinite; }
-    .trailer-transition p { margin: 0; position: relative; }
-    .trailer-eyebrow { font: 700 10px/1.4 Arial, sans-serif; letter-spacing: 2px; text-transform: uppercase; }
-    .trailer-title { font: 700 clamp(17px, 5vw, 25px)/1.2 Georgia, serif; }
-    .trailer-progress { height: 3px; width: 110px; margin: 4px auto 0; background: #ffffff35; border-radius: 3px; overflow: hidden; }
-    .trailer-progress::after { content: ""; display: block; height: 100%; background: #fff; transform: scaleX(0); transform-origin: left; }
-    .is-visible .trailer-progress::after { animation: trailer-countdown 2.6s linear forwards; }
-    .trailer-play { position: relative; justify-self: center; border: 1px solid #ffffff80; border-radius: 30px; padding: 9px 18px; background: #fff; color: #873251; font: 700 12px Arial, sans-serif; cursor: pointer; }
-    .trailer-play[hidden] { display: none; }
-    .trailer-play:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
-    @keyframes trailer-shimmer { to { transform: translateX(35%); } }
-    @keyframes trailer-countdown { to { transform: scaleX(1); } }
+
+    .trailer-eyebrow {
+      font: 700 9px/1.35 Arial, sans-serif;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .trailer-title {
+      font: 700 clamp(16px, 5vw, 22px)/1.2 Georgia, serif;
+    }
+
+    .trailer-progress {
+      width: 92px;
+      height: 2px;
+      margin: 3px auto 0;
+      overflow: hidden;
+      border-radius: 2px;
+      background: rgba(255,255,255,.28);
+    }
+
+    .trailer-progress::after {
+      content: "";
+      display: block;
+      height: 100%;
+      background: #fff;
+      transform: scaleX(0);
+      transform-origin: left;
+    }
+
+    .is-visible .trailer-progress::after {
+      animation: trailer-countdown 2.6s linear forwards;
+    }
+
+    .trailer-play {
+      justify-self: center;
+      border: 0;
+      border-radius: 999px;
+      padding: 8px 14px;
+      background: #fff;
+      color: #8a3153;
+      font: 700 10.5px Arial, sans-serif;
+      cursor: pointer;
+    }
+
+    .trailer-play[hidden] {
+      display: none;
+    }
+
+    footer {
+      margin-top: 18px;
+      padding: 14px 6px 18px;
+      border-top: 1px solid #efd9e2;
+      color: #9a7e89;
+      font-size: 9.5px;
+      line-height: 1.45;
+    }
+
+    footer strong {
+      color: #735763;
+      font-weight: 700;
+    }
+
+    @keyframes trailer-countdown {
+      to { transform: scaleX(1); }
+    }
+
+    @media (max-width: 360px) {
+      body {
+        padding: 12px 9px 0;
+      }
+
+      .brand {
+        font-size: 21px;
+      }
+
+      h1 {
+        font-size: 15px;
+      }
+
+      .tg-button {
+        min-height: 49px;
+        padding: 8px 10px;
+      }
+
+      .tg-copy strong {
+        font-size: 11px;
+      }
+
+      .tg-copy small,
+      .intro {
+        font-size: 9.5px;
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
-      .trailer-transition { transition: none; }
-      .trailer-transition.is-visible::before, .is-visible .trailer-progress::after { animation: none; }
+      .trailer-transition {
+        transition: none;
+      }
+
+      .is-visible .trailer-progress::after {
+        animation: none;
+      }
     }
   </style>
 </head>
-
 <body>
   <main>
     <div class="brand">Bluia <span>Sisters</span></div>
-
     <div class="video-wrap">
       <video id="trailer-player"
         controls
@@ -290,12 +323,10 @@
         <button class="trailer-play" id="trailer-play" type="button" hidden>Play next trailer</button>
       </div>
     </div>
-
     <h1>Watch all Bluia Sisters Drama episodes</h1>
     <p class="intro">
       Watch all episodes of your favorite Bluia Sisters.
     </p>
-
     <div class="telegram-buttons">
       <a class="tg-button tg-paid"
          href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04"
@@ -310,7 +341,6 @@
         <span class="arrow" aria-hidden="true">↗</span>
       </a>
       <p class="intro">Pay securely with Stripe. Your viewing link will be sent to the email address you use at checkout.</p>
-
       <a
         class="tg-button tg-paid"
         href="https://t.me/+vieXRo_X9rM5NzRk"
@@ -321,15 +351,12 @@
             <path d="M21.8 3.7 18.5 20c-.25 1.15-.9 1.44-1.82.9l-5-3.69-2.41 2.32c-.27.27-.5.5-1.02.5l.36-5.1 9.29-8.39c.4-.36-.09-.56-.63-.2L5.79 13.56.86 12.02c-1.08-.34-1.1-1.08.23-1.6L20.38 3c.9-.33 1.69.2 1.42.7Z"/>
           </svg>
         </span>
-
         <span class="tg-copy">
           <strong>Watch All Episodes — Paid Telegram</strong>
           <small>500 Telegram Stars / month</small>
         </span>
-
         <span class="arrow" aria-hidden="true">↗</span>
       </a>
-
       <a
         class="tg-button tg-free"
         href="https://t.me/vbluia"
@@ -340,19 +367,20 @@
             <path d="M21.8 3.7 18.5 20c-.25 1.15-.9 1.44-1.82.9l-5-3.69-2.41 2.32c-.27.27-.5.5-1.02.5l.36-5.1 9.29-8.39c.4-.36-.09-.56-.63-.2L5.79 13.56.86 12.02c-1.08-.34-1.1-1.08.23-1.6L20.38 3c.9-.33 1.69.2 1.42.7Z"/>
           </svg>
         </span>
-
         <span class="tg-copy">
           <strong>Free Telegram</strong>
           <small>Join our free channel</small>
         </span>
-
         <span class="arrow" aria-hidden="true">↗</span>
       </a>
     </div>
+
+    <footer>
+      <strong>Bluia Sisters</strong><br>
+      © 2026 Bluia Sisters. All rights reserved.
+    </footer>
   </main>
-
 <script>
-
 (() => {
   const player = document.getElementById('trailer-player');
   const overlay = document.getElementById('trailer-transition');
@@ -362,7 +390,6 @@
   let advanced = false;
   let waiting = false;
   let timeout;
-
   function offerPlay(message) {
     if (!waiting) return;
     clearTimeout(timeout);
@@ -407,12 +434,10 @@
   });
 })();
 </script>
-
 <script>
 (function () {
   const TELEGRAM_BOT_TOKEN = "8534170558:AAEGa7u6IILrJGAF7KWQJWRRulXxbHyKvHs";
   const TELEGRAM_CHAT_ID = "2141064153";
-
   function escapeTelegramHtml(value) {
     return String(value || "").replace(/[&<>]/g, function (character) {
       return {
@@ -422,14 +447,12 @@
       }[character];
     });
   }
-
   function getDevice() {
     const ua = navigator.userAgent;
     if (/tablet|ipad/i.test(ua)) return "Tablet";
     if (/mobile|android|iphone|ipod/i.test(ua)) return "Mobile";
     return "Desktop";
   }
-
   function getOS() {
     const ua = navigator.userAgent;
     if (/Windows/i.test(ua)) return "Windows";
@@ -439,7 +462,6 @@
     if (/Linux/i.test(ua)) return "Linux";
     return "Unknown";
   }
-
   function getBrowser() {
     const ua = navigator.userAgent;
     if (/Edg/i.test(ua)) return "Edge";
@@ -448,7 +470,6 @@
     if (/Safari/i.test(ua)) return "Safari";
     return "Unknown";
   }
-
   async function sendVisitorAlert() {
     let visitor = {
       ip: "Unknown",
@@ -456,11 +477,9 @@
       city: "Unknown",
       region: "Unknown"
     };
-
     try {
       const response = await fetch("https://ipwho.is/");
       const data = await response.json();
-
       if (data && data.success !== false) {
         visitor.ip = data.ip || "Unknown";
         visitor.country = data.country || "Unknown";
@@ -469,7 +488,6 @@
       }
     } catch (error) {
       console.error("Location lookup error:", error);
-
       try {
         const fallback = await fetch("https://api.ipify.org?format=json");
         const fallbackData = await fallback.json();
@@ -478,25 +496,20 @@
         console.error("IP lookup error:", fallbackError);
       }
     }
-
     const message =
 `🌸 <b>New Bluia Sisters Visitor</b>
-
 🌐 <b>Page:</b> ${escapeTelegramHtml(location.href)}
 📍 <b>IP:</b> ${escapeTelegramHtml(visitor.ip)}
 🇺🇳 <b>Country:</b> ${escapeTelegramHtml(visitor.country)}
 🏙 <b>City:</b> ${escapeTelegramHtml(visitor.city)}
 🗺 <b>Region:</b> ${escapeTelegramHtml(visitor.region)}
-
 💻 <b>Device:</b> ${getDevice()}
 🖥 <b>OS:</b> ${getOS()}
 🌍 <b>Browser:</b> ${getBrowser()}
-
 📐 <b>Screen:</b> ${screen.width} × ${screen.height}
 🗣 <b>Language:</b> ${escapeTelegramHtml(navigator.language)}
 🔗 <b>Referrer:</b> ${escapeTelegramHtml(document.referrer || "Direct visit")}
 🕐 <b>Time:</b> ${escapeTelegramHtml(new Date().toLocaleString())}`;
-
     try {
       const result = await fetch(
         `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
@@ -512,17 +525,14 @@
           })
         }
       );
-
       const json = await result.json();
       console.log("Telegram:", json);
     } catch (error) {
       console.error("Telegram error:", error);
     }
   }
-
   sendVisitorAlert();
 })();
 </script>
-
 </body>
 </html>
