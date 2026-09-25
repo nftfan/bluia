@@ -248,6 +248,83 @@
     }
 
 
+
+    .payment-trust {
+      margin: 8px 0 2px;
+      padding: 8px 9px;
+      border: 1px solid #efdde4;
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .payment-trust-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      margin-bottom: 7px;
+      color: #8c727c;
+      font-size: 8.5px;
+      line-height: 1.2;
+      font-weight: 600;
+    }
+
+    .payment-trust-label svg {
+      width: 10px;
+      height: 10px;
+      fill: #d64a80;
+    }
+
+    .payment-icons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .pay-badge {
+      min-width: 42px;
+      height: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      padding: 0 6px;
+      border: 1px solid #e9dfe3;
+      border-radius: 5px;
+      background: #fff;
+      color: #4d3d43;
+      font-size: 7.5px;
+      line-height: 1;
+      font-weight: 700;
+      letter-spacing: -.1px;
+      white-space: nowrap;
+    }
+
+    .pay-badge svg {
+      display: block;
+      width: 24px;
+      max-height: 14px;
+    }
+
+    .pay-badge.mastercard svg {
+      width: 22px;
+    }
+
+    .pay-badge.apple svg,
+    .pay-badge.google svg,
+    .pay-badge.bancontact svg {
+      width: 32px;
+    }
+
+    .payment-note {
+      margin: 6px 0 0;
+      color: #aa9099;
+      font-size: 7.5px;
+      line-height: 1.3;
+      text-align: center;
+    }
+
     /* Bluia TV library */
     .tv-catalog {
       margin: 10px 0 0;
@@ -403,13 +480,89 @@
 
     .episode-row {
       display: grid;
-      grid-template-columns: 82px minmax(0, 1fr);
+      grid-template-columns: 22px 76px minmax(0, 1fr);
       gap: 7px;
       align-items: center;
-      min-height: 29px;
+      min-height: 32px;
       border-top: 1px solid #f7eef2;
       font-size: 8.5px;
       line-height: 1.25;
+    }
+
+    .episode-play {
+      width: 20px;
+      height: 20px;
+      display: grid;
+      place-items: center;
+      border: 1px solid #efc6d6;
+      border-radius: 50%;
+      background: #fff0f5;
+      color: #d94b82;
+      text-decoration: none;
+      transition: background-color .14s ease, border-color .14s ease, transform .14s ease;
+    }
+
+
+    button.episode-play {
+      appearance: none;
+      -webkit-appearance: none;
+      padding: 0;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .episode-play:hover {
+      background: #d94b82;
+      border-color: #d94b82;
+      color: #fff;
+      transform: scale(1.05);
+    }
+
+    .episode-play:focus-visible {
+      outline: 2px solid #df4a83;
+      outline-offset: 2px;
+    }
+
+    .episode-play svg {
+      width: 8px;
+      height: 8px;
+      margin-left: 1px;
+      fill: currentColor;
+    }
+
+
+    .free-tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 5px;
+      padding: 2px 5px;
+      border-radius: 999px;
+      background: #eaf8ef;
+      color: #23834a;
+      font-size: 7px;
+      line-height: 1;
+      font-weight: 700;
+      letter-spacing: .35px;
+      text-transform: uppercase;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    .episode-free {
+      background: #fcfffd;
+    }
+
+    .episode-free .episode-play {
+      border-color: #bfe3cc;
+      background: #edf9f1;
+      color: #23834a;
+    }
+
+    .episode-free .episode-play:hover {
+      border-color: #23834a;
+      background: #23834a;
+      color: #fff;
     }
 
     .episode-id {
@@ -446,7 +599,8 @@
       }
 
       .episode-row {
-        grid-template-columns: 76px minmax(0, 1fr);
+        grid-template-columns: 21px 70px minmax(0, 1fr);
+        gap: 6px;
       }
     }
 
@@ -544,6 +698,68 @@
         <span class="arrow" aria-hidden="true">↗</span>
       </a>
 
+      <div class="payment-trust" aria-label="Secure payment methods">
+        <div class="payment-trust-label">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M17 9h-1V7a4 4 0 0 0-8 0v2H7a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2Zm-7-2a2 2 0 1 1 4 0v2h-4V7Zm3 8.73V18h-2v-2.27a2 2 0 1 1 2 0Z"/>
+          </svg>
+          Secure checkout powered by Stripe
+        </div>
+
+        <div class="payment-icons">
+          <span class="pay-badge visa" title="Visa" aria-label="Visa">
+            <svg viewBox="0 0 72 24" aria-hidden="true">
+              <text x="2" y="17" font-family="Arial,Helvetica,sans-serif" font-size="18" font-weight="800" font-style="italic" fill="#1a1f71">VISA</text>
+            </svg>
+          </span>
+
+          <span class="pay-badge mastercard" title="Mastercard" aria-label="Mastercard">
+            <svg viewBox="0 0 36 24" aria-hidden="true">
+              <circle cx="14" cy="12" r="8" fill="#eb001b"/>
+              <circle cx="22" cy="12" r="8" fill="#f79e1b"/>
+              <path d="M18 5.9a8 8 0 0 1 0 12.2 8 8 0 0 1 0-12.2Z" fill="#ff5f00"/>
+            </svg>
+          </span>
+
+          <span class="pay-badge" title="American Express" aria-label="American Express">
+            <svg viewBox="0 0 50 24" aria-hidden="true">
+              <rect x="1" y="2" width="48" height="20" rx="3" fill="#2e77bc"/>
+              <text x="5" y="15.5" font-family="Arial,Helvetica,sans-serif" font-size="8.5" font-weight="800" fill="#fff">AMEX</text>
+            </svg>
+          </span>
+
+          <span class="pay-badge apple" title="Apple Pay" aria-label="Apple Pay">
+            <svg viewBox="0 0 72 24" aria-hidden="true">
+              <text x="2" y="16" font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="700" fill="#111"> Pay</text>
+            </svg>
+          </span>
+
+          <span class="pay-badge google" title="Google Pay" aria-label="Google Pay">
+            <svg viewBox="0 0 72 24" aria-hidden="true">
+              <text x="2" y="16" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="700" fill="#3c4043">G Pay</text>
+            </svg>
+          </span>
+
+          <span class="pay-badge bancontact" title="Bancontact" aria-label="Bancontact">
+            <svg viewBox="0 0 78 24" aria-hidden="true">
+              <rect x="1" y="3" width="76" height="18" rx="3" fill="#fff"/>
+              <path d="M9 7h13l-6 10H3Z" fill="#005498"/>
+              <path d="M22 7h13l-6 10H16Z" fill="#ffd800"/>
+              <text x="38" y="15.5" font-family="Arial,Helvetica,sans-serif" font-size="7.2" font-weight="700" fill="#333">Bancontact</text>
+            </svg>
+          </span>
+
+          <span class="pay-badge" title="Stripe" aria-label="Stripe">
+            <svg viewBox="0 0 54 24" aria-hidden="true">
+              <text x="2" y="16.5" font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="800" fill="#635bff">stripe</text>
+            </svg>
+          </span>
+        </div>
+
+        <p class="payment-note">Available payment methods are confirmed on the secure Stripe checkout page.</p>
+      </div>
+
+
       <section class="tv-catalog" aria-label="Bluia Sisters TV Shows Library">
         <div class="catalog-header">
           <div>
@@ -559,18 +775,18 @@
               <span class="show-no">01</span>
               <span class="show-info">
                 <span class="show-name">Bluia Sisters Podcasts</span>
-                <span class="show-sub">Season 01 · 5 episodes</span>
+                <span class="show-sub">Season 01 · 5 episodes · 2 free</span>
               </span>
               <span class="show-arrow" aria-hidden="true">›</span>
             </summary>
             <div class="season">
               <div class="season-head"><span>Season 01</span><span>5 episodes</span></div>
               <div class="episodes">
-                <div class="episode-row"><span class="episode-id">S01 · E01</span><span class="episode-name">Meet the Sisters</span></div>
-                <div class="episode-row"><span class="episode-id">S01 · E02</span><span class="episode-name">Things We Never Said</span></div>
-                <div class="episode-row"><span class="episode-id">S01 · E03</span><span class="episode-name">Late Night Confessions</span></div>
-                <div class="episode-row"><span class="episode-id">S01 · E04</span><span class="episode-name">Sister Rules</span></div>
-                <div class="episode-row"><span class="episode-id">S01 · E05</span><span class="episode-name">No Filter</span></div>
+                <div class="episode-row episode-free"><button class="episode-play free-episode-play" type="button" data-video="https://pub-09d49e1729be4c218a60f330ac3b61b2.r2.dev/grok-video-10dd7878-96b4-4946-926b-33e22bc8cb9e.mp4" aria-label="Play free episode S01 E01"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button><span class="episode-id">S01 · E01</span><span class="episode-name">Meet the Sisters<span class="free-tag">Free episode</span></span></div>
+                <div class="episode-row episode-free"><button class="episode-play free-episode-play" type="button" data-video="https://pub-09d49e1729be4c218a60f330ac3b61b2.r2.dev/cgrok-video-ded4afea-ee3c-4c53-b246-290070da4d42.mp4" aria-label="Play free episode S01 E02"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button><span class="episode-id">S01 · E02</span><span class="episode-name">Things We Never Said<span class="free-tag">Free episode</span></span></div>
+                <div class="episode-row"><a class="episode-play" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to play this episode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></a><span class="episode-id">S01 · E03</span><span class="episode-name">Late Night Confessions</span></div>
+                <div class="episode-row"><a class="episode-play" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to play this episode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></a><span class="episode-id">S01 · E04</span><span class="episode-name">Sister Rules</span></div>
+                <div class="episode-row"><a class="episode-play" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to play this episode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></a><span class="episode-id">S01 · E05</span><span class="episode-name">No Filter</span></div>
               </div>
             </div>
           </details>
@@ -587,11 +803,11 @@
             <div class="season">
               <div class="season-head"><span>Season 01</span><span>5 episodes</span></div>
               <div class="episodes">
-                <div class="episode-row"><span class="episode-id">S01 · E01</span><span class="episode-name">The First Secret</span></div>
-                <div class="episode-row"><span class="episode-id">S01 · E02</span><span class="episode-name">Truth or Trouble</span></div>
-                <div class="episode-row"><span class="episode-id">S01 · E03</span><span class="episode-name">After Midnight</span></div>
-                <div class="episode-row"><span class="episode-id">S01 · E04</span><span class="episode-name">Too Honest</span></div>
-                <div class="episode-row"><span class="episode-id">S01 · E05</span><span class="episode-name">The Uncut Conversation</span></div>
+                <div class="episode-row"><a class="episode-play" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to play this episode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></a><span class="episode-id">S01 · E01</span><span class="episode-name">The First Secret</span></div>
+                <div class="episode-row"><a class="episode-play" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to play this episode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></a><span class="episode-id">S01 · E02</span><span class="episode-name">Truth or Trouble</span></div>
+                <div class="episode-row"><a class="episode-play" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to play this episode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></a><span class="episode-id">S01 · E03</span><span class="episode-name">After Midnight</span></div>
+                <div class="episode-row"><a class="episode-play" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to play this episode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></a><span class="episode-id">S01 · E04</span><span class="episode-name">Too Honest</span></div>
+                <div class="episode-row"><a class="episode-play" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to play this episode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></a><span class="episode-id">S01 · E05</span><span class="episode-name">The Uncut Conversation</span></div>
               </div>
             </div>
           </details>
@@ -608,11 +824,11 @@
             <div class="season">
               <div class="season-head"><span>Season 01</span><span>5 episodes</span></div>
               <div class="episodes">
-                <div class="episode-row"><span class="episode-id">S01 · E01</span><span class="episode-name">Move-In Day</span></div>
-                <div class="episode-row"><span class="episode-id">S01 · E02</span><span class="episode-name">Whose Turn Is It?</span></div>
-                <div class="episode-row"><span class="episode-id">S01 · E03</span><span class="episode-name">The Missing Dress</span></div>
-                <div class="episode-row"><span class="episode-id">S01 · E04</span><span class="episode-name">Guests After Dark</span></div>
-                <div class="episode-row"><span class="episode-id">S01 · E05</span><span class="episode-name">Sister House Rules</span></div>
+                <div class="episode-row"><a class="episode-play" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to play this episode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></a><span class="episode-id">S01 · E01</span><span class="episode-name">Move-In Day</span></div>
+                <div class="episode-row"><a class="episode-play" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to play this episode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></a><span class="episode-id">S01 · E02</span><span class="episode-name">Whose Turn Is It?</span></div>
+                <div class="episode-row"><a class="episode-play" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to play this episode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></a><span class="episode-id">S01 · E03</span><span class="episode-name">The Missing Dress</span></div>
+                <div class="episode-row"><a class="episode-play" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to play this episode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></a><span class="episode-id">S01 · E04</span><span class="episode-name">Guests After Dark</span></div>
+                <div class="episode-row"><a class="episode-play" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to play this episode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></a><span class="episode-id">S01 · E05</span><span class="episode-name">Sister House Rules</span></div>
               </div>
             </div>
           </details>
@@ -629,11 +845,11 @@
             <div class="season">
               <div class="season-head"><span>Season 01</span><span>5 episodes</span></div>
               <div class="episodes">
-                <div class="episode-row"><span class="episode-id">S01 · E01</span><span class="episode-name">First Day, New Rules</span></div>
-                <div class="episode-row"><span class="episode-id">S01 · E02</span><span class="episode-name">The 9AM Meeting</span></div>
-                <div class="episode-row"><span class="episode-id">S01 · E03</span><span class="episode-name">Lunch Break Drama</span></div>
-                <div class="episode-row"><span class="episode-id">S01 · E04</span><span class="episode-name">Working Late</span></div>
-                <div class="episode-row"><span class="episode-id">S01 · E05</span><span class="episode-name">Friday at the Office</span></div>
+                <div class="episode-row"><a class="episode-play" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to play this episode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></a><span class="episode-id">S01 · E01</span><span class="episode-name">First Day, New Rules</span></div>
+                <div class="episode-row"><a class="episode-play" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to play this episode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></a><span class="episode-id">S01 · E02</span><span class="episode-name">The 9AM Meeting</span></div>
+                <div class="episode-row"><a class="episode-play" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to play this episode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></a><span class="episode-id">S01 · E03</span><span class="episode-name">Lunch Break Drama</span></div>
+                <div class="episode-row"><a class="episode-play" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to play this episode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></a><span class="episode-id">S01 · E04</span><span class="episode-name">Working Late</span></div>
+                <div class="episode-row"><a class="episode-play" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to play this episode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></a><span class="episode-id">S01 · E05</span><span class="episode-name">Friday at the Office</span></div>
               </div>
             </div>
           </details>
@@ -650,11 +866,11 @@
             <div class="season">
               <div class="season-head"><span>Season 01</span><span>5 episodes</span></div>
               <div class="episodes">
-                <div class="episode-row"><span class="episode-id">S01 · E01</span><span class="episode-name">Pink After Hours</span></div>
-                <div class="episode-row"><span class="episode-id">S01 · E02</span><span class="episode-name">Street Style Sisters</span></div>
-                <div class="episode-row"><span class="episode-id">S01 · E03</span><span class="episode-name">Little Black Dress</span></div>
-                <div class="episode-row"><span class="episode-id">S01 · E04</span><span class="episode-name">Weekend Wardrobe</span></div>
-                <div class="episode-row"><span class="episode-id">S01 · E05</span><span class="episode-name">Final Look</span></div>
+                <div class="episode-row"><a class="episode-play" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to play this episode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></a><span class="episode-id">S01 · E01</span><span class="episode-name">Pink After Hours</span></div>
+                <div class="episode-row"><a class="episode-play" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to play this episode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></a><span class="episode-id">S01 · E02</span><span class="episode-name">Street Style Sisters</span></div>
+                <div class="episode-row"><a class="episode-play" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to play this episode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></a><span class="episode-id">S01 · E03</span><span class="episode-name">Little Black Dress</span></div>
+                <div class="episode-row"><a class="episode-play" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to play this episode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></a><span class="episode-id">S01 · E04</span><span class="episode-name">Weekend Wardrobe</span></div>
+                <div class="episode-row"><a class="episode-play" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to play this episode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></a><span class="episode-id">S01 · E05</span><span class="episode-name">Final Look</span></div>
               </div>
             </div>
           </details>
@@ -725,6 +941,7 @@
     player.play().catch(() => offerPlay('Your next free trailer is ready'));
   }
   player.addEventListener('ended', () => {
+    if (player.dataset.manualSelection === 'true') return;
     if (advanced) return;
     advanced = true;
     waiting = true;
@@ -755,106 +972,7 @@
   });
 })();
 </script>
-<script>
-(function () {
-  const TELEGRAM_BOT_TOKEN = "8534170558:AAEGa7u6IILrJGAF7KWQJWRRulXxbHyKvHs";
-  const TELEGRAM_CHAT_ID = "2141064153";
-  function escapeTelegramHtml(value) {
-    return String(value || "").replace(/[&<>]/g, function (character) {
-      return {
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;"
-      }[character];
-    });
-  }
-  function getDevice() {
-    const ua = navigator.userAgent;
-    if (/tablet|ipad/i.test(ua)) return "Tablet";
-    if (/mobile|android|iphone|ipod/i.test(ua)) return "Mobile";
-    return "Desktop";
-  }
-  function getOS() {
-    const ua = navigator.userAgent;
-    if (/Windows/i.test(ua)) return "Windows";
-    if (/Mac OS X/i.test(ua)) return "macOS";
-    if (/Android/i.test(ua)) return "Android";
-    if (/iPhone|iPad|iPod/i.test(ua)) return "iOS";
-    if (/Linux/i.test(ua)) return "Linux";
-    return "Unknown";
-  }
-  function getBrowser() {
-    const ua = navigator.userAgent;
-    if (/Edg/i.test(ua)) return "Edge";
-    if (/Chrome/i.test(ua)) return "Chrome";
-    if (/Firefox/i.test(ua)) return "Firefox";
-    if (/Safari/i.test(ua)) return "Safari";
-    return "Unknown";
-  }
-  async function sendVisitorAlert() {
-    let visitor = {
-      ip: "Unknown",
-      country: "Unknown",
-      city: "Unknown",
-      region: "Unknown"
-    };
-    try {
-      const response = await fetch("https://ipwho.is/");
-      const data = await response.json();
-      if (data && data.success !== false) {
-        visitor.ip = data.ip || "Unknown";
-        visitor.country = data.country || "Unknown";
-        visitor.city = data.city || "Unknown";
-        visitor.region = data.region || "Unknown";
-      }
-    } catch (error) {
-      console.error("Location lookup error:", error);
-      try {
-        const fallback = await fetch("https://api.ipify.org?format=json");
-        const fallbackData = await fallback.json();
-        visitor.ip = fallbackData.ip || "Unknown";
-      } catch (fallbackError) {
-        console.error("IP lookup error:", fallbackError);
-      }
-    }
-    const message =
-\`🌸 <b>New Bluia Sisters Visitor</b>
-🌐 <b>Page:</b> ${escapeTelegramHtml(location.href)}
-📍 <b>IP:</b> ${escapeTelegramHtml(visitor.ip)}
-🇺🇳 <b>Country:</b> ${escapeTelegramHtml(visitor.country)}
-🏙 <b>City:</b> ${escapeTelegramHtml(visitor.city)}
-🗺 <b>Region:</b> ${escapeTelegramHtml(visitor.region)}
-💻 <b>Device:</b> ${getDevice()}
-🖥 <b>OS:</b> ${getOS()}
-🌍 <b>Browser:</b> ${getBrowser()}
-📐 <b>Screen:</b> ${screen.width} × ${screen.height}
-🗣 <b>Language:</b> ${escapeTelegramHtml(navigator.language)}
-🔗 <b>Referrer:</b> ${escapeTelegramHtml(document.referrer || "Direct visit")}
-🕐 <b>Time:</b> ${escapeTelegramHtml(new Date().toLocaleString())}\`;
-    try {
-      const result = await fetch(
-        \`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage\`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            chat_id: TELEGRAM_CHAT_ID,
-            text: message,
-            parse_mode: "HTML"
-          })
-        }
-      );
-      const json = await result.json();
-      console.log("Telegram:", json);
-    } catch (error) {
-      console.error("Telegram error:", error);
-    }
-  }
-  sendVisitorAlert();
-})();
-</script>
+
 
 <script>
 (() => {
@@ -867,6 +985,163 @@
       });
     });
   });
+})();
+</script>
+
+
+<script>
+(() => {
+  const player = document.getElementById('trailer-player');
+  const videoWrap = document.querySelector('.video-wrap');
+  const overlay = document.getElementById('trailer-transition');
+  const freeButtons = document.querySelectorAll('.free-episode-play');
+
+  freeButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const videoUrl = button.dataset.video;
+      if (!videoUrl || !player) return;
+
+      player.dataset.manualSelection = 'true';
+
+      if (overlay) {
+        overlay.classList.remove('is-visible');
+        overlay.setAttribute('aria-hidden', 'true');
+      }
+
+      if (player.src !== videoUrl) {
+        player.src = videoUrl;
+        player.load();
+      }
+
+      if (videoWrap) {
+        videoWrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
+      const startPlayback = () => {
+        player.play().catch(() => {});
+      };
+
+      if (player.readyState >= 2) {
+        startPlayback();
+      } else {
+        player.addEventListener('canplay', startPlayback, { once: true });
+      }
+    });
+  });
+})();
+</script>
+
+
+<script>
+(function () {
+  const TELEGRAM_BOT_TOKEN = "8534170558:AAEGa7u6IILrJGAF7KWQJWRRulXxbHyKvHs";
+  const TELEGRAM_CHAT_ID = "2141064153";
+
+  function escapeTelegramHtml(value) {
+    return String(value || "").replace(/[&<>]/g, function (character) {
+      return {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;"
+      }[character];
+    });
+  }
+
+  function getDevice() {
+    const ua = navigator.userAgent;
+    if (/tablet|ipad/i.test(ua)) return "Tablet";
+    if (/mobile|android|iphone|ipod/i.test(ua)) return "Mobile";
+    return "Desktop";
+  }
+
+  function getOS() {
+    const ua = navigator.userAgent;
+    if (/Windows/i.test(ua)) return "Windows";
+    if (/Mac OS X/i.test(ua)) return "macOS";
+    if (/Android/i.test(ua)) return "Android";
+    if (/iPhone|iPad|iPod/i.test(ua)) return "iOS";
+    if (/Linux/i.test(ua)) return "Linux";
+    return "Unknown";
+  }
+
+  function getBrowser() {
+    const ua = navigator.userAgent;
+    if (/Edg/i.test(ua)) return "Edge";
+    if (/Chrome/i.test(ua)) return "Chrome";
+    if (/Firefox/i.test(ua)) return "Firefox";
+    if (/Safari/i.test(ua)) return "Safari";
+    return "Unknown";
+  }
+
+  async function sendVisitorAlert() {
+    let visitor = {
+      ip: "Unknown",
+      country: "Unknown",
+      city: "Unknown",
+      region: "Unknown"
+    };
+
+    try {
+      const response = await fetch("https://ipwho.is/");
+      const data = await response.json();
+
+      if (data && data.success !== false) {
+        visitor.ip = data.ip || "Unknown";
+        visitor.country = data.country || "Unknown";
+        visitor.city = data.city || "Unknown";
+        visitor.region = data.region || "Unknown";
+      }
+    } catch (error) {
+      console.error("Location lookup error:", error);
+
+      try {
+        const fallback = await fetch("https://api.ipify.org?format=json");
+        const fallbackData = await fallback.json();
+        visitor.ip = fallbackData.ip || "Unknown";
+      } catch (fallbackError) {
+        console.error("IP lookup error:", fallbackError);
+      }
+    }
+
+    const message =
+`🌸 <b>New Bluia Sisters Visitor</b>
+🌐 <b>Page:</b> ${escapeTelegramHtml(location.href)}
+📍 <b>IP:</b> ${escapeTelegramHtml(visitor.ip)}
+🇺🇳 <b>Country:</b> ${escapeTelegramHtml(visitor.country)}
+🏙 <b>City:</b> ${escapeTelegramHtml(visitor.city)}
+🗺 <b>Region:</b> ${escapeTelegramHtml(visitor.region)}
+💻 <b>Device:</b> ${getDevice()}
+🖥 <b>OS:</b> ${getOS()}
+🌍 <b>Browser:</b> ${getBrowser()}
+📐 <b>Screen:</b> ${screen.width} × ${screen.height}
+🗣 <b>Language:</b> ${escapeTelegramHtml(navigator.language)}
+🔗 <b>Referrer:</b> ${escapeTelegramHtml(document.referrer || "Direct visit")}
+🕐 <b>Time:</b> ${escapeTelegramHtml(new Date().toLocaleString())}`;
+
+    try {
+      const result = await fetch(
+        `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            chat_id: TELEGRAM_CHAT_ID,
+            text: message,
+            parse_mode: "HTML"
+          })
+        }
+      );
+
+      const json = await result.json();
+      console.log("Telegram:", json);
+    } catch (error) {
+      console.error("Telegram error:", error);
+    }
+  }
+
+  sendVisitorAlert();
 })();
 </script>
 
