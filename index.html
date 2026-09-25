@@ -247,6 +247,209 @@
       display: none;
     }
 
+
+    /* Bluia TV library */
+    .tv-catalog {
+      margin: 10px 0 0;
+      text-align: left;
+    }
+
+    .catalog-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 0 1px 7px;
+    }
+
+    .catalog-kicker {
+      margin: 0 0 2px;
+      color: #d94b82;
+      font-size: 8px;
+      line-height: 1.2;
+      font-weight: 700;
+      letter-spacing: 1.05px;
+      text-transform: uppercase;
+    }
+
+    .catalog-title {
+      margin: 0;
+      color: #4d3540;
+      font-size: 11px;
+      line-height: 1.25;
+      font-weight: 700;
+    }
+
+    .catalog-total {
+      flex: 0 0 auto;
+      color: #947783;
+      font-size: 8.5px;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .show-list {
+      overflow: hidden;
+      border: 1px solid #ecd8e0;
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .show {
+      border-bottom: 1px solid #f0e4e9;
+    }
+
+    .show:last-child {
+      border-bottom: 0;
+    }
+
+    .show > summary {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 24px minmax(0, 1fr) 16px;
+      align-items: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 7px 9px;
+      cursor: pointer;
+      background: #fff;
+      transition: background-color .14s ease;
+    }
+
+    .show > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .show > summary:hover,
+    .show[open] > summary {
+      background: #fff8fb;
+    }
+
+    .show-no {
+      display: grid;
+      place-items: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: #fff0f5;
+      color: #d94b82;
+      font-size: 8.5px;
+      line-height: 1;
+      font-weight: 700;
+    }
+
+    .show-info {
+      min-width: 0;
+    }
+
+    .show-name {
+      display: block;
+      overflow: hidden;
+      color: #49343d;
+      font-size: 10.5px;
+      line-height: 1.25;
+      font-weight: 700;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .show-sub {
+      display: block;
+      margin-top: 2px;
+      color: #9b808b;
+      font-size: 8.5px;
+      line-height: 1.2;
+    }
+
+    .show-arrow {
+      display: grid;
+      place-items: center;
+      color: #b794a2;
+      font-size: 11px;
+      line-height: 1;
+      transition: transform .15s ease;
+    }
+
+    .show[open] .show-arrow {
+      transform: rotate(90deg);
+    }
+
+    .season {
+      padding: 0 9px 8px 41px;
+      background: #fff;
+    }
+
+    .season-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 7px 0 5px;
+      border-top: 1px solid #f2e7eb;
+      color: #765b66;
+      font-size: 8.5px;
+      line-height: 1.2;
+      font-weight: 700;
+    }
+
+    .season-head span:last-child {
+      color: #a88d98;
+      font-weight: 500;
+    }
+
+    .episodes {
+      display: grid;
+    }
+
+    .episode-row {
+      display: grid;
+      grid-template-columns: 82px minmax(0, 1fr);
+      gap: 7px;
+      align-items: center;
+      min-height: 29px;
+      border-top: 1px solid #f7eef2;
+      font-size: 8.5px;
+      line-height: 1.25;
+    }
+
+    .episode-id {
+      color: #d54a80;
+      font-size: 8px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .episode-name {
+      min-width: 0;
+      overflow: hidden;
+      color: #67515a;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 360px) {
+      .show > summary {
+        grid-template-columns: 22px minmax(0, 1fr) 14px;
+        gap: 7px;
+        padding-left: 8px;
+        padding-right: 8px;
+      }
+
+      .show-no {
+        width: 22px;
+        height: 22px;
+      }
+
+      .season {
+        padding-left: 37px;
+        padding-right: 8px;
+      }
+
+      .episode-row {
+        grid-template-columns: 76px minmax(0, 1fr);
+      }
+    }
+
     footer {
       margin-top: 18px;
       padding: 14px 6px 18px;
@@ -340,6 +543,124 @@
         </span>
         <span class="arrow" aria-hidden="true">↗</span>
       </a>
+
+      <section class="tv-catalog" aria-label="Bluia Sisters TV Shows Library">
+        <div class="catalog-header">
+          <div>
+            <p class="catalog-kicker">Bluia TV</p>
+            <h2 class="catalog-title">Bluia Sisters TV Shows Library</h2>
+          </div>
+          <span class="catalog-total">5 shows · 25 episodes</span>
+        </div>
+
+        <div class="show-list">
+          <details class="show">
+            <summary>
+              <span class="show-no">01</span>
+              <span class="show-info">
+                <span class="show-name">Bluia Sisters Podcasts</span>
+                <span class="show-sub">Season 01 · 5 episodes</span>
+              </span>
+              <span class="show-arrow" aria-hidden="true">›</span>
+            </summary>
+            <div class="season">
+              <div class="season-head"><span>Season 01</span><span>5 episodes</span></div>
+              <div class="episodes">
+                <div class="episode-row"><span class="episode-id">S01 · E01</span><span class="episode-name">Meet the Sisters</span></div>
+                <div class="episode-row"><span class="episode-id">S01 · E02</span><span class="episode-name">Things We Never Said</span></div>
+                <div class="episode-row"><span class="episode-id">S01 · E03</span><span class="episode-name">Late Night Confessions</span></div>
+                <div class="episode-row"><span class="episode-id">S01 · E04</span><span class="episode-name">Sister Rules</span></div>
+                <div class="episode-row"><span class="episode-id">S01 · E05</span><span class="episode-name">No Filter</span></div>
+              </div>
+            </div>
+          </details>
+
+          <details class="show">
+            <summary>
+              <span class="show-no">02</span>
+              <span class="show-info">
+                <span class="show-name">Naughty Talk</span>
+                <span class="show-sub">Season 01 · 5 episodes</span>
+              </span>
+              <span class="show-arrow" aria-hidden="true">›</span>
+            </summary>
+            <div class="season">
+              <div class="season-head"><span>Season 01</span><span>5 episodes</span></div>
+              <div class="episodes">
+                <div class="episode-row"><span class="episode-id">S01 · E01</span><span class="episode-name">The First Secret</span></div>
+                <div class="episode-row"><span class="episode-id">S01 · E02</span><span class="episode-name">Truth or Trouble</span></div>
+                <div class="episode-row"><span class="episode-id">S01 · E03</span><span class="episode-name">After Midnight</span></div>
+                <div class="episode-row"><span class="episode-id">S01 · E04</span><span class="episode-name">Too Honest</span></div>
+                <div class="episode-row"><span class="episode-id">S01 · E05</span><span class="episode-name">The Uncut Conversation</span></div>
+              </div>
+            </div>
+          </details>
+
+          <details class="show">
+            <summary>
+              <span class="show-no">03</span>
+              <span class="show-info">
+                <span class="show-name">2 Sisters Living Together</span>
+                <span class="show-sub">Season 01 · 5 episodes</span>
+              </span>
+              <span class="show-arrow" aria-hidden="true">›</span>
+            </summary>
+            <div class="season">
+              <div class="season-head"><span>Season 01</span><span>5 episodes</span></div>
+              <div class="episodes">
+                <div class="episode-row"><span class="episode-id">S01 · E01</span><span class="episode-name">Move-In Day</span></div>
+                <div class="episode-row"><span class="episode-id">S01 · E02</span><span class="episode-name">Whose Turn Is It?</span></div>
+                <div class="episode-row"><span class="episode-id">S01 · E03</span><span class="episode-name">The Missing Dress</span></div>
+                <div class="episode-row"><span class="episode-id">S01 · E04</span><span class="episode-name">Guests After Dark</span></div>
+                <div class="episode-row"><span class="episode-id">S01 · E05</span><span class="episode-name">Sister House Rules</span></div>
+              </div>
+            </div>
+          </details>
+
+          <details class="show">
+            <summary>
+              <span class="show-no">04</span>
+              <span class="show-info">
+                <span class="show-name">Office Girl</span>
+                <span class="show-sub">Season 01 · 5 episodes</span>
+              </span>
+              <span class="show-arrow" aria-hidden="true">›</span>
+            </summary>
+            <div class="season">
+              <div class="season-head"><span>Season 01</span><span>5 episodes</span></div>
+              <div class="episodes">
+                <div class="episode-row"><span class="episode-id">S01 · E01</span><span class="episode-name">First Day, New Rules</span></div>
+                <div class="episode-row"><span class="episode-id">S01 · E02</span><span class="episode-name">The 9AM Meeting</span></div>
+                <div class="episode-row"><span class="episode-id">S01 · E03</span><span class="episode-name">Lunch Break Drama</span></div>
+                <div class="episode-row"><span class="episode-id">S01 · E04</span><span class="episode-name">Working Late</span></div>
+                <div class="episode-row"><span class="episode-id">S01 · E05</span><span class="episode-name">Friday at the Office</span></div>
+              </div>
+            </div>
+          </details>
+
+          <details class="show">
+            <summary>
+              <span class="show-no">05</span>
+              <span class="show-info">
+                <span class="show-name">The Outfits Show</span>
+                <span class="show-sub">Season 01 · 5 episodes</span>
+              </span>
+              <span class="show-arrow" aria-hidden="true">›</span>
+            </summary>
+            <div class="season">
+              <div class="season-head"><span>Season 01</span><span>5 episodes</span></div>
+              <div class="episodes">
+                <div class="episode-row"><span class="episode-id">S01 · E01</span><span class="episode-name">Pink After Hours</span></div>
+                <div class="episode-row"><span class="episode-id">S01 · E02</span><span class="episode-name">Street Style Sisters</span></div>
+                <div class="episode-row"><span class="episode-id">S01 · E03</span><span class="episode-name">Little Black Dress</span></div>
+                <div class="episode-row"><span class="episode-id">S01 · E04</span><span class="episode-name">Weekend Wardrobe</span></div>
+                <div class="episode-row"><span class="episode-id">S01 · E05</span><span class="episode-name">Final Look</span></div>
+              </div>
+            </div>
+          </details>
+        </div>
+      </section>
+
       <p class="intro">Pay securely with Stripe. Your viewing link will be sent to the email address you use at checkout.</p>
       <a
         class="tg-button tg-paid"
@@ -497,7 +818,7 @@
       }
     }
     const message =
-`🌸 <b>New Bluia Sisters Visitor</b>
+\`🌸 <b>New Bluia Sisters Visitor</b>
 🌐 <b>Page:</b> ${escapeTelegramHtml(location.href)}
 📍 <b>IP:</b> ${escapeTelegramHtml(visitor.ip)}
 🇺🇳 <b>Country:</b> ${escapeTelegramHtml(visitor.country)}
@@ -509,10 +830,10 @@
 📐 <b>Screen:</b> ${screen.width} × ${screen.height}
 🗣 <b>Language:</b> ${escapeTelegramHtml(navigator.language)}
 🔗 <b>Referrer:</b> ${escapeTelegramHtml(document.referrer || "Direct visit")}
-🕐 <b>Time:</b> ${escapeTelegramHtml(new Date().toLocaleString())}`;
+🕐 <b>Time:</b> ${escapeTelegramHtml(new Date().toLocaleString())}\`;
     try {
       const result = await fetch(
-        `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
+        \`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage\`,
         {
           method: "POST",
           headers: {
@@ -534,5 +855,20 @@
   sendVisitorAlert();
 })();
 </script>
+
+<script>
+(() => {
+  const shows = [...document.querySelectorAll('.show')];
+  shows.forEach(show => {
+    show.addEventListener('toggle', () => {
+      if (!show.open) return;
+      shows.forEach(other => {
+        if (other !== show) other.open = false;
+      });
+    });
+  });
+})();
+</script>
+
 </body>
 </html>
