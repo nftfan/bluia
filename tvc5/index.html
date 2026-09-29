@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Bluia Sisters TV Live</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100svh;
+      background: #fff8fb;
+      color: #3f3037;
+      font-family: Arial, Helvetica, sans-serif;
+      display: flex;
+      justify-content: center;
+      padding: 18px 14px 24px;
+    }
+
+    main {
+      width: min(100%, 440px);
+      text-align: center;
+    }
+
+    .brand {
+      margin: 2px 0 5px;
+      font: 700 22px/1.1 Georgia, "Times New Roman", serif;
+      letter-spacing: -0.8px;
+      color: #472e38;
+    }
+
+    .brand span {
+      color: #e94f8b;
+      font-style: italic;
+    }
+
+    .live-title {
+      margin: 0 0 14px;
+      color: #8b727d;
+      font-size: 10px;
+      line-height: 1.3;
+      font-weight: 700;
+      letter-spacing: 1.25px;
+      text-transform: uppercase;
+    }
+
+    .live-title .dot {
+      width: 7px;
+      height: 7px;
+      display: inline-block;
+      margin-right: 5px;
+      border-radius: 50%;
+      background: #df4a83;
+      box-shadow: 0 0 0 4px rgba(223, 74, 131, 0.10);
+      vertical-align: 0;
+    }
+
+    .video-wrap {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      border: 1px solid #efcfdb;
+      border-radius: 16px;
+      background: #111;
+    }
+
+    .video-stage {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      max-height: 72svh;
+      background: #111;
+    }
+
+    .video-stage video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #111;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .video-stage video.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .live-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: rgba(223, 74, 131, 0.94);
+      color: #fff;
+      font-size: 8px;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      backdrop-filter: blur(8px);
+    }
+
+    .live-badge::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    .transition-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      opacity: 0;
+      visibility: hidden;
+      overflow: hidden;
+      background: #050505;
+      transition: opacity .22s ease, visibility .22s ease;
+      pointer-events: none;
+    }
+
+    .transition-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    #soft-pixels {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: .22;
+      image-rendering: pixelated;
+      filter: contrast(80%) brightness(72%);
+    }
+
+    .soft-pixel-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, transparent 28%, rgba(0,0,0,.48) 100%);
+    }
+
+    .loading-dots {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+    }
+
+    .loading-dots span {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.7);
+      animation: dotPulse 1.2s ease-in-out infinite;
+    }
+
+    .loading-dots span:nth-child(2) { animation-delay: .16s; }
+    .loading-dots span:nth-child(3) { animation-delay: .32s; }
+
+    @keyframes dotPulse {
+      0%, 80%, 100% { opacity: .22; transform: scale(.86); }
+      40% { opacity: .75; transform: scale(1); }
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .control-btn {
+      min-height: 46px;
+      border: 1px solid #efc6d6;
+      border-radius: 11px;
+      background: #fff;
+      color: #c43d75;
+      font: 700 11px/1 Arial, Helvetica, sans-serif;
+      cursor: pointer;
+      transition: background-color .15s ease, border-color .15s ease, transform .15s ease;
+    }
+
+    .control-btn:hover {
+      background: #fff0f5;
+      border-color: #e9aec5;
+    }
+
+    .control-btn:active {
+      transform: scale(.985);
+    }
+
+    .control-btn.primary {
+      color: #fff;
+      background: #df4a83;
+      border-color: #df4a83;
+    }
+
+    .control-btn.primary:hover {
+      background: #d8437a;
+      border-color: #d8437a;
+    }
+
+    .control-btn:focus-visible {
+      outline: 2px solid #df4a83;
+      outline-offset: 3px;
+    }
+
+    .caption {
+      max-width: 360px;
+      margin: 12px auto 0;
+      color: #8b727d;
+      font-size: 9.5px;
+      line-height: 1.45;
+    }
+
+    footer {
+      margin-top: 18px;
+      padding: 14px 6px 2px;
+      border-top: 1px solid #efd9e2;
+      color: #9a7e89;
+      font-size: 9.5px;
+      line-height: 1.45;
+    }
+
+    footer strong {
+      color: #735763;
+    }
+
+    @media (max-width: 360px) {
+      body {
+        padding: 12px 9px 18px;
+      }
+
+      .brand {
+        font-size: 21px;
+      }
+
+      .control-btn {
+        min-height: 44px;
+        font-size: 10.5px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .loading-dots span {
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="brand">Bluia <span>Sisters</span></div>
+    <div class="live-title"><span class="dot"></span>Bluia Sisters TV Live</div>
+
+    <div class="video-wrap">
+      <div class="video-stage" id="video-stage">
+        <video
+          id="live-player"
+          class="active"
+          autoplay
+          muted
+          playsinline
+          preload="metadata"
+          disablepictureinpicture
+          controlslist="nodownload noplaybackrate noremoteplayback"
+          src="https://huggingface.co/buckets/veebluia/drama/resolve/cgrok-video-ded4afea-ee3c-4c53-b246-290070da4d42.mp4?download=true"
+        ></video>
+
+        <div class="transition-overlay" id="transition-overlay" aria-hidden="true">
+          <canvas id="soft-pixels" aria-hidden="true"></canvas>
+          <div class="soft-pixel-vignette" aria-hidden="true"></div>
+          <div class="loading-dots" aria-label="Loading next clip">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="live-badge">Live</div>
+    </div>
+
+    <div class="controls" aria-label="Video controls">
+      <button class="control-btn primary" id="play-pause" type="button">Pause</button>
+      <button class="control-btn" id="mute-toggle" type="button">Unmute</button>
+    </div>
+
+    <p class="caption">
+      Bluia Sisters TV Live · Continuous playback
+    </p>
+
+    <footer>
+      <strong>Bluia Sisters</strong><br />
+      © 2026 Bluia Sisters. All rights reserved.
+    </footer>
+  </main>
+
+  <script>
+    (() => {
+      const player = document.getElementById('live-player');
+      const playPauseButton = document.getElementById('play-pause');
+      const muteButton = document.getElementById('mute-toggle');
+      const transitionOverlay = document.getElementById('transition-overlay');
+      const pixelCanvas = document.getElementById('soft-pixels');
+      const pixelCtx = pixelCanvas.getContext('2d', { alpha: false });
+
+      const playlist = [
+        'https://huggingface.co/buckets/veebluia/drama/resolve/cgrok-video-ded4afea-ee3c-4c53-b246-290070da4d42.mp4?download=true',
+        'https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-10dd7878-96b4-4946-926b-33e22bc8cb9e.mp4?download=true',
+        'https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-7ef55572-64ad-46c5-9c2e-ae777e88f28b.mp4?download=true',
+        'https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-344b021b-a159-4251-90d8-aeb92164a4b3.mp4?download=true',
+        'https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-6c0d70db-a7e0-4a2f-b093-1d0f6b1266ed.mp4?download=true'
+      ];
+
+      let currentIndex = 0;
+      let userPaused = false;
+      let switching = false;
+      let pixelFrame = null;
+      let lastPixelDraw = 0;
+
+      function resizePixelCanvas() {
+        const rect = pixelCanvas.getBoundingClientRect();
+        pixelCanvas.width = Math.max(80, Math.floor(rect.width * 0.18));
+        pixelCanvas.height = Math.max(140, Math.floor(rect.height * 0.18));
+      }
+
+      function drawSoftPixels(time = 0) {
+        if (time - lastPixelDraw > 85) {
+          lastPixelDraw = time;
+          const w = pixelCanvas.width;
+          const h = pixelCanvas.height;
+          const image = pixelCtx.createImageData(w, h);
+          const data = image.data;
+
+          for (let i = 0; i < data.length; i += 4) {
+            const c = 72 + Math.floor(Math.random() * 105);
+            data[i] = c;
+            data[i + 1] = c;
+            data[i + 2] = c;
+            data[i + 3] = 255;
+          }
+
+          pixelCtx.putImageData(image, 0, 0);
+        }
+        pixelFrame = requestAnimationFrame(drawSoftPixels);
+      }
+
+      function startSoftPixels() {
+        resizePixelCanvas();
+        if (pixelFrame === null) pixelFrame = requestAnimationFrame(drawSoftPixels);
+      }
+
+      function stopSoftPixels() {
+        if (pixelFrame !== null) {
+          cancelAnimationFrame(pixelFrame);
+          pixelFrame = null;
+        }
+      }
+      function updatePlayButton() {
+        playPauseButton.textContent = userPaused ? 'Play' : 'Pause';
+      }
+
+      function updateMuteButton() {
+        muteButton.textContent = player.muted ? 'Unmute' : 'Mute';
+      }
+
+      function showTransition() {
+        transitionOverlay.classList.add('active');
+        transitionOverlay.setAttribute('aria-hidden', 'false');
+        startSoftPixels();
+      }
+
+      function hideTransition() {
+        transitionOverlay.classList.remove('active');
+        transitionOverlay.setAttribute('aria-hidden', 'true');
+        stopSoftPixels();
+      }
+
+      function loadVideo(index) {
+        switching = true;
+        currentIndex = index;
+        showTransition();
+        player.src = playlist[currentIndex];
+        player.load();
+
+        if (!userPaused) {
+          player.play().catch(() => {
+            userPaused = true;
+            updatePlayButton();
+          });
+        }
+      }
+
+      player.addEventListener('ended', () => {
+        loadVideo((currentIndex + 1) % playlist.length);
+      });
+
+      player.addEventListener('playing', () => {
+        if (switching) {
+          hideTransition();
+          switching = false;
+        }
+      });
+
+      playPauseButton.addEventListener('click', () => {
+        if (player.paused) {
+          userPaused = false;
+          window.addEventListener('resize', () => {
+        if (transitionOverlay.classList.contains('active')) resizePixelCanvas();
+      });
+
+      player.play().then(() => {
+            if (switching) {
+              hideTransition();
+              switching = false;
+            }
+          }).catch(() => {
+            userPaused = true;
+            updatePlayButton();
+          });
+        } else {
+          userPaused = true;
+          player.pause();
+        }
+        updatePlayButton();
+      });
+
+      muteButton.addEventListener('click', () => {
+        player.muted = !player.muted;
+        updateMuteButton();
+      });
+
+      player.addEventListener('waiting', () => {
+        if (!player.paused) showTransition();
+      });
+
+      player.addEventListener('error', () => {
+        showTransition();
+      });
+
+      window.addEventListener('resize', () => {
+        if (transitionOverlay.classList.contains('active')) resizePixelCanvas();
+      });
+
+      player.play().then(() => {
+        hideTransition();
+      }).catch(() => {
+        userPaused = true;
+        hideTransition();
+        updatePlayButton();
+      });
+
+      updatePlayButton();
+      updateMuteButton();
+    })();
+  </script>
+</body>
+</html>
