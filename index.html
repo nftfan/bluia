@@ -681,14 +681,31 @@
       overflow: hidden;
     }
 
-    .live-tv-stage video {
+    .live-tv-stage video,
+    .live-tv-stage .live-tv-image {
       position: absolute;
       inset: 0;
       display: block;
       width: 100%;
       height: 100%;
       object-fit: contain;
+      object-position: center center;
       background: #050505;
+    }
+
+    .live-tv-stage video {
+      z-index: 1;
+    }
+
+    .live-tv-stage .live-tv-image {
+      z-index: 2;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .live-tv-stage .live-tv-image.active {
+      opacity: 1;
+      visibility: visible;
     }
 
     .live-tv-badge {
@@ -741,15 +758,9 @@
       inset: 0;
       width: 100%;
       height: 100%;
-      opacity: .20;
+      opacity: .11;
       image-rendering: pixelated;
-      filter: contrast(78%) brightness(68%);
-    }
-
-    .live-pixel-vignette {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at center, transparent 28%, rgba(0,0,0,.52) 100%);
+      filter: contrast(74%) brightness(72%);
     }
 
     .live-loading-dots {
@@ -765,7 +776,7 @@
       width: 5px;
       height: 5px;
       border-radius: 50%;
-      background: rgba(255,255,255,.72);
+      background: rgba(255,255,255,.78);
       animation: liveDotPulse 1.2s ease-in-out infinite;
     }
 
@@ -773,8 +784,8 @@
     .live-loading-dots span:nth-child(3) { animation-delay: .32s; }
 
     @keyframes liveDotPulse {
-      0%, 80%, 100% { opacity: .22; transform: scale(.86); }
-      40% { opacity: .76; transform: scale(1); }
+      0%, 80%, 100% { opacity: .24; transform: scale(.86); }
+      40% { opacity: .84; transform: scale(1); }
     }
 
     .live-tv-controls {
@@ -821,13 +832,18 @@
           playsinline
           preload="metadata"
           disablepictureinpicture
-          controlslist="nodownload noplaybackrate noremoteplayback"
-          src="https://huggingface.co/buckets/veebluia/drama/resolve/cgrok-video-ded4afea-ee3c-4c53-b246-290070da4d42.mp4?download=true">
+          controlslist="nodownload noplaybackrate noremoteplayback">
         </video>
+
+        <img
+          id="live-tv-image"
+          class="live-tv-image"
+          alt=""
+          decoding="async"
+        />
 
         <div class="live-tv-transition" id="live-tv-transition" aria-hidden="true">
           <canvas id="live-soft-pixels" aria-hidden="true"></canvas>
-          <div class="live-pixel-vignette" aria-hidden="true"></div>
           <div class="live-loading-dots" aria-hidden="true"><span></span><span></span><span></span></div>
         </div>
       </div>
@@ -1063,23 +1079,38 @@
 <script>
 (() => {
   const player = document.getElementById('live-tv-player');
+  const imagePlayer = document.getElementById('live-tv-image');
   const playPauseButton = document.getElementById('live-play-pause');
   const muteButton = document.getElementById('live-mute-toggle');
   const transition = document.getElementById('live-tv-transition');
   const canvas = document.getElementById('live-soft-pixels');
   const ctx = canvas.getContext('2d', { alpha: false });
 
-  const playlist = [
-    'https://huggingface.co/buckets/veebluia/drama/resolve/cgrok-video-ded4afea-ee3c-4c53-b246-290070da4d42.mp4?download=true',
-    'https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-10dd7878-96b4-4946-926b-33e22bc8cb9e.mp4?download=true',
-    'https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-7ef55572-64ad-46c5-9c2e-ae777e88f28b.mp4?download=true',
-    'https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-344b021b-a159-4251-90d8-aeb92164a4b3.mp4?download=true',
-    'https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-6c0d70db-a7e0-4a2f-b093-1d0f6b1266ed.mp4?download=true'
+  const mediaPlaylist = [
+    { type: 'video', src: 'https://huggingface.co/buckets/veebluia/drama/resolve/cgrok-video-ded4afea-ee3c-4c53-b246-290070da4d42.mp4?download=true' },
+    { type: 'image', src: 'https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_48_51%20AM.png?download=true' },
+
+    { type: 'video', src: 'https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-10dd7878-96b4-4946-926b-33e22bc8cb9e.mp4?download=true' },
+    { type: 'image', src: 'https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_12%20AM.png?download=true' },
+
+    { type: 'video', src: 'https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-7ef55572-64ad-46c5-9c2e-ae777e88f28b.mp4?download=true' },
+    { type: 'image', src: 'https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_27%20AM.png?download=true' },
+
+    { type: 'video', src: 'https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-344b021b-a159-4251-90d8-aeb92164a4b3.mp4?download=true' },
+    { type: 'image', src: 'https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_33%20AM.png?download=true' },
+
+    { type: 'video', src: 'https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-6c0d70db-a7e0-4a2f-b093-1d0f6b1266ed.mp4?download=true' },
+    { type: 'image', src: 'https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_44%20AM.png?download=true' }
   ];
+
+  const IMAGE_DURATION = 5000;
 
   let currentIndex = 0;
   let userPaused = false;
-  let switching = false;
+  let currentType = null;
+  let imageTimer = null;
+  let imageStartedAt = 0;
+  let imageRemaining = IMAGE_DURATION;
   let pixelFrame = null;
   let lastPixelDraw = 0;
 
@@ -1102,24 +1133,28 @@
       lastPixelDraw = time;
       const w = canvas.width;
       const h = canvas.height;
-      const image = ctx.createImageData(w, h);
-      const data = image.data;
+      const frame = ctx.createImageData(w, h);
+      const data = frame.data;
 
       for (let i = 0; i < data.length; i += 4) {
-        const grey = 18 + Math.floor(Math.random() * 86);
+        const grey = 16 + Math.floor(Math.random() * 72);
         data[i] = grey;
         data[i + 1] = grey;
         data[i + 2] = grey;
         data[i + 3] = 255;
       }
-      ctx.putImageData(image, 0, 0);
+
+      ctx.putImageData(frame, 0, 0);
     }
+
     pixelFrame = requestAnimationFrame(drawSoftPixels);
   }
 
   function startPixels() {
     resizeCanvas();
-    if (pixelFrame === null) pixelFrame = requestAnimationFrame(drawSoftPixels);
+    if (pixelFrame === null) {
+      pixelFrame = requestAnimationFrame(drawSoftPixels);
+    }
   }
 
   function stopPixels() {
@@ -1141,39 +1176,137 @@
     stopPixels();
   }
 
-  function loadVideo(index) {
-    switching = true;
+  function clearImageTimer() {
+    if (imageTimer !== null) {
+      clearTimeout(imageTimer);
+      imageTimer = null;
+    }
+  }
+
+  function scheduleImageAdvance(duration = IMAGE_DURATION) {
+    clearImageTimer();
+    imageRemaining = duration;
+    imageStartedAt = Date.now();
+
+    imageTimer = setTimeout(() => {
+      imageTimer = null;
+      goNext();
+    }, duration);
+  }
+
+  function hideVideo() {
+    player.pause();
+    player.style.opacity = '0';
+    player.style.visibility = 'hidden';
+  }
+
+  function showVideo() {
+    imagePlayer.classList.remove('active');
+    player.style.opacity = '1';
+    player.style.visibility = 'visible';
+  }
+
+  function showImage() {
+    hideVideo();
+    imagePlayer.classList.add('active');
+  }
+
+  function loadMedia(index) {
+    clearImageTimer();
     currentIndex = index;
+    const item = mediaPlaylist[currentIndex];
+    currentType = item.type;
+
     showTransition();
-    player.src = playlist[currentIndex];
+
+    if (item.type === 'image') {
+      player.removeAttribute('src');
+      player.load();
+
+      imageRemaining = IMAGE_DURATION;
+      imagePlayer.onload = () => {
+        showImage();
+        hideTransition();
+
+        if (!userPaused) {
+          scheduleImageAdvance(IMAGE_DURATION);
+        }
+      };
+
+      imagePlayer.onerror = () => {
+        goNext();
+      };
+
+      imagePlayer.src = item.src;
+      return;
+    }
+
+    imagePlayer.classList.remove('active');
+    imagePlayer.removeAttribute('src');
+    showVideo();
+
+    player.src = item.src;
     player.load();
 
     if (!userPaused) {
       player.play().catch(() => {
         userPaused = true;
         updatePlayButton();
+        hideTransition();
       });
     }
   }
 
-  player.addEventListener('ended', () => {
-    loadVideo((currentIndex + 1) % playlist.length);
-  });
+  function goNext() {
+    loadMedia((currentIndex + 1) % mediaPlaylist.length);
+  }
 
   player.addEventListener('playing', () => {
-    if (switching) {
-      switching = false;
+    if (currentType === 'video') {
       hideTransition();
     }
   });
 
-  player.addEventListener('waiting', () => {
-    if (!player.paused) showTransition();
+  player.addEventListener('ended', () => {
+    if (currentType === 'video') {
+      goNext();
+    }
   });
 
-  player.addEventListener('error', showTransition);
+  player.addEventListener('waiting', () => {
+    if (currentType === 'video' && !player.paused) {
+      showTransition();
+    }
+  });
+
+  player.addEventListener('error', () => {
+    if (currentType === 'video') {
+      goNext();
+    }
+  });
 
   playPauseButton.addEventListener('click', () => {
+    if (currentType === 'image') {
+      if (userPaused) {
+        userPaused = false;
+        scheduleImageAdvance(imageRemaining || IMAGE_DURATION);
+      } else {
+        userPaused = true;
+
+        if (imageTimer !== null) {
+          imageRemaining = Math.max(
+            0,
+            imageRemaining - (Date.now() - imageStartedAt)
+          );
+        }
+
+        clearImageTimer();
+      }
+
+      updatePlayButton();
+      return;
+    }
+
     if (player.paused) {
       userPaused = false;
       player.play().catch(() => {
@@ -1184,6 +1317,7 @@
       userPaused = true;
       player.pause();
     }
+
     updatePlayButton();
   });
 
@@ -1193,15 +1327,12 @@
   });
 
   window.addEventListener('resize', () => {
-    if (transition.classList.contains('active')) resizeCanvas();
+    if (transition.classList.contains('active')) {
+      resizeCanvas();
+    }
   });
 
-  player.play().then(hideTransition).catch(() => {
-    userPaused = true;
-    hideTransition();
-    updatePlayButton();
-  });
-
+  loadMedia(0);
   updatePlayButton();
   updateMuteButton();
 })();
