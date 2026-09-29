@@ -659,30 +659,189 @@
         animation: none;
       }
     }
+
+
+    /* Bluia Sisters TV Live */
+    .live-tv-wrap {
+      position: relative;
+      width: 100%;
+      margin: 0 auto;
+      overflow: hidden;
+      border: 1px solid #efcfdb;
+      border-radius: 16px;
+      background: #050505;
+    }
+
+    .live-tv-stage {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      max-height: 68svh;
+      background: #050505;
+      overflow: hidden;
+    }
+
+    .live-tv-stage video {
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #050505;
+    }
+
+    .live-tv-badge {
+      position: absolute;
+      z-index: 5;
+      top: 10px;
+      left: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: rgba(223, 74, 131, .94);
+      color: #fff;
+      font-size: 8px;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      backdrop-filter: blur(8px);
+    }
+
+    .live-tv-badge::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    .live-tv-transition {
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      opacity: 0;
+      visibility: hidden;
+      overflow: hidden;
+      background: #050505;
+      transition: opacity .22s ease, visibility .22s ease;
+      pointer-events: none;
+    }
+
+    .live-tv-transition.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    #live-soft-pixels {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: .20;
+      image-rendering: pixelated;
+      filter: contrast(78%) brightness(68%);
+    }
+
+    .live-pixel-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, transparent 28%, rgba(0,0,0,.52) 100%);
+    }
+
+    .live-loading-dots {
+      position: absolute;
+      left: 50%;
+      bottom: 9%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+    }
+
+    .live-loading-dots span {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.72);
+      animation: liveDotPulse 1.2s ease-in-out infinite;
+    }
+
+    .live-loading-dots span:nth-child(2) { animation-delay: .16s; }
+    .live-loading-dots span:nth-child(3) { animation-delay: .32s; }
+
+    @keyframes liveDotPulse {
+      0%, 80%, 100% { opacity: .22; transform: scale(.86); }
+      40% { opacity: .76; transform: scale(1); }
+    }
+
+    .live-tv-controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+      margin-top: 8px;
+    }
+
+    .live-control {
+      min-height: 42px;
+      border: 1px solid #efc6d6;
+      border-radius: 10px;
+      background: #fff;
+      color: #c43d75;
+      font: 700 10.5px/1 Arial, sans-serif;
+      cursor: pointer;
+    }
+
+    .live-control.primary {
+      color: #fff;
+      background: #df4a83;
+      border-color: #df4a83;
+    }
+
+    .live-tv-caption {
+      margin: 7px 0 0;
+      color: #9b808b;
+      font-size: 8.5px;
+      line-height: 1.35;
+    }
+
   </style>
 </head>
 <body>
   <main>
     <div class="brand">Bluia <span>Sisters</span></div>
-    <div class="video-wrap">
-      <video id="trailer-player"
-        controls
-        playsinline
-        preload="metadata"
-        src="https://pub-09d49e1729be4c218a60f330ac3b61b2.r2.dev/grok-video-10dd7878-96b4-4946-926b-33e22bc8cb9e.mp4">
-      </video>
-      <div class="trailer-transition" id="trailer-transition" aria-hidden="true">
-        <div role="status" aria-live="polite" aria-atomic="true">
-          <p class="trailer-eyebrow" id="trailer-status">Playing next free trailer of</p>
-          <p class="trailer-title">Bluia Sisters Show</p>
+    <div class="live-tv-wrap">
+      <div class="live-tv-stage">
+        <video
+          id="live-tv-player"
+          autoplay
+          muted
+          playsinline
+          preload="metadata"
+          disablepictureinpicture
+          controlslist="nodownload noplaybackrate noremoteplayback"
+          src="https://huggingface.co/buckets/veebluia/drama/resolve/cgrok-video-ded4afea-ee3c-4c53-b246-290070da4d42.mp4?download=true">
+        </video>
+
+        <div class="live-tv-transition" id="live-tv-transition" aria-hidden="true">
+          <canvas id="live-soft-pixels" aria-hidden="true"></canvas>
+          <div class="live-pixel-vignette" aria-hidden="true"></div>
+          <div class="live-loading-dots" aria-hidden="true"><span></span><span></span><span></span></div>
         </div>
-        <div class="trailer-progress" aria-hidden="true"></div>
-        <button class="trailer-play" id="trailer-play" type="button" hidden>Play next trailer</button>
       </div>
+      <div class="live-tv-badge">Live</div>
     </div>
-    <h1>Watch all Bluia Sisters Drama episodes</h1>
+
+    <div class="live-tv-controls" aria-label="Live TV controls">
+      <button class="live-control primary" id="live-play-pause" type="button">Pause</button>
+      <button class="live-control" id="live-mute-toggle" type="button">Unmute</button>
+    </div>
+    <p class="live-tv-caption">Bluia Sisters TV Live · Continuous playback</p>
+    <h1>Bluia Sisters TV Live</h1>
     <p class="intro">
-      Watch all episodes of your favorite Bluia Sisters.
+      Watch live clips now or unlock the full Bluia Sisters library.
     </p>
     <div class="telegram-buttons">
       <a class="tg-button tg-paid"
@@ -692,8 +851,8 @@
           <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
         </span>
         <span class="tg-copy">
-          <strong>Bluia TV — Just $5/month</strong>
-          <small>Watch all episodes of your favorite Bluia Sisters</small>
+          <strong>Buy Full Access — $5/month</strong>
+          <small>Unlock the complete Bluia Sisters TV library</small>
         </span>
         <span class="arrow" aria-hidden="true">↗</span>
       </a>
@@ -775,15 +934,15 @@
               <span class="show-no">01</span>
               <span class="show-info">
                 <span class="show-name">Bluia Sisters Podcasts</span>
-                <span class="show-sub">Season 01 · 5 episodes · 2 free</span>
+                <span class="show-sub">Season 01 · 5 episodes</span>
               </span>
               <span class="show-arrow" aria-hidden="true">›</span>
             </summary>
             <div class="season">
               <div class="season-head"><span>Season 01</span><span>5 episodes</span></div>
               <div class="episodes">
-                <div class="episode-row episode-free"><button class="episode-play free-episode-play" type="button" data-video="https://pub-09d49e1729be4c218a60f330ac3b61b2.r2.dev/grok-video-10dd7878-96b4-4946-926b-33e22bc8cb9e.mp4" aria-label="Play free episode S01 E01"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button><span class="episode-id">S01 · E01</span><span class="episode-name">Meet the Sisters<span class="free-tag">Free episode</span></span></div>
-                <div class="episode-row episode-free"><button class="episode-play free-episode-play" type="button" data-video="https://pub-09d49e1729be4c218a60f330ac3b61b2.r2.dev/cgrok-video-ded4afea-ee3c-4c53-b246-290070da4d42.mp4" aria-label="Play free episode S01 E02"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button><span class="episode-id">S01 · E02</span><span class="episode-name">Things We Never Said<span class="free-tag">Free episode</span></span></div>
+                <div class="episode-row"><a class="episode-play" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04" target="_blank" rel="noopener noreferrer" aria-label="Buy full access to play this episode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></a><span class="episode-id">S01 · E01</span><span class="episode-name">Meet the Sisters</span></div>
+                <div class="episode-row"><a class="episode-play" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04" target="_blank" rel="noopener noreferrer" aria-label="Buy full access to play this episode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></a><span class="episode-id">S01 · E02</span><span class="episode-name">Things We Never Said</span></div>
                 <div class="episode-row"><a class="episode-play" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to play this episode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></a><span class="episode-id">S01 · E03</span><span class="episode-name">Late Night Confessions</span></div>
                 <div class="episode-row"><a class="episode-play" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to play this episode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></a><span class="episode-id">S01 · E04</span><span class="episode-name">Sister Rules</span></div>
                 <div class="episode-row"><a class="episode-play" href="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to play this episode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></a><span class="episode-id">S01 · E05</span><span class="episode-name">No Filter</span></div>
@@ -879,22 +1038,6 @@
 
       <p class="intro">Pay securely with Stripe. Your viewing link will be sent to the email address you use at checkout.</p>
       <a
-        class="tg-button tg-paid"
-        href="https://t.me/+vieXRo_X9rM5NzRk"
-        target="_blank"
-        rel="noopener noreferrer">
-        <span class="tg-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24">
-            <path d="M21.8 3.7 18.5 20c-.25 1.15-.9 1.44-1.82.9l-5-3.69-2.41 2.32c-.27.27-.5.5-1.02.5l.36-5.1 9.29-8.39c.4-.36-.09-.56-.63-.2L5.79 13.56.86 12.02c-1.08-.34-1.1-1.08.23-1.6L20.38 3c.9-.33 1.69.2 1.42.7Z"/>
-          </svg>
-        </span>
-        <span class="tg-copy">
-          <strong>Watch All Episodes — Paid Telegram</strong>
-          <small>500 Telegram Stars / month</small>
-        </span>
-        <span class="arrow" aria-hidden="true">↗</span>
-      </a>
-      <a
         class="tg-button tg-free"
         href="https://t.me/vbluia"
         target="_blank"
@@ -919,57 +1062,148 @@
   </main>
 <script>
 (() => {
-  const player = document.getElementById('trailer-player');
-  const overlay = document.getElementById('trailer-transition');
-  const status = document.getElementById('trailer-status');
-  const button = document.getElementById('trailer-play');
-  const nextTrailer = 'https://pub-09d49e1729be4c218a60f330ac3b61b2.r2.dev/cgrok-video-ded4afea-ee3c-4c53-b246-290070da4d42.mp4';
-  let advanced = false;
-  let waiting = false;
-  let timeout;
-  function offerPlay(message) {
-    if (!waiting) return;
-    clearTimeout(timeout);
-    status.textContent = message;
-    button.hidden = false;
+  const player = document.getElementById('live-tv-player');
+  const playPauseButton = document.getElementById('live-play-pause');
+  const muteButton = document.getElementById('live-mute-toggle');
+  const transition = document.getElementById('live-tv-transition');
+  const canvas = document.getElementById('live-soft-pixels');
+  const ctx = canvas.getContext('2d', { alpha: false });
+
+  const playlist = [
+    'https://huggingface.co/buckets/veebluia/drama/resolve/cgrok-video-ded4afea-ee3c-4c53-b246-290070da4d42.mp4?download=true',
+    'https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-10dd7878-96b4-4946-926b-33e22bc8cb9e.mp4?download=true',
+    'https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-7ef55572-64ad-46c5-9c2e-ae777e88f28b.mp4?download=true',
+    'https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-344b021b-a159-4251-90d8-aeb92164a4b3.mp4?download=true',
+    'https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-6c0d70db-a7e0-4a2f-b093-1d0f6b1266ed.mp4?download=true'
+  ];
+
+  let currentIndex = 0;
+  let userPaused = false;
+  let switching = false;
+  let pixelFrame = null;
+  let lastPixelDraw = 0;
+
+  function updatePlayButton() {
+    playPauseButton.textContent = userPaused ? 'Play' : 'Pause';
   }
-  function playNext() {
-    button.hidden = true;
-    status.textContent = 'Playing next free trailer of';
-    clearTimeout(timeout);
-    timeout = setTimeout(() => offerPlay('Tap below to continue watching'), 12000);
-    player.play().catch(() => offerPlay('Your next free trailer is ready'));
+
+  function updateMuteButton() {
+    muteButton.textContent = player.muted ? 'Unmute' : 'Mute';
   }
+
+  function resizeCanvas() {
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = Math.max(70, Math.floor(rect.width * .22));
+    canvas.height = Math.max(120, Math.floor(rect.height * .22));
+  }
+
+  function drawSoftPixels(time = 0) {
+    if (time - lastPixelDraw > 110) {
+      lastPixelDraw = time;
+      const w = canvas.width;
+      const h = canvas.height;
+      const image = ctx.createImageData(w, h);
+      const data = image.data;
+
+      for (let i = 0; i < data.length; i += 4) {
+        const grey = 18 + Math.floor(Math.random() * 86);
+        data[i] = grey;
+        data[i + 1] = grey;
+        data[i + 2] = grey;
+        data[i + 3] = 255;
+      }
+      ctx.putImageData(image, 0, 0);
+    }
+    pixelFrame = requestAnimationFrame(drawSoftPixels);
+  }
+
+  function startPixels() {
+    resizeCanvas();
+    if (pixelFrame === null) pixelFrame = requestAnimationFrame(drawSoftPixels);
+  }
+
+  function stopPixels() {
+    if (pixelFrame !== null) {
+      cancelAnimationFrame(pixelFrame);
+      pixelFrame = null;
+    }
+  }
+
+  function showTransition() {
+    transition.classList.add('active');
+    transition.setAttribute('aria-hidden', 'false');
+    startPixels();
+  }
+
+  function hideTransition() {
+    transition.classList.remove('active');
+    transition.setAttribute('aria-hidden', 'true');
+    stopPixels();
+  }
+
+  function loadVideo(index) {
+    switching = true;
+    currentIndex = index;
+    showTransition();
+    player.src = playlist[currentIndex];
+    player.load();
+
+    if (!userPaused) {
+      player.play().catch(() => {
+        userPaused = true;
+        updatePlayButton();
+      });
+    }
+  }
+
   player.addEventListener('ended', () => {
-    if (player.dataset.manualSelection === 'true') return;
-    if (advanced) return;
-    advanced = true;
-    waiting = true;
-    overlay.classList.add('is-visible');
-    overlay.setAttribute('aria-hidden', 'false');
-    // Leave native fullscreen so the transition remains visible on phones.
-    if (player.webkitDisplayingFullscreen && player.webkitExitFullscreen) player.webkitExitFullscreen();
-    if (document.fullscreenElement === player && document.exitFullscreen) document.exitFullscreen().catch(() => {});
-    setTimeout(() => {
-      player.src = nextTrailer;
-      player.load();
-      playNext();
-    }, 2600);
+    loadVideo((currentIndex + 1) % playlist.length);
   });
+
   player.addEventListener('playing', () => {
-    if (!waiting) return;
-    waiting = false;
-    clearTimeout(timeout);
-    if (document.activeElement === button) player.focus();
-    overlay.classList.remove('is-visible');
-    overlay.setAttribute('aria-hidden', 'true');
-    button.hidden = true;
+    if (switching) {
+      switching = false;
+      hideTransition();
+    }
   });
-  player.addEventListener('error', () => offerPlay('Trailer could not load. Tap to retry.'));
-  button.addEventListener('click', () => {
-    if (player.error) player.load();
-    playNext();
+
+  player.addEventListener('waiting', () => {
+    if (!player.paused) showTransition();
   });
+
+  player.addEventListener('error', showTransition);
+
+  playPauseButton.addEventListener('click', () => {
+    if (player.paused) {
+      userPaused = false;
+      player.play().catch(() => {
+        userPaused = true;
+        updatePlayButton();
+      });
+    } else {
+      userPaused = true;
+      player.pause();
+    }
+    updatePlayButton();
+  });
+
+  muteButton.addEventListener('click', () => {
+    player.muted = !player.muted;
+    updateMuteButton();
+  });
+
+  window.addEventListener('resize', () => {
+    if (transition.classList.contains('active')) resizeCanvas();
+  });
+
+  player.play().then(hideTransition).catch(() => {
+    userPaused = true;
+    hideTransition();
+    updatePlayButton();
+  });
+
+  updatePlayButton();
+  updateMuteButton();
 })();
 </script>
 
@@ -988,48 +1222,6 @@
 })();
 </script>
 
-
-<script>
-(() => {
-  const player = document.getElementById('trailer-player');
-  const videoWrap = document.querySelector('.video-wrap');
-  const overlay = document.getElementById('trailer-transition');
-  const freeButtons = document.querySelectorAll('.free-episode-play');
-
-  freeButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      const videoUrl = button.dataset.video;
-      if (!videoUrl || !player) return;
-
-      player.dataset.manualSelection = 'true';
-
-      if (overlay) {
-        overlay.classList.remove('is-visible');
-        overlay.setAttribute('aria-hidden', 'true');
-      }
-
-      if (player.src !== videoUrl) {
-        player.src = videoUrl;
-        player.load();
-      }
-
-      if (videoWrap) {
-        videoWrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-
-      const startPlayback = () => {
-        player.play().catch(() => {});
-      };
-
-      if (player.readyState >= 2) {
-        startPlayback();
-      } else {
-        player.addEventListener('canplay', startPlayback, { once: true });
-      }
-    });
-  });
-})();
-</script>
 
 
 <script>
