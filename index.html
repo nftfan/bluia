@@ -838,26 +838,46 @@
     }
 
     .live-tv-controls {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 7px;
-      margin-top: 8px;
+      display: flex;
+      justify-content: center;
+      gap: 9px;
+      margin-top: 9px;
     }
 
     .live-control {
-      min-height: 42px;
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      padding: 0;
       border: 1px solid #efc6d6;
-      border-radius: 10px;
+      border-radius: 50%;
       background: #fff;
       color: #c43d75;
-      font: 700 10.5px/1 Arial, sans-serif;
       cursor: pointer;
+      transition: transform .14s ease, background-color .14s ease, border-color .14s ease;
+    }
+
+    .live-control:hover {
+      background: #fff4f8;
+      border-color: #e9aec5;
+    }
+
+    .live-control:active {
+      transform: scale(.94);
     }
 
     .live-control.primary {
       color: #fff;
       background: #df4a83;
       border-color: #df4a83;
+    }
+
+    .live-control svg {
+      width: 17px;
+      height: 17px;
+      display: block;
+      fill: currentColor;
     }
 
     .live-tv-caption {
@@ -876,11 +896,11 @@
       <div class="live-tv-stage">
         <video
           id="live-tv-player"
-          autoplay
           muted
           playsinline
           webkit-playsinline
           preload="auto"
+          src="https://huggingface.co/buckets/veebluia/drama/resolve/cgrok-video-ded4afea-ee3c-4c53-b246-290070da4d42.mp4?download=true"
           disablepictureinpicture
           controlslist="nodownload noplaybackrate noremoteplayback">
         </video>
@@ -901,8 +921,17 @@
     </div>
 
     <div class="live-tv-controls" aria-label="Live TV controls">
-      <button class="live-control primary" id="live-play-pause" type="button">Pause</button>
-      <button class="live-control" id="live-mute-toggle" type="button">Unmute</button>
+      <button class="live-control primary" id="live-play-pause" type="button" aria-label="Play">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
+      </button>
+      <button class="live-control" id="live-mute-toggle" type="button" aria-label="Unmute">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 9v6h4l5 4V5L8 9H4zm11.5 3c0-1.77-1-3.29-2.5-4.03v8.05A4.48 4.48 0 0 0 15.5 12z"/>
+          <path d="M19.59 7 18.17 8.41 20.76 11l-2.59 2.59L19.59 15 22.17 12z"/>
+        </svg>
+      </button>
     </div>
     <p class="live-tv-caption">Bluia Sisters Photos and Videos · Continuous playback</p>
     <h1>Bluia Sisters Photos and Videos</h1>
@@ -1155,7 +1184,7 @@
 
   let currentIndex = 0;
   let currentType = null;
-  let userPaused = false;
+  let userPaused = true;
   let userChangedMute = false;
 
   let imageTimer = null;
@@ -1168,12 +1197,22 @@
   let preparedImage = null;
   let pendingVideoSwitch = false;
 
+  const ICONS = {
+    play: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>',
+    pause: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zm6 0h4v14h-4z"/></svg>',
+    muted: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="m17 9-1.4 1.4L17.2 12l-1.6 1.6L17 15l1.6-1.6L20.2 15l1.4-1.4L20 12l1.6-1.6L20.2 9l-1.6 1.6z"/></svg>',
+    sound: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4zm11.5 3c0-1.77-1-3.29-2.5-4.03v8.05A4.48 4.48 0 0 0 15.5 12z"/><path d="M14.5 3.97v2.06A7 7 0 0 1 14.5 18v2.06a9 9 0 0 0 0-16.09z"/></svg>'
+  };
+
   function updatePlayButton() {
-    playPauseButton.textContent = userPaused ? 'Play' : 'Pause';
+    const paused = userPaused || (currentType === 'video' && player.paused);
+    playPauseButton.innerHTML = paused ? ICONS.play : ICONS.pause;
+    playPauseButton.setAttribute('aria-label', paused ? 'Play' : 'Pause');
   }
 
   function updateMuteButton() {
-    muteButton.textContent = player.muted ? 'Unmute' : 'Mute';
+    muteButton.innerHTML = player.muted ? ICONS.muted : ICONS.sound;
+    muteButton.setAttribute('aria-label', player.muted ? 'Unmute' : 'Mute');
   }
 
   function clearImageTimer() {
@@ -1309,30 +1348,6 @@
     preparedImage = img;
   }
 
-  function requestAutoplay() {
-    if (userPaused || currentType !== 'video') return;
-
-    // Explicit properties improve muted inline autoplay reliability on mobile Safari.
-    if (!userChangedMute) {
-      player.muted = true;
-      player.defaultMuted = true;
-      player.setAttribute('muted', '');
-    }
-
-    player.autoplay = true;
-    player.playsInline = true;
-    player.setAttribute('playsinline', '');
-    player.setAttribute('webkit-playsinline', '');
-
-    const promise = player.play();
-
-    // A rejected autoplay attempt can simply mean the media is not ready yet.
-    // Do NOT convert that into a user pause; later readiness events retry automatically.
-    if (promise && typeof promise.catch === 'function') {
-      promise.catch(() => {});
-    }
-  }
-
   function startVideo(index, alreadyPrepared = false) {
     clearImageTimer();
 
@@ -1342,19 +1357,22 @@
 
     showVideo();
 
-    if (!alreadyPrepared || preparedVideoIndex !== index) {
-      player.src = mediaPlaylist[index].src;
+    const targetSrc = mediaPlaylist[index].src;
+    const sameSource =
+      player.getAttribute('src') === targetSrc ||
+      player.currentSrc === targetSrc;
+
+    if ((!alreadyPrepared || preparedVideoIndex !== index) && !sameSource) {
+      player.src = targetSrc;
       player.load();
     }
 
-    // Ask for autoplay immediately; mobile browsers can accept this before canplay.
-    requestAutoplay();
+    // Do not autoplay. Keep the media loaded and ready for the user.
+    player.pause();
+    userPaused = true;
+    updatePlayButton();
 
-    if (player.readyState < 3) {
-      pendingVideoSwitch = true;
-    }
-
-    // While the video is playing, quietly cache the next image.
+    // While the video is loaded, quietly cache the next image.
     prepareUpcomingMedia();
   }
 
@@ -1408,9 +1426,8 @@
       return;
     }
 
-    if (currentType === 'video' && !userPaused) {
+    if (currentType === 'video') {
       pendingVideoSwitch = false;
-      requestAutoplay();
     }
   });
 
@@ -1424,7 +1441,6 @@
     }
 
     if (currentType === 'video' && !userPaused) {
-      requestAutoplay();
     }
   });
 
@@ -1447,7 +1463,10 @@
     if (currentIndex === 0 && currentType === 'video') {
       startDots.classList.add('is-hidden');
     }
+    updatePlayButton();
   });
+
+  player.addEventListener('pause', updatePlayButton);
 
   player.addEventListener('timeupdate', hideStartDotsWhenPlaybackBegins);
 
@@ -1509,7 +1528,6 @@
       userPaused = false;
       player.play().catch(() => {
         userPaused = true;
-        updatePlayButton();
       });
     } else {
       userPaused = true;
@@ -1532,26 +1550,12 @@
     updateMuteButton();
   });
 
-  // Start directly with the first video and aggressively retry muted inline autoplay.
-  startMedia(0);
-
-  const retryInitialAutoplay = () => {
-    if (currentIndex === 0 && currentType === 'video' && !userPaused && player.paused) {
-      requestAutoplay();
-    }
-  };
-
-  window.addEventListener('load', retryInitialAutoplay, { once: true });
-  window.addEventListener('pageshow', retryInitialAutoplay);
-  document.addEventListener('visibilitychange', () => {
-    if (!document.hidden) retryInitialAutoplay();
-  });
-
-  // Short retries cover mobile browsers that delay media readiness after page paint.
-  [120, 350, 800, 1500, 2500].forEach(delay => {
-    setTimeout(retryInitialAutoplay, delay);
-  });
-
+  // Load the first video immediately, but wait for the user to press Play.
+  currentIndex = 0;
+  currentType = 'video';
+  showVideo();
+  player.pause();
+  prepareUpcomingMedia();
   updatePlayButton();
   updateMuteButton();
 })();
