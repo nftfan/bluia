@@ -675,8 +675,8 @@
     .live-tv-stage {
       position: relative;
       width: 100%;
-      aspect-ratio: 9 / 16;
-      max-height: 68svh;
+      aspect-ratio: 16 / 9;
+      max-height: 62svh;
       background: #050505;
       overflow: hidden;
     }
@@ -861,6 +861,84 @@
       display: grid;
     }
 
+
+    .media-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+      margin: 0 0 9px;
+    }
+
+    .media-tab {
+      min-height: 38px;
+      border: 1px solid #efc6d6;
+      border-radius: 10px;
+      background: #fff;
+      color: #c43d75;
+      font: 700 10px/1 Arial, sans-serif;
+      cursor: pointer;
+    }
+
+    .media-tab.active {
+      color: #fff;
+      background: #df4a83;
+      border-color: #df4a83;
+    }
+
+    .media-panel[hidden] {
+      display: none !important;
+    }
+
+    .photo-viewer {
+      width: 100%;
+      height: min(68svh, 620px);
+      min-height: 360px;
+      overflow: hidden;
+      border: 1px solid #efcfdb;
+      border-radius: 16px;
+      background: #111;
+      display: grid;
+      place-items: center;
+    }
+
+    .photo-viewer img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+      object-position: center;
+      background: #111;
+    }
+
+    .photo-nav {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 9px;
+    }
+
+    .photo-nav button {
+      min-height: 40px;
+      border: 1px solid #efc6d6;
+      border-radius: 10px;
+      background: #fff;
+      color: #c43d75;
+      font: 700 10px/1 Arial, sans-serif;
+      cursor: pointer;
+    }
+
+    .photo-nav button:hover {
+      background: #fff4f8;
+    }
+
+    .photo-position {
+      margin: 7px 0 0;
+      color: #9b808b;
+      font-size: 8.5px;
+      line-height: 1.3;
+      text-align: center;
+    }
+
     .live-tv-controls {
       display: flex;
       justify-content: center;
@@ -916,7 +994,13 @@
 <body>
   <main>
     <div class="brand">Bluia <span>Sisters</span></div>
-    <div class="live-tv-wrap">
+    <div class="media-tabs" role="tablist" aria-label="Bluia Sisters media">
+      <button class="media-tab active" id="videos-tab" type="button" role="tab" aria-selected="true">Videos</button>
+      <button class="media-tab" id="photos-tab" type="button" role="tab" aria-selected="false">Photos</button>
+    </div>
+
+    <section class="media-panel" id="videos-panel" role="tabpanel">
+      <div class="live-tv-wrap">
       <div class="live-tv-stage">
         <video
           id="live-tv-player"
@@ -928,17 +1012,7 @@
           disablepictureinpicture
           controlslist="nodownload noplaybackrate noremoteplayback">
         </video>
-
-        <img
-          id="live-tv-image"
-          class="live-tv-image"
-          alt=""
-          decoding="async"
-        />
-
-        <div class="photo-countdown" id="photo-countdown" aria-live="polite">5</div>
-
-        <div class="live-start-dots" id="live-start-dots" aria-hidden="true">
+<div class="live-start-dots" id="live-start-dots" aria-hidden="true">
           <span></span><span></span><span></span>
         </div>
 
@@ -960,6 +1034,21 @@
       </button>
     </div>
     <p class="live-tv-caption">Bluia Sisters Photos and Videos · Continuous playback</p>
+    </section>
+
+    <section class="media-panel" id="photos-panel" role="tabpanel" hidden>
+      <div class="photo-viewer">
+        <img id="gallery-photo" alt="Bluia Sisters photo" />
+      </div>
+
+      <div class="photo-nav">
+        <button id="photo-prev" type="button">Previous</button>
+        <button id="photo-next" type="button">Next</button>
+      </div>
+
+      <p class="photo-position" id="photo-position">1 / 5</p>
+    </section>
+
     <h1>Bluia Sisters Photos and Videos</h1>
     <p class="intro">
       Watch live clips now or unlock the full Bluia Sisters library.
@@ -1184,49 +1273,40 @@
 <script>
 (() => {
   const player = document.getElementById('live-tv-player');
-  const imagePlayer = document.getElementById('live-tv-image');
   const playPauseButton = document.getElementById('live-play-pause');
   const muteButton = document.getElementById('live-mute-toggle');
   const startDots = document.getElementById('live-start-dots');
-  const photoCountdown = document.getElementById('photo-countdown');
 
-  const mediaPlaylist = [
-    { type: 'video', src: 'https://huggingface.co/buckets/veebluia/drama/resolve/cgrok-video-ded4afea-ee3c-4c53-b246-290070da4d42.mp4?download=true' },
-    { type: 'image', src: 'https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_48_51%20AM.png?download=true' },
+  const videosTab = document.getElementById('videos-tab');
+  const photosTab = document.getElementById('photos-tab');
+  const videosPanel = document.getElementById('videos-panel');
+  const photosPanel = document.getElementById('photos-panel');
 
-    { type: 'video', src: 'https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-10dd7878-96b4-4946-926b-33e22bc8cb9e.mp4?download=true' },
-    { type: 'image', src: 'https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_12%20AM.png?download=true' },
+  const galleryPhoto = document.getElementById('gallery-photo');
+  const photoPrev = document.getElementById('photo-prev');
+  const photoNext = document.getElementById('photo-next');
+  const photoPosition = document.getElementById('photo-position');
 
-    { type: 'video', src: 'https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-7ef55572-64ad-46c5-9c2e-ae777e88f28b.mp4?download=true' },
-    { type: 'image', src: 'https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_27%20AM.png?download=true' },
-
-    { type: 'video', src: 'https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-344b021b-a159-4251-90d8-aeb92164a4b3.mp4?download=true' },
-    { type: 'image', src: 'https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_33%20AM.png?download=true' },
-
-    { type: 'video', src: 'https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-6c0d70db-a7e0-4a2f-b093-1d0f6b1266ed.mp4?download=true' },
-    { type: 'image', src: 'https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_44%20AM.png?download=true' }
+  const videoPlaylist = [
+    'https://huggingface.co/buckets/veebluia/drama/resolve/cgrok-video-ded4afea-ee3c-4c53-b246-290070da4d42.mp4?download=true',
+    'https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-10dd7878-96b4-4946-926b-33e22bc8cb9e.mp4?download=true',
+    'https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-7ef55572-64ad-46c5-9c2e-ae777e88f28b.mp4?download=true',
+    'https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-344b021b-a159-4251-90d8-aeb92164a4b3.mp4?download=true',
+    'https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-6c0d70db-a7e0-4a2f-b093-1d0f6b1266ed.mp4?download=true'
   ];
 
-  const IMAGE_DURATION = 5000;
+  const photoPlaylist = [
+    'https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_48_51%20AM.png?download=true',
+    'https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_12%20AM.png?download=true',
+    'https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_27%20AM.png?download=true',
+    'https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_33%20AM.png?download=true',
+    'https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_44%20AM.png?download=true'
+  ];
 
-  let currentIndex = 0;
-  let currentType = 'video';
-
-  // Only the very first video waits for a click.
+  let videoIndex = 0;
+  let photoIndex = 0;
   let hasStarted = false;
   let userPaused = true;
-  let userChangedMute = false;
-
-  let imageTimer = null;
-  let countdownTimer = null;
-  let imageStartedAt = 0;
-  let imageRemaining = IMAGE_DURATION;
-
-  let preparedVideoIndex = -1;
-  let preparedVideoReady = false;
-  let preparedImageIndex = -1;
-  let preparedImage = null;
-  let waitingForPreparedVideo = false;
 
   const ICONS = {
     play: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>',
@@ -1236,7 +1316,7 @@
   };
 
   function updatePlayButton() {
-    const paused = userPaused || (currentType === 'video' && player.paused);
+    const paused = userPaused || player.paused;
     playPauseButton.innerHTML = paused ? ICONS.play : ICONS.pause;
     playPauseButton.setAttribute('aria-label', paused ? 'Play' : 'Pause');
   }
@@ -1246,354 +1326,59 @@
     muteButton.setAttribute('aria-label', player.muted ? 'Unmute' : 'Mute');
   }
 
-  function nextIndex(index = currentIndex) {
-    return (index + 1) % mediaPlaylist.length;
-  }
-
-  function findNextVideoIndex(fromIndex) {
-    for (let step = 1; step <= mediaPlaylist.length; step++) {
-      const i = (fromIndex + step) % mediaPlaylist.length;
-      if (mediaPlaylist[i].type === 'video') return i;
-    }
-    return -1;
-  }
-
-  function findNextImageIndex(fromIndex) {
-    for (let step = 1; step <= mediaPlaylist.length; step++) {
-      const i = (fromIndex + step) % mediaPlaylist.length;
-      if (mediaPlaylist[i].type === 'image') return i;
-    }
-    return -1;
-  }
-
-  function showVideo() {
-    imagePlayer.classList.remove('active');
-    photoCountdown.classList.remove('active');
-    player.style.visibility = 'visible';
-    player.style.opacity = '1';
-  }
-
-  function showImage() {
-    player.style.opacity = '0';
-    player.style.visibility = 'hidden';
-    imagePlayer.classList.add('active');
-    photoCountdown.classList.add('active');
-  }
-
-  function clearImageTimers() {
-    if (imageTimer !== null) {
-      clearTimeout(imageTimer);
-      imageTimer = null;
-    }
-
-    if (countdownTimer !== null) {
-      clearInterval(countdownTimer);
-      countdownTimer = null;
-    }
-  }
-
-  function updatePhotoCountdown() {
-    if (currentType !== 'image') return;
-
-    let remainingMs = imageRemaining;
-
-    if (imageTimer !== null && !userPaused) {
-      remainingMs = Math.max(
-        0,
-        imageRemaining - (Date.now() - imageStartedAt)
-      );
-    }
-
-    const seconds = Math.max(1, Math.ceil(remainingMs / 1000));
-    photoCountdown.textContent = seconds;
-  }
-
-  function scheduleImageAdvance(duration = IMAGE_DURATION) {
-    clearImageTimers();
-
-    imageRemaining = duration;
-    imageStartedAt = Date.now();
-    updatePhotoCountdown();
-
-    countdownTimer = setInterval(updatePhotoCountdown, 150);
-
-    imageTimer = setTimeout(() => {
-      imageTimer = null;
-      if (countdownTimer !== null) {
-        clearInterval(countdownTimer);
-        countdownTimer = null;
-      }
-      requestNextFromImage();
-    }, duration);
-  }
-
-  function preloadImage(index) {
-    if (index < 0 || mediaPlaylist[index].type !== 'image') return;
-    if (preparedImageIndex === index && preparedImage) return;
-
-    const img = new Image();
-    img.decoding = 'async';
-    img.src = mediaPlaylist[index].src;
-
-    preparedImageIndex = index;
-    preparedImage = img;
-  }
-
-  function preloadVideo(index) {
-    if (index < 0 || mediaPlaylist[index].type !== 'video') return;
-
-    preparedVideoIndex = index;
-    preparedVideoReady = false;
-
-    player.pause();
-    player.src = mediaPlaylist[index].src;
+  function loadVideo(index, autoplay = false) {
+    videoIndex = (index + videoPlaylist.length) % videoPlaylist.length;
+    player.src = videoPlaylist[videoIndex];
     player.load();
 
-    if (player.readyState >= 3) {
-      preparedVideoReady = true;
+    if (autoplay && hasStarted && !userPaused) {
+      player.play().catch(() => {});
     }
   }
 
-  function prepareUpcomingMedia() {
-    if (currentType === 'video') {
-      preloadImage(findNextImageIndex(currentIndex));
-    } else {
-      preloadVideo(findNextVideoIndex(currentIndex));
-    }
+  function renderPhoto(index) {
+    photoIndex = (index + photoPlaylist.length) % photoPlaylist.length;
+    galleryPhoto.src = photoPlaylist[photoIndex];
+    photoPosition.textContent = `${photoIndex + 1} / ${photoPlaylist.length}`;
   }
 
-  function startImage(index) {
-    clearImageTimers();
-
-    currentIndex = index;
-    currentType = 'image';
-    imageRemaining = IMAGE_DURATION;
-
-    const item = mediaPlaylist[index];
-
-    const reveal = () => {
-      imagePlayer.src = item.src;
-      showImage();
-
-      // Use the full 5-second photo preview to buffer the next video.
-      prepareUpcomingMedia();
-
-      if (hasStarted && !userPaused) {
-        scheduleImageAdvance(IMAGE_DURATION);
-      } else {
-        photoCountdown.textContent = '5';
-      }
-
-      updatePlayButton();
-    };
-
-    if (
-      preparedImageIndex === index &&
-      preparedImage &&
-      preparedImage.complete &&
-      preparedImage.naturalWidth > 0
-    ) {
-      reveal();
-      return;
-    }
-
-    const img = new Image();
-    img.decoding = 'async';
-    img.onload = reveal;
-    img.onerror = () => startMedia(nextIndex(index), true);
-    img.src = item.src;
-
-    preparedImageIndex = index;
-    preparedImage = img;
+  function openVideos() {
+    videosTab.classList.add('active');
+    videosTab.setAttribute('aria-selected', 'true');
+    photosTab.classList.remove('active');
+    photosTab.setAttribute('aria-selected', 'false');
+    videosPanel.hidden = false;
+    photosPanel.hidden = true;
   }
 
-  function playCurrentVideo() {
-    if (currentType !== 'video' || userPaused) return;
-
-    const promise = player.play();
-
-    if (promise && typeof promise.catch === 'function') {
-      promise.catch(() => {});
-    }
+  function openPhotos() {
+    photosTab.classList.add('active');
+    photosTab.setAttribute('aria-selected', 'true');
+    videosTab.classList.remove('active');
+    videosTab.setAttribute('aria-selected', 'false');
+    photosPanel.hidden = false;
+    videosPanel.hidden = true;
+    renderPhoto(photoIndex);
   }
-
-  function startVideo(index, autoplayAfterFirst = true, alreadyPrepared = false) {
-    clearImageTimers();
-
-    currentIndex = index;
-    currentType = 'video';
-    waitingForPreparedVideo = false;
-
-    showVideo();
-
-    const targetSrc = mediaPlaylist[index].src;
-    const sameSource =
-      player.getAttribute('src') === targetSrc ||
-      player.currentSrc === targetSrc;
-
-    if ((!alreadyPrepared || preparedVideoIndex !== index) && !sameSource) {
-      player.src = targetSrc;
-      player.load();
-    }
-
-    // First video waits for the initial Play click.
-    // Every later video plays automatically unless the user explicitly pauses.
-    if (!hasStarted) {
-      userPaused = true;
-      player.pause();
-    } else if (autoplayAfterFirst && !userPaused) {
-      playCurrentVideo();
-    }
-
-    prepareUpcomingMedia();
-    updatePlayButton();
-  }
-
-  function startMedia(index, autoplayAfterFirst = true) {
-    const item = mediaPlaylist[index];
-
-    if (item.type === 'image') {
-      startImage(index);
-    } else {
-      startVideo(index, autoplayAfterFirst);
-    }
-  }
-
-  function requestNextFromImage() {
-    const targetIndex = nextIndex(currentIndex);
-    const target = mediaPlaylist[targetIndex];
-
-    if (target.type !== 'video') {
-      startMedia(targetIndex, true);
-      return;
-    }
-
-    if (
-      preparedVideoIndex === targetIndex &&
-      (preparedVideoReady || player.readyState >= 3)
-    ) {
-      startVideo(targetIndex, true, true);
-      return;
-    }
-
-    // Keep the current photo visible until the next video is ready.
-    waitingForPreparedVideo = true;
-
-    if (preparedVideoIndex !== targetIndex) {
-      preloadVideo(targetIndex);
-    }
-  }
-
-  player.addEventListener('loadeddata', () => {
-    if (currentIndex === 0 && currentType === 'video') {
-      startDots.classList.add('is-hidden');
-    }
-
-    if (preparedVideoIndex >= 0 && player.readyState >= 3) {
-      preparedVideoReady = true;
-    }
-  });
-
-  player.addEventListener('canplay', () => {
-    if (currentIndex === 0 && currentType === 'video') {
-      startDots.classList.add('is-hidden');
-    }
-
-    if (preparedVideoIndex >= 0) {
-      preparedVideoReady = true;
-    }
-
-    if (waitingForPreparedVideo && currentType === 'image' && hasStarted && !userPaused) {
-      const targetIndex = nextIndex(currentIndex);
-
-      if (targetIndex === preparedVideoIndex) {
-        startVideo(targetIndex, true, true);
-      }
-    } else if (
-      currentType === 'video' &&
-      hasStarted &&
-      !userPaused &&
-      player.paused
-    ) {
-      playCurrentVideo();
-    }
-  });
-
-  player.addEventListener('playing', () => {
-    startDots.classList.add('is-hidden');
-    updatePlayButton();
-  });
-
-  player.addEventListener('pause', updatePlayButton);
-
-  player.addEventListener('ended', () => {
-    if (currentType !== 'video') return;
-
-    const targetIndex = nextIndex(currentIndex);
-
-    // Once the user has started the TV, the stream continues automatically.
-    if (mediaPlaylist[targetIndex].type === 'image') {
-      startImage(targetIndex);
-    } else {
-      startVideo(targetIndex, true);
-    }
-  });
-
-  player.addEventListener('error', () => {
-    if (!hasStarted) {
-      startDots.classList.add('is-hidden');
-      return;
-    }
-
-    startMedia(nextIndex(currentIndex), true);
-  });
 
   playPauseButton.addEventListener('click', () => {
-    // First click starts the whole TV experience.
     if (!hasStarted) {
       hasStarted = true;
       userPaused = false;
-
-      if (currentType === 'video') {
-        playCurrentVideo();
-      } else {
-        scheduleImageAdvance(imageRemaining || IMAGE_DURATION);
-      }
-
-      updatePlayButton();
-      return;
-    }
-
-    if (currentType === 'image') {
-      if (userPaused) {
-        userPaused = false;
-
-        if (waitingForPreparedVideo) {
-          requestNextFromImage();
-        } else {
-          scheduleImageAdvance(imageRemaining || IMAGE_DURATION);
-        }
-      } else {
+      player.play().catch(() => {
         userPaused = true;
-
-        if (imageTimer !== null) {
-          imageRemaining = Math.max(
-            0,
-            imageRemaining - (Date.now() - imageStartedAt)
-          );
-        }
-
-        clearImageTimers();
-        updatePhotoCountdown();
-      }
-
+        updatePlayButton();
+      });
       updatePlayButton();
       return;
     }
 
     if (player.paused) {
       userPaused = false;
-      playCurrentVideo();
+      player.play().catch(() => {
+        userPaused = true;
+        updatePlayButton();
+      });
     } else {
       userPaused = true;
       player.pause();
@@ -1603,25 +1388,33 @@
   });
 
   muteButton.addEventListener('click', () => {
-    userChangedMute = true;
     player.muted = !player.muted;
-
-    if (player.muted) {
-      player.setAttribute('muted', '');
-    } else {
-      player.removeAttribute('muted');
-    }
-
     updateMuteButton();
   });
 
-  // Load the first video only. User clicks Play once, then the whole playlist runs automatically.
-  currentIndex = 0;
-  currentType = 'video';
-  showVideo();
-  player.pause();
-  prepareUpcomingMedia();
+  player.addEventListener('loadeddata', () => {
+    startDots.classList.add('is-hidden');
+  });
 
+  player.addEventListener('canplay', () => {
+    startDots.classList.add('is-hidden');
+  });
+
+  player.addEventListener('playing', updatePlayButton);
+  player.addEventListener('pause', updatePlayButton);
+
+  player.addEventListener('ended', () => {
+    loadVideo(videoIndex + 1, true);
+  });
+
+  videosTab.addEventListener('click', openVideos);
+  photosTab.addEventListener('click', openPhotos);
+
+  photoPrev.addEventListener('click', () => renderPhoto(photoIndex - 1));
+  photoNext.addEventListener('click', () => renderPhoto(photoIndex + 1));
+
+  renderPhoto(0);
+  loadVideo(0, false);
   updatePlayButton();
   updateMuteButton();
 })();
