@@ -701,6 +701,10 @@
       z-index: 2;
       opacity: 0;
       visibility: hidden;
+      object-fit: cover !important;
+      object-position: center center;
+      background: transparent;
+      transform: scale(1.01);
     }
 
     .live-tv-stage .live-tv-image.active {
@@ -788,6 +792,83 @@
       40% { opacity: .84; transform: scale(1); }
     }
 
+
+    .live-tv-startup {
+      position: absolute;
+      inset: 0;
+      z-index: 8;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at 50% 42%, rgba(233,79,139,.16), transparent 34%),
+        #050505;
+      color: #fff;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity .55s ease, visibility .55s ease;
+      pointer-events: none;
+    }
+
+    .live-tv-startup.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .live-tv-startup-inner {
+      text-align: center;
+      transform: translateY(-2%);
+      animation: startupFloat 1.8s ease-in-out infinite;
+    }
+
+    .live-tv-startup-brand {
+      margin: 0;
+      font: 700 23px/1.05 Georgia, "Times New Roman", serif;
+      letter-spacing: -.7px;
+    }
+
+    .live-tv-startup-brand span {
+      color: #f06b9f;
+      font-style: italic;
+    }
+
+    .live-tv-startup-label {
+      margin: 8px 0 0;
+      color: rgba(255,255,255,.62);
+      font-size: 8px;
+      line-height: 1;
+      font-weight: 700;
+      letter-spacing: 1.65px;
+      text-transform: uppercase;
+    }
+
+    .live-tv-startup-dots {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 15px;
+    }
+
+    .live-tv-startup-dots span {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.86);
+      animation: startupDot 1.15s ease-in-out infinite;
+    }
+
+    .live-tv-startup-dots span:nth-child(2) { animation-delay: .14s; }
+    .live-tv-startup-dots span:nth-child(3) { animation-delay: .28s; }
+
+    @keyframes startupDot {
+      0%, 80%, 100% { opacity: .2; transform: translateY(0) scale(.85); }
+      40% { opacity: 1; transform: translateY(-3px) scale(1); }
+    }
+
+    @keyframes startupFloat {
+      0%, 100% { transform: translateY(-2%); }
+      50% { transform: translateY(-5%); }
+    }
+
     .live-tv-controls {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -842,10 +923,16 @@
           decoding="async"
         />
 
-        <div class="live-tv-transition" id="live-tv-transition" aria-hidden="true">
-          <canvas id="live-soft-pixels" aria-hidden="true"></canvas>
-          <div class="live-loading-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="live-tv-startup" id="live-tv-startup" aria-hidden="true">
+          <div class="live-tv-startup-inner">
+            <p class="live-tv-startup-brand">Bluia <span>Sisters</span></p>
+            <p class="live-tv-startup-label">TV Live</p>
+            <div class="live-tv-startup-dots" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
         </div>
+
       </div>
       <div class="live-tv-badge">Live</div>
     </div>
@@ -1082,9 +1169,7 @@
   const imagePlayer = document.getElementById('live-tv-image');
   const playPauseButton = document.getElementById('live-play-pause');
   const muteButton = document.getElementById('live-mute-toggle');
-  const transition = document.getElementById('live-tv-transition');
-  const canvas = document.getElementById('live-soft-pixels');
-  const ctx = canvas.getContext('2d', { alpha: false });
+  const startupOverlay = document.getElementById('live-tv-startup');
 
   const mediaPlaylist = [
     { type: 'video', src: 'https://huggingface.co/buckets/veebluia/drama/resolve/cgrok-video-ded4afea-ee3c-4c53-b246-290070da4d42.mp4?download=true' },
@@ -1106,13 +1191,19 @@
   const IMAGE_DURATION = 5000;
 
   let currentIndex = 0;
-  let userPaused = false;
   let currentType = null;
+  let userPaused = false;
+  let startupShown = false;
+
   let imageTimer = null;
   let imageStartedAt = 0;
   let imageRemaining = IMAGE_DURATION;
-  let pixelFrame = null;
-  let lastPixelDraw = 0;
+
+  let preparedVideoIndex = -1;
+  let preparedVideoReady = false;
+  let preparedImageIndex = -1;
+  let preparedImage = null;
+  let pendingVideoSwitch = false;
 
   function updatePlayButton() {
     playPauseButton.textContent = userPaused ? 'Play' : 'Pause';
@@ -1122,58 +1213,10 @@
     muteButton.textContent = player.muted ? 'Unmute' : 'Mute';
   }
 
-  function resizeCanvas() {
-    const rect = canvas.getBoundingClientRect();
-    canvas.width = Math.max(70, Math.floor(rect.width * .22));
-    canvas.height = Math.max(120, Math.floor(rect.height * .22));
-  }
-
-  function drawSoftPixels(time = 0) {
-    if (time - lastPixelDraw > 110) {
-      lastPixelDraw = time;
-      const w = canvas.width;
-      const h = canvas.height;
-      const frame = ctx.createImageData(w, h);
-      const data = frame.data;
-
-      for (let i = 0; i < data.length; i += 4) {
-        const grey = 16 + Math.floor(Math.random() * 72);
-        data[i] = grey;
-        data[i + 1] = grey;
-        data[i + 2] = grey;
-        data[i + 3] = 255;
-      }
-
-      ctx.putImageData(frame, 0, 0);
-    }
-
-    pixelFrame = requestAnimationFrame(drawSoftPixels);
-  }
-
-  function startPixels() {
-    resizeCanvas();
-    if (pixelFrame === null) {
-      pixelFrame = requestAnimationFrame(drawSoftPixels);
-    }
-  }
-
-  function stopPixels() {
-    if (pixelFrame !== null) {
-      cancelAnimationFrame(pixelFrame);
-      pixelFrame = null;
-    }
-  }
-
-  function showTransition() {
-    transition.classList.add('active');
-    transition.setAttribute('aria-hidden', 'false');
-    startPixels();
-  }
-
-  function hideTransition() {
-    transition.classList.remove('active');
-    transition.setAttribute('aria-hidden', 'true');
-    stopPixels();
+  function hideStartupOnce() {
+    if (startupShown) return;
+    startupShown = true;
+    startupOverlay.classList.add('is-hidden');
   }
 
   function clearImageTimer() {
@@ -1183,105 +1226,259 @@
     }
   }
 
+  function nextIndex(index = currentIndex) {
+    return (index + 1) % mediaPlaylist.length;
+  }
+
+  function findNextVideoIndex(fromIndex) {
+    for (let step = 1; step <= mediaPlaylist.length; step++) {
+      const i = (fromIndex + step) % mediaPlaylist.length;
+      if (mediaPlaylist[i].type === 'video') return i;
+    }
+    return -1;
+  }
+
+  function findNextImageIndex(fromIndex) {
+    for (let step = 1; step <= mediaPlaylist.length; step++) {
+      const i = (fromIndex + step) % mediaPlaylist.length;
+      if (mediaPlaylist[i].type === 'image') return i;
+    }
+    return -1;
+  }
+
+  function showVideo() {
+    imagePlayer.classList.remove('active');
+    player.style.visibility = 'visible';
+    player.style.opacity = '1';
+  }
+
+  function showImage() {
+    player.style.opacity = '0';
+    player.style.visibility = 'hidden';
+    imagePlayer.classList.add('active');
+  }
+
+  function preloadImage(index) {
+    if (index < 0 || mediaPlaylist[index].type !== 'image') return;
+    if (preparedImageIndex === index && preparedImage) return;
+
+    const img = new Image();
+    img.decoding = 'async';
+    img.src = mediaPlaylist[index].src;
+
+    preparedImageIndex = index;
+    preparedImage = img;
+  }
+
+  function preloadVideo(index) {
+    if (index < 0 || mediaPlaylist[index].type !== 'video') return;
+
+    preparedVideoIndex = index;
+    preparedVideoReady = false;
+    pendingVideoSwitch = false;
+
+    player.pause();
+    player.src = mediaPlaylist[index].src;
+    player.load();
+
+    // The photo stays visible while the browser buffers the upcoming video.
+    // readyState >= 3 is enough to begin playback in most browsers.
+    if (player.readyState >= 3) {
+      preparedVideoReady = true;
+    }
+  }
+
+  function prepareUpcomingMedia() {
+    if (currentType === 'video') {
+      const imageIndex = findNextImageIndex(currentIndex);
+      preloadImage(imageIndex);
+    } else if (currentType === 'image') {
+      const videoIndex = findNextVideoIndex(currentIndex);
+      preloadVideo(videoIndex);
+    }
+  }
+
   function scheduleImageAdvance(duration = IMAGE_DURATION) {
     clearImageTimer();
+
     imageRemaining = duration;
     imageStartedAt = Date.now();
 
     imageTimer = setTimeout(() => {
       imageTimer = null;
-      goNext();
+      requestNextFromImage();
     }, duration);
   }
 
-  function hideVideo() {
-    player.pause();
-    player.style.opacity = '0';
-    player.style.visibility = 'hidden';
-  }
-
-  function showVideo() {
-    imagePlayer.classList.remove('active');
-    player.style.opacity = '1';
-    player.style.visibility = 'visible';
-  }
-
-  function showImage() {
-    hideVideo();
-    imagePlayer.classList.add('active');
-  }
-
-  function loadMedia(index) {
+  function startImage(index) {
     clearImageTimer();
+
     currentIndex = index;
-    const item = mediaPlaylist[currentIndex];
-    currentType = item.type;
+    currentType = 'image';
+    imageRemaining = IMAGE_DURATION;
 
-    showTransition();
+    const item = mediaPlaylist[index];
 
-    if (item.type === 'image') {
-      player.removeAttribute('src');
-      player.load();
-
-      imageRemaining = IMAGE_DURATION;
-      imagePlayer.onload = () => {
-        showImage();
-        hideTransition();
-
-        if (!userPaused) {
-          scheduleImageAdvance(IMAGE_DURATION);
-        }
-      };
-
-      imagePlayer.onerror = () => {
-        goNext();
-      };
-
+    const reveal = () => {
       imagePlayer.src = item.src;
+      showImage();
+
+      // While this 5-second photo is visible, buffer the next video.
+      prepareUpcomingMedia();
+
+      if (!userPaused) {
+        scheduleImageAdvance(IMAGE_DURATION);
+      }
+    };
+
+    if (
+      preparedImageIndex === index &&
+      preparedImage &&
+      preparedImage.complete &&
+      preparedImage.naturalWidth > 0
+    ) {
+      reveal();
       return;
     }
 
-    imagePlayer.classList.remove('active');
-    imagePlayer.removeAttribute('src');
-    showVideo();
+    const img = new Image();
+    img.decoding = 'async';
 
-    player.src = item.src;
-    player.load();
+    img.onload = reveal;
+    img.onerror = () => startMedia(nextIndex(index));
+    img.src = item.src;
 
-    if (!userPaused) {
-      player.play().catch(() => {
-        userPaused = true;
-        updatePlayButton();
-        hideTransition();
-      });
+    preparedImageIndex = index;
+    preparedImage = img;
+  }
+
+  function startVideo(index, alreadyPrepared = false) {
+    clearImageTimer();
+
+    currentIndex = index;
+    currentType = 'video';
+    pendingVideoSwitch = false;
+
+    if (!alreadyPrepared || preparedVideoIndex !== index) {
+      player.src = mediaPlaylist[index].src;
+      player.load();
+    }
+
+    const begin = () => {
+      showVideo();
+
+      if (!userPaused) {
+        player.play().catch(() => {
+          userPaused = true;
+          updatePlayButton();
+        });
+      }
+
+      // While the video is playing, quietly cache the next image.
+      prepareUpcomingMedia();
+    };
+
+    if (player.readyState >= 3) {
+      begin();
+    } else {
+      pendingVideoSwitch = true;
     }
   }
 
-  function goNext() {
-    loadMedia((currentIndex + 1) % mediaPlaylist.length);
+  function startMedia(index) {
+    const item = mediaPlaylist[index];
+
+    if (item.type === 'image') {
+      startImage(index);
+    } else {
+      startVideo(index);
+    }
+  }
+
+  function requestNextFromImage() {
+    const targetIndex = nextIndex(currentIndex);
+    const target = mediaPlaylist[targetIndex];
+
+    if (target.type !== 'video') {
+      startMedia(targetIndex);
+      return;
+    }
+
+    // Do not hide the current photo until the next video is actually buffered.
+    if (
+      preparedVideoIndex === targetIndex &&
+      (preparedVideoReady || player.readyState >= 3)
+    ) {
+      startVideo(targetIndex, true);
+      return;
+    }
+
+    pendingVideoSwitch = true;
+
+    if (preparedVideoIndex !== targetIndex) {
+      preloadVideo(targetIndex);
+    }
+
+    // Keep the image on-screen until canplay fires.
   }
 
   player.addEventListener('playing', () => {
-    if (currentType === 'video') {
-      hideTransition();
+    if (currentIndex === 0 && currentType === 'video') {
+      hideStartupOnce();
+    }
+  });
+
+  player.addEventListener('canplay', () => {
+    if (preparedVideoIndex >= 0) {
+      preparedVideoReady = true;
+    }
+
+    if (pendingVideoSwitch && currentType === 'image' && !userPaused) {
+      const targetIndex = nextIndex(currentIndex);
+      if (targetIndex === preparedVideoIndex) {
+        startVideo(targetIndex, true);
+      }
+    } else if (
+      pendingVideoSwitch &&
+      currentType === 'video' &&
+      !userPaused
+    ) {
+      showVideo();
+      player.play().catch(() => {});
+      pendingVideoSwitch = false;
+    }
+  });
+
+  player.addEventListener('loadeddata', () => {
+    if (preparedVideoIndex >= 0 && player.readyState >= 3) {
+      preparedVideoReady = true;
     }
   });
 
   player.addEventListener('ended', () => {
-    if (currentType === 'video') {
-      goNext();
-    }
-  });
+    if (currentType !== 'video') return;
 
-  player.addEventListener('waiting', () => {
-    if (currentType === 'video' && !player.paused) {
-      showTransition();
+    const targetIndex = nextIndex(currentIndex);
+    const target = mediaPlaylist[targetIndex];
+
+    if (target.type === 'image') {
+      startImage(targetIndex);
+    } else {
+      startVideo(targetIndex);
     }
   });
 
   player.addEventListener('error', () => {
-    if (currentType === 'video') {
-      goNext();
+    if (currentType === 'image') {
+      // Keep the current photo visible and retry the next video shortly.
+      setTimeout(() => {
+        const targetIndex = nextIndex(currentIndex);
+        if (mediaPlaylist[targetIndex].type === 'video') {
+          preloadVideo(targetIndex);
+        }
+      }, 1200);
+    } else {
+      startMedia(nextIndex(currentIndex));
     }
   });
 
@@ -1289,7 +1486,12 @@
     if (currentType === 'image') {
       if (userPaused) {
         userPaused = false;
-        scheduleImageAdvance(imageRemaining || IMAGE_DURATION);
+
+        if (pendingVideoSwitch) {
+          requestNextFromImage();
+        } else {
+          scheduleImageAdvance(imageRemaining || IMAGE_DURATION);
+        }
       } else {
         userPaused = true;
 
@@ -1309,7 +1511,11 @@
 
     if (player.paused) {
       userPaused = false;
-      player.play().catch(() => {
+      player.play().then(() => {
+        if (currentIndex === 0 && currentType === 'video') {
+          hideStartupOnce();
+        }
+      }).catch(() => {
         userPaused = true;
         updatePlayButton();
       });
@@ -1326,13 +1532,8 @@
     updateMuteButton();
   });
 
-  window.addEventListener('resize', () => {
-    if (transition.classList.contains('active')) {
-      resizeCanvas();
-    }
-  });
-
-  loadMedia(0);
+  // Start the first video normally. The next photo is preloaded while it plays.
+  startMedia(0);
   updatePlayButton();
   updateMuteButton();
 })();
