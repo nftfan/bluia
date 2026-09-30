@@ -794,79 +794,47 @@
 
 
 
-    .live-tv-startup {
+
+    .live-start-dots {
       position: absolute;
       inset: 0;
-      z-index: 8;
-      display: grid;
-      place-items: center;
-      background:
-        radial-gradient(circle at 50% 42%, rgba(233,79,139,.16), transparent 34%),
-        #050505;
-      color: #fff;
+      z-index: 7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      background: #050505;
       opacity: 1;
       visibility: visible;
-      transition: opacity .55s ease, visibility .55s ease;
+      transition: opacity .35s ease, visibility .35s ease;
       pointer-events: none;
     }
 
-    .live-tv-startup.is-hidden {
+    .live-start-dots.is-hidden {
       opacity: 0;
       visibility: hidden;
     }
 
-    .live-tv-startup-inner {
-      text-align: center;
-      animation: startupFloat 1.8s ease-in-out infinite;
-    }
-
-    .live-tv-startup-brand {
-      margin: 0;
-      font: 700 23px/1.05 Georgia, "Times New Roman", serif;
-      letter-spacing: -.7px;
-    }
-
-    .live-tv-startup-brand span {
-      color: #f06b9f;
-      font-style: italic;
-    }
-
-    .live-tv-startup-label {
-      margin: 8px 0 0;
-      color: rgba(255,255,255,.62);
-      font-size: 8px;
-      line-height: 1;
-      font-weight: 700;
-      letter-spacing: 1.65px;
-      text-transform: uppercase;
-    }
-
-    .live-tv-startup-dots {
-      display: flex;
-      justify-content: center;
-      gap: 6px;
-      margin-top: 15px;
-    }
-
-    .live-tv-startup-dots span {
-      width: 5px;
-      height: 5px;
+    .live-start-dots span {
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
       background: rgba(255,255,255,.86);
-      animation: startupDot 1.15s ease-in-out infinite;
+      animation: startDotPulse 1.05s ease-in-out infinite;
     }
 
-    .live-tv-startup-dots span:nth-child(2) { animation-delay: .14s; }
-    .live-tv-startup-dots span:nth-child(3) { animation-delay: .28s; }
+    .live-start-dots span:nth-child(2) { animation-delay: .14s; }
+    .live-start-dots span:nth-child(3) { animation-delay: .28s; }
 
-    @keyframes startupDot {
-      0%, 80%, 100% { opacity: .2; transform: translateY(0) scale(.85); }
-      40% { opacity: 1; transform: translateY(-3px) scale(1); }
-    }
-
-    @keyframes startupFloat {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-3px); }
+    @keyframes startDotPulse {
+      0%, 80%, 100% {
+        opacity: .22;
+        transform: scale(.84);
+      }
+      40% {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
     .live-tv-controls {
@@ -911,7 +879,7 @@
           autoplay
           muted
           playsinline
-          preload="metadata"
+          preload="auto"
           disablepictureinpicture
           controlslist="nodownload noplaybackrate noremoteplayback">
         </video>
@@ -923,14 +891,8 @@
           decoding="async"
         />
 
-        <div class="live-tv-startup" id="live-tv-startup" aria-hidden="true">
-          <div class="live-tv-startup-inner">
-            <p class="live-tv-startup-brand">Bluia <span>Sisters</span></p>
-            <p class="live-tv-startup-label">Photos and Videos</p>
-            <div class="live-tv-startup-dots" aria-hidden="true">
-              <span></span><span></span><span></span>
-            </div>
-          </div>
+        <div class="live-start-dots" id="live-start-dots" aria-hidden="true">
+          <span></span><span></span><span></span>
         </div>
 
       </div>
@@ -1169,23 +1131,23 @@
   const imagePlayer = document.getElementById('live-tv-image');
   const playPauseButton = document.getElementById('live-play-pause');
   const muteButton = document.getElementById('live-mute-toggle');
-  const startupOverlay = document.getElementById('live-tv-startup');
+  const startDots = document.getElementById('live-start-dots');
 
   const mediaPlaylist = [
-    { type: 'image', src: 'https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_48_51%20AM.png?download=true' },
     { type: 'video', src: 'https://huggingface.co/buckets/veebluia/drama/resolve/cgrok-video-ded4afea-ee3c-4c53-b246-290070da4d42.mp4?download=true' },
+    { type: 'image', src: 'https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_48_51%20AM.png?download=true' },
 
-    { type: 'image', src: 'https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_12%20AM.png?download=true' },
     { type: 'video', src: 'https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-10dd7878-96b4-4946-926b-33e22bc8cb9e.mp4?download=true' },
+    { type: 'image', src: 'https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_12%20AM.png?download=true' },
 
-    { type: 'image', src: 'https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_27%20AM.png?download=true' },
     { type: 'video', src: 'https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-7ef55572-64ad-46c5-9c2e-ae777e88f28b.mp4?download=true' },
+    { type: 'image', src: 'https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_27%20AM.png?download=true' },
 
-    { type: 'image', src: 'https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_33%20AM.png?download=true' },
     { type: 'video', src: 'https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-344b021b-a159-4251-90d8-aeb92164a4b3.mp4?download=true' },
+    { type: 'image', src: 'https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_33%20AM.png?download=true' },
 
-    { type: 'image', src: 'https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_44%20AM.png?download=true' },
-    { type: 'video', src: 'https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-6c0d70db-a7e0-4a2f-b093-1d0f6b1266ed.mp4?download=true' }
+    { type: 'video', src: 'https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-6c0d70db-a7e0-4a2f-b093-1d0f6b1266ed.mp4?download=true' },
+    { type: 'image', src: 'https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_44%20AM.png?download=true' }
   ];
 
   const IMAGE_DURATION = 5000;
@@ -1193,7 +1155,6 @@
   let currentIndex = 0;
   let currentType = null;
   let userPaused = false;
-  let startupShown = false;
 
   let imageTimer = null;
   let imageStartedAt = 0;
@@ -1211,12 +1172,6 @@
 
   function updateMuteButton() {
     muteButton.textContent = player.muted ? 'Unmute' : 'Mute';
-  }
-
-  function hideStartupOnce() {
-    if (startupShown) return;
-    startupShown = true;
-    startupOverlay.classList.add('is-hidden');
   }
 
   function clearImageTimer() {
@@ -1322,10 +1277,6 @@
     const reveal = () => {
       imagePlayer.src = item.src;
       showImage();
-
-      if (currentIndex === 0) {
-        setTimeout(hideStartupOnce, 650);
-      }
 
       // While this 5-second photo is visible, buffer the next video.
       prepareUpcomingMedia();
@@ -1453,6 +1404,12 @@
     }
   });
 
+  player.addEventListener('playing', () => {
+    if (currentIndex === 0 && currentType === 'video') {
+      startDots.classList.add('is-hidden');
+    }
+  });
+
   player.addEventListener('ended', () => {
     if (currentType !== 'video') return;
 
@@ -1526,7 +1483,7 @@
     updateMuteButton();
   });
 
-  // Start with a photo so the first video can preload during the 5-second preview.
+  // Start directly with the first video.
   startMedia(0);
   updatePlayButton();
   updateMuteButton();
