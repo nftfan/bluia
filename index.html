@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Bluia Sisters</title>
+  <title>Bluia Sisters Photos and Videos</title>
   <style>
     * {
       box-sizing: border-box;
@@ -325,7 +325,7 @@
       text-align: center;
     }
 
-    /* Bluia TV library */
+    /* Bluia Sisters Photos and Videos library */
     .tv-catalog {
       margin: 10px 0 0;
       text-align: left;
@@ -661,7 +661,7 @@
     }
 
 
-    /* Bluia Sisters TV Live */
+    /* Bluia Sisters Photos and Videos */
     .live-tv-wrap {
       position: relative;
       width: 100%;
@@ -793,6 +793,82 @@
     }
 
 
+
+    .live-tv-startup {
+      position: absolute;
+      inset: 0;
+      z-index: 8;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at 50% 42%, rgba(233,79,139,.16), transparent 34%),
+        #050505;
+      color: #fff;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity .55s ease, visibility .55s ease;
+      pointer-events: none;
+    }
+
+    .live-tv-startup.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .live-tv-startup-inner {
+      text-align: center;
+      animation: startupFloat 1.8s ease-in-out infinite;
+    }
+
+    .live-tv-startup-brand {
+      margin: 0;
+      font: 700 23px/1.05 Georgia, "Times New Roman", serif;
+      letter-spacing: -.7px;
+    }
+
+    .live-tv-startup-brand span {
+      color: #f06b9f;
+      font-style: italic;
+    }
+
+    .live-tv-startup-label {
+      margin: 8px 0 0;
+      color: rgba(255,255,255,.62);
+      font-size: 8px;
+      line-height: 1;
+      font-weight: 700;
+      letter-spacing: 1.65px;
+      text-transform: uppercase;
+    }
+
+    .live-tv-startup-dots {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 15px;
+    }
+
+    .live-tv-startup-dots span {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.86);
+      animation: startupDot 1.15s ease-in-out infinite;
+    }
+
+    .live-tv-startup-dots span:nth-child(2) { animation-delay: .14s; }
+    .live-tv-startup-dots span:nth-child(3) { animation-delay: .28s; }
+
+    @keyframes startupDot {
+      0%, 80%, 100% { opacity: .2; transform: translateY(0) scale(.85); }
+      40% { opacity: 1; transform: translateY(-3px) scale(1); }
+    }
+
+    @keyframes startupFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
+    }
+
     .live-tv-controls {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -847,6 +923,16 @@
           decoding="async"
         />
 
+        <div class="live-tv-startup" id="live-tv-startup" aria-hidden="true">
+          <div class="live-tv-startup-inner">
+            <p class="live-tv-startup-brand">Bluia <span>Sisters</span></p>
+            <p class="live-tv-startup-label">Photos and Videos</p>
+            <div class="live-tv-startup-dots" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
+        </div>
+
       </div>
       <div class="live-tv-badge">Live</div>
     </div>
@@ -855,8 +941,8 @@
       <button class="live-control primary" id="live-play-pause" type="button">Pause</button>
       <button class="live-control" id="live-mute-toggle" type="button">Unmute</button>
     </div>
-    <p class="live-tv-caption">Bluia Sisters TV Live · Continuous playback</p>
-    <h1>Bluia Sisters TV Live</h1>
+    <p class="live-tv-caption">Bluia Sisters Photos and Videos · Continuous playback</p>
+    <h1>Bluia Sisters Photos and Videos</h1>
     <p class="intro">
       Watch live clips now or unlock the full Bluia Sisters library.
     </p>
@@ -939,7 +1025,7 @@
       <section class="tv-catalog" aria-label="Bluia Sisters TV Shows Library">
         <div class="catalog-header">
           <div>
-            <p class="catalog-kicker">Bluia TV</p>
+            <p class="catalog-kicker">Bluia Sisters Photos and Videos</p>
             <h2 class="catalog-title">Bluia Sisters TV Shows Library</h2>
           </div>
           <span class="catalog-total">5 shows · 25 episodes</span>
@@ -1083,6 +1169,7 @@
   const imagePlayer = document.getElementById('live-tv-image');
   const playPauseButton = document.getElementById('live-play-pause');
   const muteButton = document.getElementById('live-mute-toggle');
+  const startupOverlay = document.getElementById('live-tv-startup');
 
   const mediaPlaylist = [
     { type: 'image', src: 'https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_48_51%20AM.png?download=true' },
@@ -1106,6 +1193,7 @@
   let currentIndex = 0;
   let currentType = null;
   let userPaused = false;
+  let startupShown = false;
 
   let imageTimer = null;
   let imageStartedAt = 0;
@@ -1123,6 +1211,12 @@
 
   function updateMuteButton() {
     muteButton.textContent = player.muted ? 'Unmute' : 'Mute';
+  }
+
+  function hideStartupOnce() {
+    if (startupShown) return;
+    startupShown = true;
+    startupOverlay.classList.add('is-hidden');
   }
 
   function clearImageTimer() {
@@ -1228,6 +1322,10 @@
     const reveal = () => {
       imagePlayer.src = item.src;
       showImage();
+
+      if (currentIndex === 0) {
+        setTimeout(hideStartupOnce, 650);
+      }
 
       // While this 5-second photo is visible, buffer the next video.
       prepareUpcomingMedia();
