@@ -879,6 +879,7 @@
           autoplay
           muted
           playsinline
+          webkit-playsinline
           preload="auto"
           disablepictureinpicture
           controlslist="nodownload noplaybackrate noremoteplayback">
@@ -1155,6 +1156,7 @@
   let currentIndex = 0;
   let currentType = null;
   let userPaused = false;
+  let userChangedMute = false;
 
   let imageTimer = null;
   let imageStartedAt = 0;
@@ -1307,6 +1309,30 @@
     preparedImage = img;
   }
 
+  function requestAutoplay() {
+    if (userPaused || currentType !== 'video') return;
+
+    // Explicit properties improve muted inline autoplay reliability on mobile Safari.
+    if (!userChangedMute) {
+      player.muted = true;
+      player.defaultMuted = true;
+      player.setAttribute('muted', '');
+    }
+
+    player.autoplay = true;
+    player.playsInline = true;
+    player.setAttribute('playsinline', '');
+    player.setAttribute('webkit-playsinline', '');
+
+    const promise = player.play();
+
+    // A rejected autoplay attempt can simply mean the media is not ready yet.
+    // Do NOT convert that into a user pause; later readiness events retry automatically.
+    if (promise && typeof promise.catch === 'function') {
+      promise.catch(() => {});
+    }
+  }
+
   function startVideo(index, alreadyPrepared = false) {
     clearImageTimer();
 
@@ -1314,30 +1340,22 @@
     currentType = 'video';
     pendingVideoSwitch = false;
 
+    showVideo();
+
     if (!alreadyPrepared || preparedVideoIndex !== index) {
       player.src = mediaPlaylist[index].src;
       player.load();
     }
 
-    const begin = () => {
-      showVideo();
+    // Ask for autoplay immediately; mobile browsers can accept this before canplay.
+    requestAutoplay();
 
-      if (!userPaused) {
-        player.play().catch(() => {
-          userPaused = true;
-          updatePlayButton();
-        });
-      }
-
-      // While the video is playing, quietly cache the next image.
-      prepareUpcomingMedia();
-    };
-
-    if (player.readyState >= 3) {
-      begin();
-    } else {
+    if (player.readyState < 3) {
       pendingVideoSwitch = true;
     }
+
+    // While the video is playing, quietly cache the next image.
+    prepareUpcomingMedia();
   }
 
   function startMedia(index) {
@@ -1387,28 +1405,51 @@
       if (targetIndex === preparedVideoIndex) {
         startVideo(targetIndex, true);
       }
-    } else if (
-      pendingVideoSwitch &&
-      currentType === 'video' &&
-      !userPaused
-    ) {
-      showVideo();
-      player.play().catch(() => {});
-      pendingVideoSwitch = false;
+      return;
     }
+
+    if (currentType === 'video' && !userPaused) {
+      pendingVideoSwitch = false;
+      requestAutoplay();
+    }
+  });
+
+  player.addEventListener('loadedmetadata', () => {
+    if (currentType === 'video' && !userPaused) requestAutoplay();
   });
 
   player.addEventListener('loadeddata', () => {
     if (preparedVideoIndex >= 0 && player.readyState >= 3) {
       preparedVideoReady = true;
     }
+
+    if (currentType === 'video' && !userPaused) {
+      requestAutoplay();
+    }
   });
+
+  player.addEventListener('canplaythrough', () => {
+    if (currentType === 'video' && !userPaused) requestAutoplay();
+  });
+
+  function hideStartDotsWhenPlaybackBegins() {
+    if (
+      currentIndex === 0 &&
+      currentType === 'video' &&
+      !player.paused &&
+      player.currentTime > 0
+    ) {
+      startDots.classList.add('is-hidden');
+    }
+  }
 
   player.addEventListener('playing', () => {
     if (currentIndex === 0 && currentType === 'video') {
       startDots.classList.add('is-hidden');
     }
   });
+
+  player.addEventListener('timeupdate', hideStartDotsWhenPlaybackBegins);
 
   player.addEventListener('ended', () => {
     if (currentType !== 'video') return;
@@ -1479,12 +1520,38 @@
   });
 
   muteButton.addEventListener('click', () => {
+    userChangedMute = true;
     player.muted = !player.muted;
+
+    if (player.muted) {
+      player.setAttribute('muted', '');
+    } else {
+      player.removeAttribute('muted');
+    }
+
     updateMuteButton();
   });
 
-  // Start directly with the first video.
+  // Start directly with the first video and aggressively retry muted inline autoplay.
   startMedia(0);
+
+  const retryInitialAutoplay = () => {
+    if (currentIndex === 0 && currentType === 'video' && !userPaused && player.paused) {
+      requestAutoplay();
+    }
+  };
+
+  window.addEventListener('load', retryInitialAutoplay, { once: true });
+  window.addEventListener('pageshow', retryInitialAutoplay);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) retryInitialAutoplay();
+  });
+
+  // Short retries cover mobile browsers that delay media readiness after page paint.
+  [120, 350, 800, 1500, 2500].forEach(delay => {
+    setTimeout(retryInitialAutoplay, delay);
+  });
+
   updatePlayButton();
   updateMuteButton();
 })();
