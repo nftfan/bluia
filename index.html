@@ -46,7 +46,8 @@
     .video-view {
       position: relative;
       width: 100vw;
-      height: min(calc(100dvh - 46px), calc(100vw * 16 / 9));
+      aspect-ratio: 16 / 9;
+      height: auto;
       background: #050505;
       overflow: hidden;
     }
@@ -174,6 +175,16 @@
       color: #fff;
       background: #df4a83;
       border-color: #df4a83;
+    }
+
+    .fullscreen-btn {
+      width: 32px;
+      flex: 0 0 32px;
+    }
+
+    .fullscreen-btn svg {
+      width: 14px;
+      height: 14px;
     }
 
     .photo-arrow {
@@ -561,7 +572,16 @@
 
     /* Portrait-friendly media stage.
        100dvh adapts as mobile browser chrome changes while scrolling. */
-    .video-view,
+    .video-view {
+      width: 100vw !important;
+      aspect-ratio: 16 / 9 !important;
+      height: auto !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      background: #050505 !important;
+      overflow: hidden !important;
+    }
+
     .photo-view {
       width: 100vw !important;
       height: min(calc(100dvh - 46px), calc(100vw * 16 / 9)) !important;
@@ -634,6 +654,12 @@
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M4 9v6h4l5 4V5L8 9H4z"/>
           <path d="m17 9-1.4 1.4L17.2 12l-1.6 1.6L17 15l1.6-1.6L20.2 15l1.4-1.4L20 12l1.6-1.6L20.2 9l-1.6 1.6z"/>
+        </svg>
+      </button>
+
+      <button class="icon-btn fullscreen-btn" id="fullscreen-toggle" type="button" aria-label="Full screen">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M7 3H3v4h2V5h2V3Zm10 0v2h2v2h2V3h-4ZM5 17H3v4h4v-2H5v-2Zm14 2h-2v2h4v-4h-2v2Z"/>
         </svg>
       </button>
 
@@ -743,6 +769,7 @@
 
     const playPause = document.getElementById("play-pause");
     const muteToggle = document.getElementById("mute-toggle");
+    const fullscreenToggle = document.getElementById("fullscreen-toggle");
     const videosButton = document.getElementById("videos-button");
     const photosButton = document.getElementById("photos-button");
     const photoPrev = document.getElementById("photo-prev");
@@ -852,6 +879,21 @@
     muteToggle.addEventListener("click", () => {
       video.muted = !video.muted;
       updateMuteIcon();
+    });
+
+
+    fullscreenToggle?.addEventListener("click", async () => {
+      try {
+        if (!document.fullscreenElement) {
+          if (videoView.requestFullscreen) {
+            await videoView.requestFullscreen();
+          } else if (video.webkitEnterFullscreen) {
+            video.webkitEnterFullscreen();
+          }
+        } else {
+          await document.exitFullscreen();
+        }
+      } catch (error) {}
     });
 
     videosButton.addEventListener("click", showVideos);
