@@ -22,3 +22,31 @@ window.BluiaMedia = {
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_44%20AM.png?download=true"
   ]
 };
+
+
+// Full-width square-corner video layout
+(() => {
+  const style = document.createElement("style");
+  style.textContent = `
+    .live-tv-wrap {
+      width: 100vw !important;
+      margin-left: calc(50% - 50vw) !important;
+      margin-right: calc(50% - 50vw) !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+    }
+
+    .live-tv-stage {
+      width: 100vw !important;
+      border-radius: 0 !important;
+    }
+
+    .live-tv-stage video {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: contain !important;
+      border-radius: 0 !important;
+    }
+  `;
+  document.head.appendChild(style);
+})();
