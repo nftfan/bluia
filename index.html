@@ -4,690 +4,196 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Bluia Sisters TV</title>
-
   <style>
-    * { box-sizing: border-box; }
-
-    html, body {
-      margin: 0;
-      min-height: 100%;
-      background: #000;
-      color: #fff;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    body {
-      min-height: 100svh;
-      overflow-x: hidden;
-    }
-
-    main {
-      width: 100%;
-      text-align: center;
-    }
-
-    .tabs {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 5px;
-      padding: 7px 8px;
-      background: rgba(0,0,0,.94);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid #1e181b;
-    }
-
-    .tab {
-      height: 34px;
-      border: 1px solid #30262b;
-      border-radius: 999px;
-      background: #0b0b0b;
-      color: #a997a0;
-      font-size: 10px;
-      font-weight: 800;
-      cursor: pointer;
-    }
-
-    .tab.active {
-      background: #df4a83;
-      border-color: #df4a83;
-      color: #fff;
-    }
-
-    .panel {
-      display: none;
-      width: 100%;
-    }
-
-    .panel.active {
-      display: block;
-    }
-
-    .tv-stage {
-      position: relative;
-      width: 100vw;
-      aspect-ratio: 16 / 9;
-      background: #000;
-      overflow: hidden;
-    }
-
-    .tv-stage video {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      object-position: center;
-      background: #000;
-    }
-
-    .tv-controls,
-    .reel-footer {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 7px;
-      padding: 8px;
-      background: #000;
-    }
-
-    .round-btn {
-      width: 34px;
-      height: 34px;
-      display: grid;
-      place-items: center;
-      border: 1px solid #35282f;
-      border-radius: 50%;
-      background: #0d0d0d;
-      color: #ff5d9b;
-      font-size: 16px;
-      font-weight: 800;
-      cursor: pointer;
-    }
-
-    .round-btn.primary {
-      background: #df4a83;
-      border-color: #df4a83;
-      color: #fff;
-    }
-
-    .counter {
-      min-width: 48px;
-      color: #927d87;
-      font-size: 9px;
-      font-weight: 700;
-    }
-
-    .reel-stage {
-      position: relative;
-      width: min(100vw, 520px);
-      height: min(82dvh, calc(100vw * 16 / 9));
-      margin: 0 auto;
-      background: #000;
-      overflow: hidden;
-    }
-
-    .reel-stage video {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      object-position: center;
-      background: #000;
-    }
-
-    .reel-side-controls {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      z-index: 3;
-    }
-
-    .reel-side-controls .round-btn {
-      background: rgba(8,8,8,.75);
-      backdrop-filter: blur(7px);
-    }
-
-    .photo-feed {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      width: 100%;
-      padding-bottom: 5px;
-      background: #000;
-    }
-
-    .photo-feed img {
-      display: block;
-      width: 100%;
-      height: auto;
-      object-fit: contain;
-      background: #000;
-    }
-
-    .content {
-      width: min(100%, 440px);
-      margin: 0 auto;
-      padding: 12px 14px 22px;
-    }
-
-    h1 {
-      margin: 0 0 5px;
-      color: #fff;
-      font: 700 22px/1.12 Georgia, "Times New Roman", serif;
-    }
-
-    h1 .pink {
-      color: #d83f7b;
-      font-style: italic;
-    }
-
-    .description {
-      margin: 0 auto 12px;
-      color: #cbb9c1;
-      font-size: 10.8px;
-      line-height: 1.55;
-    }
-
-    .description strong {
-      color: #ff5d9b;
-    }
-
-    .buy-button {
-      width: 100%;
-      min-height: 58px;
-      border: 0;
-      border-radius: 14px;
-      background: linear-gradient(135deg,#eb568f,#bd2f66);
-      color: #fff;
-      font-size: 13px;
-      font-weight: 800;
-      cursor: pointer;
-    }
-
-    .telegram-button {
-      width: 100%;
-      min-height: 46px;
-      margin-top: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid #35282f;
-      border-radius: 12px;
-      background: #0b0b0b;
-      color: #ff5d9b;
-      text-decoration: none;
-      font-size: 10.5px;
-      font-weight: 800;
-    }
-
-    .site-footer {
-      width: min(100%, 440px);
-      margin: 18px auto 0;
-      padding: 16px 14px 18px;
-      border-top: 1px solid #251c21;
-      color: #95848c;
-      font-size: 9px;
-    }
-
-    .payment-modal {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      display: grid;
-      place-items: center;
-      padding: 20px;
-      background: rgba(0,0,0,.72);
-      opacity: 0;
-      visibility: hidden;
-      transition: .22s;
-    }
-
-    .payment-modal.open {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .payment-card {
-      width: min(100%,380px);
-      padding: 24px 20px;
-      border-radius: 22px;
-      background: #fff;
-      color: #241a1f;
-    }
-
-    .payment-card h2 {
-      margin-top: 0;
-      color: #171217;
-    }
-
-    .payment-card strong {
-      color: #d43d78;
-    }
-
-    .payment-methods {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin: 12px 0;
-    }
-
-    .payment-methods span {
-      padding: 8px;
-      border: 1px solid #eadde3;
-      border-radius: 7px;
-      font-size: 8px;
-      font-weight: 800;
-    }
-
-    .proceed-button {
-      width: 100%;
-      min-height: 50px;
-      border: 0;
-      border-radius: 12px;
-      background: linear-gradient(135deg,#eb568f,#bd2f66);
-      color: #fff;
-      font-weight: 800;
-    }
-
-    .cancel-button {
-      width: 100%;
-      margin-top: 8px;
-      border: 0;
-      background: transparent;
-      color: #9b808b;
-    }
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#000;color:#fff;font-family:Arial,Helvetica,sans-serif}body{min-height:100svh;overflow-x:hidden}main{width:100%;text-align:center}
+    .tabs{position:sticky;top:0;z-index:50;display:grid;grid-template-columns:repeat(3,1fr);gap:5px;padding:7px 8px;background:rgba(0,0,0,.94);backdrop-filter:blur(10px);border-bottom:1px solid #1e181b}
+    .tab{height:34px;border:1px solid #30262b;border-radius:999px;background:#0b0b0b;color:#a997a0;font-size:10px;font-weight:800;cursor:pointer}.tab.active{background:#df4a83;border-color:#df4a83;color:#fff}
+    .panel{display:none;width:100%}.panel.active{display:block}
+    .tv-stage{position:relative;width:100vw;aspect-ratio:16/9;background:#000;overflow:hidden}.tv-stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;background:#000}
+    .tv-controls,.reel-footer{display:flex;align-items:center;justify-content:center;gap:7px;padding:8px;background:#000}.round-btn{width:34px;height:34px;display:grid;place-items:center;border:1px solid #35282f;border-radius:50%;background:#0d0d0d;color:#ff5d9b;font-size:16px;font-weight:800;cursor:pointer}.round-btn.primary{background:#df4a83;border-color:#df4a83;color:#fff}.counter{min-width:48px;color:#927d87;font-size:9px;font-weight:700}
+    .reel-stage{position:relative;width:min(100vw,520px);height:min(82dvh,calc(100vw * 16 / 9));margin:0 auto;background:#000;overflow:hidden}.reel-stage video{width:100%;height:100%;object-fit:contain;object-position:center;background:#000}.reel-side-controls{position:absolute;right:10px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:8px;z-index:3}.reel-side-controls .round-btn{background:rgba(8,8,8,.75);backdrop-filter:blur(7px)}
+    .photo-feed{display:flex;flex-direction:column;gap:5px;width:100%;padding-bottom:5px;background:#000}.photo-feed img{display:block;width:100%;height:auto;object-fit:contain;background:#000}
+    .content{width:min(100%,440px);margin:0 auto;padding:12px 14px 22px}h1{margin:0 0 5px;color:#fff;font:700 22px/1.12 Georgia,"Times New Roman",serif;letter-spacing:-.5px}h1 .pink{color:#d83f7b;font-style:italic}.description{margin:0 auto 12px;color:#cbb9c1;font-size:10.8px;line-height:1.55}.description strong{color:#ff5d9b}
+    .buy-button{width:100%;min-height:58px;display:flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:14px;background:linear-gradient(135deg,#eb568f,#bd2f66);color:#fff;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 10px 28px rgba(202,50,107,.24)}.telegram-button{width:100%;min-height:46px;margin-top:8px;display:flex;align-items:center;justify-content:center;border:1px solid #35282f;border-radius:12px;background:#0b0b0b;color:#ff5d9b;text-decoration:none;font-size:10.5px;font-weight:800}
+    .site-footer{width:min(100%,440px);margin:18px auto 0;padding:16px 14px calc(18px + env(safe-area-inset-bottom));border-top:1px solid #251c21;color:#95848c;font-size:9px;line-height:1.5}.site-footer strong{color:#fff}.site-footer .pink{color:#d83f7b}
+    .payment-modal{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;padding:20px;background:rgba(0,0,0,.72);backdrop-filter:blur(9px);opacity:0;visibility:hidden;transition:opacity .22s ease,visibility .22s ease}.payment-modal.open{opacity:1;visibility:visible}.payment-card{width:min(100%,380px);padding:24px 20px 18px;border:1px solid #f0d2df;border-radius:22px;background:#fff;color:#241a1f;text-align:left;box-shadow:0 30px 90px rgba(0,0,0,.4);transform:translateY(18px) scale(.965);opacity:0;transition:transform .3s cubic-bezier(.2,.82,.2,1),opacity .26s ease}.payment-modal.open .payment-card{transform:none;opacity:1}.payment-icon{width:50px;height:50px;margin-bottom:12px;display:grid;place-items:center;border-radius:14px;background:#ffeaf2;color:#df4a83;font-size:22px;border:1px solid #f4c9da}.payment-card h2{margin:0 0 8px;color:#171217;font:700 20px/1.2 Georgia,serif}.payment-card p{margin:0 0 14px;color:#33272d;font-size:11.5px;line-height:1.58}.payment-card strong{color:#d43d78}.step{display:grid;grid-template-columns:24px 1fr;gap:9px;align-items:start;padding:9px 10px;margin-bottom:8px;border:1px solid #f2d9e3;border-radius:11px;background:#fff9fb}.step .n{width:24px;height:24px;display:grid;place-items:center;border-radius:50%;background:#ffe8f1;color:#d43d78;font-size:10px;font-weight:800}.step div{font-size:10.5px;line-height:1.45}.step b{display:block;color:#171217;font-size:10.8px}.payment-methods{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 8px}.payment-methods span{height:28px;display:inline-flex;align-items:center;justify-content:center;padding:0 8px;border:1px solid #eadde3;border-radius:7px;background:#fff;color:#2f272b;font-size:8px;font-weight:800}.payment-methods .visa{color:#1a1f71;font-style:italic;font-size:11px}.payment-methods .stripe{color:#635bff;font-size:10px}.secure-note{margin:0 0 14px;color:#8c727d;font-size:9px}.proceed-button{width:100%;min-height:50px;border:0;border-radius:12px;background:linear-gradient(135deg,#eb568f,#bd2f66);color:#fff;font-size:12px;font-weight:800;cursor:pointer}.cancel-button{width:100%;margin-top:8px;border:0;background:transparent;color:#9b808b;font-size:10px;font-weight:700;cursor:pointer}
   </style>
 </head>
-
 <body>
-
-<main>
-
-  <div class="tabs">
-    <button class="tab active" data-tab="tv">TV</button>
-    <button class="tab" data-tab="reels">Reels</button>
-    <button class="tab" data-tab="photos">Photos</button>
-  </div>
-
-  <section class="panel active" id="panel-tv">
-
-    <div class="tv-stage" id="tv-stage">
-      <video id="tv-video" muted playsinline preload="auto"></video>
+  <main>
+    <div class="tabs">
+      <button class="tab active" data-tab="tv" type="button">TV</button>
+      <button class="tab" data-tab="reels" type="button">Reels</button>
+      <button class="tab" data-tab="photos" type="button">Photos</button>
     </div>
 
-    <div class="tv-controls">
-      <button class="round-btn" id="tv-prev">‹</button>
-      <button class="round-btn primary" id="tv-play">▶</button>
-      <button class="round-btn" id="tv-next">›</button>
-      <button class="round-btn" id="tv-mute">♪</button>
-      <button class="round-btn" id="tv-full">⛶</button>
-      <span class="counter" id="tv-counter"></span>
-    </div>
-
-  </section>
-
-  <section class="panel" id="panel-reels">
-
-    <div class="reel-stage" id="reel-stage">
-
-      <video id="reel-video" muted playsinline preload="auto"></video>
-
-      <div class="reel-side-controls">
-        <button class="round-btn" id="reel-up">↑</button>
-        <button class="round-btn" id="reel-down">↓</button>
-        <button class="round-btn" id="reel-play">▶</button>
-        <button class="round-btn" id="reel-mute">♪</button>
-        <button class="round-btn" id="reel-full">⛶</button>
+    <section class="panel active" id="panel-tv">
+      <div class="tv-stage" id="tv-stage"><video id="tv-video" muted playsinline webkit-playsinline preload="auto"></video></div>
+      <div class="tv-controls">
+        <button class="round-btn" id="tv-prev" type="button">‹</button>
+        <button class="round-btn primary" id="tv-play" type="button">▶</button>
+        <button class="round-btn" id="tv-next" type="button">›</button>
+        <button class="round-btn" id="tv-mute" type="button">♪</button>
+        <button class="round-btn" id="tv-full" type="button">⛶</button>
+        <span class="counter" id="tv-counter"></span>
       </div>
+    </section>
 
+    <section class="panel" id="panel-reels">
+      <div class="reel-stage" id="reel-stage">
+        <video id="reel-video" muted playsinline webkit-playsinline preload="auto"></video>
+        <div class="reel-side-controls">
+          <button class="round-btn" id="reel-up" type="button">↑</button>
+          <button class="round-btn" id="reel-down" type="button">↓</button>
+          <button class="round-btn" id="reel-play" type="button">▶</button>
+          <button class="round-btn" id="reel-mute" type="button">♪</button>
+          <button class="round-btn" id="reel-full" type="button">⛶</button>
+        </div>
+      </div>
+      <div class="reel-footer"><span class="counter" id="reel-counter"></span></div>
+    </section>
+
+    <section class="panel" id="panel-photos"><div class="photo-feed" id="photo-feed"></div></section>
+
+    <div class="content">
+      <h1>Bluia <span class="pink">Sisters</span> TV</h1>
+      <p class="description">All Bluia Sisters entertainment in one place. Watch unlimited content for <strong>$5/month</strong>, with fresh episodes, new faces, and beautiful new Bluia Sisters joining every week.</p>
+      <button class="buy-button" id="buy-button" type="button">✦ Get Full Access — $5/month</button>
+      <a class="telegram-button" href="https://t.me/vbluia" target="_blank" rel="noopener noreferrer">Join my Telegram</a>
     </div>
 
-    <div class="reel-footer">
-      <span class="counter" id="reel-counter"></span>
-    </div>
+    <footer class="site-footer"><strong><span class="pink">Bluia Sisters</span> TV</strong><br>© 2026 Bluia Sisters. All rights reserved.</footer>
+  </main>
 
-  </section>
+  <div class="payment-modal" id="payment-modal" aria-hidden="true">
+    <div class="payment-card" role="dialog" aria-modal="true">
 
-  <section class="panel" id="panel-photos">
-    <div class="photo-feed" id="photo-feed"></div>
-  </section>
-
-  <div class="content">
-
-    <h1>Bluia <span class="pink">Sisters</span> TV</h1>
-
-    <p class="description">
-      All Bluia Sisters entertainment in one place.
-      Watch unlimited content for <strong>$5/month</strong>,
-      with fresh episodes, new faces and beautiful new Bluia Sisters joining every week.
-    </p>
-
-    <button class="buy-button" id="buy-button">
-      ✦ Get Full Access — $5/month
-    </button>
-
-    <a class="telegram-button"
-       href="https://t.me/vbluia"
-       target="_blank">
-      Join my Telegram
-    </a>
-
-  </div>
-
-  <footer class="site-footer">
-    <strong>Bluia Sisters TV</strong><br>
-    © 2026 Bluia Sisters. All rights reserved.
-  </footer>
-
-</main>
-
-<div class="payment-modal" id="payment-modal">
-
-  <div class="payment-card">
-
-    <h2>Unlock Bluia Sisters TV</h2>
-
-    <p>
-      Your private viewing URL will be sent to the
-      <strong>email address used at checkout</strong>.
-    </p>
-
-    <div class="payment-methods">
-      <span>VISA</span>
-      <span>Mastercard</span>
-      <span>AMEX</span>
-      <span>Apple Pay</span>
-      <span>Google Pay</span>
-      <span>Bancontact</span>
-      <span>Stripe</span>
-    </div>
-
-    <button class="proceed-button" id="proceed-payment">
-      Proceed to payment
-    </button>
-
-    <button class="cancel-button" id="cancel-payment">
-      Not now
-    </button>
-
-  </div>
-
+    <button class="payment-close" id="payment-close" type="button" aria-label="Close">×</button>
+      <div class="payment-icon">✦</div>
+      <h2>Unlock Bluia Sisters TV</h2>
+      <p>Your private viewing URL will be sent to the <strong>email address used at checkout</strong>. Please make sure your email is correct before paying.</p>
+      <div class="step"><span class="n">1</span><div><b>Complete secure payment</b>Continue to Stripe and finish checkout.</div></div>
+      <div class="step"><span class="n">2</span><div><b>Check your payment email</b>Your Bluia Sisters TV access URL will be sent there.</div></div>
+      <div class="payment-methods"><span class="visa">VISA</span><span>Mastercard</span><span>AMEX</span><span>Apple Pay</span><span>Google Pay</span><span>Bancontact</span><span class="stripe">Stripe</span></div>
+      <div class="secure-note">Payment is processed securely by Stripe. Available methods may vary at checkout.</div>
+      <button class="proceed-button" id="proceed-payment" type="button">Proceed to payment</button>
 </div>
+  </div>
 
-<script src="media.js"></script>
+  <script src="media.js"></script>
+  <script>
+  (()=>{
+    const PAYMENT_URL="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04";
+    const tabs=document.querySelectorAll('.tab');
+    const panels={tv:document.getElementById('panel-tv'),reels:document.getElementById('panel-reels'),photos:document.getElementById('panel-photos')};
+    const tv=Array.isArray(window.BluiaMedia?.tv)?window.BluiaMedia.tv:[];
+    const reels=Array.isArray(window.BluiaMedia?.reels)?window.BluiaMedia.reels:[];
+    const photos=Array.isArray(window.BluiaMedia?.photos)?window.BluiaMedia.photos:[];
+    const tvVideo=document.getElementById('tv-video'),reelVideo=document.getElementById('reel-video');
+    const tvPlay=document.getElementById('tv-play'),reelPlay=document.getElementById('reel-play');
+    const tvCounter=document.getElementById('tv-counter'),reelCounter=document.getElementById('reel-counter');
+    let tvIndex=0,reelIndex=0;
+    const syncPlay=(button,video)=>button.textContent=video.paused?'▶':'❚❚';
+    function loadTv(index,autoplay=false){if(!tv.length)return;tvIndex=(index+tv.length)%tv.length;tvVideo.src=tv[tvIndex];tvVideo.load();tvCounter.textContent=`${tvIndex+1} / ${tv.length}`;if(autoplay)tvVideo.play().catch(()=>{});}
+    function loadReel(index,autoplay=false){if(!reels.length)return;reelIndex=(index+reels.length)%reels.length;reelVideo.src=reels[reelIndex];reelVideo.load();reelCounter.textContent=`${reelIndex+1} / ${reels.length}`;if(autoplay)reelVideo.play().catch(()=>{});}
+    tabs.forEach(tab=>tab.addEventListener('click',()=>{tabs.forEach(x=>x.classList.toggle('active',x===tab));Object.entries(panels).forEach(([name,panel])=>panel.classList.toggle('active',name===tab.dataset.tab));if(tab.dataset.tab!=='tv')tvVideo.pause();if(tab.dataset.tab!=='reels')reelVideo.pause();}));
+    document.getElementById('tv-prev').onclick=()=>loadTv(tvIndex-1,true);document.getElementById('tv-next').onclick=()=>loadTv(tvIndex+1,true);document.getElementById('tv-play').onclick=()=>tvVideo.paused?tvVideo.play():tvVideo.pause();document.getElementById('tv-mute').onclick=()=>tvVideo.muted=!tvVideo.muted;document.getElementById('tv-full').onclick=async()=>{try{if(document.getElementById('tv-stage').requestFullscreen)await document.getElementById('tv-stage').requestFullscreen();else if(tvVideo.webkitEnterFullscreen)tvVideo.webkitEnterFullscreen();}catch(e){}};tvVideo.onplay=()=>syncPlay(tvPlay,tvVideo);tvVideo.onpause=()=>syncPlay(tvPlay,tvVideo);tvVideo.onended=()=>loadTv(tvIndex+1,true);
+    document.getElementById('reel-up').onclick=()=>loadReel(reelIndex-1,true);document.getElementById('reel-down').onclick=()=>loadReel(reelIndex+1,true);document.getElementById('reel-play').onclick=()=>reelVideo.paused?reelVideo.play():reelVideo.pause();document.getElementById('reel-mute').onclick=()=>reelVideo.muted=!reelVideo.muted;document.getElementById('reel-full').onclick=async()=>{try{if(document.getElementById('reel-stage').requestFullscreen)await document.getElementById('reel-stage').requestFullscreen();else if(reelVideo.webkitEnterFullscreen)reelVideo.webkitEnterFullscreen();}catch(e){}};reelVideo.onplay=()=>syncPlay(reelPlay,reelVideo);reelVideo.onpause=()=>syncPlay(reelPlay,reelVideo);reelVideo.onended=()=>loadReel(reelIndex+1,true);
+    document.getElementById('photo-feed').innerHTML=photos.map((src,i)=>`<img src="${src}" alt="Bluia Sisters photo ${i+1}" loading="lazy">`).join('');
+    const modal=document.getElementById('payment-modal');document.getElementById('buy-button').onclick=()=>{modal.classList.add('open');modal.setAttribute('aria-hidden','false')};const closeModal=()=>{modal.classList.remove('open');modal.setAttribute('aria-hidden','true')};document.getElementById('proceed-payment').onclick=()=>location.href=PAYMENT_URL;document.getElementById('cancel-payment').onclick=closeModal;modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+    loadTv(0,false);loadReel(0,false);
+  })();
+  </script>
 
-<script>
-(() => {
+  <!-- Telegram visitor alert system -->
+  <script>
+  (function () {
+    const TELEGRAM_BOT_TOKEN = "8534170558:AAEGa7u6IILrJGAF7KWQJWRRulXxbHyKvHs";
+    const TELEGRAM_CHAT_ID = "2141064153";
 
-  const PAYMENT_URL =
-  "https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04";
-
-  const tabs = document.querySelectorAll(".tab");
-
-  const panels = {
-    tv: document.getElementById("panel-tv"),
-    reels: document.getElementById("panel-reels"),
-    photos: document.getElementById("panel-photos")
-  };
-
-  const tv = window.BluiaMedia.tv || [];
-  const reels = window.BluiaMedia.reels || [];
-  const photos = window.BluiaMedia.photos || [];
-
-  const tvVideo = document.getElementById("tv-video");
-  const reelVideo = document.getElementById("reel-video");
-
-  let tvIndex = 0;
-  let reelIndex = 0;
-
-  function loadTv(index, autoplay=false) {
-
-    tvIndex = (index + tv.length) % tv.length;
-
-    tvVideo.src = tv[tvIndex];
-    tvVideo.load();
-
-    document.getElementById("tv-counter").textContent =
-      (tvIndex + 1) + " / " + tv.length;
-
-    if (autoplay) tvVideo.play().catch(()=>{});
-  }
-
-  function loadReel(index, autoplay=false) {
-
-    reelIndex = (index + reels.length) % reels.length;
-
-    reelVideo.src = reels[reelIndex];
-    reelVideo.load();
-
-    document.getElementById("reel-counter").textContent =
-      (reelIndex + 1) + " / " + reels.length;
-
-    if (autoplay) reelVideo.play().catch(()=>{});
-  }
-
-  tabs.forEach(tab => {
-
-    tab.onclick = () => {
-
-      tabs.forEach(t =>
-        t.classList.toggle("active", t === tab)
-      );
-
-      Object.entries(panels).forEach(([name,panel]) => {
-        panel.classList.toggle(
-          "active",
-          name === tab.dataset.tab
-        );
+    function escapeTelegramHtml(value) {
+      return String(value || "").replace(/[&<>]/g, function (character) {
+        return {"&":"&amp;","<":"&lt;",">":"&gt;"}[character];
       });
-
-      if (tab.dataset.tab !== "tv")
-        tvVideo.pause();
-
-      if (tab.dataset.tab !== "reels")
-        reelVideo.pause();
-    };
-
-  });
-
-  document.getElementById("tv-prev").onclick =
-    () => loadTv(tvIndex - 1, true);
-
-  document.getElementById("tv-next").onclick =
-    () => loadTv(tvIndex + 1, true);
-
-  document.getElementById("tv-play").onclick = () => {
-
-    if (tvVideo.paused)
-      tvVideo.play();
-    else
-      tvVideo.pause();
-
-  };
-
-  document.getElementById("tv-mute").onclick = () => {
-    tvVideo.muted = !tvVideo.muted;
-  };
-
-  document.getElementById("tv-full").onclick = async () => {
-
-    const stage = document.getElementById("tv-stage");
-
-    if (stage.requestFullscreen)
-      await stage.requestFullscreen();
-
-  };
-
-  tvVideo.onended =
-    () => loadTv(tvIndex + 1, true);
-
-
-  document.getElementById("reel-up").onclick =
-    () => loadReel(reelIndex - 1, true);
-
-  document.getElementById("reel-down").onclick =
-    () => loadReel(reelIndex + 1, true);
-
-  document.getElementById("reel-play").onclick = () => {
-
-    if (reelVideo.paused)
-      reelVideo.play();
-    else
-      reelVideo.pause();
-
-  };
-
-  document.getElementById("reel-mute").onclick = () => {
-    reelVideo.muted = !reelVideo.muted;
-  };
-
-  document.getElementById("reel-full").onclick = async () => {
-
-    const stage = document.getElementById("reel-stage");
-
-    if (stage.requestFullscreen)
-      await stage.requestFullscreen();
-
-  };
-
-  reelVideo.onended =
-    () => loadReel(reelIndex + 1, true);
-
-
-  const feed =
-    document.getElementById("photo-feed");
-
-  feed.innerHTML =
-    photos.map((src,i) =>
-      `<img src="${src}" alt="Bluia Sisters photo ${i+1}">`
-    ).join("");
-
-
-  const modal =
-    document.getElementById("payment-modal");
-
-  document.getElementById("buy-button").onclick = () => {
-    modal.classList.add("open");
-  };
-
-  document.getElementById("cancel-payment").onclick = () => {
-    modal.classList.remove("open");
-  };
-
-  document.getElementById("proceed-payment").onclick = () => {
-    location.href = PAYMENT_URL;
-  };
-
-  loadTv(0);
-  loadReel(0);
-
-})();
-</script>
-
-<!-- TELEGRAM VISITOR ALERT -->
-<script>
-(function(){
-
-const TELEGRAM_BOT_TOKEN =
-"8534170558:AAEGa7u6IILrJGAF7KWQJWRRulXxbHyKvHs";
-
-const TELEGRAM_CHAT_ID =
-"2141064153";
-
-function escapeHtml(v){
-
-return String(v || "")
-.replace(/[&<>]/g,c=>({
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;"
-}[c]));
-
-}
-
-async function sendVisitorAlert(){
-
-let visitor = {
-ip:"Unknown",
-country:"Unknown",
-city:"Unknown",
-region:"Unknown"
-};
-
-try {
-
-const response =
-await fetch("https://ipwho.is/");
-
-const data =
-await response.json();
-
-if(data && data.success !== false){
-
-visitor.ip = data.ip || "Unknown";
-visitor.country = data.country || "Unknown";
-visitor.city = data.city || "Unknown";
-visitor.region = data.region || "Unknown";
-
-}
-
-} catch(e){}
-
-const message = `
-🌸 <b>New Bluia Sisters Visitor</b>
-
-🌐 <b>Page:</b> ${escapeHtml(location.href)}
-📍 <b>IP:</b> ${escapeHtml(visitor.ip)}
-🇺🇳 <b>Country:</b> ${escapeHtml(visitor.country)}
-🏙 <b>City:</b> ${escapeHtml(visitor.city)}
-🗺 <b>Region:</b> ${escapeHtml(visitor.region)}
-
-💻 <b>Device:</b> ${navigator.userAgent}
-
-📐 <b>Screen:</b>
-${screen.width} × ${screen.height}
-
-🗣 <b>Language:</b>
-${escapeHtml(navigator.language)}
-
-🔗 <b>Referrer:</b>
-${escapeHtml(document.referrer || "Direct visit")}
-
-🕐 <b>Time:</b>
-${escapeHtml(new Date().toLocaleString())}
-`;
-
-try {
-
-await fetch(
-`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
-{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({
-chat_id:TELEGRAM_CHAT_ID,
-text:message,
-parse_mode:"HTML"
-})
-}
-);
-
-} catch(e){}
-
-}
-
-sendVisitorAlert();
-
-})();
-</script>
+    }
+
+    function getDevice() {
+      const ua = navigator.userAgent;
+      if (/tablet|ipad/i.test(ua)) return "Tablet";
+      if (/mobile|android|iphone|ipod/i.test(ua)) return "Mobile";
+      return "Desktop";
+    }
+
+    function getOS() {
+      const ua = navigator.userAgent;
+      if (/Windows/i.test(ua)) return "Windows";
+      if (/Mac OS X/i.test(ua)) return "macOS";
+      if (/Android/i.test(ua)) return "Android";
+      if (/iPhone|iPad|iPod/i.test(ua)) return "iOS";
+      if (/Linux/i.test(ua)) return "Linux";
+      return "Unknown";
+    }
+
+    function getBrowser() {
+      const ua = navigator.userAgent;
+      if (/Edg/i.test(ua)) return "Edge";
+      if (/Chrome/i.test(ua)) return "Chrome";
+      if (/Firefox/i.test(ua)) return "Firefox";
+      if (/Safari/i.test(ua)) return "Safari";
+      return "Unknown";
+    }
+
+    async function sendVisitorAlert() {
+      let visitor = { ip:"Unknown", country:"Unknown", city:"Unknown", region:"Unknown" };
+
+      try {
+        const response = await fetch("https://ipwho.is/");
+        const data = await response.json();
+        if (data && data.success !== false) {
+          visitor.ip = data.ip || "Unknown";
+          visitor.country = data.country || "Unknown";
+          visitor.city = data.city || "Unknown";
+          visitor.region = data.region || "Unknown";
+        }
+      } catch (error) {
+        try {
+          const fallback = await fetch("https://api.ipify.org?format=json");
+          const fallbackData = await fallback.json();
+          visitor.ip = fallbackData.ip || "Unknown";
+        } catch (fallbackError) {}
+      }
+
+      const message =
+`🌸 <b>New Bluia Sisters Visitor</b>
+🌐 <b>Page:</b> ${escapeTelegramHtml(location.href)}
+📍 <b>IP:</b> ${escapeTelegramHtml(visitor.ip)}
+🇺🇳 <b>Country:</b> ${escapeTelegramHtml(visitor.country)}
+🏙 <b>City:</b> ${escapeTelegramHtml(visitor.city)}
+🗺 <b>Region:</b> ${escapeTelegramHtml(visitor.region)}
+💻 <b>Device:</b> ${getDevice()}
+🖥 <b>OS:</b> ${getOS()}
+🌍 <b>Browser:</b> ${getBrowser()}
+📐 <b>Screen:</b> ${screen.width} × ${screen.height}
+🗣 <b>Language:</b> ${escapeTelegramHtml(navigator.language)}
+🔗 <b>Referrer:</b> ${escapeTelegramHtml(document.referrer || "Direct visit")}
+🕐 <b>Time:</b> ${escapeTelegramHtml(new Date().toLocaleString())}`;
+
+      try {
+        await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+          method: "POST",
+          headers: { "Content-Type":"application/json" },
+          body: JSON.stringify({
+            chat_id: TELEGRAM_CHAT_ID,
+            text: message,
+            parse_mode: "HTML"
+          })
+        });
+      } catch (error) {}
+    }
+
+    sendVisitorAlert();
+  })();
+  </script>
 
 </body>
 </html>
