@@ -2,1007 +2,218 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, viewport-fit=cover"
-  >
-
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#000000">
-
   <title>Bluia Sisters TV</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    html,body{margin:0;min-height:100%;background:#000;color:#fff;font-family:Arial,Helvetica,sans-serif}
+    body{min-height:100svh;overflow-x:hidden}
+    button,a{font-family:inherit}
+    button{touch-action:manipulation}
+    main{width:100%;text-align:center;background:#000}
+
+    .media-tabs{
+      position:sticky;top:0;z-index:1000;
+      display:grid;grid-template-columns:repeat(3,1fr);gap:6px;
+      width:100%;padding:calc(7px + env(safe-area-inset-top)) 8px 7px;
+      background:rgba(0,0,0,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+      border-bottom:1px solid #23191f
+    }
+    .media-tab{
+      height:36px;padding:0 12px;border:1px solid #33262d;border-radius:999px;
+      background:#0c0c0c;color:#a9959f;font-size:10px;font-weight:800;cursor:pointer;
+      transition:background .16s ease,color .16s ease,border-color .16s ease,transform .12s ease
+    }
+    .media-tab:active{transform:scale(.97)}
+    .media-tab.active{border-color:#df4a83;background:#df4a83;color:#fff}
+
+    .media-panel{display:none;width:100%;background:#000}
+    .media-panel.active{display:block}
+
+    .tv-stage{
+      position:relative;width:100vw;aspect-ratio:16/9;overflow:hidden;background:#000
+    }
+    #tv-video{
+      position:absolute;inset:0;display:block;width:100%;height:100%;
+      object-fit:contain;object-position:center;background:#000
+    }
+
+    .tv-controls{
+      display:flex;align-items:center;justify-content:center;gap:9px;
+      min-height:53px;padding:8px;background:#000
+    }
+
+    .media-control{
+      width:37px;height:37px;flex:0 0 37px;display:flex;align-items:center;justify-content:center;
+      padding:0;border:1px solid #392a32;border-radius:50%;background:#0d0d0d;color:#ff5d9b;
+      cursor:pointer;transition:transform .12s ease,background .15s ease,border-color .15s ease
+    }
+    .media-control:active{transform:scale(.9)}
+    .media-control.primary{
+      background:linear-gradient(145deg,#ee5b96,#cf3974);border-color:#df4a83;color:#fff;
+      box-shadow:0 5px 18px rgba(223,74,131,.23)
+    }
+    .media-control svg{width:16px;height:16px;display:block;fill:currentColor}
+    .nav-control{font-size:29px;font-weight:900;line-height:1;color:#ff5d9b}
+    .nav-control span{position:relative;top:-1px}
+
+    .reel-stage{
+      position:relative;width:min(100vw,520px);
+      height:min(calc(100dvh - 50px),calc(100vw * 16 / 9));
+      min-height:420px;margin:0 auto;overflow:hidden;background:#000
+    }
+    #reel-video{
+      display:block;width:100%;height:100%;object-fit:contain;object-position:center;background:#000
+    }
+    .reel-controls{
+      position:absolute;right:11px;top:50%;z-index:20;
+      display:flex;flex-direction:column;gap:9px;transform:translateY(-50%)
+    }
+    .reel-controls .media-control{
+      background:rgba(8,8,8,.78);border-color:rgba(255,255,255,.13);
+      backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+      box-shadow:0 5px 18px rgba(0,0,0,.28)
+    }
+    .reel-controls .media-control.primary{
+      background:rgba(223,74,131,.93);border-color:rgba(255,116,170,.7);color:#fff
+    }
+
+    /* Loading dots */
+    .loading-dots{
+      position:absolute;inset:0;z-index:15;
+      display:flex;align-items:center;justify-content:center;gap:7px;
+      background:rgba(0,0,0,.5);
+      opacity:0;visibility:hidden;pointer-events:none;
+      transition:opacity .16s ease,visibility .16s ease
+    }
+    .loading-dots.show{opacity:1;visibility:visible}
+    .loading-dots span{
+      width:7px;height:7px;border-radius:50%;background:#ff5d9b;
+      animation:dotBounce .9s ease-in-out infinite
+    }
+    .loading-dots span:nth-child(2){animation-delay:.12s}
+    .loading-dots span:nth-child(3){animation-delay:.24s}
+    @keyframes dotBounce{
+      0%,70%,100%{transform:translateY(0) scale(.82);opacity:.35}
+      35%{transform:translateY(-5px) scale(1);opacity:1}
+    }
+
+    .photo-feed{display:flex;flex-direction:column;width:100%;gap:5px;padding:0 0 5px;background:#000}
+    .photo-feed img{display:block;width:100%;height:auto;margin:0;object-fit:contain;background:#000}
+
+    .page-content{width:min(100%,440px);margin:0 auto;padding:14px 14px 24px;background:#000}
+    .page-title{
+      margin:0 0 6px;color:#fff;font:700 23px/1.12 Georgia,"Times New Roman",serif;letter-spacing:-.55px
+    }
+    .page-title .pink{color:#df4a83;font-style:italic}
+    .description{max-width:390px;margin:0 auto 14px;color:#c6b5bd;font-size:10.8px;line-height:1.55}
+    .description strong{color:#ff5d9b;font-weight:800}
+
+    .buy-button{
+      width:100%;min-height:57px;display:flex;align-items:center;justify-content:center;gap:8px;
+      padding:12px 16px;border:0;border-radius:14px;
+      background:linear-gradient(135deg,#ed5b96 0%,#d8407b 55%,#b92d63 100%);
+      color:#fff;font-size:13px;font-weight:800;cursor:pointer;
+      box-shadow:0 10px 30px rgba(223,74,131,.25)
+    }
+    .telegram-button{
+      width:100%;min-height:46px;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:7px;
+      border:1px solid #372830;border-radius:12px;background:#0c0c0c;color:#ff5d9b;
+      text-decoration:none;font-size:10.5px;font-weight:800
+    }
+    .telegram-button svg{width:16px;height:16px;fill:currentColor}
+
+    .site-footer{
+      width:min(100%,440px);margin:18px auto 0;padding:16px 14px calc(19px + env(safe-area-inset-bottom));
+      border-top:1px solid #251c21;color:#8f7e86;font-size:9px;line-height:1.55
+    }
+    .site-footer strong{color:#fff}
+    .site-footer .pink{color:#df4a83}
+
+    .payment-modal{
+      position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;
+      padding:18px;background:rgba(0,0,0,.86);backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px);
+      opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s ease,visibility .2s ease
+    }
+    .payment-modal.open{opacity:1;visibility:visible;pointer-events:auto}
+    .payment-card{
+      position:relative;width:min(91vw,320px);max-height:88dvh;overflow-y:auto;
+      padding:19px 16px 16px;border:1px solid #382630;border-radius:19px;
+      background:radial-gradient(circle at 100% 0%,rgba(223,74,131,.18),transparent 38%),
+                 linear-gradient(180deg,#101010 0%,#090909 100%);
+      color:#fff;text-align:left;box-shadow:0 28px 90px rgba(0,0,0,.7);
+      transform:translateY(14px) scale(.97);opacity:0;
+      transition:transform .27s cubic-bezier(.2,.82,.2,1),opacity .22s ease
+    }
+    .payment-modal.open .payment-card{transform:translateY(0) scale(1);opacity:1}
+    .payment-close{
+      position:absolute;top:10px;right:10px;z-index:10;width:34px;height:34px;
+      display:flex;align-items:center;justify-content:center;padding:0;
+      border:1px solid rgba(255,132,180,.62);border-radius:50%;
+      background:linear-gradient(145deg,#f3619b,#cc3370);color:#fff;cursor:pointer;
+      box-shadow:0 5px 20px rgba(223,74,131,.35)
+    }
+    .payment-close svg{
+      width:15px;height:15px;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;fill:none;pointer-events:none
+    }
+
+    .payment-icon{
+      width:42px;height:42px;display:grid;place-items:center;margin-bottom:11px;
+      border:1px solid #52303f;border-radius:12px;background:#191116;color:#ff5d9b;font-size:19px
+    }
+    .payment-card h2{
+      margin:0 40px 7px 0;color:#fff;font:700 19px/1.2 Georgia,"Times New Roman",serif;letter-spacing:-.25px
+    }
+    .payment-intro{margin:0 0 13px;color:#cab9c1;font-size:10.7px;line-height:1.55}
+    .payment-intro strong{color:#ff5d9b}
+    .payment-step{
+      display:grid;grid-template-columns:25px 1fr;gap:9px;align-items:start;margin-bottom:7px;
+      padding:9px;border:1px solid #31252b;border-radius:11px;background:#121012
+    }
+    .step-number{
+      width:25px;height:25px;display:grid;place-items:center;border-radius:50%;
+      background:#301723;color:#ff5d9b;font-size:10px;font-weight:800
+    }
+    .step-content{color:#c8b9c0;font-size:10px;line-height:1.45}
+    .step-content strong{display:block;margin-bottom:1px;color:#fff;font-size:10.6px}
+    .payment-label{
+      margin:13px 0 7px;color:#fff;font-size:8.8px;font-weight:800;letter-spacing:.5px;text-transform:uppercase
+    }
+    .payment-methods{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+    .payment-method{
+      min-height:27px;display:inline-flex;align-items:center;justify-content:center;padding:0 8px;
+      border:1px solid #3c2d34;border-radius:7px;background:#161316;color:#eee6e9;font-size:7.8px;font-weight:800
+    }
+    .payment-method.visa{color:#9dacff;font-size:10px;font-style:italic}
+    .payment-method.stripe{color:#a69fff;font-size:9px}
+    .secure-note{margin:0 0 13px;color:#928189;font-size:8.6px;line-height:1.42}
+    .proceed-payment{
+      width:100%;min-height:47px;border:0;border-radius:12px;
+      background:linear-gradient(135deg,#ed5b96,#d03b77 55%,#b72d62);
+      color:#fff;font-size:11.5px;font-weight:800;cursor:pointer
+    }
+
+    @media (max-width:350px){
+      .tv-controls{gap:7px}
+      .media-control{width:35px;height:35px;flex-basis:35px}
     }
-
-    html,
-    body {
-      margin: 0;
-      width: 100%;
-      min-height: 100%;
-      background: #000;
-      color: #fff;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    body {
-      min-height: 100svh;
-      overflow-x: hidden;
-    }
-
-    button,
-    a {
-      font-family: inherit;
-    }
-
-    button {
-      touch-action: manipulation;
-    }
-
-    main {
-      width: 100%;
-      margin: 0;
-      text-align: center;
-      background: #000;
-    }
-
-
-    /* ========================================
-       TOP TABS
-    ======================================== */
-
-    .media-tabs {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 6px;
-
-      width: 100%;
-      padding:
-        calc(7px + env(safe-area-inset-top))
-        8px
-        7px;
-
-      background: rgba(0, 0, 0, 0.94);
-
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-
-      border-bottom: 1px solid #23191f;
-    }
-
-    .media-tab {
-      height: 36px;
-      padding: 0 12px;
-
-      border: 1px solid #33262d;
-      border-radius: 999px;
-
-      background: #0c0c0c;
-      color: #a9959f;
-
-      font-size: 10px;
-      font-weight: 800;
-
-      cursor: pointer;
-
-      transition:
-        background 0.16s ease,
-        color 0.16s ease,
-        border-color 0.16s ease,
-        transform 0.12s ease;
-    }
-
-    .media-tab:active {
-      transform: scale(0.97);
-    }
-
-    .media-tab.active {
-      border-color: #df4a83;
-      background: #df4a83;
-      color: #fff;
-    }
-
-
-    /* ========================================
-       PANELS
-    ======================================== */
-
-    .media-panel {
-      display: none;
-      width: 100%;
-      background: #000;
-    }
-
-    .media-panel.active {
-      display: block;
-    }
-
-
-    /* ========================================
-       TV — 16:9
-    ======================================== */
-
-    .tv-stage {
-      position: relative;
-
-      width: 100vw;
-      aspect-ratio: 16 / 9;
-
-      overflow: hidden;
-
-      background: #000;
-    }
-
-    #tv-video {
-      position: absolute;
-      inset: 0;
-
-      display: block;
-
-      width: 100%;
-      height: 100%;
-
-      object-fit: contain;
-      object-position: center;
-
-      background: #000;
-    }
-
-
-    /* ========================================
-       TV CONTROLS
-    ======================================== */
-
-    .tv-controls {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      gap: 9px;
-
-      min-height: 53px;
-
-      padding: 8px;
-
-      background: #000;
-    }
-
-    .media-control {
-      width: 37px;
-      height: 37px;
-
-      flex: 0 0 37px;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      padding: 0;
-
-      border: 1px solid #392a32;
-      border-radius: 50%;
-
-      background: #0d0d0d;
-      color: #ff5d9b;
-
-      cursor: pointer;
-
-      transition:
-        transform 0.12s ease,
-        background 0.15s ease,
-        border-color 0.15s ease;
-    }
-
-    .media-control:active {
-      transform: scale(0.9);
-    }
-
-    .media-control.primary {
-      background: linear-gradient(
-        145deg,
-        #ee5b96,
-        #cf3974
-      );
-
-      border-color: #df4a83;
-
-      color: #fff;
-
-      box-shadow:
-        0 5px 18px
-        rgba(223, 74, 131, 0.23);
-    }
-
-    .media-control svg {
-      width: 16px;
-      height: 16px;
-
-      display: block;
-
-      fill: currentColor;
-    }
-
-
-    /* strong previous / next arrows */
-
-    .nav-control {
-      font-size: 29px;
-      font-weight: 900;
-      line-height: 1;
-      color: #ff5d9b;
-    }
-
-    .nav-control span {
-      position: relative;
-      top: -1px;
-    }
-
-
-    /* ========================================
-       REELS — 9:16
-    ======================================== */
-
-    .reel-stage {
-      position: relative;
-
-      width: min(100vw, 520px);
-
-      height: min(
-        calc(100dvh - 50px),
-        calc(100vw * 16 / 9)
-      );
-
-      min-height: 420px;
-
-      margin: 0 auto;
-
-      overflow: hidden;
-
-      background: #000;
-    }
-
-    #reel-video {
-      display: block;
-
-      width: 100%;
-      height: 100%;
-
-      object-fit: contain;
-      object-position: center;
-
-      background: #000;
-    }
-
-    .reel-controls {
-      position: absolute;
-
-      right: 11px;
-      top: 50%;
-
-      z-index: 20;
-
-      display: flex;
-      flex-direction: column;
-
-      gap: 9px;
-
-      transform: translateY(-50%);
-    }
-
-    .reel-controls .media-control {
-      background: rgba(8, 8, 8, 0.78);
-
-      border-color: rgba(255, 255, 255, 0.13);
-
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-
-      box-shadow:
-        0 5px 18px
-        rgba(0, 0, 0, 0.28);
-    }
-
-    .reel-controls .media-control.primary {
-      background: rgba(223, 74, 131, 0.93);
-
-      border-color: rgba(255, 116, 170, 0.7);
-
-      color: #fff;
-    }
-
-
-    /* ========================================
-       PHOTO FEED
-    ======================================== */
-
-    .photo-feed {
-      display: flex;
-      flex-direction: column;
-
-      width: 100%;
-
-      gap: 5px;
-
-      padding: 0 0 5px;
-
-      background: #000;
-    }
-
-    .photo-feed img {
-      display: block;
-
-      width: 100%;
-      height: auto;
-
-      margin: 0;
-
-      object-fit: contain;
-
-      background: #000;
-    }
-
-
-    /* ========================================
-       MAIN CONTENT
-    ======================================== */
-
-    .page-content {
-      width: min(100%, 440px);
-
-      margin: 0 auto;
-
-      padding: 14px 14px 24px;
-
-      background: #000;
-    }
-
-    .page-title {
-      margin: 0 0 6px;
-
-      color: #fff;
-
-      font:
-        700
-        23px/1.12
-        Georgia,
-        "Times New Roman",
-        serif;
-
-      letter-spacing: -0.55px;
-    }
-
-    .page-title .pink {
-      color: #df4a83;
-      font-style: italic;
-    }
-
-    .description {
-      max-width: 390px;
-
-      margin: 0 auto 14px;
-
-      color: #c6b5bd;
-
-      font-size: 10.8px;
-      line-height: 1.55;
-    }
-
-    .description strong {
-      color: #ff5d9b;
-      font-weight: 800;
-    }
-
-
-    /* ========================================
-       SUBSCRIPTION BUTTON
-    ======================================== */
-
-    .buy-button {
-      width: 100%;
-      min-height: 57px;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      gap: 8px;
-
-      padding: 12px 16px;
-
-      border: 0;
-      border-radius: 14px;
-
-      background:
-        linear-gradient(
-          135deg,
-          #ed5b96 0%,
-          #d8407b 55%,
-          #b92d63 100%
-        );
-
-      color: #fff;
-
-      font-size: 13px;
-      font-weight: 800;
-
-      cursor: pointer;
-
-      box-shadow:
-        0 10px 30px
-        rgba(223, 74, 131, 0.25);
-
-      transition:
-        transform 0.13s ease,
-        box-shadow 0.13s ease;
-    }
-
-    .buy-button:active {
-      transform: scale(0.985);
-
-      box-shadow:
-        0 6px 18px
-        rgba(223, 74, 131, 0.2);
-    }
-
-
-    /* ========================================
-       TELEGRAM
-    ======================================== */
-
-    .telegram-button {
-      width: 100%;
-      min-height: 46px;
-
-      margin-top: 8px;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      gap: 7px;
-
-      border: 1px solid #372830;
-      border-radius: 12px;
-
-      background: #0c0c0c;
-
-      color: #ff5d9b;
-
-      text-decoration: none;
-
-      font-size: 10.5px;
-      font-weight: 800;
-    }
-
-    .telegram-button svg {
-      width: 16px;
-      height: 16px;
-
-      fill: currentColor;
-    }
-
-
-    /* ========================================
-       FOOTER
-    ======================================== */
-
-    .site-footer {
-      width: min(100%, 440px);
-
-      margin: 18px auto 0;
-
-      padding:
-        16px
-        14px
-        calc(19px + env(safe-area-inset-bottom));
-
-      border-top: 1px solid #251c21;
-
-      color: #8f7e86;
-
-      font-size: 9px;
-      line-height: 1.55;
-    }
-
-    .site-footer strong {
-      color: #fff;
-    }
-
-    .site-footer .pink {
-      color: #df4a83;
-    }
-
-
-    /* ========================================
-       PAYMENT POPUP BACKDROP
-    ======================================== */
-
-    .payment-modal {
-      position: fixed;
-      inset: 0;
-
-      z-index: 99999;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      padding: 18px;
-
-      background: rgba(0, 0, 0, 0.86);
-
-      backdrop-filter: blur(13px);
-      -webkit-backdrop-filter: blur(13px);
-
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-
-      transition:
-        opacity 0.2s ease,
-        visibility 0.2s ease;
-    }
-
-    .payment-modal.open {
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-    }
-
-
-    /* ========================================
-       PAYMENT POPUP — DARK
-    ======================================== */
-
-    .payment-card {
-      position: relative;
-
-      width: min(91vw, 320px);
-
-      max-height: 88dvh;
-
-      overflow-y: auto;
-
-      padding:
-        19px
-        16px
-        16px;
-
-      border: 1px solid #382630;
-      border-radius: 19px;
-
-      background:
-        radial-gradient(
-          circle at 100% 0%,
-          rgba(223, 74, 131, 0.18),
-          transparent 38%
-        ),
-        linear-gradient(
-          180deg,
-          #101010 0%,
-          #090909 100%
-        );
-
-      color: #fff;
-
-      text-align: left;
-
-      box-shadow:
-        0 28px 90px
-        rgba(0, 0, 0, 0.7);
-
-      transform:
-        translateY(14px)
-        scale(0.97);
-
-      opacity: 0;
-
-      transition:
-        transform 0.27s
-        cubic-bezier(.2,.82,.2,1),
-        opacity 0.22s ease;
-    }
-
-    .payment-modal.open .payment-card {
-      transform:
-        translateY(0)
-        scale(1);
-
-      opacity: 1;
-    }
-
-
-    /* ========================================
-       NICE PINK CLOSE BUTTON
-    ======================================== */
-
-    .payment-close {
-      position: absolute;
-
-      top: 10px;
-      right: 10px;
-
-      z-index: 10;
-
-      width: 34px;
-      height: 34px;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      padding: 0;
-
-      border:
-        1px solid
-        rgba(255, 132, 180, 0.62);
-
-      border-radius: 50%;
-
-      background:
-        linear-gradient(
-          145deg,
-          #f3619b,
-          #cc3370
-        );
-
-      color: #fff;
-
-      cursor: pointer;
-
-      box-shadow:
-        0 5px 20px
-        rgba(223, 74, 131, 0.35);
-
-      transition:
-        transform 0.14s ease,
-        box-shadow 0.14s ease;
-    }
-
-    .payment-close svg {
-      width: 15px;
-      height: 15px;
-
-      stroke: currentColor;
-      stroke-width: 2.5;
-      stroke-linecap: round;
-
-      fill: none;
-
-      pointer-events: none;
-    }
-
-    .payment-close:hover {
-      transform: scale(1.07);
-
-      box-shadow:
-        0 7px 23px
-        rgba(223, 74, 131, 0.48);
-    }
-
-    .payment-close:active {
-      transform: scale(0.91);
-    }
-
-
-    /* ========================================
-       POPUP CONTENT
-    ======================================== */
-
-    .payment-icon {
-      width: 42px;
-      height: 42px;
-
-      display: grid;
-      place-items: center;
-
-      margin-bottom: 11px;
-
-      border: 1px solid #52303f;
-      border-radius: 12px;
-
-      background: #191116;
-
-      color: #ff5d9b;
-
-      font-size: 19px;
-    }
-
-    .payment-card h2 {
-      margin:
-        0
-        40px
-        7px
-        0;
-
-      color: #fff;
-
-      font:
-        700
-        19px/1.2
-        Georgia,
-        "Times New Roman",
-        serif;
-
-      letter-spacing: -0.25px;
-    }
-
-    .payment-intro {
-      margin: 0 0 13px;
-
-      color: #cab9c1;
-
-      font-size: 10.7px;
-      line-height: 1.55;
-    }
-
-    .payment-intro strong {
-      color: #ff5d9b;
-    }
-
-
-    /* ========================================
-       POPUP STEPS
-    ======================================== */
-
-    .payment-step {
-      display: grid;
-
-      grid-template-columns:
-        25px
-        1fr;
-
-      gap: 9px;
-
-      align-items: start;
-
-      margin-bottom: 7px;
-
-      padding: 9px;
-
-      border: 1px solid #31252b;
-      border-radius: 11px;
-
-      background: #121012;
-    }
-
-    .step-number {
-      width: 25px;
-      height: 25px;
-
-      display: grid;
-      place-items: center;
-
-      border-radius: 50%;
-
-      background: #301723;
-
-      color: #ff5d9b;
-
-      font-size: 10px;
-      font-weight: 800;
-    }
-
-    .step-content {
-      color: #c8b9c0;
-
-      font-size: 10px;
-      line-height: 1.45;
-    }
-
-    .step-content strong {
-      display: block;
-
-      margin-bottom: 1px;
-
-      color: #fff;
-
-      font-size: 10.6px;
-    }
-
-
-    /* ========================================
-       PAYMENT METHODS
-    ======================================== */
-
-    .payment-label {
-      margin:
-        13px
-        0
-        7px;
-
-      color: #fff;
-
-      font-size: 8.8px;
-      font-weight: 800;
-
-      letter-spacing: 0.5px;
-
-      text-transform: uppercase;
-    }
-
-    .payment-methods {
-      display: flex;
-      flex-wrap: wrap;
-
-      gap: 5px;
-
-      margin-bottom: 10px;
-    }
-
-    .payment-method {
-      min-height: 27px;
-
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-
-      padding: 0 8px;
-
-      border: 1px solid #3c2d34;
-      border-radius: 7px;
-
-      background: #161316;
-
-      color: #eee6e9;
-
-      font-size: 7.8px;
-      font-weight: 800;
-    }
-
-    .payment-method.visa {
-      color: #9dacff;
-
-      font-size: 10px;
-      font-style: italic;
-    }
-
-    .payment-method.stripe {
-      color: #a69fff;
-
-      font-size: 9px;
-    }
-
-    .secure-note {
-      margin: 0 0 13px;
-
-      color: #928189;
-
-      font-size: 8.6px;
-      line-height: 1.42;
-    }
-
-    .proceed-payment {
-      width: 100%;
-      min-height: 47px;
-
-      border: 0;
-      border-radius: 12px;
-
-      background:
-        linear-gradient(
-          135deg,
-          #ed5b96,
-          #d03b77 55%,
-          #b72d62
-        );
-
-      color: #fff;
-
-      font-size: 11.5px;
-      font-weight: 800;
-
-      cursor: pointer;
-
-      box-shadow:
-        0 8px 23px
-        rgba(223, 74, 131, 0.23);
-    }
-
-    .proceed-payment:active {
-      transform: scale(0.985);
-    }
-
-
-    /* ========================================
-       MOBILE
-    ======================================== */
-
-    @media (max-width: 350px) {
-
-      .tv-controls {
-        gap: 7px;
-      }
-
-      .media-control {
-        width: 35px;
-        height: 35px;
-
-        flex-basis: 35px;
-      }
-
-    }
-
-
-    @media (prefers-reduced-motion: reduce) {
-
-      *,
-      *::before,
-      *::after {
-        transition: none !important;
-        animation: none !important;
-      }
-
-    }
-
   </style>
 </head>
-
 
 <body>
 
 <main>
 
-
-  <!-- ===================================
-       CATEGORIES
-  ==================================== -->
-
-  <nav
-    class="media-tabs"
-    aria-label="Media categories"
-  >
-
-    <button
-      class="media-tab active"
-      type="button"
-      data-panel="tv"
-    >
-      TV
-    </button>
-
-
-    <button
-      class="media-tab"
-      type="button"
-      data-panel="reels"
-    >
-      Reels
-    </button>
-
-
-    <button
-      class="media-tab"
-      type="button"
-      data-panel="photos"
-    >
-      Photos
-    </button>
-
+  <nav class="media-tabs" aria-label="Media categories">
+    <button class="media-tab active" type="button" data-panel="tv">TV</button>
+    <button class="media-tab" type="button" data-panel="reels">Reels</button>
+    <button class="media-tab" type="button" data-panel="photos">Photos</button>
   </nav>
 
-
-
-  <!-- ===================================
-       TV
-  ==================================== -->
-
-  <section
-    class="media-panel active"
-    id="panel-tv"
-  >
-
-    <div
-      class="tv-stage"
-      id="tv-stage"
-    >
+  <section class="media-panel active" id="panel-tv">
+    <div class="tv-stage" id="tv-stage">
 
       <video
         id="tv-video"
@@ -1012,111 +223,41 @@
         webkit-playsinline
         preload="auto"
         disablepictureinpicture
-        controlslist="nodownload noplaybackrate noremoteplayback"
-      ></video>
+        controlslist="nodownload noplaybackrate noremoteplayback">
+      </video>
+
+      <div class="loading-dots" id="tv-loading" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
 
     </div>
-
 
     <div class="tv-controls">
 
-
-      <!-- PREVIOUS -->
-
-      <button
-        class="media-control nav-control"
-        id="tv-prev"
-        type="button"
-        aria-label="Previous video"
-      >
+      <button class="media-control nav-control" id="tv-prev" type="button" aria-label="Previous video">
         <span>‹</span>
       </button>
 
+      <button class="media-control primary" id="tv-play" type="button" aria-label="Play"></button>
 
-      <!-- PLAY / PAUSE -->
-
-      <button
-        class="media-control primary"
-        id="tv-play"
-        type="button"
-        aria-label="Pause"
-      >
-
-        <svg
-          id="tv-play-icon"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
-          <path
-            d="M7 5h4v14H7zm6 0h4v14h-4z"
-          />
-        </svg>
-
-      </button>
-
-
-      <!-- NEXT -->
-
-      <button
-        class="media-control nav-control"
-        id="tv-next"
-        type="button"
-        aria-label="Next video"
-      >
+      <button class="media-control nav-control" id="tv-next" type="button" aria-label="Next video">
         <span>›</span>
       </button>
 
+      <button class="media-control" id="tv-mute" type="button" aria-label="Unmute"></button>
 
-      <!-- MUTE -->
-
-      <button
-        class="media-control"
-        id="tv-mute"
-        type="button"
-        aria-label="Unmute"
-      ></button>
-
-
-      <!-- FULLSCREEN -->
-
-      <button
-        class="media-control"
-        id="tv-fullscreen"
-        type="button"
-        aria-label="Full screen"
-      >
-
-        <svg
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
-          <path
-            d="M7 3H3v4h2V5h2V3Zm10 0v2h2v2h2V3h-4ZM5 17H3v4h4v-2H5v-2Zm14 2h-2v2h4v-4h-2v2Z"
-          />
+      <button class="media-control" id="tv-fullscreen" type="button" aria-label="Full screen">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M7 3H3v4h2V5h2V3Zm10 0v2h2v2h2V3h-4ZM5 17H3v4h4v-2H5v-2Zm14 2h-2v2h4v-4h-2v2Z"/>
         </svg>
-
       </button>
 
-
     </div>
-
   </section>
 
+  <section class="media-panel" id="panel-reels">
 
-
-  <!-- ===================================
-       REELS
-  ==================================== -->
-
-  <section
-    class="media-panel"
-    id="panel-reels"
-  >
-
-    <div
-      class="reel-stage"
-      id="reel-stage"
-    >
+    <div class="reel-stage" id="reel-stage">
 
       <video
         id="reel-video"
@@ -1125,77 +266,28 @@
         webkit-playsinline
         preload="auto"
         disablepictureinpicture
-        controlslist="nodownload noplaybackrate noremoteplayback"
-      ></video>
+        controlslist="nodownload noplaybackrate noremoteplayback">
+      </video>
 
+      <div class="loading-dots" id="reel-loading" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
 
       <div class="reel-controls">
 
+        <button class="media-control nav-control" id="reel-prev" type="button" aria-label="Previous reel">↑</button>
 
-        <!-- REEL UP -->
+        <button class="media-control nav-control" id="reel-next" type="button" aria-label="Next reel">↓</button>
 
-        <button
-          class="media-control nav-control"
-          id="reel-prev"
-          type="button"
-          aria-label="Previous reel"
-        >
-          ↑
-        </button>
+        <button class="media-control primary" id="reel-play" type="button" aria-label="Play"></button>
 
+        <button class="media-control" id="reel-mute" type="button" aria-label="Unmute"></button>
 
-        <!-- REEL DOWN -->
-
-        <button
-          class="media-control nav-control"
-          id="reel-next"
-          type="button"
-          aria-label="Next reel"
-        >
-          ↓
-        </button>
-
-
-        <!-- PLAY / PAUSE -->
-
-        <button
-          class="media-control primary"
-          id="reel-play"
-          type="button"
-          aria-label="Play"
-        ></button>
-
-
-        <!-- MUTE -->
-
-        <button
-          class="media-control"
-          id="reel-mute"
-          type="button"
-          aria-label="Unmute"
-        ></button>
-
-
-        <!-- FULLSCREEN -->
-
-        <button
-          class="media-control"
-          id="reel-fullscreen"
-          type="button"
-          aria-label="Full screen"
-        >
-
-          <svg
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-            <path
-              d="M7 3H3v4h2V5h2V3Zm10 0v2h2v2h2V3h-4ZM5 17H3v4h4v-2H5v-2Zm14 2h-2v2h4v-4h-2v2Z"
-            />
+        <button class="media-control" id="reel-fullscreen" type="button" aria-label="Full screen">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7 3H3v4h2V5h2V3Zm10 0v2h2v2h2V3h-4ZM5 17H3v4h4v-2H5v-2Zm14 2h-2v2h4v-4h-2v2Z"/>
           </svg>
-
         </button>
-
 
       </div>
 
@@ -1203,399 +295,153 @@
 
   </section>
 
-
-
-  <!-- ===================================
-       PHOTOS
-  ==================================== -->
-
-  <section
-    class="media-panel"
-    id="panel-photos"
-  >
-
-    <div
-      class="photo-feed"
-      id="photo-feed"
-    ></div>
-
+  <section class="media-panel" id="panel-photos">
+    <div class="photo-feed" id="photo-feed"></div>
   </section>
-
-
-
-  <!-- ===================================
-       INFO
-  ==================================== -->
 
   <div class="page-content">
 
-
     <h1 class="page-title">
-
-      Bluia
-
-      <span class="pink">
-        Sisters
-      </span>
-
-      TV
-
+      Bluia <span class="pink">Sisters</span> TV
     </h1>
 
-
     <p class="description">
-
       All Bluia Sisters entertainment in one place.
-
-      Watch unlimited content for
-
-      <strong>
-        $5/month
-      </strong>,
-
+      Watch unlimited content for <strong>$5/month</strong>,
       with fresh episodes, new faces, and beautiful new Bluia Sisters joining every week.
-
     </p>
 
-
-    <button
-      class="buy-button"
-      id="buy-button"
-      type="button"
-    >
-
+    <button class="buy-button" id="buy-button" type="button">
       ✦ Get Full Access — $5/month
-
     </button>
-
 
     <a
       class="telegram-button"
       href="https://t.me/vbluia"
       target="_blank"
-      rel="noopener noreferrer"
-    >
+      rel="noopener noreferrer">
 
-      <svg
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-      >
-        <path
-          d="M21.8 3.7 18.5 20c-.25 1.15-.9 1.44-1.82.9l-5-3.69-2.41 2.32c-.27.27-.5.5-1.02.5l.36-5.1 9.29-8.39c.4-.36-.09-.56-.63-.2L5.79 13.56.86 12.02c-1.08-.34-1.1-1.08.23-1.6L20.38 3c.9-.33 1.69.2 1.42.7Z"
-        />
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M21.8 3.7 18.5 20c-.25 1.15-.9 1.44-1.82.9l-5-3.69-2.41 2.32c-.27.27-.5.5-1.02.5l.36-5.1 9.29-8.39c.4-.36-.09-.56-.63-.2L5.79 13.56.86 12.02c-1.08-.34-1.1-1.08.23-1.6L20.38 3c.9-.33 1.69.2 1.42.7Z"/>
       </svg>
 
       Join my Telegram
-
     </a>
-
 
   </div>
 
-
-
-  <!-- ===================================
-       FOOTER
-  ==================================== -->
-
   <footer class="site-footer">
-
-    <strong>
-
-      <span class="pink">
-        Bluia Sisters
-      </span>
-
-      TV
-
-    </strong>
-
-    <br>
-
+    <strong><span class="pink">Bluia Sisters</span> TV</strong><br>
     © 2026 Bluia Sisters. All rights reserved.
-
   </footer>
-
 
 </main>
 
+<div class="payment-modal" id="payment-modal" aria-hidden="true">
 
+  <div class="payment-card" id="payment-card" role="dialog" aria-modal="true" aria-labelledby="payment-title">
 
-<!-- =====================================
-     DARK PAYMENT POPUP
-===================================== -->
-
-<div
-  class="payment-modal"
-  id="payment-modal"
-  aria-hidden="true"
->
-
-  <div
-    class="payment-card"
-    id="payment-card"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="payment-title"
-  >
-
-
-    <!-- PINK X -->
-
-    <button
-      class="payment-close"
-      id="payment-close"
-      type="button"
-      aria-label="Close"
-    >
-
-      <svg
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-      >
+    <button class="payment-close" id="payment-close" type="button" aria-label="Close">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M6 6L18 18"></path>
         <path d="M18 6L6 18"></path>
       </svg>
-
     </button>
 
+    <div class="payment-icon">✦</div>
 
-
-    <div class="payment-icon">
-      ✦
-    </div>
-
-
-    <h2 id="payment-title">
-      Unlock Bluia Sisters TV
-    </h2>
-
+    <h2 id="payment-title">Unlock Bluia Sisters TV</h2>
 
     <p class="payment-intro">
-
       Your private viewing URL will be delivered to the
-
-      <strong>
-        email address used at checkout
-      </strong>.
-
+      <strong>email address used at checkout</strong>.
       Make sure your email is correct so you receive your private access link.
-
     </p>
 
-
-
     <div class="payment-step">
-
-      <span class="step-number">
-        1
-      </span>
-
+      <span class="step-number">1</span>
       <div class="step-content">
-
-        <strong>
-          Complete secure payment
-        </strong>
-
+        <strong>Complete secure payment</strong>
         Continue to Stripe and complete checkout.
-
       </div>
-
     </div>
-
-
 
     <div class="payment-step">
-
-      <span class="step-number">
-        2
-      </span>
-
+      <span class="step-number">2</span>
       <div class="step-content">
-
-        <strong>
-          Check your payment email
-        </strong>
-
+        <strong>Check your payment email</strong>
         Your private Bluia Sisters TV viewing URL will be sent there.
-
       </div>
-
     </div>
 
-
-
-    <div class="payment-label">
-      Secure payment
-    </div>
-
+    <div class="payment-label">Secure payment</div>
 
     <div class="payment-methods">
-
-      <span class="payment-method visa">
-        VISA
-      </span>
-
-      <span class="payment-method">
-        Mastercard
-      </span>
-
-      <span class="payment-method">
-        AMEX
-      </span>
-
-      <span class="payment-method">
-        Apple Pay
-      </span>
-
-      <span class="payment-method">
-        Google Pay
-      </span>
-
-      <span class="payment-method">
-        Bancontact
-      </span>
-
-      <span class="payment-method stripe">
-        Stripe
-      </span>
-
+      <span class="payment-method visa">VISA</span>
+      <span class="payment-method">Mastercard</span>
+      <span class="payment-method">AMEX</span>
+      <span class="payment-method">Apple Pay</span>
+      <span class="payment-method">Google Pay</span>
+      <span class="payment-method">Bancontact</span>
+      <span class="payment-method stripe">Stripe</span>
     </div>
-
 
     <div class="secure-note">
-
-      Payment is processed securely by Stripe.
-      Available payment methods may vary at checkout.
-
+      Payment is processed securely by Stripe. Available payment methods may vary at checkout.
     </div>
 
-
-    <button
-      class="proceed-payment"
-      id="proceed-payment"
-      type="button"
-    >
-
+    <button class="proceed-payment" id="proceed-payment" type="button">
       Proceed to payment
-
     </button>
-
 
   </div>
 
 </div>
 
-
-
-<!-- =====================================
-     MEDIA URL FILE
-===================================== -->
-
 <script src="media.js"></script>
-
-
-
-<!-- =====================================
-     PLAYER / UI LOGIC
-===================================== -->
 
 <script>
 (() => {
-
   "use strict";
 
+  const PAYMENT_URL = "https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04";
 
-  const PAYMENT_URL =
-    "https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04";
+  const TV_VIDEOS = Array.isArray(window.BluiaMedia?.tv) ? window.BluiaMedia.tv : [];
+  const REELS = Array.isArray(window.BluiaMedia?.reels) ? window.BluiaMedia.reels : [];
+  const PHOTOS = Array.isArray(window.BluiaMedia?.photos) ? window.BluiaMedia.photos : [];
 
+  const tabs = document.querySelectorAll(".media-tab");
 
-  /* ====================================
-     MEDIA ARRAYS
-  ==================================== */
+  const tvPanel = document.getElementById("panel-tv");
+  const reelsPanel = document.getElementById("panel-reels");
+  const photosPanel = document.getElementById("panel-photos");
 
-  const TV_VIDEOS =
-    Array.isArray(window.BluiaMedia?.tv)
-      ? window.BluiaMedia.tv
-      : [];
+  const tvVideo = document.getElementById("tv-video");
+  const reelVideo = document.getElementById("reel-video");
 
+  const tvPlay = document.getElementById("tv-play");
+  const tvMute = document.getElementById("tv-mute");
 
-  const REELS =
-    Array.isArray(window.BluiaMedia?.reels)
-      ? window.BluiaMedia.reels
-      : [];
+  const reelPlay = document.getElementById("reel-play");
+  const reelMute = document.getElementById("reel-mute");
 
+  const tvLoading = document.getElementById("tv-loading");
+  const reelLoading = document.getElementById("reel-loading");
 
-  const PHOTOS =
-    Array.isArray(window.BluiaMedia?.photos)
-      ? window.BluiaMedia.photos
-      : [];
-
-
-
-  /* ====================================
-     ELEMENTS
-  ==================================== */
-
-  const tabs =
-    document.querySelectorAll(".media-tab");
-
-
-  const tvPanel =
-    document.getElementById("panel-tv");
-
-
-  const reelsPanel =
-    document.getElementById("panel-reels");
-
-
-  const photosPanel =
-    document.getElementById("panel-photos");
-
-
-  const tvVideo =
-    document.getElementById("tv-video");
-
-
-  const reelVideo =
-    document.getElementById("reel-video");
-
-
-  const tvPlay =
-    document.getElementById("tv-play");
-
-
-  const tvMute =
-    document.getElementById("tv-mute");
-
-
-  const reelPlay =
-    document.getElementById("reel-play");
-
-
-  const reelMute =
-    document.getElementById("reel-mute");
-
-
-
-  /* ====================================
-     ICONS
-  ==================================== */
+  let tvIndex = 0;
+  let reelIndex = 0;
 
   const ICONS = {
-
     play: `
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M8 5v14l11-7z"></path>
       </svg>
     `,
-
     pause: `
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M7 5h4v14H7zm6 0h4v14h-4z"></path>
       </svg>
     `,
-
     muted: `
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M4 9v6h4l5 4V5L8 9H4z"></path>
@@ -1603,7 +449,6 @@
         <path d="M21 9.5 16.5 14"></path>
       </svg>
     `,
-
     sound: `
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M4 9v6h4l5 4V5L8 9H4z"></path>
@@ -1611,1340 +456,346 @@
         <path d="M17.8 6a8.5 8.5 0 0 1 0 12"></path>
       </svg>
     `
-
   };
 
-
-  /*
-    The mute SVG has stroke lines,
-    so make them visible.
-  */
-
-  const extraIconStyle =
-    document.createElement("style");
-
-
-  extraIconStyle.textContent = `
+  const iconStyle = document.createElement("style");
+  iconStyle.textContent = `
     #tv-mute svg path:not(:first-child),
-    #reel-mute svg path:not(:first-child) {
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 2;
-      stroke-linecap: round;
+    #reel-mute svg path:not(:first-child){
+      fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round
     }
   `;
+  document.head.appendChild(iconStyle);
 
-
-  document.head.appendChild(
-    extraIconStyle
-  );
-
-
-
-  /* ====================================
-     STATE
-  ==================================== */
-
-  let tvIndex = 0;
-
-  let reelIndex = 0;
-
-
-
-  /* ====================================
-     BUTTON STATE
-  ==================================== */
-
-  function syncPlayButton(
-    video,
-    button
-  ) {
-
-    const playing =
-      !video.paused &&
-      !video.ended;
-
-
-    button.innerHTML =
-      playing
-        ? ICONS.pause
-        : ICONS.play;
-
-
-    button.setAttribute(
-      "aria-label",
-      playing
-        ? "Pause"
-        : "Play"
-    );
-
+  function showLoading(el){
+    el.classList.add("show");
   }
 
-
-  function syncMuteButton(
-    video,
-    button
-  ) {
-
-    const muted =
-      video.muted ||
-      video.volume === 0;
-
-
-    button.innerHTML =
-      muted
-        ? ICONS.muted
-        : ICONS.sound;
-
-
-    button.setAttribute(
-      "aria-label",
-      muted
-        ? "Unmute"
-        : "Mute"
-    );
-
+  function hideLoading(el){
+    el.classList.remove("show");
   }
 
+  function syncPlayButton(video, button){
+    const playing = !video.paused && !video.ended;
+    button.innerHTML = playing ? ICONS.pause : ICONS.play;
+    button.setAttribute("aria-label", playing ? "Pause" : "Play");
+  }
 
+  function syncMuteButton(video, button){
+    const muted = video.muted || video.volume === 0;
+    button.innerHTML = muted ? ICONS.muted : ICONS.sound;
+    button.setAttribute("aria-label", muted ? "Unmute" : "Mute");
+  }
 
-  /* ====================================
-     SAFE PLAY
-  ==================================== */
-
-  async function safePlay(video) {
-
-    try {
-
+  async function safePlay(video){
+    try{
       await video.play();
-
       return true;
-
-    } catch (error) {
-
+    }catch(error){
       return false;
-
     }
-
   }
 
+  async function loadTv(index, autoplay = true){
+    if(!TV_VIDEOS.length) return;
 
+    tvIndex = (index + TV_VIDEOS.length) % TV_VIDEOS.length;
 
-  /* ====================================
-     TV LOADER
-  ==================================== */
-
-  async function loadTv(
-    index,
-    autoplay = true
-  ) {
-
-    if (!TV_VIDEOS.length) {
-      return;
-    }
-
-
-    tvIndex =
-      (
-        index +
-        TV_VIDEOS.length
-      ) %
-      TV_VIDEOS.length;
-
+    showLoading(tvLoading);
 
     tvVideo.pause();
-
-
     tvVideo.muted = true;
-
     tvVideo.defaultMuted = true;
-
     tvVideo.autoplay = true;
-
     tvVideo.playsInline = true;
-
-
-    tvVideo.src =
-      TV_VIDEOS[tvIndex];
-
-
+    tvVideo.src = TV_VIDEOS[tvIndex];
     tvVideo.load();
 
+    syncMuteButton(tvVideo, tvMute);
+    syncPlayButton(tvVideo, tvPlay);
 
-    syncMuteButton(
-      tvVideo,
-      tvMute
-    );
-
-
-    syncPlayButton(
-      tvVideo,
-      tvPlay
-    );
-
-
-    if (autoplay) {
-
-      await safePlay(
-        tvVideo
-      );
-
-      syncPlayButton(
-        tvVideo,
-        tvPlay
-      );
-
+    if(autoplay){
+      await safePlay(tvVideo);
+      syncPlayButton(tvVideo, tvPlay);
     }
-
   }
 
+  async function loadReel(index, autoplay = false){
+    if(!REELS.length) return;
 
+    reelIndex = (index + REELS.length) % REELS.length;
 
-  /* ====================================
-     REEL LOADER
-  ==================================== */
-
-  async function loadReel(
-    index,
-    autoplay = false
-  ) {
-
-    if (!REELS.length) {
-      return;
-    }
-
-
-    reelIndex =
-      (
-        index +
-        REELS.length
-      ) %
-      REELS.length;
-
+    showLoading(reelLoading);
 
     reelVideo.pause();
-
-
     reelVideo.muted = true;
-
     reelVideo.defaultMuted = true;
-
     reelVideo.playsInline = true;
-
-
-    reelVideo.src =
-      REELS[reelIndex];
-
-
+    reelVideo.src = REELS[reelIndex];
     reelVideo.load();
 
+    syncMuteButton(reelVideo, reelMute);
+    syncPlayButton(reelVideo, reelPlay);
 
-    syncMuteButton(
-      reelVideo,
-      reelMute
-    );
-
-
-    syncPlayButton(
-      reelVideo,
-      reelPlay
-    );
-
-
-    if (autoplay) {
-
-      await safePlay(
-        reelVideo
-      );
-
-
-      syncPlayButton(
-        reelVideo,
-        reelPlay
-      );
-
+    if(autoplay){
+      await safePlay(reelVideo);
+      syncPlayButton(reelVideo, reelPlay);
     }
-
   }
 
-
-
-  /* ====================================
-     CATEGORY SWITCHING
-  ==================================== */
-
-  function openPanel(name) {
-
+  function openPanel(name){
     tabs.forEach(tab => {
-
-      tab.classList.toggle(
-        "active",
-        tab.dataset.panel === name
-      );
-
+      tab.classList.toggle("active", tab.dataset.panel === name);
     });
 
+    tvPanel.classList.toggle("active", name === "tv");
+    reelsPanel.classList.toggle("active", name === "reels");
+    photosPanel.classList.toggle("active", name === "photos");
 
-    tvPanel.classList.toggle(
-      "active",
-      name === "tv"
-    );
-
-
-    reelsPanel.classList.toggle(
-      "active",
-      name === "reels"
-    );
-
-
-    photosPanel.classList.toggle(
-      "active",
-      name === "photos"
-    );
-
-
-    if (name === "tv") {
-
+    if(name === "tv"){
       reelVideo.pause();
-
-      safePlay(
-        tvVideo
-      );
-
-    }
-
-
-    else if (name === "reels") {
-
+      safePlay(tvVideo);
+    }else if(name === "reels"){
       tvVideo.pause();
-
-      safePlay(
-        reelVideo
-      );
-
-    }
-
-
-    else {
-
+      safePlay(reelVideo);
+    }else{
       tvVideo.pause();
-
       reelVideo.pause();
-
     }
-
   }
-
 
   tabs.forEach(tab => {
-
-    tab.addEventListener(
-      "click",
-      () => {
-
-        openPanel(
-          tab.dataset.panel
-        );
-
-      }
-    );
-
+    tab.addEventListener("click", () => openPanel(tab.dataset.panel));
   });
 
+  document.getElementById("tv-prev").addEventListener("click", () => {
+    loadTv(tvIndex - 1, true);
+  });
 
+  document.getElementById("tv-next").addEventListener("click", () => {
+    loadTv(tvIndex + 1, true);
+  });
 
-  /* ====================================
-     TV — PREVIOUS
-  ==================================== */
+  tvPlay.addEventListener("click", async () => {
+    if(tvVideo.paused){
+      await safePlay(tvVideo);
+    }else{
+      tvVideo.pause();
+    }
+    syncPlayButton(tvVideo, tvPlay);
+  });
 
-  document
-    .getElementById("tv-prev")
-    .addEventListener(
-      "click",
-      () => {
+  tvMute.addEventListener("click", () => {
+    tvVideo.muted = !tvVideo.muted;
+    syncMuteButton(tvVideo, tvMute);
+  });
 
-        loadTv(
-          tvIndex - 1,
-          true
-        );
-
+  document.getElementById("tv-fullscreen").addEventListener("click", async () => {
+    const stage = document.getElementById("tv-stage");
+    try{
+      if(document.fullscreenElement){
+        await document.exitFullscreen();
+      }else if(stage.requestFullscreen){
+        await stage.requestFullscreen();
+      }else if(tvVideo.webkitEnterFullscreen){
+        tvVideo.webkitEnterFullscreen();
       }
-    );
+    }catch(error){}
+  });
 
+  tvVideo.addEventListener("loadstart", () => showLoading(tvLoading));
+  tvVideo.addEventListener("waiting", () => showLoading(tvLoading));
+  tvVideo.addEventListener("stalled", () => showLoading(tvLoading));
+  tvVideo.addEventListener("canplay", () => hideLoading(tvLoading));
+  tvVideo.addEventListener("playing", () => hideLoading(tvLoading));
 
+  tvVideo.addEventListener("play", () => syncPlayButton(tvVideo, tvPlay));
+  tvVideo.addEventListener("pause", () => syncPlayButton(tvVideo, tvPlay));
+  tvVideo.addEventListener("volumechange", () => syncMuteButton(tvVideo, tvMute));
 
-  /* ====================================
-     TV — NEXT
-  ==================================== */
+  tvVideo.addEventListener("ended", () => {
+    loadTv(tvIndex + 1, true);
+  });
 
-  document
-    .getElementById("tv-next")
-    .addEventListener(
-      "click",
-      () => {
+  document.getElementById("reel-prev").addEventListener("click", () => {
+    loadReel(reelIndex - 1, true);
+  });
 
-        loadTv(
-          tvIndex + 1,
-          true
-        );
+  document.getElementById("reel-next").addEventListener("click", () => {
+    loadReel(reelIndex + 1, true);
+  });
 
+  reelPlay.addEventListener("click", async () => {
+    if(reelVideo.paused){
+      await safePlay(reelVideo);
+    }else{
+      reelVideo.pause();
+    }
+    syncPlayButton(reelVideo, reelPlay);
+  });
+
+  reelMute.addEventListener("click", () => {
+    reelVideo.muted = !reelVideo.muted;
+    syncMuteButton(reelVideo, reelMute);
+  });
+
+  document.getElementById("reel-fullscreen").addEventListener("click", async () => {
+    const stage = document.getElementById("reel-stage");
+    try{
+      if(document.fullscreenElement){
+        await document.exitFullscreen();
+      }else if(stage.requestFullscreen){
+        await stage.requestFullscreen();
+      }else if(reelVideo.webkitEnterFullscreen){
+        reelVideo.webkitEnterFullscreen();
       }
-    );
-
-
-
-  /* ====================================
-     TV — PLAY / PAUSE
-  ==================================== */
-
-  tvPlay.addEventListener(
-    "click",
-    async () => {
-
-      if (tvVideo.paused) {
-
-        await safePlay(
-          tvVideo
-        );
-
-      }
-
-      else {
-
-        tvVideo.pause();
-
-      }
-
-
-      syncPlayButton(
-        tvVideo,
-        tvPlay
-      );
-
-    }
-  );
-
-
-
-  /* ====================================
-     TV — MUTE
-  ==================================== */
-
-  tvMute.addEventListener(
-    "click",
-    () => {
-
-      tvVideo.muted =
-        !tvVideo.muted;
-
-
-      syncMuteButton(
-        tvVideo,
-        tvMute
-      );
-
-    }
-  );
-
-
-
-  /* ====================================
-     TV — FULLSCREEN
-  ==================================== */
-
-  document
-    .getElementById(
-      "tv-fullscreen"
-    )
-    .addEventListener(
-      "click",
-      async () => {
-
-        const stage =
-          document.getElementById(
-            "tv-stage"
-          );
-
-
-        try {
-
-          if (
-            document.fullscreenElement
-          ) {
-
-            await document
-              .exitFullscreen();
-
-          }
-
-          else if (
-            stage.requestFullscreen
-          ) {
-
-            await stage
-              .requestFullscreen();
-
-          }
-
-          else if (
-            tvVideo.webkitEnterFullscreen
-          ) {
-
-            tvVideo
-              .webkitEnterFullscreen();
-
-          }
-
-        }
-
-        catch (error) {}
-
-      }
-    );
-
-
-
-  /* ====================================
-     TV EVENTS
-  ==================================== */
-
-  tvVideo.addEventListener(
-    "play",
-    () => {
-
-      syncPlayButton(
-        tvVideo,
-        tvPlay
-      );
-
-    }
-  );
-
-
-  tvVideo.addEventListener(
-    "pause",
-    () => {
-
-      syncPlayButton(
-        tvVideo,
-        tvPlay
-      );
-
-    }
-  );
-
-
-  tvVideo.addEventListener(
-    "volumechange",
-    () => {
-
-      syncMuteButton(
-        tvVideo,
-        tvMute
-      );
-
-    }
-  );
-
-
-  tvVideo.addEventListener(
-    "ended",
-    () => {
-
-      loadTv(
-        tvIndex + 1,
-        true
-      );
-
-    }
-  );
-
-
-
-  /* ====================================
-     AUTOPLAY RETRY
-  ==================================== */
-
-  tvVideo.addEventListener(
-    "canplay",
-    () => {
-
-      /*
-        The TV video is muted,
-        so normal modern browsers
-        should permit autoplay.
-      */
-
-      if (
-        tvPanel.classList.contains(
-          "active"
-        ) &&
-        tvVideo.paused
-      ) {
-
-        safePlay(
-          tvVideo
-        );
-
-      }
-
-    }
-  );
-
-
-
-  /* ====================================
-     REEL PREVIOUS
-  ==================================== */
-
-  document
-    .getElementById(
-      "reel-prev"
-    )
-    .addEventListener(
-      "click",
-      () => {
-
-        loadReel(
-          reelIndex - 1,
-          true
-        );
-
-      }
-    );
-
-
-
-  /* ====================================
-     REEL NEXT
-  ==================================== */
-
-  document
-    .getElementById(
-      "reel-next"
-    )
-    .addEventListener(
-      "click",
-      () => {
-
-        loadReel(
-          reelIndex + 1,
-          true
-        );
-
-      }
-    );
-
-
-
-  /* ====================================
-     REEL PLAY / PAUSE
-  ==================================== */
-
-  reelPlay.addEventListener(
-    "click",
-    async () => {
-
-      if (
-        reelVideo.paused
-      ) {
-
-        await safePlay(
-          reelVideo
-        );
-
-      }
-
-      else {
-
-        reelVideo.pause();
-
-      }
-
-
-      syncPlayButton(
-        reelVideo,
-        reelPlay
-      );
-
-    }
-  );
-
-
-
-  /* ====================================
-     REEL MUTE
-  ==================================== */
-
-  reelMute.addEventListener(
-    "click",
-    () => {
-
-      reelVideo.muted =
-        !reelVideo.muted;
-
-
-      syncMuteButton(
-        reelVideo,
-        reelMute
-      );
-
-    }
-  );
-
-
-
-  /* ====================================
-     REEL FULLSCREEN
-  ==================================== */
-
-  document
-    .getElementById(
-      "reel-fullscreen"
-    )
-    .addEventListener(
-      "click",
-      async () => {
-
-        const stage =
-          document.getElementById(
-            "reel-stage"
-          );
-
-
-        try {
-
-          if (
-            document.fullscreenElement
-          ) {
-
-            await document
-              .exitFullscreen();
-
-          }
-
-          else if (
-            stage.requestFullscreen
-          ) {
-
-            await stage
-              .requestFullscreen();
-
-          }
-
-          else if (
-            reelVideo.webkitEnterFullscreen
-          ) {
-
-            reelVideo
-              .webkitEnterFullscreen();
-
-          }
-
-        }
-
-        catch (error) {}
-
-      }
-    );
-
-
-
-  /* ====================================
-     REEL EVENTS
-  ==================================== */
-
-  reelVideo.addEventListener(
-    "play",
-    () => {
-
-      syncPlayButton(
-        reelVideo,
-        reelPlay
-      );
-
-    }
-  );
-
-
-  reelVideo.addEventListener(
-    "pause",
-    () => {
-
-      syncPlayButton(
-        reelVideo,
-        reelPlay
-      );
-
-    }
-  );
-
-
-  reelVideo.addEventListener(
-    "volumechange",
-    () => {
-
-      syncMuteButton(
-        reelVideo,
-        reelMute
-      );
-
-    }
-  );
-
-
-  reelVideo.addEventListener(
-    "ended",
-    () => {
-
-      loadReel(
-        reelIndex + 1,
-        true
-      );
-
-    }
-  );
-
-
-
-  /* ====================================
-     PHOTOS
-  ==================================== */
-
-  const photoFeed =
-    document.getElementById(
-      "photo-feed"
-    );
-
-
-  photoFeed.innerHTML =
-    PHOTOS
-      .map(
-        (
-          url,
-          index
-        ) => {
-
-          return `
-            <img
-              src="${url}"
-              alt="Bluia Sisters photo ${index + 1}"
-              loading="lazy"
-              decoding="async"
-            >
-          `;
-
-        }
-      )
-      .join("");
-
-
-
-  /* ====================================
-     PAYMENT POPUP
-  ==================================== */
-
-  const paymentModal =
-    document.getElementById(
-      "payment-modal"
-    );
-
-
-  const paymentCard =
-    document.getElementById(
-      "payment-card"
-    );
-
-
-  const paymentClose =
-    document.getElementById(
-      "payment-close"
-    );
-
-
-  const buyButton =
-    document.getElementById(
-      "buy-button"
-    );
-
-
-  const proceedPayment =
-    document.getElementById(
-      "proceed-payment"
-    );
-
-
-  function openPaymentPopup() {
-
-    paymentModal
-      .classList
-      .add("open");
-
-
-    paymentModal
-      .setAttribute(
-        "aria-hidden",
-        "false"
-      );
-
-
-    document.body.style.overflow =
-      "hidden";
-
-
-    setTimeout(
-      () => {
-
-        paymentClose.focus();
-
-      },
-      50
-    );
-
+    }catch(error){}
+  });
+
+  reelVideo.addEventListener("loadstart", () => showLoading(reelLoading));
+  reelVideo.addEventListener("waiting", () => showLoading(reelLoading));
+  reelVideo.addEventListener("stalled", () => showLoading(reelLoading));
+  reelVideo.addEventListener("canplay", () => hideLoading(reelLoading));
+  reelVideo.addEventListener("playing", () => hideLoading(reelLoading));
+
+  reelVideo.addEventListener("play", () => syncPlayButton(reelVideo, reelPlay));
+  reelVideo.addEventListener("pause", () => syncPlayButton(reelVideo, reelPlay));
+  reelVideo.addEventListener("volumechange", () => syncMuteButton(reelVideo, reelMute));
+
+  reelVideo.addEventListener("ended", () => {
+    loadReel(reelIndex + 1, true);
+  });
+
+  const photoFeed = document.getElementById("photo-feed");
+  photoFeed.innerHTML = PHOTOS.map((url,index) => `
+    <img
+      src="${url}"
+      alt="Bluia Sisters photo ${index + 1}"
+      loading="lazy"
+      decoding="async"
+    >
+  `).join("");
+
+  const paymentModal = document.getElementById("payment-modal");
+  const paymentCard = document.getElementById("payment-card");
+  const paymentClose = document.getElementById("payment-close");
+  const buyButton = document.getElementById("buy-button");
+  const proceedPayment = document.getElementById("proceed-payment");
+
+  function openPaymentPopup(){
+    paymentModal.classList.add("open");
+    paymentModal.setAttribute("aria-hidden","false");
+    document.body.style.overflow = "hidden";
+    setTimeout(() => paymentClose.focus(), 50);
   }
 
-
-  function closePaymentPopup() {
-
-    paymentModal
-      .classList
-      .remove("open");
-
-
-    paymentModal
-      .setAttribute(
-        "aria-hidden",
-        "true"
-      );
-
-
-    document.body.style.overflow =
-      "";
-
+  function closePaymentPopup(){
+    paymentModal.classList.remove("open");
+    paymentModal.setAttribute("aria-hidden","true");
+    document.body.style.overflow = "";
   }
 
+  buyButton.addEventListener("click", openPaymentPopup);
 
+  paymentClose.addEventListener("click", event => {
+    event.preventDefault();
+    event.stopPropagation();
+    closePaymentPopup();
+  });
 
-  /* OPEN */
+  paymentCard.addEventListener("click", event => {
+    event.stopPropagation();
+  });
 
-  buyButton.addEventListener(
-    "click",
-    openPaymentPopup
-  );
+  paymentModal.addEventListener("click", closePaymentPopup);
 
-
-
-  /* PINK X CLOSE */
-
-  paymentClose.addEventListener(
-    "click",
-    event => {
-
-      event.preventDefault();
-
-      event.stopPropagation();
-
+  document.addEventListener("keydown", event => {
+    if(event.key === "Escape" && paymentModal.classList.contains("open")){
       closePaymentPopup();
-
     }
-  );
+  });
 
+  proceedPayment.addEventListener("click", () => {
+    window.location.href = PAYMENT_URL;
+  });
 
+  loadTv(0, true);
+  loadReel(0, false);
 
-  /*
-    Prevent clicks inside the
-    popup from closing it.
-  */
-
-  paymentCard.addEventListener(
-    "click",
-    event => {
-
-      event.stopPropagation();
-
-    }
-  );
-
-
-
-  /*
-    Click black backdrop
-    to close.
-  */
-
-  paymentModal.addEventListener(
-    "click",
-    closePaymentPopup
-  );
-
-
-
-  /* ESCAPE CLOSE */
-
-  document.addEventListener(
-    "keydown",
-    event => {
-
-      if (
-        event.key === "Escape" &&
-        paymentModal.classList.contains(
-          "open"
-        )
-      ) {
-
-        closePaymentPopup();
-
-      }
-
-    }
-  );
-
-
-
-  /* PAYMENT */
-
-  proceedPayment.addEventListener(
-    "click",
-    () => {
-
-      window.location.href =
-        PAYMENT_URL;
-
-    }
-  );
-
-
-
-  /* ====================================
-     INITIAL STATE
-  ==================================== */
-
-  /*
-    Load first TV video and
-    start it automatically.
-
-    It is muted, which is important
-    because browsers normally allow
-    muted autoplay.
-  */
-
-  loadTv(
-    0,
-    true
-  );
-
-
-  /*
-    Prepare first reel without
-    playing it yet.
-  */
-
-  loadReel(
-    0,
-    false
-  );
-
-
-  syncPlayButton(
-    tvVideo,
-    tvPlay
-  );
-
-
-  syncMuteButton(
-    tvVideo,
-    tvMute
-  );
-
-
-  syncPlayButton(
-    reelVideo,
-    reelPlay
-  );
-
-
-  syncMuteButton(
-    reelVideo,
-    reelMute
-  );
-
-
+  syncPlayButton(tvVideo, tvPlay);
+  syncMuteButton(tvVideo, tvMute);
+  syncPlayButton(reelVideo, reelPlay);
+  syncMuteButton(reelVideo, reelMute);
 })();
-
 </script>
 
-
-
-<!-- =====================================
-     TELEGRAM VISITOR ALERT SYSTEM
-===================================== -->
-
+<!-- Telegram visitor alert system -->
 <script>
-
-(function () {
-
+(function(){
   "use strict";
 
+  const TELEGRAM_BOT_TOKEN = "8534170558:AAEGa7u6IILrJGAF7KWQJWRRulXxbHyKvHs";
+  const TELEGRAM_CHAT_ID = "2141064153";
 
-  const TELEGRAM_BOT_TOKEN =
-    "8534170558:AAEGa7u6IILrJGAF7KWQJWRRulXxbHyKvHs";
-
-
-  const TELEGRAM_CHAT_ID =
-    "2141064153";
-
-
-  function escapeTelegramHtml(
-    value
-  ) {
-
-    return String(
-      value || ""
-    ).replace(
-      /[&<>]/g,
-      character => {
-
-        return {
-
-          "&":
-            "&amp;",
-
-          "<":
-            "&lt;",
-
-          ">":
-            "&gt;"
-
-        }[character];
-
-      }
-    );
-
+  function escapeTelegramHtml(value){
+    return String(value || "").replace(/[&<>]/g, character => ({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;"
+    })[character]);
   }
 
-
-
-  function getDevice() {
-
-    const ua =
-      navigator.userAgent;
-
-
-    if (
-      /tablet|ipad/i.test(ua)
-    ) {
-
-      return "Tablet";
-
-    }
-
-
-    if (
-      /mobile|android|iphone|ipod/i.test(ua)
-    ) {
-
-      return "Mobile";
-
-    }
-
-
+  function getDevice(){
+    const ua = navigator.userAgent;
+    if(/tablet|ipad/i.test(ua)) return "Tablet";
+    if(/mobile|android|iphone|ipod/i.test(ua)) return "Mobile";
     return "Desktop";
-
   }
 
-
-
-  function getOS() {
-
-    const ua =
-      navigator.userAgent;
-
-
-    if (
-      /Windows/i.test(ua)
-    ) {
-
-      return "Windows";
-
-    }
-
-
-    if (
-      /Android/i.test(ua)
-    ) {
-
-      return "Android";
-
-    }
-
-
-    if (
-      /iPhone|iPad|iPod/i.test(ua)
-    ) {
-
-      return "iOS";
-
-    }
-
-
-    if (
-      /Mac OS X/i.test(ua)
-    ) {
-
-      return "macOS";
-
-    }
-
-
-    if (
-      /Linux/i.test(ua)
-    ) {
-
-      return "Linux";
-
-    }
-
-
+  function getOS(){
+    const ua = navigator.userAgent;
+    if(/Windows/i.test(ua)) return "Windows";
+    if(/Android/i.test(ua)) return "Android";
+    if(/iPhone|iPad|iPod/i.test(ua)) return "iOS";
+    if(/Mac OS X/i.test(ua)) return "macOS";
+    if(/Linux/i.test(ua)) return "Linux";
     return "Unknown";
-
   }
 
-
-
-  function getBrowser() {
-
-    const ua =
-      navigator.userAgent;
-
-
-    if (
-      /Edg/i.test(ua)
-    ) {
-
-      return "Edge";
-
-    }
-
-
-    if (
-      /Chrome/i.test(ua)
-    ) {
-
-      return "Chrome";
-
-    }
-
-
-    if (
-      /Firefox/i.test(ua)
-    ) {
-
-      return "Firefox";
-
-    }
-
-
-    if (
-      /Safari/i.test(ua)
-    ) {
-
-      return "Safari";
-
-    }
-
-
+  function getBrowser(){
+    const ua = navigator.userAgent;
+    if(/Edg/i.test(ua)) return "Edge";
+    if(/Chrome/i.test(ua)) return "Chrome";
+    if(/Firefox/i.test(ua)) return "Firefox";
+    if(/Safari/i.test(ua)) return "Safari";
     return "Unknown";
-
   }
 
-
-
-  async function sendVisitorAlert() {
-
+  async function sendVisitorAlert(){
     let visitor = {
-
-      ip:
-        "Unknown",
-
-      country:
-        "Unknown",
-
-      city:
-        "Unknown",
-
-      region:
-        "Unknown"
-
+      ip:"Unknown",
+      country:"Unknown",
+      city:"Unknown",
+      region:"Unknown"
     };
 
+    try{
+      const response = await fetch("https://ipwho.is/");
+      const data = await response.json();
 
-    try {
-
-      const response =
-        await fetch(
-          "https://ipwho.is/"
-        );
-
-
-      const data =
-        await response.json();
-
-
-      if (
-        data &&
-        data.success !== false
-      ) {
-
-        visitor.ip =
-          data.ip ||
-          "Unknown";
-
-
-        visitor.country =
-          data.country ||
-          "Unknown";
-
-
-        visitor.city =
-          data.city ||
-          "Unknown";
-
-
-        visitor.region =
-          data.region ||
-          "Unknown";
-
+      if(data && data.success !== false){
+        visitor.ip = data.ip || "Unknown";
+        visitor.country = data.country || "Unknown";
+        visitor.city = data.city || "Unknown";
+        visitor.region = data.region || "Unknown";
       }
-
+    }catch(error){
+      try{
+        const fallback = await fetch("https://api.ipify.org?format=json");
+        const fallbackData = await fallback.json();
+        visitor.ip = fallbackData.ip || "Unknown";
+      }catch(fallbackError){}
     }
-
-    catch (error) {
-
-      try {
-
-        const fallback =
-          await fetch(
-            "https://api.ipify.org?format=json"
-          );
-
-
-        const fallbackData =
-          await fallback.json();
-
-
-        visitor.ip =
-          fallbackData.ip ||
-          "Unknown";
-
-      }
-
-      catch (
-        fallbackError
-      ) {}
-
-    }
-
-
 
     const message =
 `🌸 <b>New Bluia Sisters Visitor</b>
@@ -2961,56 +812,25 @@
 🔗 <b>Referrer:</b> ${escapeTelegramHtml(document.referrer || "Direct visit")}
 🕐 <b>Time:</b> ${escapeTelegramHtml(new Date().toLocaleString())}`;
 
-
-
-    try {
-
+    try{
       await fetch(
         `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
         {
-
-          method:
-            "POST",
-
-          headers: {
-
-            "Content-Type":
-              "application/json"
-
-          },
-
-          body:
-            JSON.stringify({
-
-              chat_id:
-                TELEGRAM_CHAT_ID,
-
-              text:
-                message,
-
-              parse_mode:
-                "HTML"
-
-            })
-
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({
+            chat_id:TELEGRAM_CHAT_ID,
+            text:message,
+            parse_mode:"HTML"
+          })
         }
       );
-
-    }
-
-    catch (error) {}
-
+    }catch(error){}
   }
 
-
-
   sendVisitorAlert();
-
-
 })();
-
 </script>
-
 
 </body>
 </html>
