@@ -35,17 +35,19 @@
     .video-view,
     .photo-view {
       width: 100vw;
+      height: min(calc(100dvh - 46px), calc(100vw * 16 / 9));
       min-height: 0;
-      height: auto;
       display: grid;
       place-items: center;
-      overflow: visible;
+      overflow: hidden;
       background: #050505;
     }
 
     .video-view {
       position: relative;
-      aspect-ratio: 16 / 9;
+      width: 100vw;
+      height: min(calc(100dvh - 46px), calc(100vw * 16 / 9));
+      background: #050505;
       overflow: hidden;
     }
 
@@ -73,10 +75,10 @@
     #photo-player {
       display: block;
       width: 100%;
-      height: auto;
+      height: 100%;
       max-height: none;
       object-fit: contain;
-      object-position: center top;
+      object-position: center center;
       background: #050505;
       border-radius: 0;
     }
@@ -513,74 +515,74 @@
     .site-footer .footer-brand {
       color: #d63f79;
     }
-
-
-    /* DARK MODE */
-    body.dark-mode {
-      background: #000;
+    /* DEFAULT DARK THEME */
+    html, body {
+      background: #000 !important;
       color: #f6edf1;
     }
 
-    body.dark-mode .controls,
-    body.dark-mode .content {
-      background: #000;
+    .controls,
+    .content {
+      background: #000 !important;
     }
 
-    body.dark-mode .icon-btn,
-    body.dark-mode .mode-btn,
-    body.dark-mode .photo-arrow,
-    body.dark-mode .telegram-button {
-      border-color: #33252d;
-      background: #0b0b0b;
-      color: #ff5d9b;
+    .icon-btn,
+    .mode-btn,
+    .photo-arrow,
+    .telegram-button {
+      border-color: #33252d !important;
+      background: #0b0b0b !important;
+      color: #ff5d9b !important;
     }
 
-    body.dark-mode .icon-btn.primary,
-    body.dark-mode .mode-btn.active {
-      background: #df4a83;
-      border-color: #df4a83;
-      color: #fff;
+    .icon-btn.primary,
+    .mode-btn.active {
+      background: #df4a83 !important;
+      border-color: #df4a83 !important;
+      color: #fff !important;
     }
 
-    body.dark-mode h1 {
-      color: #fff;
+    h1 {
+      color: #fff !important;
     }
 
-    body.dark-mode .tv-description {
-      color: #cbb9c1;
+    .tv-description {
+      color: #cbb9c1 !important;
     }
 
-    body.dark-mode .site-footer {
-      border-top-color: #2b2026;
-      color: #9f8e96;
+    .site-footer {
+      border-top-color: #2b2026 !important;
+      color: #9f8e96 !important;
     }
 
-    body.dark-mode .site-footer strong {
-      color: #fff;
+    .site-footer strong {
+      color: #fff !important;
     }
 
-    .theme-toggle {
-      width: 32px;
-      flex: 0 0 32px;
+    /* Portrait-friendly media stage.
+       100dvh adapts as mobile browser chrome changes while scrolling. */
+    .video-view,
+    .photo-view {
+      width: 100vw !important;
+      height: min(calc(100dvh - 46px), calc(100vw * 16 / 9)) !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      background: #050505 !important;
+      overflow: hidden !important;
     }
 
-    .theme-toggle .sun-icon,
-    .theme-toggle .moon-icon {
-      width: 14px;
-      height: 14px;
+    #video-player,
+    #photo-player {
+      width: 100% !important;
+      height: 100% !important;
+      max-height: none !important;
+      object-fit: contain !important;
+      object-position: center center !important;
+      background: #050505 !important;
+      border-radius: 0 !important;
     }
 
-    .theme-toggle .sun-icon {
-      display: none;
-    }
 
-    body.dark-mode .theme-toggle .moon-icon {
-      display: none;
-    }
-
-    body.dark-mode .theme-toggle .sun-icon {
-      display: block;
-    }
 
     @media (max-width: 360px) {
       .controls { gap: 5px; padding-left: 5px; padding-right: 5px; }
@@ -637,15 +639,6 @@
 
       <button class="mode-btn active" id="videos-button" type="button">Videos</button>
       <button class="mode-btn" id="photos-button" type="button">Photos</button>
-
-      <button class="icon-btn theme-toggle" id="theme-toggle" type="button" aria-label="Turn on dark mode">
-        <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M20.3 15.1A8.5 8.5 0 0 1 8.9 3.7 8.7 8.7 0 1 0 20.3 15.1Z"/>
-        </svg>
-        <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 4V2h1v2h-1Zm0 18v-2h1v2h-1ZM4 13H2v-1h2v1Zm18 0h-2v-1h2v1ZM5.6 6.3 4.2 4.9l.7-.7 1.4 1.4-.7.7Zm13.5 13.5-1.4-1.4.7-.7 1.4 1.4-.7.7ZM18.4 6.3l-.7-.7 1.4-1.4.7.7-1.4 1.4ZM4.9 19.8l-.7-.7 1.4-1.4.7.7-1.4 1.4ZM12.5 7A5.5 5.5 0 1 0 18 12.5 5.5 5.5 0 0 0 12.5 7Zm0 10A4.5 4.5 0 1 1 17 12.5 4.5 4.5 0 0 1 12.5 17Z"/>
-        </svg>
-      </button>
 
       <button class="photo-arrow" id="photo-prev" type="button" aria-label="Previous photo">‹</button>
       <button class="photo-arrow" id="photo-next" type="button" aria-label="Next photo">›</button>
@@ -759,24 +752,6 @@
     const modal = document.getElementById("payment-modal");
     const proceedPayment = document.getElementById("proceed-payment");
     const cancelPayment = document.getElementById("cancel-payment");
-    const themeToggle = document.getElementById("theme-toggle");
-
-    function applyTheme(mode) {
-      const dark = mode === "dark";
-      document.body.classList.toggle("dark-mode", dark);
-      if (themeToggle) {
-        themeToggle.setAttribute("aria-label", dark ? "Turn off dark mode" : "Turn on dark mode");
-      }
-    }
-
-    const savedTheme = localStorage.getItem("bluia-theme");
-    applyTheme(savedTheme === "dark" ? "dark" : "light");
-
-    themeToggle?.addEventListener("click", () => {
-      const next = document.body.classList.contains("dark-mode") ? "light" : "dark";
-      localStorage.setItem("bluia-theme", next);
-      applyTheme(next);
-    });
 
     const videos = Array.isArray(window.BluiaMedia?.videos) ? window.BluiaMedia.videos : [];
     const photos = Array.isArray(window.BluiaMedia?.photos) ? window.BluiaMedia.photos : [];
