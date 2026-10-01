@@ -16,7 +16,7 @@
 
     .media-tabs{
       position:sticky;top:0;z-index:1000;
-      display:grid;grid-template-columns:repeat(3,1fr);gap:6px;
+      display:grid;grid-template-columns:repeat(4,1fr);gap:6px;
       width:100%;padding:calc(7px + env(safe-area-inset-top)) 8px 7px;
       background:rgba(0,0,0,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
       border-bottom:1px solid #23191f
@@ -199,6 +199,133 @@
       .tv-controls{gap:7px}
       .media-control{width:35px;height:35px;flex-basis:35px}
     }
+  
+    .media-tab.members-tab{
+      border-color:#d7b24b;
+      color:#fff;
+      background:linear-gradient(135deg,#e3c45d,#b98724);
+      box-shadow:0 4px 16px rgba(215,178,75,.18);
+    }
+    .media-tab.members-tab.active{
+      border-color:#f0d36a;
+      background:linear-gradient(135deg,#f0cf68,#c28e25);
+      color:#fff;
+      box-shadow:0 5px 18px rgba(215,178,75,.28);
+    }
+
+    .members-panel{
+      width:min(100%,440px);
+      margin:0 auto;
+      padding:18px 14px 24px;
+      background:#000;
+      text-align:left;
+    }
+
+    .members-card{
+      border:1px solid #6b5421;
+      border-radius:18px;
+      padding:18px 16px;
+      background:
+        radial-gradient(circle at top right,rgba(226,194,91,.12),transparent 34%),
+        linear-gradient(180deg,#111008,#090909);
+      box-shadow:0 14px 40px rgba(0,0,0,.28);
+    }
+
+    .members-kicker{
+      margin:0 0 7px;
+      color:#d7b24b;
+      font-size:9px;
+      font-weight:900;
+      letter-spacing:.9px;
+      text-transform:uppercase;
+    }
+
+    .members-title{
+      margin:0 0 7px;
+      color:#f1d77a;
+      font:700 22px/1.15 Georgia,"Times New Roman",serif;
+    }
+
+    .members-copy{
+      margin:0 0 14px;
+      color:#cfc8b4;
+      font-size:10.8px;
+      line-height:1.6;
+    }
+
+    .members-price{
+      display:flex;
+      align-items:baseline;
+      gap:5px;
+      margin:0 0 14px;
+      color:#fff;
+    }
+
+    .members-price strong{
+      color:#f1d77a;
+      font-size:26px;
+      line-height:1;
+    }
+
+    .members-price span{
+      color:#a99f84;
+      font-size:10px;
+      font-weight:700;
+    }
+
+    .members-points{
+      display:grid;
+      gap:8px;
+      margin:0 0 15px;
+    }
+
+    .members-point{
+      display:grid;
+      grid-template-columns:22px 1fr;
+      gap:8px;
+      align-items:start;
+      padding:9px 10px;
+      border:1px solid #2f2a1c;
+      border-radius:10px;
+      background:#0e0d09;
+      color:#d6d0bd;
+      font-size:10px;
+      line-height:1.45;
+    }
+
+    .members-point .check{
+      width:22px;
+      height:22px;
+      display:grid;
+      place-items:center;
+      border-radius:50%;
+      background:#2c2411;
+      color:#e2c25b;
+      font-weight:900;
+      font-size:11px;
+    }
+
+    .members-buy{
+      width:100%;
+      min-height:50px;
+      border:0;
+      border-radius:12px;
+      background:linear-gradient(135deg,#e6c65c,#b88928);
+      color:#140f04;
+      font-size:11.5px;
+      font-weight:900;
+      cursor:pointer;
+      box-shadow:0 8px 24px rgba(196,153,49,.22);
+    }
+
+    .members-note{
+      margin:9px 0 0;
+      color:#8f876f;
+      font-size:8.7px;
+      line-height:1.45;
+      text-align:center;
+    }
+
   </style>
 </head>
 
@@ -210,6 +337,7 @@
     <button class="media-tab active" type="button" data-panel="tv">TV</button>
     <button class="media-tab" type="button" data-panel="reels">Reels</button>
     <button class="media-tab" type="button" data-panel="photos">Photos</button>
+    <button class="media-tab members-tab" type="button" data-panel="members">Members</button>
   </nav>
 
   <section class="media-panel active" id="panel-tv">
@@ -297,6 +425,58 @@
 
   <section class="media-panel" id="panel-photos">
     <div class="photo-feed" id="photo-feed"></div>
+  </section>
+
+  <section class="media-panel" id="panel-members">
+    <div class="members-panel">
+      <div class="members-card">
+
+        <div class="members-kicker">Bluia Sisters Members</div>
+
+        <h2 class="members-title">Full Access</h2>
+
+        <p class="members-copy">
+          Become a Bluia Sisters member and get private access to the full TV collection,
+          reels, photos, fresh episodes, new faces, and new Bluia Sisters content.
+        </p>
+
+        <div class="members-price">
+          <strong>$5</strong>
+          <span>/ month</span>
+        </div>
+
+        <div class="members-points">
+          <div class="members-point">
+            <span class="check">✓</span>
+            <span>Unlimited member access to Bluia Sisters entertainment.</span>
+          </div>
+
+          <div class="members-point">
+            <span class="check">✓</span>
+            <span>Your private viewing URL is sent to the email used at checkout.</span>
+          </div>
+
+          <div class="members-point">
+            <span class="check">✓</span>
+            <span>Secure payment is processed through Stripe.</span>
+          </div>
+
+          <div class="members-point">
+            <span class="check">✓</span>
+            <span>Fresh episodes and new content added regularly.</span>
+          </div>
+        </div>
+
+        <button class="members-buy" id="members-buy" type="button">
+          Get Full Access — $5/month
+        </button>
+
+        <p class="members-note">
+          Use an email address you can access. Your private viewing link will be delivered there.
+        </p>
+
+      </div>
+    </div>
   </section>
 
   <div class="page-content">
@@ -415,6 +595,7 @@
   const tvPanel = document.getElementById("panel-tv");
   const reelsPanel = document.getElementById("panel-reels");
   const photosPanel = document.getElementById("panel-photos");
+  const membersPanel = document.getElementById("panel-members");
 
   const tvVideo = document.getElementById("tv-video");
   const reelVideo = document.getElementById("reel-video");
@@ -551,6 +732,7 @@
     tvPanel.classList.toggle("active", name === "tv");
     reelsPanel.classList.toggle("active", name === "reels");
     photosPanel.classList.toggle("active", name === "photos");
+    membersPanel.classList.toggle("active", name === "members");
 
     if(name === "tv"){
       reelVideo.pause();
@@ -696,6 +878,8 @@
   }
 
   buyButton.addEventListener("click", openPaymentPopup);
+
+  document.getElementById("members-buy").addEventListener("click", openPaymentPopup);
 
   paymentClose.addEventListener("click", event => {
     event.preventDefault();
