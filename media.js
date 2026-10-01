@@ -1,17 +1,16 @@
-// Bluia Sisters media list
-// Add/remove/reorder URLs here. index.html reads this file automatically.
-
 window.BluiaMedia = {
-  videos: [
-    "https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-66e1277e-ffcc-47eb-b056-82e1d33f48ed.mp4?download=true",
+  tv: [
     "https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-a4f971c6-547e-4f13-8642-a3dd06da3ee2.mp4?download=true",
-    "https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-5f62c992-623b-4e63-bb65-9d7a9736b5ff.mp4?download=true",
-    "https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-cdec6d71-9fad-4460-9bd4-b5ee3ccb3f74.mp4?download=true",
     "https://huggingface.co/buckets/veebluia/drama/resolve/cgrok-video-ded4afea-ee3c-4c53-b246-290070da4d42.mp4?download=true",
     "https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-10dd7878-96b4-4946-926b-33e22bc8cb9e.mp4?download=true",
-    "https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-7ef55572-64ad-46c5-9c2e-ae777e88f28b.mp4?download=true",
     "https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-344b021b-a159-4251-90d8-aeb92164a4b3.mp4?download=true",
     "https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-6c0d70db-a7e0-4a2f-b093-1d0f6b1266ed.mp4?download=true"
+  ],
+
+  reels: [
+    "https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-66e1277e-ffcc-47eb-b056-82e1d33f48ed.mp4?download=true",
+    "https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-cdec6d71-9fad-4460-9bd4-b5ee3ccb3f74.mp4?download=true",
+    "https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-7ef55572-64ad-46c5-9c2e-ae777e88f28b.mp4?download=true"
   ],
 
   photos: [
@@ -22,31 +21,3 @@ window.BluiaMedia = {
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_44%20AM.png?download=true"
   ]
 };
-
-
-// Full-width square-corner video layout
-(() => {
-  const style = document.createElement("style");
-  style.textContent = `
-    .live-tv-wrap {
-      width: 100vw !important;
-      margin-left: calc(50% - 50vw) !important;
-      margin-right: calc(50% - 50vw) !important;
-      border: 0 !important;
-      border-radius: 0 !important;
-    }
-
-    .live-tv-stage {
-      width: 100vw !important;
-      border-radius: 0 !important;
-    }
-
-    .live-tv-stage video {
-      width: 100% !important;
-      height: 100% !important;
-      object-fit: contain !important;
-      border-radius: 0 !important;
-    }
-  `;
-  document.head.appendChild(style);
-})();
