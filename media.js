@@ -29,6 +29,12 @@ window.BluiaMedia = {
   // Photos
   photos: [
 
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2007_19_21%20AM.png?download=true",
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2007_18_43%20AM.png?download=true",
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2007_19_05%20AM.png?download=true",
+    
+    
+    
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%201%2C%202026%2C%2010_27_11%20PM.png?download=true",
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%201%2C%202026%2C%2010_27_29%20PM.png?download=true",
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%201%2C%202026%2C%2010_27_45%20PM.png?download=true",
