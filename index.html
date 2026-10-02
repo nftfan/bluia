@@ -326,6 +326,85 @@
       text-align:center;
     }
 
+  
+    .sub-tabs{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:6px;
+      margin-top:10px;
+      padding:7px 0;
+      border-top:1px solid #22191e;
+      border-bottom:1px solid #22191e;
+      background:#000;
+    }
+    .sub-tab{
+      height:34px;
+      border:1px solid #33262d;
+      border-radius:999px;
+      background:#0c0c0c;
+      color:#a9959f;
+      font-size:10px;
+      font-weight:800;
+      cursor:pointer;
+    }
+    .sub-tab.active{
+      border-color:#df4a83;
+      background:#df4a83;
+      color:#fff;
+    }
+    .sub-panel{
+      display:none;
+      padding-top:10px;
+    }
+    .sub-panel.active{
+      display:block;
+    }
+    .models-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:3px;
+      width:100%;
+    }
+    .models-grid img{
+      display:block;
+      width:100%;
+      aspect-ratio:1/1;
+      object-fit:cover;
+      border:0;
+      border-radius:0;
+      background:#000;
+    }
+    .models-more{
+      margin:10px 0 0;
+      color:#b9aab1;
+      font-size:9.5px;
+      line-height:1.45;
+      text-align:center;
+    }
+    .sub-card{
+      padding:14px 12px;
+      border:1px solid #2d2228;
+      border-radius:12px;
+      background:#0d0d0d;
+      text-align:left;
+    }
+    .sub-card h3{
+      margin:0 0 6px;
+      color:#fff;
+      font-size:14px;
+      line-height:1.2;
+    }
+    .sub-card p{
+      margin:0;
+      color:#c6b5bd;
+      font-size:10.5px;
+      line-height:1.55;
+    }
+    .sub-card .accent{
+      color:#ff5d9b;
+      font-weight:800;
+    }
+
   </style>
 </head>
 
@@ -508,6 +587,31 @@
       Join my Telegram
     </a>
 
+    <div class="sub-tabs" aria-label="Bluia Sisters extras">
+      <button class="sub-tab active" type="button" data-subpanel="models">Models</button>
+      <button class="sub-tab" type="button" data-subpanel="chat">Chat</button>
+      <button class="sub-tab" type="button" data-subpanel="love">Love</button>
+    </div>
+
+    <div class="sub-panel active" id="subpanel-models">
+      <div class="models-grid" id="models-grid"></div>
+      <p class="models-more">And many more new Bluia Sisters join every week.</p>
+    </div>
+
+    <div class="sub-panel" id="subpanel-chat">
+      <div class="sub-card">
+        <h3>Chat — Coming Soon</h3>
+        <p>Talk to your favorite <span class="accent">Bluia Sisters</span>. A new private chat experience is coming soon.</p>
+      </div>
+    </div>
+
+    <div class="sub-panel" id="subpanel-love">
+      <div class="sub-card">
+        <h3>Love</h3>
+        <p>All paid members get access to a private Telegram where exclusive media is uploaded by Bluia Sisters.</p>
+      </div>
+    </div>
+
   </div>
 
   <footer class="site-footer">
@@ -589,6 +693,7 @@
   const TV_VIDEOS = Array.isArray(window.BluiaMedia?.tv) ? window.BluiaMedia.tv : [];
   const REELS = Array.isArray(window.BluiaMedia?.reels) ? window.BluiaMedia.reels : [];
   const PHOTOS = Array.isArray(window.BluiaMedia?.photos) ? window.BluiaMedia.photos : [];
+  const MODELS = Array.isArray(window.BluiaMedia?.models) ? window.BluiaMedia.models : [];
 
   const tabs = document.querySelectorAll(".media-tab");
 
@@ -857,6 +962,29 @@
       decoding="async"
     >
   `).join("");
+
+
+  const modelsGrid = document.getElementById("models-grid");
+  modelsGrid.innerHTML = MODELS.map((url,index) => `
+    <img
+      src="${url}"
+      alt="Bluia Sisters model ${index + 1}"
+      loading="lazy"
+      decoding="async"
+    >
+  `).join("");
+
+  const subTabs = document.querySelectorAll(".sub-tab");
+  const subPanels = document.querySelectorAll(".sub-panel");
+
+  subTabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      subTabs.forEach(item => item.classList.toggle("active", item === tab));
+      subPanels.forEach(panel => panel.classList.remove("active"));
+      const target = document.getElementById("subpanel-" + tab.dataset.subpanel);
+      if(target) target.classList.add("active");
+    });
+  });
 
   const paymentModal = document.getElementById("payment-modal");
   const paymentCard = document.getElementById("payment-card");
