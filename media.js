@@ -80,3 +80,98 @@ window.BluiaMedia = {
   ]
 
 };
+
+// Albums UI
+(() => {
+  const applyAlbumsUI = () => {
+    const albums = Array.isArray(window.BluiaMedia?.albums) ? window.BluiaMedia.albums : [];
+
+    const chatTab = document.querySelector('.sub-tab[data-subpanel="chat"]');
+    if (chatTab) {
+      chatTab.textContent = "Albums";
+      chatTab.dataset.subpanel = "albums";
+    }
+
+    const chatPanel = document.getElementById("subpanel-chat");
+    if (chatPanel) {
+      chatPanel.id = "subpanel-albums";
+      chatPanel.innerHTML = '<div class="albums-grid" id="albums-grid"></div>';
+    }
+
+    const grid = document.getElementById("albums-grid");
+    if (grid) {
+      grid.innerHTML = albums.map((album, index) => `
+        <a
+          class="album-card"
+          href="${album.stripe || '#'}"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open album ${index + 1}"
+        >
+          <img
+            class="album-cover"
+            src="${album.cover}"
+            alt="Bluia Sisters album ${index + 1}"
+            loading="lazy"
+            decoding="async"
+          >
+          <span class="album-meta">${album.photos || 0} Photos</span>
+        </a>
+      `).join("");
+    }
+
+    if (!document.getElementById("bluia-albums-style")) {
+      const style = document.createElement("style");
+      style.id = "bluia-albums-style";
+      style.textContent = `
+        .albums-grid{
+          display:grid;
+          grid-template-columns:repeat(2,minmax(0,1fr));
+          gap:12px 9px;
+          width:100%;
+        }
+
+        .album-card{
+          display:block;
+          min-width:0;
+          color:#fff;
+          text-decoration:none;
+          text-align:left;
+          transition:transform .12s ease;
+        }
+
+        .album-card:active{
+          transform:scale(.985);
+        }
+
+        .album-cover{
+          display:block;
+          width:100%;
+          aspect-ratio:2/3;
+          object-fit:cover;
+          object-position:top center;
+          border:0;
+          border-radius:12px;
+          background:#111;
+        }
+
+        .album-meta{
+          display:block;
+          padding:6px 2px 0;
+          color:#d8cbd1;
+          font-size:9.5px;
+          font-weight:800;
+          line-height:1.25;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", applyAlbumsUI, { once: true });
+  } else {
+    applyAlbumsUI();
+  }
+})();
+
