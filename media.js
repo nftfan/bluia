@@ -70,31 +70,43 @@ window.BluiaMedia = {
     {
       cover: "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_01_28%20AM.png?download=true",
       photos: 38,
+      id: "XX001",
+      videos: 3,
       stripe: "https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04"
     },
     {
       cover: "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_01_37%20AM.png?download=true",
       photos: 52,
+      id: "XX002",
+      videos: 5,
       stripe: "https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04"
     },
     {
       cover: "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_01_49%20AM.png?download=true",
       photos: 44,
+      id: "XX003",
+      videos: 2,
       stripe: "https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04"
     },
     {
       cover: "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_48_51%20AM.png?download=true",
       photos: 41,
+      id: "XX004",
+      videos: 4,
       stripe: "https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04"
     },
     {
       cover: "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_13_47%20AM.png?download=true",
       photos: 47,
+      id: "XX005",
+      videos: 1,
       stripe: "https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04"
     },
     {
       cover: "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_13_28%20AM.png?download=true",
       photos: 36,
+      id: "XX006",
+      videos: 3,
       stripe: "https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04"
     }
   ]
@@ -135,7 +147,7 @@ window.BluiaMedia = {
             loading="lazy"
             decoding="async"
           >
-          <span class="album-meta">${album.photos || 0} Photos</span>
+          <span class="album-meta">Album ID: ${album.id || ("XX" + String(index + 1).padStart(3,"0"))} · ${album.photos || 0} Photos · ${album.videos || 0} Videos</span>
         </a>
       `).join("");
     }
