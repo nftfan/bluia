@@ -81,6 +81,21 @@ window.BluiaMedia = {
       cover: "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_01_49%20AM.png?download=true",
       photos: 44,
       stripe: "https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04"
+    },
+    {
+      cover: "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_48_51%20AM.png?download=true",
+      photos: 41,
+      stripe: "https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04"
+    },
+    {
+      cover: "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_13_47%20AM.png?download=true",
+      photos: 47,
+      stripe: "https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04"
+    },
+    {
+      cover: "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_13_28%20AM.png?download=true",
+      photos: 36,
+      stripe: "https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04"
     }
   ]
 
