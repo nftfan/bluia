@@ -216,7 +216,7 @@ window.BluiaMedia = {
     panel.innerHTML =
       '<div class="sub-card">' +
         '<h3>Love — VIP Telegram</h3>' +
-        '<p>Paid members get access to the private Bluia Sisters Telegram channel.</p>' +
+        '<p>Join the exclusive Telegram for VIP fans.</p>' +
         '<p style="margin-top:8px;color:#ffd86b;font-weight:800;">500 Telegram Stars per month</p>' +
         '<a href="https://t.me/+vieXRo_X9rM5NzRk" target="_blank" rel="noopener noreferrer" ' +
         'style="margin-top:10px;min-height:42px;display:flex;align-items:center;justify-content:center;' +
