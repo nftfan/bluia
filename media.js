@@ -220,7 +220,7 @@ window.BluiaMedia = {
         '<p style="margin-top:8px;color:#ffd86b;font-weight:800;">500 Telegram Stars per month</p>' +
         '<a href="https://t.me/+vieXRo_X9rM5NzRk" target="_blank" rel="noopener noreferrer" ' +
         'style="margin-top:10px;min-height:42px;display:flex;align-items:center;justify-content:center;' +
-        'border-radius:10px;background:#df4a83;color:#fff;text-decoration:none;font-size:10.5px;font-weight:900;">' +
+        'border-radius:10px;background:linear-gradient(135deg,#e6c65c,#b88928);color:#140f04;text-decoration:none;font-size:10.5px;font-weight:900;box-shadow:0 8px 24px rgba(196,153,49,.22);">' +
         'Join VIP Telegram</a>' +
       '</div>';
   };
@@ -229,6 +229,31 @@ window.BluiaMedia = {
     document.addEventListener("DOMContentLoaded", applyVipTelegram, {once:true});
   } else {
     applyVipTelegram();
+  }
+})();
+
+// Free Telegram button UI
+(() => {
+  const applyFreeTelegramButton = () => {
+    const button = document.querySelector(".telegram-button");
+    if (!button) return;
+
+    for (const node of [...button.childNodes]) {
+      if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+        node.textContent = " Join Free Telegram ";
+      }
+    }
+
+    button.style.background = "#229ED9";
+    button.style.borderColor = "#229ED9";
+    button.style.color = "#ffffff";
+    button.style.boxShadow = "0 8px 24px rgba(34,158,217,.24)";
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", applyFreeTelegramButton, {once:true});
+  } else {
+    applyFreeTelegramButton();
   }
 })();
 
