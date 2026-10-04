@@ -147,7 +147,7 @@ window.BluiaMedia = {
             loading="lazy"
             decoding="async"
           >
-          <span class="album-meta">Album ID: ${album.id || ("XX" + String(index + 1).padStart(3,"0"))} · ${album.photos || 0} Photos · ${album.videos || 0} Videos</span>
+          <span class="album-meta">ID: ${album.id || ("XX" + String(index + 1).padStart(3,"0"))} · ${album.photos || 0} Photos · ${album.videos || 0} Videos</span>
         </a>
       `).join("");
     }
