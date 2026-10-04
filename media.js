@@ -58,6 +58,25 @@ window.BluiaMedia = {
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_50_09%20AM.png?download=true",
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_50_19%20AM.png?download=true",
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_50_36%20AM.png?download=true"
+  ],
+
+  // Albums
+  albums: [
+    {
+      cover: "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_01_28%20AM.png?download=true",
+      photos: 38,
+      stripe: "https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04"
+    },
+    {
+      cover: "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_01_37%20AM.png?download=true",
+      photos: 52,
+      stripe: "https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04"
+    },
+    {
+      cover: "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_01_49%20AM.png?download=true",
+      photos: 44,
+      stripe: "https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04"
+    }
   ]
 
 };
