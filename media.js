@@ -19,21 +19,6 @@ window.BluiaMedia = {
     "https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-7ef55572-64ad-46c5-9c2e-ae777e88f28b.mp4?download=true"
   ],
 
-  // Photos
-  photos: [
-    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2007_19_21%20AM.png?download=true",
-    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2007_18_43%20AM.png?download=true",
-    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2007_19_05%20AM.png?download=true",
-    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%201%2C%202026%2C%2010_27_11%20PM.png?download=true",
-    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%201%2C%202026%2C%2010_27_29%20PM.png?download=true",
-    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%201%2C%202026%2C%2010_27_45%20PM.png?download=true",
-    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_48_51%20AM.png?download=true",
-    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_12%20AM.png?download=true",
-    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_27%20AM.png?download=true",
-    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_33%20AM.png?download=true",
-    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_44%20AM.png?download=true"
-  ],
-
   // Models grid
   models: [
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_49_38%20AM.png?download=true",
@@ -48,7 +33,7 @@ window.BluiaMedia = {
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_10_11%20AM.png?download=true"
   ],
 
-  // Albums — latest first
+  // Albums — includes all former Photos items
   albums: [
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%205%2C%202026%2C%2011_08_28%20AM.png?download=true",
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%205%2C%202026%2C%2011_08_15%20AM.png?download=true",
@@ -58,19 +43,28 @@ window.BluiaMedia = {
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_01_49%20AM.png?download=true",
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_48_51%20AM.png?download=true",
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_13_47%20AM.png?download=true",
-    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_13_28%20AM.png?download=true"
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_13_28%20AM.png?download=true",
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2007_19_21%20AM.png?download=true",
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2007_18_43%20AM.png?download=true",
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2007_19_05%20AM.png?download=true",
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%201%2C%202026%2C%2010_27_11%20PM.png?download=true",
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%201%2C%202026%2C%2010_27_29%20PM.png?download=true",
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%201%2C%202026%2C%2010_27_45%20PM.png?download=true",
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_12%20AM.png?download=true",
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_27%20AM.png?download=true",
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_33%20AM.png?download=true",
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_44%20AM.png?download=true"
   ]
 };
 
-// Albums in top menu + Photos in lower menu
+// Albums in top menu. Photos section is removed.
 (() => {
   const BUY_ALBUM_URL = "https://t.me/+1in39ZKPFZZjNjU0";
 
-  const applyMediaSwap = () => {
+  const applyAlbumsUI = () => {
     const albums = Array.isArray(window.BluiaMedia?.albums) ? window.BluiaMedia.albums : [];
-    const photos = Array.isArray(window.BluiaMedia?.photos) ? window.BluiaMedia.photos : [];
 
-    // Top menu: Photos -> Albums. Keep data-panel="photos" so the existing tab logic still works.
+    // Top menu: Photos -> Albums. Keep data-panel="photos" so existing index logic still works.
     const topPhotosTab = document.querySelector('.media-tab[data-panel="photos"]');
     if (topPhotosTab) {
       topPhotosTab.textContent = "Albums";
@@ -93,7 +87,7 @@ window.BluiaMedia = {
             decoding="async"
           >
           <a
-            class="album-buy-button"
+            class="album-buy-link"
             href="${BUY_ALBUM_URL}"
             target="_blank"
             rel="noopener noreferrer"
@@ -103,34 +97,20 @@ window.BluiaMedia = {
       `).join("");
     }
 
-    // Lower menu: old Albums slot -> Photos.
-    const lowerTab = document.querySelector('.sub-tab[data-subpanel="chat"]') || document.querySelector('.sub-tab[data-subpanel="albums"]');
-    if (lowerTab) {
-      lowerTab.textContent = "Photos";
-      lowerTab.dataset.subpanel = "photos-grid";
-    }
+    // Remove the old Photos/Albums slot from the lower menu completely.
+    const lowerTab = document.querySelector('.sub-tab[data-subpanel="chat"]') ||
+                     document.querySelector('.sub-tab[data-subpanel="albums"]') ||
+                     document.querySelector('.sub-tab[data-subpanel="photos-grid"]');
+    if (lowerTab) lowerTab.remove();
 
-    const lowerPanel = document.getElementById("subpanel-chat") || document.getElementById("subpanel-albums");
-    if (lowerPanel) {
-      lowerPanel.id = "subpanel-photos-grid";
-      lowerPanel.innerHTML = '<div class="photos-grid" id="photos-grid"></div>';
-    }
+    const lowerPanel = document.getElementById("subpanel-chat") ||
+                       document.getElementById("subpanel-albums") ||
+                       document.getElementById("subpanel-photos-grid");
+    if (lowerPanel) lowerPanel.remove();
 
-    const photosGrid = document.getElementById("photos-grid");
-    if (photosGrid) {
-      photosGrid.innerHTML = photos.map((url, index) => `
-        <img
-          src="${url}"
-          alt="Bluia Sisters photo ${index + 1}"
-          loading="lazy"
-          decoding="async"
-        >
-      `).join("");
-    }
-
-    if (!document.getElementById("bluia-media-swap-style")) {
+    if (!document.getElementById("bluia-albums-only-style")) {
       const style = document.createElement("style");
-      style.id = "bluia-media-swap-style";
+      style.id = "bluia-albums-only-style";
       style.textContent = `
         .albums-grid{
           display:grid;
@@ -155,36 +135,22 @@ window.BluiaMedia = {
           border-radius:12px;
           background:#111;
         }
-        .album-buy-button{
-          min-height:38px;
-          margin-top:7px;
-          display:flex;
-          align-items:center;
-          justify-content:center;
-          width:100%;
-          border-radius:10px;
-          background:linear-gradient(135deg,#ed5b96,#c93470);
-          color:#fff;
+        .album-buy-link{
+          display:inline-block;
+          margin-top:6px;
+          color:#ff6fa8;
           text-decoration:none;
           font-size:10px;
-          font-weight:900;
-          box-shadow:0 7px 20px rgba(223,74,131,.20);
+          font-weight:700;
+          line-height:1.25;
+          letter-spacing:.1px;
         }
-        .photos-grid{
-          display:grid;
-          grid-template-columns:repeat(3,minmax(0,1fr));
-          gap:3px;
-          width:100%;
+        .album-buy-link:hover,
+        .album-buy-link:focus{
+          text-decoration:underline;
         }
-        .photos-grid img{
-          display:block;
-          width:100%;
-          aspect-ratio:2/3;
-          object-fit:cover;
-          object-position:top center;
-          border:0;
-          border-radius:0;
-          background:#000;
+        .sub-tabs{
+          grid-template-columns:repeat(2,1fr) !important;
         }
       `;
       document.head.appendChild(style);
@@ -192,9 +158,9 @@ window.BluiaMedia = {
   };
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", applyMediaSwap, { once: true });
+    document.addEventListener("DOMContentLoaded", applyAlbumsUI, { once: true });
   } else {
-    applyMediaSwap();
+    applyAlbumsUI();
   }
 })();
 
