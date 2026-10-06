@@ -62,28 +62,28 @@ window.BluiaMedia = {
   ]
 };
 
-// Albums UI
+// Albums in top menu + Photos in lower menu
 (() => {
   const BUY_ALBUM_URL = "https://t.me/+1in39ZKPFZZjNjU0";
 
-  const applyAlbumsUI = () => {
+  const applyMediaSwap = () => {
     const albums = Array.isArray(window.BluiaMedia?.albums) ? window.BluiaMedia.albums : [];
+    const photos = Array.isArray(window.BluiaMedia?.photos) ? window.BluiaMedia.photos : [];
 
-    const chatTab = document.querySelector('.sub-tab[data-subpanel="chat"]');
-    if (chatTab) {
-      chatTab.textContent = "Albums";
-      chatTab.dataset.subpanel = "albums";
+    // Top menu: Photos -> Albums. Keep data-panel="photos" so the existing tab logic still works.
+    const topPhotosTab = document.querySelector('.media-tab[data-panel="photos"]');
+    if (topPhotosTab) {
+      topPhotosTab.textContent = "Albums";
     }
 
-    const chatPanel = document.getElementById("subpanel-chat");
-    if (chatPanel) {
-      chatPanel.id = "subpanel-albums";
-      chatPanel.innerHTML = '<div class="albums-grid" id="albums-grid"></div>';
+    const topPhotosPanel = document.getElementById("panel-photos");
+    if (topPhotosPanel) {
+      topPhotosPanel.innerHTML = '<div class="albums-grid" id="albums-grid"></div>';
     }
 
-    const grid = document.getElementById("albums-grid");
-    if (grid) {
-      grid.innerHTML = albums.map((cover, index) => `
+    const albumsGrid = document.getElementById("albums-grid");
+    if (albumsGrid) {
+      albumsGrid.innerHTML = albums.map((cover, index) => `
         <div class="album-card">
           <img
             class="album-cover"
@@ -103,15 +103,42 @@ window.BluiaMedia = {
       `).join("");
     }
 
-    if (!document.getElementById("bluia-albums-style")) {
+    // Lower menu: old Albums slot -> Photos.
+    const lowerTab = document.querySelector('.sub-tab[data-subpanel="chat"]') || document.querySelector('.sub-tab[data-subpanel="albums"]');
+    if (lowerTab) {
+      lowerTab.textContent = "Photos";
+      lowerTab.dataset.subpanel = "photos-grid";
+    }
+
+    const lowerPanel = document.getElementById("subpanel-chat") || document.getElementById("subpanel-albums");
+    if (lowerPanel) {
+      lowerPanel.id = "subpanel-photos-grid";
+      lowerPanel.innerHTML = '<div class="photos-grid" id="photos-grid"></div>';
+    }
+
+    const photosGrid = document.getElementById("photos-grid");
+    if (photosGrid) {
+      photosGrid.innerHTML = photos.map((url, index) => `
+        <img
+          src="${url}"
+          alt="Bluia Sisters photo ${index + 1}"
+          loading="lazy"
+          decoding="async"
+        >
+      `).join("");
+    }
+
+    if (!document.getElementById("bluia-media-swap-style")) {
       const style = document.createElement("style");
-      style.id = "bluia-albums-style";
+      style.id = "bluia-media-swap-style";
       style.textContent = `
         .albums-grid{
           display:grid;
           grid-template-columns:repeat(2,minmax(0,1fr));
           gap:14px 9px;
-          width:100%;
+          width:min(100%,440px);
+          margin:0 auto;
+          padding:12px 14px 16px;
         }
         .album-card{
           display:block;
@@ -143,15 +170,31 @@ window.BluiaMedia = {
           font-weight:900;
           box-shadow:0 7px 20px rgba(223,74,131,.20);
         }
+        .photos-grid{
+          display:grid;
+          grid-template-columns:repeat(3,minmax(0,1fr));
+          gap:3px;
+          width:100%;
+        }
+        .photos-grid img{
+          display:block;
+          width:100%;
+          aspect-ratio:2/3;
+          object-fit:cover;
+          object-position:top center;
+          border:0;
+          border-radius:0;
+          background:#000;
+        }
       `;
       document.head.appendChild(style);
     }
   };
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", applyAlbumsUI, { once: true });
+    document.addEventListener("DOMContentLoaded", applyMediaSwap, { once: true });
   } else {
-    applyAlbumsUI();
+    applyMediaSwap();
   }
 })();
 
