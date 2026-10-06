@@ -33,8 +33,8 @@ window.BluiaMedia = {
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_10_11%20AM.png?download=true"
   ],
 
-  // Albums — includes all former Photos items
-  albums: [
+  // Photos gallery — newest first
+  gallery: [
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%205%2C%202026%2C%2011_08_28%20AM.png?download=true",
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%205%2C%202026%2C%2011_08_15%20AM.png?download=true",
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%205%2C%202026%2C%2011_08_08%20AM.png?download=true",
@@ -57,47 +57,46 @@ window.BluiaMedia = {
   ]
 };
 
-// Albums in top menu. Photos section is removed.
+// Photos gallery in top menu
 (() => {
-  const BUY_ALBUM_URL = "https://t.me/+1in39ZKPFZZjNjU0";
+  const applyPhotosUI = () => {
+    const photos = Array.isArray(window.BluiaMedia?.gallery) ? window.BluiaMedia.gallery : [];
 
-  const applyAlbumsUI = () => {
-    const albums = Array.isArray(window.BluiaMedia?.albums) ? window.BluiaMedia.albums : [];
-
-    // Top menu: Photos -> Albums. Keep data-panel="photos" so existing index logic still works.
     const topPhotosTab = document.querySelector('.media-tab[data-panel="photos"]');
-    if (topPhotosTab) {
-      topPhotosTab.textContent = "Albums";
-    }
+    if (topPhotosTab) topPhotosTab.textContent = "Photos";
 
     const topPhotosPanel = document.getElementById("panel-photos");
     if (topPhotosPanel) {
-      topPhotosPanel.innerHTML = '<div class="albums-grid" id="albums-grid"></div>';
+      topPhotosPanel.innerHTML = `
+        <div class="photos-member-note">
+          Bluia Sisters post new photos every day for members.
+          <a href="#" id="photos-member-cta">Become a member now</a>
+        </div>
+        <div class="photos-gallery-grid" id="photos-gallery-grid"></div>
+      `;
     }
 
-    const albumsGrid = document.getElementById("albums-grid");
-    if (albumsGrid) {
-      albumsGrid.innerHTML = albums.map((cover, index) => `
-        <div class="album-card">
-          <img
-            class="album-cover"
-            src="${cover}"
-            alt="Bluia Sisters album ${index + 1}"
-            loading="lazy"
-            decoding="async"
-          >
-          <a
-            class="album-buy-link"
-            href="${BUY_ALBUM_URL}"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Buy this Album"
-          >Buy this Album</a>
-        </div>
+    const grid = document.getElementById("photos-gallery-grid");
+    if (grid) {
+      grid.innerHTML = photos.map((url, index) => `
+        <img
+          src="${url}"
+          alt="Bluia Sisters photo ${index + 1}"
+          loading="lazy"
+          decoding="async"
+        >
       `).join("");
     }
 
-    // Remove the old Photos/Albums slot from the lower menu completely.
+    const cta = document.getElementById("photos-member-cta");
+    if (cta) {
+      cta.addEventListener("click", event => {
+        event.preventDefault();
+        const buyButton = document.getElementById("buy-button");
+        if (buyButton) buyButton.click();
+      });
+    }
+
     const lowerTab = document.querySelector('.sub-tab[data-subpanel="chat"]') ||
                      document.querySelector('.sub-tab[data-subpanel="albums"]') ||
                      document.querySelector('.sub-tab[data-subpanel="photos-grid"]');
@@ -108,24 +107,38 @@ window.BluiaMedia = {
                        document.getElementById("subpanel-photos-grid");
     if (lowerPanel) lowerPanel.remove();
 
-    if (!document.getElementById("bluia-albums-only-style")) {
+    if (!document.getElementById("bluia-photos-gallery-style")) {
       const style = document.createElement("style");
-      style.id = "bluia-albums-only-style";
+      style.id = "bluia-photos-gallery-style";
       style.textContent = `
-        .albums-grid{
-          display:grid;
-          grid-template-columns:repeat(2,minmax(0,1fr));
-          gap:14px 9px;
+        .photos-member-note{
           width:min(100%,440px);
           margin:0 auto;
-          padding:12px 14px 16px;
+          padding:13px 14px 10px;
+          color:#c9bbc2;
+          font-size:10px;
+          line-height:1.5;
+          text-align:center;
         }
-        .album-card{
-          display:block;
-          min-width:0;
-          text-align:left;
+        .photos-member-note a{
+          color:#ff6fa8;
+          font-weight:900;
+          text-decoration:none;
+          white-space:nowrap;
         }
-        .album-cover{
+        .photos-member-note a:hover,
+        .photos-member-note a:focus{
+          text-decoration:underline;
+        }
+        .photos-gallery-grid{
+          display:grid;
+          grid-template-columns:repeat(2,minmax(0,1fr));
+          gap:9px;
+          width:min(100%,440px);
+          margin:0 auto;
+          padding:0 14px 16px;
+        }
+        .photos-gallery-grid img{
           display:block;
           width:100%;
           aspect-ratio:2/3;
@@ -134,20 +147,6 @@ window.BluiaMedia = {
           border:0;
           border-radius:12px;
           background:#111;
-        }
-        .album-buy-link{
-          display:inline-block;
-          margin-top:6px;
-          color:#ff6fa8;
-          text-decoration:none;
-          font-size:10px;
-          font-weight:700;
-          line-height:1.25;
-          letter-spacing:.1px;
-        }
-        .album-buy-link:hover,
-        .album-buy-link:focus{
-          text-decoration:underline;
         }
         .sub-tabs{
           grid-template-columns:repeat(2,1fr) !important;
@@ -158,9 +157,9 @@ window.BluiaMedia = {
   };
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", applyAlbumsUI, { once: true });
+    document.addEventListener("DOMContentLoaded", applyPhotosUI, { once: true });
   } else {
-    applyAlbumsUI();
+    applyPhotosUI();
   }
 })();
 
