@@ -211,3 +211,13 @@ window.BluiaMedia = {
     applyFreeTelegramButton();
   }
 })();
+
+// Load the Firebase Fans feature
+(() => {
+  if (document.querySelector('script[data-bluia-fans]')) return;
+  const script = document.createElement("script");
+  script.src = "fans.js";
+  script.async = true;
+  script.dataset.bluiaFans = "1";
+  document.head.appendChild(script);
+})();
