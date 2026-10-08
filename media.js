@@ -221,3 +221,13 @@ window.BluiaMedia = {
   script.dataset.bluiaBooking = "1";
   document.head.appendChild(script);
 })();
+
+// Load full-width Chat layout and make Chat the default view
+(() => {
+  if (document.querySelector('script[data-bluia-booking-ui]')) return;
+  const script = document.createElement("script");
+  script.src = "booking-ui.js";
+  script.async = true;
+  script.dataset.bluiaBookingUi = "1";
+  document.head.appendChild(script);
+})();
