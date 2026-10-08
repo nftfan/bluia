@@ -1,4 +1,4 @@
-// Bluia Sisters Fans tab powered by Firebase
+// Bluia Sisters Chat tab powered by Firebase
 (() => {
   "use strict";
 
@@ -57,12 +57,18 @@
       .fans-list{display:grid;gap:9px}
       .fan-card{display:grid;grid-template-columns:92px minmax(0,1fr);min-height:122px;overflow:hidden;border:1px solid rgba(255,255,255,.24);border-radius:15px;background:#fff;color:#241019;box-shadow:0 10px 26px rgba(98,8,44,.18)}
       .fan-card.no-photo{display:block;min-height:0}
+      .fan-card.demo-card{border-color:#ffc5dc;box-shadow:0 12px 30px rgba(109,10,50,.22)}
       .fan-card-image{display:block;width:100%;height:100%;min-height:122px;object-fit:cover;object-position:top center;background:#ead5df}
       .fan-card-body{padding:12px;min-width:0}
       .fan-card-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+      .fan-card-name-wrap{display:flex;align-items:center;gap:6px;min-width:0}
       .fan-card-name{color:#d53678;font-size:11px;font-weight:900;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+      .member-badge{display:inline-flex;align-items:center;justify-content:center;min-height:17px;padding:0 6px;border-radius:999px;background:linear-gradient(135deg,#f1cf66,#bd8d29);color:#241604;font-size:7px;font-weight:950;letter-spacing:.35px;text-transform:uppercase;white-space:nowrap}
       .fan-card-time{color:#a68d98;font-size:8px;white-space:nowrap}
       .fan-card-message{margin:0;color:#3a2530;font-size:10.5px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}
+      .fan-card-divider{height:1px;margin:10px 0;background:#ff8fba;opacity:.55}
+      .fan-card-reply-label{margin:0 0 4px;color:#d53678;font-size:9px;font-weight:900}
+      .fan-card-reply{margin:0;color:#5a3444;font-size:10px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}
       .fans-empty{padding:14px;border:1px dashed rgba(255,255,255,.45);border-radius:13px;color:#ffeaf2;font-size:10px;text-align:center}
       @media(max-width:370px){.media-tab{padding:0 7px !important;font-size:9px !important}.media-tabs{gap:4px !important}.fans-photo-options{grid-template-columns:repeat(3,minmax(0,1fr))}.fan-card{grid-template-columns:82px minmax(0,1fr)}}
     `;
@@ -135,10 +141,8 @@
     fansTab.className = "media-tab fans-tab";
     fansTab.type = "button";
     fansTab.dataset.panel = "fans";
-    fansTab.textContent = "Fans";
-    const membersTab = nav.querySelector('[data-panel="members"]');
-    if (membersTab) nav.insertBefore(fansTab, membersTab);
-    else nav.appendChild(fansTab);
+    fansTab.textContent = "Chat";
+    nav.insertBefore(fansTab, nav.firstElementChild);
 
     const panel = document.createElement("section");
     panel.className = "media-panel";
@@ -146,13 +150,13 @@
     panel.innerHTML = `
       <div class="fans-shell">
         <div class="fans-hero">
-          <h2>Love from the Fans 💗</h2>
-          <p>Leave a love message for Bluia Sisters and optionally choose one of the photos from our Photos tab.</p>
+          <h2>Chat with Bluia Sisters 💗</h2>
+          <p>Post a love message and optionally choose one of the photos from our Photos tab.</p>
         </div>
         <form class="fans-compose" id="fans-form">
-          <h3>Post a love message</h3>
+          <h3>Post a message</h3>
           <input class="fans-field" id="fan-name" type="text" maxlength="40" autocomplete="name" placeholder="Your name" required>
-          <textarea class="fans-field" id="fan-message" maxlength="300" placeholder="Write your love message..." required></textarea>
+          <textarea class="fans-field" id="fan-message" maxlength="300" placeholder="Write your message..." required></textarea>
           <div class="fans-photo-picker">
             <div class="fans-photo-picker-row">
               <button class="fans-photo-toggle" id="fans-photo-toggle" type="button">Choose a photo</button>
@@ -167,10 +171,10 @@
               <div class="fans-photo-options" id="fans-photo-options"></div>
             </div>
           </div>
-          <button class="fans-post-button" id="fans-submit" type="submit">Post Love Message</button>
+          <button class="fans-post-button" id="fans-submit" type="submit">Post Message</button>
           <div class="fans-status" id="fans-status" aria-live="polite"></div>
         </form>
-        <div class="fans-latest-title">Latest love messages</div>
+        <div class="fans-latest-title">Latest chats</div>
         <div class="fans-list" id="fans-list"><div class="fans-empty">Loading messages…</div></div>
       </div>
     `;
@@ -214,14 +218,79 @@
     return item?.imageUrl || item?.photoUrl || item?.selectedPhotoUrl || item?.image || "";
   }
 
+  function appendDemoCard(list){
+    const card = document.createElement("article");
+    card.className = "fan-card demo-card";
+
+    const demoPhoto = Array.isArray(window.BluiaMedia?.gallery) ? (window.BluiaMedia.gallery[0] || "") : "";
+    if (demoPhoto) {
+      const image = document.createElement("img");
+      image.className = "fan-card-image";
+      image.src = demoPhoto;
+      image.alt = "Bluia Sisters chat preview";
+      image.loading = "lazy";
+      image.decoding = "async";
+      image.addEventListener("error", () => {
+        image.remove();
+        card.classList.add("no-photo");
+      }, {once:true});
+      card.appendChild(image);
+    } else {
+      card.classList.add("no-photo");
+    }
+
+    const body = document.createElement("div");
+    body.className = "fan-card-body";
+
+    const top = document.createElement("div");
+    top.className = "fan-card-top";
+
+    const nameWrap = document.createElement("div");
+    nameWrap.className = "fan-card-name-wrap";
+    const name = document.createElement("div");
+    name.className = "fan-card-name";
+    name.textContent = "Sofia";
+    const badge = document.createElement("span");
+    badge.className = "member-badge";
+    badge.textContent = "Member";
+    nameWrap.append(name, badge);
+
+    const time = document.createElement("div");
+    time.className = "fan-card-time";
+    time.textContent = "Demo";
+
+    const message = document.createElement("p");
+    message.className = "fan-card-message";
+    message.textContent = "I love the new photos and the whole Bluia Sisters vibe 💗";
+
+    const divider = document.createElement("div");
+    divider.className = "fan-card-divider";
+
+    const replyLabel = document.createElement("div");
+    replyLabel.className = "fan-card-reply-label";
+    replyLabel.textContent = "Bluia Sisters replied";
+
+    const reply = document.createElement("p");
+    reply.className = "fan-card-reply";
+    reply.textContent = "Thank you Sofia 💗 We love having you here with us.";
+
+    top.append(nameWrap, time);
+    body.append(top, message, divider, replyLabel, reply);
+    card.appendChild(body);
+    list.appendChild(card);
+  }
+
   function renderMessages(items){
     const list = document.getElementById("fans-list");
     if (!list) return;
     list.innerHTML = "";
+
+    appendDemoCard(list);
+
     if (!items.length) {
       const empty = document.createElement("div");
       empty.className = "fans-empty";
-      empty.textContent = "No love messages yet. Be the first 💗";
+      empty.textContent = "No community messages yet. Be the first 💗";
       list.appendChild(empty);
       return;
     }
@@ -270,7 +339,7 @@
     latestFanItems = items
       .filter(Boolean)
       .sort((a,b) => (Number(b.createdAt) || 0) - (Number(a.createdAt) || 0))
-      .slice(0,5);
+      .slice(0,10);
     renderMessages(latestFanItems);
   }
 
@@ -295,8 +364,6 @@
       const db = dbMod.getDatabase(app);
       const messagesRef = dbMod.ref(db, "fanMessages");
 
-      // Read the collection directly instead of orderByChild/limitToLast.
-      // This avoids Firebase rule/index combinations that can stop the preview listener.
       dbMod.onValue(messagesRef, snapshot => {
         const items = [];
         snapshot.forEach(child => {
@@ -305,11 +372,8 @@
         });
         setLatestItems(items);
       }, error => {
-        console.warn("Fans messages read failed:", error);
-        if (!latestFanItems.length) {
-          const list = document.getElementById("fans-list");
-          if (list) list.innerHTML = '<div class="fans-empty">Messages cannot be loaded right now.</div>';
-        }
+        console.warn("Chat messages read failed:", error);
+        renderMessages(latestFanItems);
       });
 
       form.addEventListener("submit", async event => {
@@ -354,31 +418,30 @@
             createdAt
           });
 
-          // Show the new card immediately. The realtime listener will then reconcile it.
           setLatestItems([newItem, ...latestFanItems.filter(item => item.id !== newItem.id)]);
           localStorage.setItem("bluiaLastFanPost", String(Date.now()));
           form.reset();
           clearGalleryPhoto();
-          status.textContent = "Love message posted 💗";
+          status.textContent = "Message posted 💗";
         } catch (error) {
-          console.warn("Fans message post failed:", error);
+          console.warn("Chat message post failed:", error);
           status.textContent = "Could not post. Please try again.";
         } finally {
           submit.disabled = false;
-          submit.textContent = "Post Love Message";
+          submit.textContent = "Post Message";
         }
       });
     } catch (error) {
-      console.warn("Firebase Fans setup failed:", error);
-      if (status) status.textContent = "Fan messages are temporarily unavailable.";
-      const list = document.getElementById("fans-list");
-      if (list) list.innerHTML = '<div class="fans-empty">Fan messages are temporarily unavailable.</div>';
+      console.warn("Firebase Chat setup failed:", error);
+      if (status) status.textContent = "Chat is temporarily unavailable.";
+      renderMessages(latestFanItems);
     }
   }
 
   function start(){
     addStyles();
     buildFansUI();
+    renderMessages([]);
     initFirebaseFans();
   }
 
