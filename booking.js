@@ -12,6 +12,7 @@
   let db = null;
   let bookingsRef = null;
   let existingBookings = [];
+  let countdownTimer = null;
   const sisterIds = new Map();
 
   const sisters = () => Array.isArray(window.BluiaMedia?.models) ? window.BluiaMedia.models : [];
@@ -44,14 +45,17 @@
       .wizard-input:focus,.wizard-select:focus{border-color:#ff6aa8;box-shadow:0 0 0 2px rgba(255,106,168,.12)}
       .wizard-row{display:grid;grid-template-columns:1fr 1fr;gap:7px}
       .wizard-row .wizard-label{margin-top:7px}
+      .wizard-time-preview{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:7px}
+      .wizard-time-zone{padding:7px 8px;border:1px solid #34242b;border-radius:9px;background:#0d090b;color:#a997a0;font-size:7.8px;line-height:1.35}
+      .wizard-time-zone strong{display:block;margin-bottom:2px;color:#ff83b5;font-size:7px;letter-spacing:.45px;text-transform:uppercase}
       .wizard-strip{display:grid;grid-auto-flow:column;grid-auto-columns:58px;gap:6px;overflow-x:auto;padding:2px 1px 4px;scrollbar-width:none}.wizard-strip::-webkit-scrollbar{display:none}
       .wizard-thumb{width:58px;aspect-ratio:2/3;padding:0;border:2px solid transparent;border-radius:9px;overflow:hidden;background:#241219;cursor:pointer}.wizard-thumb img{width:100%;height:100%;object-fit:cover;object-position:top center}.wizard-thumb.selected{border-color:#ff71ad;box-shadow:0 0 0 2px rgba(255,113,173,.14)}
       .wizard-note{margin:5px 1px 0;color:#91818a;font-size:7.5px}.wizard-book{width:100%;min-height:45px;margin-top:11px;border:0;border-radius:11px;background:linear-gradient(135deg,#ff6aa8,#d93679);color:#fff;font-size:11px;font-weight:950;cursor:pointer}.wizard-status{min-height:17px;margin-top:6px;color:#d6c4cc;font-size:8.5px;text-align:center}
 
       .bookings-heading{display:flex;align-items:center;justify-content:space-between;margin:17px 2px 9px;color:#fff}.bookings-heading strong{font-size:12px}.bookings-heading span{font-size:8px;color:#ffd1e1}
       .bookings-list{display:grid;gap:8px}.booking-entry{display:grid;grid-template-columns:72px minmax(0,1fr);overflow:hidden;border:1px solid rgba(255,255,255,.28);border-radius:14px;background:#fff;box-shadow:0 9px 24px rgba(89,7,40,.17)}
-      .booking-entry img{display:block;width:72px;height:96px;object-fit:cover;object-position:top center;background:#eed6e0}.booking-entry-body{padding:9px 10px;min-width:0}
-      .booking-entry-top{display:flex;align-items:center;justify-content:space-between;gap:7px;margin-bottom:4px}.booking-entry-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#ce3374;font-size:10.5px;font-weight:950}.booking-entry-badge{padding:3px 6px;border-radius:999px;background:#fff0f6;color:#cf3975;font-size:7px;font-weight:900}.booking-entry-time{color:#2c1821;font-size:10px;font-weight:850;line-height:1.4}.booking-entry-duration{margin-top:3px;color:#8c707c;font-size:8.2px}.booking-entry-id{margin-top:4px;color:#b19aa4;font-size:7px;letter-spacing:.35px;text-transform:uppercase}
+      .booking-entry img{display:block;width:72px;height:112px;object-fit:cover;object-position:top center;background:#eed6e0}.booking-entry-body{padding:9px 10px;min-width:0}
+      .booking-entry-top{display:flex;align-items:center;justify-content:space-between;gap:7px;margin-bottom:4px}.booking-entry-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#ce3374;font-size:10.5px;font-weight:950}.booking-entry-badge{padding:3px 6px;border-radius:999px;background:#fff0f6;color:#cf3975;font-size:7px;font-weight:900}.booking-entry-time{color:#2c1821;font-size:9.5px;font-weight:850;line-height:1.4}.booking-entry-zone{margin-top:2px;color:#8c707c;font-size:7.6px;line-height:1.4}.booking-entry-duration{margin-top:3px;color:#8c707c;font-size:8.2px}.booking-entry-id{margin-top:4px;color:#b19aa4;font-size:7px;letter-spacing:.35px;text-transform:uppercase}.booking-entry-countdown{margin-top:5px;padding-top:5px;border-top:1px solid #f3d7e3;color:#cf3975;font-size:8px;font-weight:900}.booking-entry-countdown.live{color:#c51e65}.booking-entry-countdown.ended{color:#9d8790}
       .bookings-empty{padding:14px;border:1px dashed rgba(255,255,255,.45);border-radius:13px;color:#ffe9f1;font-size:9.5px;text-align:center}
 
       .pin-modal{position:fixed;inset:0;z-index:100001;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(0,0,0,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);opacity:0;visibility:hidden;pointer-events:none;transition:.18s ease}.pin-modal.open{opacity:1;visibility:visible;pointer-events:auto}
@@ -60,7 +64,7 @@
       .pin-card h3{margin:0 42px 7px 0;font:700 19px/1.15 Georgia,"Times New Roman",serif}.pin-copy{margin:0 0 13px;color:#cdbbc3;font-size:10px;line-height:1.5}
       .pin-input{width:100%;min-height:49px;padding:10px 12px;border:1px solid #5c3346;border-radius:12px;background:#0c090a;color:#fff;font-size:19px;font-weight:900;letter-spacing:5px;text-align:center;outline:none}.pin-error{min-height:18px;margin:6px 0 0;color:#ff8db8;font-size:9px;text-align:center}.pin-confirm{width:100%;min-height:46px;margin-top:3px;border:0;border-radius:11px;background:linear-gradient(135deg,#ff68a5,#d83879);color:#fff;font-size:11px;font-weight:950;cursor:pointer}
       .pin-divider{height:1px;margin:14px 0;background:#38262f}.pin-help{margin:0 0 9px;color:#aa98a0;font-size:9px;line-height:1.45}.pin-buy{min-height:42px;display:flex;align-items:center;justify-content:center;border:1px solid #69501d;border-radius:11px;background:linear-gradient(135deg,#e7c75f,#b88828);color:#160f04;text-decoration:none;font-size:10.5px;font-weight:950}.pin-email-note{margin:8px 2px 0;color:#8e7d85;font-size:8.5px;line-height:1.4;text-align:center}
-      @media(max-width:370px){.media-tab{padding:0 6px!important;font-size:8.7px!important}.wizard-top{grid-template-columns:82px minmax(0,1fr)}.wizard-image{width:82px}.booking-entry{grid-template-columns:64px minmax(0,1fr)}.booking-entry img{width:64px;height:88px}}
+      @media(max-width:370px){.media-tab{padding:0 6px!important;font-size:8.7px!important}.wizard-top{grid-template-columns:82px minmax(0,1fr)}.wizard-image{width:82px}.booking-entry{grid-template-columns:64px minmax(0,1fr)}.booking-entry img{width:64px;height:104px}}
     `;
     document.head.appendChild(s);
   }
@@ -75,6 +79,10 @@
     }
   }
 
+  function viewerTimeZone(){
+    try{return Intl.DateTimeFormat().resolvedOptions().timeZone || "Local"}catch(e){return "Local"}
+  }
+
   function localDate(){
     const d = new Date();
     return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
@@ -84,6 +92,11 @@
     const d = new Date(Date.now()+3600000);
     d.setMinutes(Math.ceil(d.getMinutes()/30)*30,0,0);
     return `${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`;
+  }
+
+  function localStartMs(date,time){
+    const d=new Date(`${date||""}T${time||""}`);
+    return Number.isNaN(d.getTime()) ? NaN : d.getTime();
   }
 
   function sisterKey(url){
@@ -118,9 +131,15 @@
     return Date.UTC(Number(m[1]),Number(m[2])-1,Number(m[3]),Number(t[1]),Number(t[2])) / 60000;
   }
 
+  function bookingStartMs(item){
+    if(Number.isFinite(Number(item?.startAtMs))) return Number(item.startAtMs);
+    if(Number.isFinite(Number(item?.startSlot))) return Number(item.startSlot) * 60000;
+    return localStartMs(item?.date,item?.time);
+  }
+
   function bookingBounds(item){
-    const start = Number.isFinite(Number(item.startSlot)) ? Number(item.startSlot) : slotNumber(item.date,item.time);
-    const duration = Math.max(1,Number(item.duration)||30);
+    const start = bookingStartMs(item);
+    const duration = Math.max(1,Number(item?.duration)||30) * 60000;
     return {start,end:start+duration};
   }
 
@@ -137,6 +156,62 @@
       const b = bookingBounds(item);
       if (!Number.isFinite(b.start)) return false;
       return a.start < b.end && a.end > b.start;
+    });
+  }
+
+  function formatZone(ms,timeZone){
+    if(!Number.isFinite(ms)) return "Time unavailable";
+    try{
+      return new Intl.DateTimeFormat(undefined,{timeZone,weekday:"short",month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"}).format(new Date(ms));
+    }catch(e){
+      return new Date(ms).toLocaleString();
+    }
+  }
+
+  function formatLocal(ms){
+    if(!Number.isFinite(ms)) return "Time unavailable";
+    try{
+      return new Intl.DateTimeFormat(undefined,{weekday:"short",month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"}).format(new Date(ms));
+    }catch(e){
+      return new Date(ms).toLocaleString();
+    }
+  }
+
+  function updateTimePreview(){
+    const wrap=document.getElementById("wizard-time-preview");
+    if(!wrap)return;
+    const date=document.getElementById("booking-date")?.value||"";
+    const time=document.getElementById("booking-time")?.value||"";
+    const ms=localStartMs(date,time);
+    if(!Number.isFinite(ms)){
+      wrap.innerHTML="";
+      return;
+    }
+    wrap.innerHTML=`<div class="wizard-time-zone"><strong>Your time</strong>${formatLocal(ms)}<br>${viewerTimeZone()}</div><div class="wizard-time-zone"><strong>Paris time</strong>${formatZone(ms,"Europe/Paris")}<br>Europe/Paris</div>`;
+  }
+
+  function compactRemaining(ms){
+    const total=Math.max(0,Math.floor(ms/1000));
+    const days=Math.floor(total/86400);
+    const hours=Math.floor((total%86400)/3600);
+    const minutes=Math.floor((total%3600)/60);
+    const seconds=total%60;
+    if(days>0)return `${days}d ${hours}h ${minutes}m`;
+    if(hours>0)return `${hours}h ${minutes}m ${seconds}s`;
+    return `${minutes}m ${seconds}s`;
+  }
+
+  function updateCountdowns(){
+    const now=Date.now();
+    document.querySelectorAll(".booking-entry-countdown[data-start]").forEach(el=>{
+      const start=Number(el.dataset.start||0);
+      const duration=Math.max(1,Number(el.dataset.duration||30))*60000;
+      const end=start+duration;
+      el.classList.remove("live","ended");
+      if(!Number.isFinite(start)||!start){el.textContent="Schedule unavailable";return}
+      if(now<start){el.textContent=`Starts in ${compactRemaining(start-now)}`;return}
+      if(now<end){el.textContent=`Chat live · ${compactRemaining(end-now)} remaining`;el.classList.add("live");return}
+      el.textContent="Chat ended";el.classList.add("ended");
     });
   }
 
@@ -161,7 +236,7 @@
         <div class="booking-hero">
           <div class="kicker">Private chat booking</div>
           <h2>Chat with Bluia Sisters 💗</h2>
-          <p>Choose a Bluia Sister below, select your date and time, then confirm your private booking with a PIN.</p>
+          <p>Choose a Bluia Sister below, select your date and time in your own timezone, then confirm your private booking with a PIN.</p>
         </div>
 
         <div class="booking-wizard" id="booking-wizard">
@@ -170,7 +245,7 @@
             <div class="wizard-copy">
               <small>Bluia Sister</small>
               <h3>Booking details</h3>
-              <p>Select your preferred date and time, then confirm with your booking PIN.</p>
+              <p>Your booking time is shown in your local timezone and Paris time.</p>
               <div class="wizard-sister-id" id="wizard-sister-id">ID …</div>
             </div>
           </div>
@@ -182,9 +257,10 @@
           <input class="wizard-input" id="booking-name" type="text" maxlength="50" autocomplete="name" placeholder="Your name">
 
           <div class="wizard-row">
-            <div><label class="wizard-label" for="booking-date">Date</label><input class="wizard-input" id="booking-date" type="date"></div>
-            <div><label class="wizard-label" for="booking-time">Time</label><input class="wizard-input" id="booking-time" type="time" step="900"></div>
+            <div><label class="wizard-label" for="booking-date">Date · your time</label><input class="wizard-input" id="booking-date" type="date"></div>
+            <div><label class="wizard-label" for="booking-time">Time · your time</label><input class="wizard-input" id="booking-time" type="time" step="900"></div>
           </div>
+          <div class="wizard-time-preview" id="wizard-time-preview"></div>
 
           <label class="wizard-label" for="booking-duration">Chat duration</label>
           <select class="wizard-select" id="booking-duration"><option value="15">15 minutes</option><option value="30" selected>30 minutes</option><option value="45">45 minutes</option><option value="60">60 minutes</option></select>
@@ -193,7 +269,7 @@
           <div class="wizard-status" id="wizard-status" aria-live="polite"></div>
         </div>
 
-        <div class="bookings-heading"><strong>Bookings</strong><span>All confirmed bookings</span></div>
+        <div class="bookings-heading"><strong>Bookings</strong><span>Your time · Paris time · live countdown</span></div>
         <div class="bookings-list" id="bookings-list"><div class="bookings-empty">Loading bookings…</div></div>
       </div>`;
 
@@ -239,6 +315,7 @@
     const date=document.getElementById("booking-date"), time=document.getElementById("booking-time");
     if(date){date.min=localDate();date.value=localDate()}
     if(time) time.value=defaultTime();
+    updateTimePreview();
   }
 
   function setupActions(tab,panel){
@@ -250,6 +327,9 @@
     };
     document.querySelectorAll(".media-tab:not(.booking-tab)").forEach(x=>x.addEventListener("click",()=>{tab.classList.remove("active");panel.classList.remove("active")}));
     document.getElementById("wizard-book")?.addEventListener("click",prepareBooking);
+    document.getElementById("booking-date")?.addEventListener("change",updateTimePreview);
+    document.getElementById("booking-time")?.addEventListener("change",updateTimePreview);
+    document.getElementById("booking-time")?.addEventListener("input",updateTimePreview);
     document.getElementById("pin-close")?.addEventListener("click",closePin);
     document.getElementById("pin-modal")?.addEventListener("click",e=>{if(e.target.id==="pin-modal")closePin()});
     document.getElementById("pin-confirm")?.addEventListener("click",confirmPin);
@@ -267,11 +347,24 @@
     if(!selectedSister){status.textContent="Choose a Bluia Sister first.";return}
     if(!name){status.textContent="Enter your name.";document.getElementById("booking-name")?.focus();return}
     if(!date||!time){status.textContent="Choose a date and time.";return}
-    const moment=new Date(`${date}T${time}`);
-    if(!Number.isNaN(moment.getTime())&&moment.getTime()<Date.now()-60000){status.textContent="Choose a future booking time.";return}
+    const startAtMs=localStartMs(date,time);
+    if(!Number.isFinite(startAtMs)){status.textContent="Choose a valid date and time.";return}
+    if(startAtMs<Date.now()-60000){status.textContent="Choose a future booking time.";return}
 
     const startSlot=slotNumber(date,time);
-    const candidate={name:name.slice(0,50),sisterImage:selectedSister,sisterId,date,time,duration,startSlot,createdAt:Date.now()};
+    const candidate={
+      name:name.slice(0,50),
+      sisterImage:selectedSister,
+      sisterId,
+      date,
+      time,
+      duration,
+      startSlot,
+      startAtMs,
+      visitorTimeZone:viewerTimeZone(),
+      visitorOffsetMinutes:new Date(startAtMs).getTimezoneOffset(),
+      createdAt:Date.now()
+    };
     if(overlapsExisting(candidate)){
       status.textContent="That Bluia Sister is already booked during this time. Please choose another time.";
       return;
@@ -344,12 +437,6 @@
     }
   }
 
-  function bookingText(date,time){
-    const d=new Date(`${date}T${time}`);
-    if(Number.isNaN(d.getTime()))return `${date} · ${time}`;
-    try{return new Intl.DateTimeFormat(undefined,{weekday:"short",month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"}).format(d)}catch(e){return `${date} · ${time}`}
-  }
-
   function renderBookings(items){
     const list=document.getElementById("bookings-list");
     if(!list)return;
@@ -364,14 +451,20 @@
       img.loading="lazy";
       const body=document.createElement("div");
       body.className="booking-entry-body";
-      body.innerHTML=`<div class="booking-entry-top"><div class="booking-entry-name"></div><span class="booking-entry-badge">Confirmed</span></div><div class="booking-entry-time"></div><div class="booking-entry-duration"></div><div class="booking-entry-id"></div>`;
+      body.innerHTML=`<div class="booking-entry-top"><div class="booking-entry-name"></div><span class="booking-entry-badge">Confirmed</span></div><div class="booking-entry-time"></div><div class="booking-entry-zone booking-entry-paris"></div><div class="booking-entry-duration"></div><div class="booking-entry-id"></div><div class="booking-entry-countdown" data-start="" data-duration=""></div>`;
+      const start=bookingStartMs(item);
       body.querySelector(".booking-entry-name").textContent=item.name||"Guest";
-      body.querySelector(".booking-entry-time").textContent=bookingText(item.date||"",item.time||"");
+      body.querySelector(".booking-entry-time").textContent=`Your time · ${formatLocal(start)}`;
+      body.querySelector(".booking-entry-paris").textContent=`Paris · ${formatZone(start,"Europe/Paris")}`;
       body.querySelector(".booking-entry-duration").textContent=`${Number(item.duration)||30} minute private chat`;
       body.querySelector(".booking-entry-id").textContent=item.sisterId?`Bluia Sister · ID ${item.sisterId}`:"Bluia Sister";
+      const countdown=body.querySelector(".booking-entry-countdown");
+      countdown.dataset.start=String(start||"");
+      countdown.dataset.duration=String(Number(item.duration)||30);
       card.append(img,body);
       list.appendChild(card);
     });
+    updateCountdowns();
   }
 
   async function ensureSisterIds(){
@@ -431,6 +524,8 @@
     removeBottomModels();
     buildUI();
     initFirebase();
+    if(countdownTimer)clearInterval(countdownTimer);
+    countdownTimer=setInterval(updateCountdowns,1000);
   }
 
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start,{once:true});
