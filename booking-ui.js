@@ -1,8 +1,9 @@
-// Bluia Sisters runtime helpers: Premium Telegram, model cleanup, and complete booking feed
+// Bluia Sisters runtime helpers: Premium Telegram, model cleanup, complete booking feed, and Chat Telegram shortcut
 (() => {
   "use strict";
 
   const FIREBASE_VERSION = "10.14.1";
+  const FREE_TELEGRAM_URL = "https://t.me/vbluia";
   const firebaseConfig = {
     apiKey: "AIzaSyDmDAHuk6CEObzaJMhIlvNReOI0K83wK0k",
     authDomain: "bluias.firebaseapp.com",
@@ -28,6 +29,11 @@
       .premium-telegram-copy{margin:0 0 7px;color:#bfaeb6;font-size:9px;line-height:1.5}
       .premium-telegram-price{margin:0 0 8px;color:#e2c25b;font-size:9px;font-weight:900}
       .premium-telegram-button{min-height:42px;display:flex;align-items:center;justify-content:center;width:100%;border:1px solid #6b5421;border-radius:11px;background:linear-gradient(135deg,#e6c65c,#b88928);color:#140f04;text-decoration:none;font-size:10.5px;font-weight:950;box-shadow:0 8px 24px rgba(196,153,49,.18)}
+      .chat-actions-row{display:flex;align-items:stretch;gap:7px;margin-top:10px;width:100%}
+      .chat-actions-row .chat-open-button{flex:1 1 auto;width:auto!important;margin-top:0!important;min-width:0}
+      .chat-telegram-button{display:flex;align-items:center;justify-content:center;flex:0 0 43px;width:43px;min-height:43px;border:1px solid rgba(255,255,255,.92);border-radius:12px;background:#fff;color:#229ed9;text-decoration:none;box-shadow:0 9px 24px rgba(87,10,40,.18);transition:transform .16s ease,box-shadow .16s ease}
+      .chat-telegram-button:active{transform:scale(.97)}
+      .chat-telegram-button svg{display:block;width:18px;height:18px;fill:currentColor}
     `;
     document.head.appendChild(style);
   }
@@ -58,6 +64,30 @@
       <a class="premium-telegram-button" target="_blank" rel="noopener noreferrer">Join Premium Telegram</a>`;
     wrap.querySelector("a").href=premiumHref;
     freeButton.insertAdjacentElement("afterend",wrap);
+    return true;
+  }
+
+  function applyChatTelegramButton(){
+    addStyles();
+    const chatButton=document.querySelector("#panel-booking .chat-open-button");
+    if(!chatButton)return false;
+    if(document.getElementById("chat-telegram-button"))return true;
+
+    const row=document.createElement("div");
+    row.className="chat-actions-row";
+    chatButton.parentNode.insertBefore(row,chatButton);
+    row.appendChild(chatButton);
+
+    const telegram=document.createElement("a");
+    telegram.id="chat-telegram-button";
+    telegram.className="chat-telegram-button";
+    telegram.href=FREE_TELEGRAM_URL;
+    telegram.target="_blank";
+    telegram.rel="noopener noreferrer";
+    telegram.setAttribute("aria-label","Open free Bluia Sisters Telegram");
+    telegram.title="Telegram";
+    telegram.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.8 3.2 18.7 20c-.23 1.18-.85 1.47-1.72.92l-4.72-3.48-2.28 2.19c-.25.25-.46.46-.95.46l.34-4.81 8.76-7.91c.38-.34-.08-.53-.59-.19L6.71 14 2.04 12.54c-1.02-.32-1.04-1.02.21-1.51L20.5 4c.85-.31 1.59.19 1.3-.8Z"/></svg>';
+    row.appendChild(telegram);
     return true;
   }
 
@@ -183,7 +213,8 @@
         const items=[];
         snapshot.forEach(child=>items.push({id:child.key,...(child.val()||{})}));
         allBookings=items;
-        keepCompleteBookingList();
+        if(allBookings.length)keepCompleteBookingList();
+        else renderAllBookings([]);
       },error=>{
         console.warn("Complete booking feed failed",error);
         const list=document.getElementById("bookings-list");
@@ -197,6 +228,7 @@
 
   function applyChatFixes(){
     removeFirstModel();
+    applyChatTelegramButton();
     watchBookings();
     if(allBookings.length)keepCompleteBookingList();
   }
@@ -208,12 +240,14 @@
     const observer=new MutationObserver(()=>{
       applyPremiumTelegram();
       removeFirstModel();
+      applyChatTelegramButton();
       if(allBookings.length)keepCompleteBookingList();
     });
     observer.observe(document.documentElement,{childList:true,subtree:true});
 
     setInterval(()=>{
       removeFirstModel();
+      applyChatTelegramButton();
       if(allBookings.length)renderAllBookings(allBookings);
     },3000);
   }
