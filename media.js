@@ -12,7 +12,7 @@ window.BluiaMedia = {
     "https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-6c0d70db-a7e0-4a2f-b093-1d0f6b1266ed.mp4?download=true"
   ],
 
-  // Bluia Sisters used by Chat
+  // Bluia Sisters used by Kiss
   models: [
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_49_55%20AM.png?download=true",
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_50_09%20AM.png?download=true",
@@ -119,30 +119,21 @@ window.BluiaMedia = {
   else applyPhotosUI();
 })();
 
-// Free Telegram button UI
+// Remove the old Telegram CTA from the main page.
 (() => {
-  const applyFreeTelegramButton = () => {
-    const button = document.querySelector(".telegram-button");
-    if (!button) return;
-    for (const node of [...button.childNodes]) {
-      if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) node.textContent = " Join Free Telegram ";
-    }
-    button.style.background = "#229ED9";
-    button.style.borderColor = "#229ED9";
-    button.style.color = "#ffffff";
-    button.style.boxShadow = "0 8px 24px rgba(34,158,217,.24)";
+  const removeTelegram = () => {
+    document.querySelector(".telegram-button")?.remove();
+    document.getElementById("premium-telegram-info")?.remove();
   };
-
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", applyFreeTelegramButton, {once:true});
-  else applyFreeTelegramButton();
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded",removeTelegram,{once:true});
+  else removeTelegram();
 })();
 
-// Lightweight Chat presentation stays on the main page.
-// The booking form itself lives at /booking.
+// Kiss experience
 (() => {
   if (document.querySelector('script[data-bluia-chat-home]')) return;
   const script = document.createElement("script");
-  script.src = "/chat-home.js?v=20261008-1";
+  script.src = "/chat-home.js?v=20261008-kiss-1";
   script.defer = true;
   script.dataset.bluiaChatHome = "1";
   document.head.appendChild(script);
