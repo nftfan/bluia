@@ -212,12 +212,12 @@ window.BluiaMedia = {
   }
 })();
 
-// Load the Firebase Fans feature
+// Load the private Chat booking feature
 (() => {
-  if (document.querySelector('script[data-bluia-fans]')) return;
+  if (document.querySelector('script[data-bluia-booking]')) return;
   const script = document.createElement("script");
-  script.src = "fans.js";
+  script.src = "booking.js";
   script.async = true;
-  script.dataset.bluiaFans = "1";
+  script.dataset.bluiaBooking = "1";
   document.head.appendChild(script);
 })();
