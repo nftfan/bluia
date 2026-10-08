@@ -151,7 +151,7 @@
       <div class="fans-shell">
         <div class="fans-hero">
           <h2>Chat with Bluia Sisters 💗</h2>
-          <p>Post a love message and optionally choose one of the photos from our Photos tab.</p>
+          <p>Become a member to receive replies from Bluia Sisters on your love messages.</p>
         </div>
         <form class="fans-compose" id="fans-form">
           <h3>Post a message</h3>
