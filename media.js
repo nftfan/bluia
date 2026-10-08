@@ -137,20 +137,29 @@ window.BluiaMedia = {
   else applyFreeTelegramButton();
 })();
 
-// Load the single Chat runtime. All booking/UI behavior lives in booking.js.
+// Booking now lives on its own page: bluia.online/booking
 (() => {
-  if (document.querySelector('script[data-bluia-booking]')) return;
-  const script = document.createElement("script");
-  script.src = "booking.js?v=20261008-smooth-2";
-  script.async = true;
-  script.dataset.bluiaBooking = "1";
-  script.addEventListener("load",() => {
-    if (document.querySelector('script[data-bluia-booking-list-fix]')) return;
-    const fix = document.createElement("script");
-    fix.src = "booking-list-fix.js?v=20261008-1";
-    fix.async = true;
-    fix.dataset.bluiaBookingListFix = "1";
-    document.head.appendChild(fix);
-  },{once:true});
-  document.head.appendChild(script);
+  const addBookingLink = () => {
+    const nav = document.querySelector(".media-tabs");
+    if (!nav || document.getElementById("booking-page-link")) return;
+
+    const style = document.createElement("style");
+    style.id = "bluia-booking-link-style";
+    style.textContent = `
+      .media-tabs{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:5px!important}
+      .booking-page-link{display:flex;align-items:center;justify-content:center;text-decoration:none;border-color:#ff6ba7!important;color:#ff8fba!important;background:#211019!important}
+      .booking-page-link:hover,.booking-page-link:focus{border-color:#ff4f95!important;color:#fff!important;background:linear-gradient(135deg,#ff6aa8,#d93778)!important}
+    `;
+    document.head.appendChild(style);
+
+    const link = document.createElement("a");
+    link.id = "booking-page-link";
+    link.className = "media-tab booking-page-link";
+    link.href = "/booking";
+    link.textContent = "Chat";
+    nav.insertBefore(link,nav.firstElementChild);
+  };
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded",addBookingLink,{once:true});
+  else addBookingLink();
 })();
