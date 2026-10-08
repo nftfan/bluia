@@ -1,6 +1,21 @@
-// Premium Telegram placement helper
+// Bluia Sisters runtime helpers: Premium Telegram, model cleanup, and complete booking feed
 (() => {
   "use strict";
+
+  const FIREBASE_VERSION = "10.14.1";
+  const firebaseConfig = {
+    apiKey: "AIzaSyDmDAHuk6CEObzaJMhIlvNReOI0K83wK0k",
+    authDomain: "bluias.firebaseapp.com",
+    databaseURL: "https://bluias-default-rtdb.firebaseio.com",
+    projectId: "bluias",
+    storageBucket: "bluias.firebasestorage.app",
+    messagingSenderId: "604309456152",
+    appId: "1:604309456152:web:71dfcb29cbcda483260a6d",
+    measurementId: "G-GQJY1FF8BT"
+  };
+
+  let allBookings = [];
+  let bookingWatchStarted = false;
 
   function addStyles(){
     if(document.getElementById("bluia-premium-telegram-style"))return;
@@ -17,12 +32,12 @@
     document.head.appendChild(style);
   }
 
-  function apply(){
+  function applyPremiumTelegram(){
     const freeButton=document.querySelector(".telegram-button");
     if(!freeButton)return false;
 
     const lovePanel=document.getElementById("subpanel-love");
-    const premiumHref=lovePanel?.querySelector("a[href]")?.href||"#";
+    const premiumHref=lovePanel?.querySelector("a[href]")?.href||"https://t.me/+vieXRo_X9rM5NzRk";
 
     document.querySelector('.sub-tab[data-subpanel="love"]')?.remove();
     lovePanel?.remove();
@@ -46,12 +61,163 @@
     return true;
   }
 
-  function start(){
-    if(apply())return;
-    const observer=new MutationObserver(()=>{if(apply())observer.disconnect()});
-    observer.observe(document.documentElement,{childList:true,subtree:true});
-    setTimeout(()=>observer.disconnect(),10000);
+  function removeFirstModel(){
+    const models=window.BluiaMedia?.models;
+    if(!Array.isArray(models)||!models.length)return false;
+
+    if(!window.__bluiaRemovedFirstModel){
+      window.__bluiaRemovedFirstModel=models.shift();
+    }
+    const removed=window.__bluiaRemovedFirstModel;
+
+    document.querySelectorAll(".chat-sister-thumb").forEach(button=>{
+      if(button.dataset.url===removed)button.remove();
+    });
+
+    const main=document.getElementById("chat-main-photo");
+    if(main&&removed&&main.src===removed){
+      const first=document.querySelector(".chat-sister-thumb");
+      if(first)first.click();
+      else if(models[0])main.src=models[0];
+    }
+
+    return true;
   }
 
-  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start,{once:true});else start();
+  function bookingStartMs(item){
+    const direct=Number(item?.startAtMs);
+    if(Number.isFinite(direct)&&direct>0)return direct;
+    const date=item?.date||"";
+    const time=item?.time||"";
+    const parsed=new Date(`${date}T${time}`);
+    return Number.isNaN(parsed.getTime())?NaN:parsed.getTime();
+  }
+
+  function formatLocal(ms){
+    if(!Number.isFinite(ms))return "Time unavailable";
+    try{return new Intl.DateTimeFormat(undefined,{weekday:"short",month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"}).format(new Date(ms));}
+    catch(e){return new Date(ms).toLocaleString();}
+  }
+
+  function formatParis(ms){
+    if(!Number.isFinite(ms))return "Time unavailable";
+    try{return new Intl.DateTimeFormat(undefined,{timeZone:"Europe/Paris",weekday:"short",month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"}).format(new Date(ms));}
+    catch(e){return new Date(ms).toLocaleString();}
+  }
+
+  function renderAllBookings(items){
+    const list=document.getElementById("bookings-list");
+    if(!list)return false;
+
+    const sorted=[...items].sort((a,b)=>{
+      const ac=Number(a.createdAt)||bookingStartMs(a)||0;
+      const bc=Number(b.createdAt)||bookingStartMs(b)||0;
+      return bc-ac;
+    });
+
+    const heading=document.querySelector("#panel-booking .bookings-heading");
+    if(heading){
+      const strong=heading.querySelector("strong");
+      const meta=heading.querySelector("span");
+      if(strong)strong.textContent="Bookings";
+      if(meta)meta.textContent=sorted.length?`${sorted.length} confirmed · newest first`:"All confirmed bookings";
+    }
+
+    list.innerHTML="";
+    if(!sorted.length){
+      list.innerHTML='<div class="bookings-empty">No confirmed bookings yet.</div>';
+      return true;
+    }
+
+    sorted.forEach(item=>{
+      const card=document.createElement("article");
+      card.className="booking-entry";
+
+      const img=document.createElement("img");
+      img.src=item.sisterImage||window.BluiaMedia?.models?.[0]||"";
+      img.alt="Booked Bluia Sister";
+      img.loading="lazy";
+
+      const body=document.createElement("div");
+      body.className="booking-entry-body";
+      body.innerHTML=`<div class="booking-entry-top"><div class="booking-entry-name"></div><span class="booking-entry-badge">Confirmed</span></div><div class="booking-entry-time"></div><div class="booking-entry-zone booking-entry-paris"></div><div class="booking-entry-duration"></div><div class="booking-entry-id"></div><div class="booking-entry-countdown" data-start="" data-duration=""></div>`;
+
+      const start=bookingStartMs(item);
+      body.querySelector(".booking-entry-name").textContent=item.name||"Guest";
+      body.querySelector(".booking-entry-time").textContent=`Your time · ${formatLocal(start)}`;
+      body.querySelector(".booking-entry-paris").textContent=`Paris · ${formatParis(start)}`;
+      body.querySelector(".booking-entry-duration").textContent=`${Number(item.duration)||30} minute private chat`;
+      body.querySelector(".booking-entry-id").textContent=item.sisterId?`Bluia Sister · ID ${item.sisterId}`:"Bluia Sister";
+
+      const countdown=body.querySelector(".booking-entry-countdown");
+      countdown.dataset.start=String(Number.isFinite(start)?start:"");
+      countdown.dataset.duration=String(Number(item.duration)||30);
+
+      card.append(img,body);
+      list.appendChild(card);
+    });
+    return true;
+  }
+
+  function keepCompleteBookingList(){
+    if(!allBookings.length)return;
+    setTimeout(()=>renderAllBookings(allBookings),0);
+    setTimeout(()=>renderAllBookings(allBookings),120);
+  }
+
+  async function watchBookings(){
+    if(bookingWatchStarted)return;
+    bookingWatchStarted=true;
+    try{
+      const [appMod,dbMod]=await Promise.all([
+        import(`https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}/firebase-app.js`),
+        import(`https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}/firebase-database.js`)
+      ]);
+
+      let app=appMod.getApps().find(x=>x.name==="bluia-booking-feed");
+      if(!app)app=appMod.initializeApp(firebaseConfig,"bluia-booking-feed");
+      const db=dbMod.getDatabase(app);
+      const ref=dbMod.ref(db,"chatBookings");
+
+      dbMod.onValue(ref,snapshot=>{
+        const items=[];
+        snapshot.forEach(child=>items.push({id:child.key,...(child.val()||{})}));
+        allBookings=items;
+        keepCompleteBookingList();
+      },error=>{
+        console.warn("Complete booking feed failed",error);
+        const list=document.getElementById("bookings-list");
+        if(list)list.innerHTML='<div class="bookings-empty">Bookings could not be loaded right now.</div>';
+      });
+    }catch(error){
+      console.warn("Booking feed setup failed",error);
+      bookingWatchStarted=false;
+    }
+  }
+
+  function applyChatFixes(){
+    removeFirstModel();
+    watchBookings();
+    if(allBookings.length)keepCompleteBookingList();
+  }
+
+  function start(){
+    applyPremiumTelegram();
+    applyChatFixes();
+
+    const observer=new MutationObserver(()=>{
+      applyPremiumTelegram();
+      removeFirstModel();
+      if(allBookings.length)keepCompleteBookingList();
+    });
+    observer.observe(document.documentElement,{childList:true,subtree:true});
+
+    setInterval(()=>{
+      removeFirstModel();
+      if(allBookings.length)renderAllBookings(allBookings);
+    },3000);
+  }
+
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",start,{once:true});
+  else start();
 })();
