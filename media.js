@@ -12,16 +12,8 @@ window.BluiaMedia = {
     "https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-6c0d70db-a7e0-4a2f-b093-1d0f6b1266ed.mp4?download=true"
   ],
 
-  // 9:16 Reels
-  reels: [
-    "https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-66e1277e-ffcc-47eb-b056-82e1d33f48ed.mp4?download=true",
-    "https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-cdec6d71-9fad-4460-9bd4-b5ee3ccb3f74.mp4?download=true",
-    "https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-7ef55572-64ad-46c5-9c2e-ae777e88f28b.mp4?download=true"
-  ],
-
-  // Models grid
+  // Bluia Sisters used by Chat
   models: [
-    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_49_38%20AM.png?download=true",
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_49_55%20AM.png?download=true",
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_50_09%20AM.png?download=true",
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_50_19%20AM.png?download=true",
@@ -31,6 +23,13 @@ window.BluiaMedia = {
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_10_31%20AM.png?download=true",
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_10_25%20AM.png?download=true",
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_10_11%20AM.png?download=true"
+  ],
+
+  // 9:16 Reels
+  reels: [
+    "https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-66e1277e-ffcc-47eb-b056-82e1d33f48ed.mp4?download=true",
+    "https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-cdec6d71-9fad-4460-9bd4-b5ee3ccb3f74.mp4?download=true",
+    "https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-7ef55572-64ad-46c5-9c2e-ae777e88f28b.mp4?download=true"
   ],
 
   // Photos gallery — newest first
@@ -60,7 +59,6 @@ window.BluiaMedia = {
 (() => {
   const applyPhotosUI = () => {
     const photos = Array.isArray(window.BluiaMedia?.gallery) ? window.BluiaMedia.gallery : [];
-
     const topPhotosTab = document.querySelector('.media-tab[data-panel="photos"]');
     if (topPhotosTab) topPhotosTab.textContent = "Photos";
 
@@ -71,120 +69,54 @@ window.BluiaMedia = {
           Bluia Sisters post new photos every day for members.
           <a href="#" id="photos-member-cta">Become a member now</a>
         </div>
-        <div class="photos-gallery-grid" id="photos-gallery-grid"></div>
-      `;
+        <div class="photos-gallery-grid" id="photos-gallery-grid"></div>`;
     }
 
     const grid = document.getElementById("photos-gallery-grid");
     if (grid) {
-      grid.innerHTML = photos.map((url, index) => `
-        <img
-          src="${url}"
-          alt="Bluia Sisters photo ${index + 1}"
-          loading="lazy"
-          decoding="async"
-        >
-      `).join("");
+      const fragment = document.createDocumentFragment();
+      photos.forEach((url,index) => {
+        const img = document.createElement("img");
+        img.src = url;
+        img.alt = `Bluia Sisters photo ${index+1}`;
+        img.loading = "lazy";
+        img.decoding = "async";
+        fragment.appendChild(img);
+      });
+      grid.replaceChildren(fragment);
     }
 
-    const cta = document.getElementById("photos-member-cta");
-    if (cta) {
-      cta.addEventListener("click", event => {
-        event.preventDefault();
-        const buyButton = document.getElementById("buy-button");
-        if (buyButton) buyButton.click();
-      });
-    }
+    document.getElementById("photos-member-cta")?.addEventListener("click",event => {
+      event.preventDefault();
+      document.getElementById("buy-button")?.click();
+    });
 
     const lowerTab = document.querySelector('.sub-tab[data-subpanel="chat"]') ||
                      document.querySelector('.sub-tab[data-subpanel="albums"]') ||
                      document.querySelector('.sub-tab[data-subpanel="photos-grid"]');
-    if (lowerTab) lowerTab.remove();
+    lowerTab?.remove();
 
     const lowerPanel = document.getElementById("subpanel-chat") ||
                        document.getElementById("subpanel-albums") ||
                        document.getElementById("subpanel-photos-grid");
-    if (lowerPanel) lowerPanel.remove();
+    lowerPanel?.remove();
 
     if (!document.getElementById("bluia-photos-gallery-style")) {
       const style = document.createElement("style");
       style.id = "bluia-photos-gallery-style";
       style.textContent = `
-        .photos-member-note{
-          width:min(100%,440px);
-          margin:0 auto;
-          padding:13px 14px 10px;
-          color:#c9bbc2;
-          font-size:10px;
-          line-height:1.5;
-          text-align:center;
-        }
-        .photos-member-note a{
-          color:#ff6fa8;
-          font-weight:900;
-          text-decoration:none;
-          white-space:nowrap;
-        }
-        .photos-member-note a:hover,
-        .photos-member-note a:focus{
-          text-decoration:underline;
-        }
-        .photos-gallery-grid{
-          display:grid;
-          grid-template-columns:repeat(2,minmax(0,1fr));
-          gap:9px;
-          width:min(100%,440px);
-          margin:0 auto;
-          padding:0 14px 16px;
-        }
-        .photos-gallery-grid img{
-          display:block;
-          width:100%;
-          aspect-ratio:2/3;
-          object-fit:cover;
-          object-position:top center;
-          border:0;
-          border-radius:12px;
-          background:#111;
-        }
-        .sub-tabs{
-          grid-template-columns:repeat(2,1fr) !important;
-        }
+        .photos-member-note{width:min(100%,440px);margin:0 auto;padding:13px 14px 10px;color:#c9bbc2;font-size:10px;line-height:1.5;text-align:center}
+        .photos-member-note a{color:#ff6fa8;font-weight:900;text-decoration:none;white-space:nowrap}
+        .photos-member-note a:hover,.photos-member-note a:focus{text-decoration:underline}
+        .photos-gallery-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;width:min(100%,440px);margin:0 auto;padding:0 14px 16px}
+        .photos-gallery-grid img{display:block;width:100%;aspect-ratio:2/3;object-fit:cover;object-position:top center;border:0;border-radius:12px;background:#111;content-visibility:auto;contain-intrinsic-size:300px 450px}
       `;
       document.head.appendChild(style);
     }
   };
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", applyPhotosUI, { once: true });
-  } else {
-    applyPhotosUI();
-  }
-})();
-
-// VIP Telegram details
-(() => {
-  const applyVipTelegram = () => {
-    const panel = document.getElementById("subpanel-love");
-    if (!panel) return;
-
-    panel.innerHTML =
-      '<div class="sub-card">' +
-        '<h3>Love — VIP Telegram</h3>' +
-        '<p>Bluia Sisters post behind the scenes and private photo and video clips exclusively in VIP Telegram.</p>' +
-        '<p style="margin-top:8px;color:#ffd86b;font-weight:800;">500 Telegram Stars per month</p>' +
-        '<a href="https://t.me/+vieXRo_X9rM5NzRk" target="_blank" rel="noopener noreferrer" ' +
-        'style="margin-top:10px;min-height:42px;display:flex;align-items:center;justify-content:center;' +
-        'border-radius:10px;background:linear-gradient(135deg,#e6c65c,#b88928);color:#140f04;text-decoration:none;font-size:10.5px;font-weight:900;box-shadow:0 8px 24px rgba(196,153,49,.22);">' +
-        'Join VIP Telegram</a>' +
-      '</div>';
-  };
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", applyVipTelegram, {once:true});
-  } else {
-    applyVipTelegram();
-  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", applyPhotosUI, {once:true});
+  else applyPhotosUI();
 })();
 
 // Free Telegram button UI
@@ -192,42 +124,25 @@ window.BluiaMedia = {
   const applyFreeTelegramButton = () => {
     const button = document.querySelector(".telegram-button");
     if (!button) return;
-
     for (const node of [...button.childNodes]) {
-      if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
-        node.textContent = " Join Free Telegram ";
-      }
+      if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) node.textContent = " Join Free Telegram ";
     }
-
     button.style.background = "#229ED9";
     button.style.borderColor = "#229ED9";
     button.style.color = "#ffffff";
     button.style.boxShadow = "0 8px 24px rgba(34,158,217,.24)";
   };
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", applyFreeTelegramButton, {once:true});
-  } else {
-    applyFreeTelegramButton();
-  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", applyFreeTelegramButton, {once:true});
+  else applyFreeTelegramButton();
 })();
 
-// Load the private Chat booking feature
+// Load the single Chat runtime. All booking/UI behavior now lives in booking.js.
 (() => {
   if (document.querySelector('script[data-bluia-booking]')) return;
   const script = document.createElement("script");
-  script.src = "booking.js";
+  script.src = "booking.js?v=20261008-smooth-1";
   script.async = true;
   script.dataset.bluiaBooking = "1";
-  document.head.appendChild(script);
-})();
-
-// Load full-width Chat layout and make Chat the default view
-(() => {
-  if (document.querySelector('script[data-bluia-booking-ui]')) return;
-  const script = document.createElement("script");
-  script.src = "booking-ui.js";
-  script.async = true;
-  script.dataset.bluiaBookingUi = "1";
   document.head.appendChild(script);
 })();
