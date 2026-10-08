@@ -136,6 +136,54 @@
       #panel-booking .booking-entry-duration,
       #panel-booking .booking-entry-countdown{font-size:8px!important}
 
+      .premium-telegram-info{
+        width:100%;
+        margin:10px 0 0;
+        padding:10px 2px 2px;
+        text-align:left;
+      }
+      .premium-telegram-kicker{
+        margin:0 0 3px;
+        color:#d7b24b;
+        font-size:8px;
+        font-weight:950;
+        letter-spacing:.7px;
+        text-transform:uppercase;
+      }
+      .premium-telegram-title{
+        margin:0 0 5px;
+        color:#fff;
+        font-size:11px;
+        font-weight:900;
+      }
+      .premium-telegram-copy{
+        margin:0 0 7px;
+        color:#bfaeb6;
+        font-size:9px;
+        line-height:1.5;
+      }
+      .premium-telegram-price{
+        margin:0 0 8px;
+        color:#e2c25b;
+        font-size:9px;
+        font-weight:900;
+      }
+      .premium-telegram-button{
+        min-height:42px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        width:100%;
+        border:1px solid #6b5421;
+        border-radius:11px;
+        background:linear-gradient(135deg,#e6c65c,#b88928);
+        color:#140f04;
+        text-decoration:none;
+        font-size:10.5px;
+        font-weight:950;
+        box-shadow:0 8px 24px rgba(196,153,49,.18);
+      }
+
       @media(max-width:390px){
         #panel-booking .booking-wizard{padding-left:11px!important;padding-right:11px!important}
         #panel-booking .wizard-top{grid-template-columns:136px minmax(0,1fr)!important;gap:12px!important}
@@ -152,6 +200,31 @@
       }
     `;
     document.head.appendChild(style);
+  }
+
+  function applyPremiumTelegram(){
+    const freeButton = document.querySelector(".telegram-button");
+    if (!freeButton) return;
+
+    document.querySelector('.sub-tab[data-subpanel="love"]')?.remove();
+    document.getElementById("subpanel-love")?.remove();
+
+    const subTabs = document.querySelector(".sub-tabs");
+    if (subTabs && !subTabs.querySelector(".sub-tab")) subTabs.remove();
+
+    if (document.getElementById("premium-telegram-info")) return;
+
+    const wrap = document.createElement("div");
+    wrap.className = "premium-telegram-info";
+    wrap.id = "premium-telegram-info";
+    wrap.innerHTML = `
+      <div class="premium-telegram-kicker">Premium Telegram</div>
+      <div class="premium-telegram-title">More from Bluia Sisters</div>
+      <p class="premium-telegram-copy">Join Premium Telegram for behind-the-scenes posts, private photo and video clips, and exclusive updates from Bluia Sisters.</p>
+      <div class="premium-telegram-price">500 Telegram Stars / month</div>
+      <a class="premium-telegram-button" href="https://t.me/+vieXRo_X9rM5NzRk" target="_blank" rel="noopener noreferrer">Join Premium Telegram</a>
+    `;
+    freeButton.insertAdjacentElement("afterend", wrap);
   }
 
   function apply(){
@@ -194,6 +267,7 @@
 
     copy.append(kicker, title, intro, details, time, id);
     hero.remove();
+    applyPremiumTelegram();
 
     applied = true;
 
