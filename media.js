@@ -137,29 +137,13 @@ window.BluiaMedia = {
   else applyFreeTelegramButton();
 })();
 
-// Booking now lives on its own page: bluia.online/booking
+// Lightweight Chat presentation stays on the main page.
+// The booking form itself lives at /booking.
 (() => {
-  const addBookingLink = () => {
-    const nav = document.querySelector(".media-tabs");
-    if (!nav || document.getElementById("booking-page-link")) return;
-
-    const style = document.createElement("style");
-    style.id = "bluia-booking-link-style";
-    style.textContent = `
-      .media-tabs{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:5px!important}
-      .booking-page-link{display:flex;align-items:center;justify-content:center;text-decoration:none;border-color:#ff6ba7!important;color:#ff8fba!important;background:#211019!important}
-      .booking-page-link:hover,.booking-page-link:focus{border-color:#ff4f95!important;color:#fff!important;background:linear-gradient(135deg,#ff6aa8,#d93778)!important}
-    `;
-    document.head.appendChild(style);
-
-    const link = document.createElement("a");
-    link.id = "booking-page-link";
-    link.className = "media-tab booking-page-link";
-    link.href = "/booking";
-    link.textContent = "Chat";
-    nav.insertBefore(link,nav.firstElementChild);
-  };
-
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded",addBookingLink,{once:true});
-  else addBookingLink();
+  if (document.querySelector('script[data-bluia-chat-home]')) return;
+  const script = document.createElement("script");
+  script.src = "/chat-home.js?v=20261008-1";
+  script.defer = true;
+  script.dataset.bluiaChatHome = "1";
+  document.head.appendChild(script);
 })();
