@@ -137,12 +137,20 @@ window.BluiaMedia = {
   else applyFreeTelegramButton();
 })();
 
-// Load the single Chat runtime. All booking/UI behavior now lives in booking.js.
+// Load the single Chat runtime. All booking/UI behavior lives in booking.js.
 (() => {
   if (document.querySelector('script[data-bluia-booking]')) return;
   const script = document.createElement("script");
-  script.src = "booking.js?v=20261008-smooth-1";
+  script.src = "booking.js?v=20261008-smooth-2";
   script.async = true;
   script.dataset.bluiaBooking = "1";
+  script.addEventListener("load",() => {
+    if (document.querySelector('script[data-bluia-booking-list-fix]')) return;
+    const fix = document.createElement("script");
+    fix.src = "booking-list-fix.js?v=20261008-1";
+    fix.async = true;
+    fix.dataset.bluiaBookingListFix = "1";
+    document.head.appendChild(fix);
+  },{once:true});
   document.head.appendChild(script);
 })();
