@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#111111">
+  <title>Book a Private Chat | Bluia Sisters</title>
+  <meta name="description" content="Choose a Bluia Sister and book a private chat in your local time.">
+  <link rel="canonical" href="https://bluia.online/booking">
+  <style>
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;background:#111;color:#fff;font-family:Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+    body{min-height:100svh}
+    .booking-page-header{height:52px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 14px;background:#0b0b0b;border-bottom:1px solid #242424;position:sticky;top:0;z-index:1000}
+    .booking-page-brand{color:#fff;text-decoration:none;font-size:12px;font-weight:950;letter-spacing:.1px}
+    .booking-page-back{display:inline-flex;align-items:center;justify-content:center;min-height:32px;padding:0 10px;border:1px solid #373737;border-radius:9px;color:#cfcfcf;text-decoration:none;font-size:9px;font-weight:850;background:#171717}
+    .media-tabs{display:none!important}
+    main{display:block;width:100%;min-height:calc(100svh - 52px)}
+    .media-panel{display:none}
+    .media-panel.active{display:block}
+    @media(max-width:390px){.booking-page-header{padding:0 11px}.booking-page-brand{font-size:11px}}
+  </style>
+</head>
+<body>
+  <header class="booking-page-header">
+    <a class="booking-page-brand" href="/">Bluia Sisters TV</a>
+    <a class="booking-page-back" href="/">Back to TV</a>
+  </header>
+  <nav class="media-tabs" aria-hidden="true"></nav>
+  <main></main>
+
+  <script>
+    window.BluiaMedia = {
+      models: [
+        "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_49_55%20AM.png?download=true",
+        "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_50_09%20AM.png?download=true",
+        "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_50_19%20AM.png?download=true",
+        "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_50_36%20AM.png?download=true",
+        "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_11_06%20AM.png?download=true",
+        "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_10_51%20AM.png?download=true",
+        "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_10_31%20AM.png?download=true",
+        "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_10_25%20AM.png?download=true",
+        "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_10_11%20AM.png?download=true"
+      ]
+    };
+  </script>
+  <script src="/booking.js?v=20261008-booking-page-1" defer></script>
+  <script src="/booking-list-fix.js?v=20261008-booking-page-1" defer></script>
+</body>
+</html>
