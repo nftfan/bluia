@@ -4,11 +4,34 @@
   const KISS_IMAGE_URL = "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%208%2C%202026%2C%2009_45_20%20PM.png?download=true";
   const SNIFF_IMAGE_URL = "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_11_13%20PM.png?download=true";
   const STRIPE_URL = "https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04";
+  const FREE_TELEGRAM_URL = "https://t.me/vbluia";
+  const PREMIUM_TELEGRAM_URL = "https://t.me/+vieXRo_X9rM5NzRk";
 
   const models = () => Array.isArray(window.BluiaMedia?.models) ? window.BluiaMedia.models : [];
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
   let selectedIndex = 0;
+
+  const kissIcon = `
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M3.4 11.1c2.2-2.6 4.6-4 7-4.1 1.2 0 2.1.4 2.8 1.1.7-.7 1.7-1.1 2.8-1.1 2.2.1 4.1 1.5 5.7 4.1-2.9 3.8-6.1 5.8-9.4 5.9-3.3-.1-6.2-2.1-8.9-5.9Zm3.1.3c1.9 1.7 3.8 2.6 5.8 2.7 2-.1 4-.9 5.9-2.7-1-.9-2-1.4-3-1.4-1 0-1.9.4-2.8 1.2-.9-.8-1.8-1.2-2.8-1.2-1 0-2.1.5-3.1 1.4Z"/>
+    </svg>`;
+  const sniffIcon = `
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M13.3 3.2c.8 2.2.8 4.3.1 6.2-.4 1.1-1 2.2-1.8 3.3-.5.7-.7 1.3-.5 1.7.2.4.8.7 1.8.7h2.4c1.4 0 2.3.7 2.3 1.8 0 1.5-1.5 3-3.6 3-1.5 0-2.8-.7-3.6-1.9l1.5-1c.5.7 1.2 1.1 2.1 1.1 1 0 1.7-.6 1.8-1.1-.1-.1-.3-.1-.6-.1h-2.4c-1.8 0-3-.6-3.5-1.8-.5-1.2-.2-2.4.8-3.8.7-1 1.2-1.9 1.5-2.7.5-1.5.5-3.1-.1-4.8l1.8-.6ZM5 6.5c1.6 0 3 .8 3.9 2.1l-1.5 1C6.8 8.8 6 8.4 5 8.4V6.5Zm14 0v1.9c-1 0-1.8.4-2.4 1.2l-1.5-1c.9-1.3 2.3-2.1 3.9-2.1Z"/>
+    </svg>`;
+  const telegramIcon = `
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M21.7 3.4 18.6 20c-.2 1.1-.8 1.4-1.7.9l-4.7-3.5-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.8 8.8-7.9c.4-.3-.1-.5-.6-.2L6.7 14l-4.7-1.5c-1-.3-1-1 .2-1.5L20.5 4c.8-.3 1.5.2 1.2-.6Z"/>
+    </svg>`;
+  const premiumIcon = `
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="m12 2.8 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 2.8Zm0 4.1-1.5 3.1-3.4.5 2.5 2.4-.6 3.4 3-1.6 3 1.6-.6-3.4 2.5-2.4-3.4-.5L12 6.9Z"/>
+    </svg>`;
+  const lockIcon = `
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M7 10V8a5 5 0 0 1 10 0v2h1.5A1.5 1.5 0 0 1 20 11.5v8A1.5 1.5 0 0 1 18.5 21h-13A1.5 1.5 0 0 1 4 19.5v-8A1.5 1.5 0 0 1 5.5 10H7Zm2 0h6V8a3 3 0 0 0-6 0v2Zm3 3a2 2 0 0 0-1 3.7V19h2v-2.3a2 2 0 0 0-1-3.7Z"/>
+    </svg>`;
 
   function addStyles(){
     $("#bluia-chat-home-style")?.remove();
@@ -27,11 +50,12 @@
       .chat-home-title{margin:0 0 7px;color:#fff;font-size:11px;line-height:1.3;font-weight:950}
       .chat-home-text{margin:0 0 7px;color:#ffe8f0;font-size:9px;line-height:1.46}
       .chat-home-small{margin:0;color:#6d1b3a;font-size:8px;line-height:1.42;font-weight:850}
-      .kiss-button,.sniff-button{min-height:43px;display:flex;align-items:center;justify-content:center;gap:7px;width:100%;border-radius:12px;font-size:10.5px;font-weight:950;cursor:pointer;box-shadow:0 7px 18px rgba(87,10,40,.14);transition:transform .14s ease}
-      .kiss-button{margin-top:10px;border:1px solid rgba(255,255,255,.94);background:#fff;color:#dd3f7b}
-      .sniff-button{margin-top:7px;border:1px solid #f4c935;background:linear-gradient(135deg,#ffe66b,#f5c934);color:#5b4300}
+      .play-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:10px;width:100%}
+      .kiss-button,.sniff-button{min-height:43px;display:flex;align-items:center;justify-content:center;gap:7px;width:100%;border:1px solid rgba(255,255,255,.96);border-radius:12px;background:#fff;font-size:10.5px;font-weight:950;cursor:pointer;box-shadow:0 7px 18px rgba(87,10,40,.14);transition:transform .14s ease,box-shadow .14s ease}
+      .kiss-button{color:#dd3f7b}
+      .sniff-button{color:#bd8900}
       .kiss-button:active,.sniff-button:active{transform:scale(.975)}
-      .kiss-icon,.sniff-icon{font-size:16px;line-height:1}
+      .kiss-button svg,.sniff-button svg{width:17px;height:17px;fill:currentColor;flex:0 0 17px}
       .chat-home-slider-wrap{padding:0 14px 4px}
       .chat-home-slider-label{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 7px;color:#fff}
       .chat-home-slider-label strong{font-size:9px}.chat-home-slider-label span{color:#ffd6e5;font-size:7px}
@@ -40,19 +64,32 @@
       .chat-home-thumb{flex:0 0 64px;width:64px;aspect-ratio:2/3;padding:0;border:2px solid transparent;border-radius:11px;overflow:hidden;background:#ba2c65;cursor:pointer;scroll-snap-align:start;box-shadow:0 5px 14px rgba(88,7,39,.12)}
       .chat-home-thumb img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center}
       .chat-home-thumb.selected{border-color:#fff;box-shadow:0 0 0 2px rgba(255,255,255,.16),0 6px 16px rgba(88,7,39,.18)}
+      .telegram-groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:7px 14px 0}
+      .telegram-group{min-width:0;display:flex;align-items:center;gap:8px;padding:10px;border:1px solid rgba(255,255,255,.32);border-radius:13px;background:rgba(255,255,255,.94);text-decoration:none;box-shadow:0 7px 18px rgba(87,10,40,.10);transition:transform .14s ease}
+      .telegram-group:active{transform:scale(.98)}
+      .telegram-group-icon{width:30px;height:30px;display:grid;place-items:center;flex:0 0 30px;border-radius:9px}
+      .telegram-group-icon svg{width:17px;height:17px;fill:currentColor}
+      .telegram-group.free{color:#229ed9}
+      .telegram-group.free .telegram-group-icon{background:#eaf7fd}
+      .telegram-group.premium{color:#b88928}
+      .telegram-group.premium .telegram-group-icon{background:#fff6d7}
+      .telegram-group-copy{min-width:0;display:flex;flex-direction:column;gap:2px}
+      .telegram-group-copy strong{color:#25131b;font-size:9px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+      .telegram-group-copy span{color:#7d6871;font-size:7px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
       .kiss-modal{position:fixed;inset:0;z-index:100005;display:grid;place-items:center;padding:16px;background:rgba(0,0,0,.84);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s ease,visibility .16s ease}
       .kiss-modal.open{opacity:1;visibility:visible;pointer-events:auto}
       .kiss-modal-card{position:relative;width:min(94vw,410px);max-height:92dvh;overflow:auto;border:1px solid #60364b;border-radius:20px;background:#120d10;box-shadow:0 28px 80px rgba(0,0,0,.65)}
       .kiss-close{position:absolute;z-index:2;top:9px;right:9px;width:34px;height:34px;border:1px solid rgba(255,255,255,.35);border-radius:50%;background:rgba(12,8,10,.84);color:#fff;font-size:20px;line-height:1;cursor:pointer}
       .kiss-preview{display:block;width:100%;height:auto;border-radius:19px}
       .unlock-card{padding:25px 18px 18px;text-align:center}
-      .unlock-icon{width:48px;height:48px;display:grid;place-items:center;margin:0 auto 12px;border-radius:15px;background:#2b1320;color:#ff74aa;font-size:23px}
+      .unlock-icon{width:48px;height:48px;display:grid;place-items:center;margin:0 auto 12px;border-radius:15px;background:#2b1320;color:#ff74aa}
+      .unlock-icon svg{width:23px;height:23px;fill:currentColor}
       .unlock-card h3{margin:0 0 7px;color:#fff;font-size:17px}
       .unlock-card p{margin:0 auto 15px;max-width:280px;color:#bca9b2;font-size:9.5px;line-height:1.55}
       .unlock-member{min-height:46px;display:flex;align-items:center;justify-content:center;border-radius:12px;background:linear-gradient(135deg,#ed5b96,#c93370);color:#fff;text-decoration:none;font-size:11px;font-weight:950}
-      @media(max-width:390px){.chat-home-main{grid-template-columns:142px minmax(0,1fr);gap:12px;padding-left:11px;padding-right:11px}.chat-home-photo{width:142px}.chat-home-slider-wrap{padding-left:11px;padding-right:11px}}
-      @media(max-width:340px){.chat-home-main{grid-template-columns:125px minmax(0,1fr);gap:10px}.chat-home-photo{width:125px}.chat-home-text{font-size:8.3px}.kiss-button,.sniff-button{font-size:9.5px}}
-      @media(prefers-reduced-motion:reduce){.kiss-button,.sniff-button,.kiss-modal{transition:none!important}}
+      @media(max-width:390px){.chat-home-main{grid-template-columns:142px minmax(0,1fr);gap:12px;padding-left:11px;padding-right:11px}.chat-home-photo{width:142px}.chat-home-slider-wrap,.telegram-groups{padding-left:11px;padding-right:11px}}
+      @media(max-width:340px){.chat-home-main{grid-template-columns:125px minmax(0,1fr);gap:10px}.chat-home-photo{width:125px}.chat-home-text{font-size:8.3px}.kiss-button,.sniff-button{font-size:9.5px}.telegram-group{padding:8px 7px;gap:6px}.telegram-group-icon{width:27px;height:27px;flex-basis:27px}}
+      @media(prefers-reduced-motion:reduce){.kiss-button,.sniff-button,.telegram-group,.kiss-modal{transition:none!important}}
     `;
     document.head.appendChild(style);
   }
@@ -69,7 +106,7 @@
     if(tabs && !tabs.querySelector(".sub-tab")) tabs.remove();
   }
 
-  function activateKiss(tab,panel){
+  function activatePlay(tab,panel){
     $$(".media-tab").forEach(x => x.classList.toggle("active",x===tab));
     $$(".media-panel").forEach(x => x.classList.toggle("active",x===panel));
     $("#tv-video")?.pause();
@@ -134,7 +171,7 @@
     }
   }
 
-  function buildKiss(){
+  function buildPlay(){
     if($("#panel-chat-home")) return;
     const nav = $(".media-tabs");
     const main = $("main");
@@ -143,7 +180,7 @@
     const tab = document.createElement("button");
     tab.type = "button";
     tab.className = "media-tab chat-home-tab";
-    tab.textContent = "Kiss";
+    tab.textContent = "Play";
     nav.insertBefore(tab,nav.firstElementChild);
 
     const panel = document.createElement("section");
@@ -155,16 +192,28 @@
           <img class="chat-home-photo" id="chat-home-photo" alt="Selected Bluia Sister" decoding="async" fetchpriority="high">
           <div class="chat-home-copy">
             <div class="chat-home-kicker">Bluia Sisters</div>
-            <div class="chat-home-title">Kiss 💋</div>
-            <p class="chat-home-text">Choose a Bluia Sister below, then tap Kiss or Sniff.</p>
-            <p class="chat-home-small">The first Bluia Sister has special Kiss and Sniff moments waiting for you.</p>
-            <button class="kiss-button" id="kiss-button" type="button"><span class="kiss-icon">💋</span><span>Kiss</span></button>
-            <button class="sniff-button" id="sniff-button" type="button"><span class="sniff-icon">✨</span><span>Sniff</span></button>
+            <div class="chat-home-title">Play</div>
+            <p class="chat-home-text">Choose a Bluia Sister below, then choose Kiss or Sniff.</p>
+            <p class="chat-home-small">The first Bluia Sister has both moments unlocked. Other models are available for members.</p>
+            <div class="play-actions">
+              <button class="kiss-button" id="kiss-button" type="button">${kissIcon}<span>Kiss</span></button>
+              <button class="sniff-button" id="sniff-button" type="button">${sniffIcon}<span>Sniff</span></button>
+            </div>
           </div>
         </div>
         <div class="chat-home-slider-wrap">
           <div class="chat-home-slider-label"><strong>Choose a Bluia Sister</strong><span>Tap a photo</span></div>
           <div class="chat-home-slider" id="chat-home-slider"></div>
+        </div>
+        <div class="telegram-groups" aria-label="Bluia Sisters Telegram groups">
+          <a class="telegram-group free" href="${FREE_TELEGRAM_URL}" target="_blank" rel="noopener noreferrer">
+            <span class="telegram-group-icon">${telegramIcon}</span>
+            <span class="telegram-group-copy"><strong>Free Telegram</strong><span>Join the free group</span></span>
+          </a>
+          <a class="telegram-group premium" href="${PREMIUM_TELEGRAM_URL}" target="_blank" rel="noopener noreferrer">
+            <span class="telegram-group-icon">${premiumIcon}</span>
+            <span class="telegram-group-copy"><strong>Premium Telegram</strong><span>500 Stars / month</span></span>
+          </a>
         </div>
       </div>`;
     main.insertBefore(panel,main.querySelector(".page-content") || null);
@@ -185,7 +234,7 @@
       <div class="kiss-modal" id="kiss-unlock-modal" aria-hidden="true">
         <div class="kiss-modal-card unlock-card" role="dialog" aria-modal="true" aria-labelledby="unlock-more-title">
           <button class="kiss-close" type="button" aria-label="Close">×</button>
-          <div class="unlock-icon">💗</div>
+          <div class="unlock-icon">${lockIcon}</div>
           <h3 id="unlock-more-title">Unlock more</h3>
           <p>Become a member to unlock more Bluia Sisters content and special moments.</p>
           <a class="unlock-member" href="${STRIPE_URL}" target="_blank" rel="noopener noreferrer">Become member</a>
@@ -195,7 +244,7 @@
     renderSlider();
     $("#kiss-button")?.addEventListener("click",openKiss);
     $("#sniff-button")?.addEventListener("click",openSniff);
-    tab.addEventListener("click",() => activateKiss(tab,panel));
+    tab.addEventListener("click",() => activatePlay(tab,panel));
     $$(".media-tab:not(.chat-home-tab)").forEach(other => other.addEventListener("click",() => {
       tab.classList.remove("active");
       panel.classList.remove("active");
@@ -210,13 +259,13 @@
     });
 
     selectSister(0);
-    requestAnimationFrame(() => activateKiss(tab,panel));
+    requestAnimationFrame(() => activatePlay(tab,panel));
   }
 
   function start(){
     addStyles();
     cleanupOldUi();
-    buildKiss();
+    buildPlay();
     setTimeout(cleanupOldUi,150);
   }
 
