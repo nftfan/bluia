@@ -12,7 +12,7 @@ window.BluiaMedia = {
     "https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-6c0d70db-a7e0-4a2f-b093-1d0f6b1266ed.mp4?download=true"
   ],
 
-  // Bluia Sisters used by Kiss
+  // Bluia Sisters used by Play
   models: [
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_49_55%20AM.png?download=true",
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_14_11%20PM.png?download=true",
@@ -134,11 +134,11 @@ window.BluiaMedia = {
   else removeTelegram();
 })();
 
-// Kiss + Sniff experience
+// Play experience
 (() => {
   if (document.querySelector('script[data-bluia-chat-home]')) return;
   const script = document.createElement("script");
-  script.src = "/chat-home.js?v=20261009-kiss-sniff-1";
+  script.src = "/chat-home.js?v=20261009-play-2";
   script.defer = true;
   script.dataset.bluiaChatHome = "1";
   document.head.appendChild(script);
