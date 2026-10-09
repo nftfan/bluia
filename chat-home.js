@@ -2,6 +2,7 @@
   "use strict";
 
   const KISS_IMAGE_URL = "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%208%2C%202026%2C%2009_45_20%20PM.png?download=true";
+  const SNIFF_IMAGE_URL = "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_11_13%20PM.png?download=true";
   const STRIPE_URL = "https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04";
 
   const models = () => Array.isArray(window.BluiaMedia?.models) ? window.BluiaMedia.models : [];
@@ -26,9 +27,11 @@
       .chat-home-title{margin:0 0 7px;color:#fff;font-size:11px;line-height:1.3;font-weight:950}
       .chat-home-text{margin:0 0 7px;color:#ffe8f0;font-size:9px;line-height:1.46}
       .chat-home-small{margin:0;color:#6d1b3a;font-size:8px;line-height:1.42;font-weight:850}
-      .kiss-button{min-height:43px;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:7px;width:100%;border:1px solid rgba(255,255,255,.94);border-radius:12px;background:#fff;color:#dd3f7b;font-size:10.5px;font-weight:950;cursor:pointer;box-shadow:0 7px 18px rgba(87,10,40,.14);transition:transform .14s ease}
-      .kiss-button:active{transform:scale(.975)}
-      .kiss-icon{font-size:16px;line-height:1}
+      .kiss-button,.sniff-button{min-height:43px;display:flex;align-items:center;justify-content:center;gap:7px;width:100%;border-radius:12px;font-size:10.5px;font-weight:950;cursor:pointer;box-shadow:0 7px 18px rgba(87,10,40,.14);transition:transform .14s ease}
+      .kiss-button{margin-top:10px;border:1px solid rgba(255,255,255,.94);background:#fff;color:#dd3f7b}
+      .sniff-button{margin-top:7px;border:1px solid #f4c935;background:linear-gradient(135deg,#ffe66b,#f5c934);color:#5b4300}
+      .kiss-button:active,.sniff-button:active{transform:scale(.975)}
+      .kiss-icon,.sniff-icon{font-size:16px;line-height:1}
       .chat-home-slider-wrap{padding:0 14px 4px}
       .chat-home-slider-label{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 7px;color:#fff}
       .chat-home-slider-label strong{font-size:9px}.chat-home-slider-label span{color:#ffd6e5;font-size:7px}
@@ -48,8 +51,8 @@
       .unlock-card p{margin:0 auto 15px;max-width:280px;color:#bca9b2;font-size:9.5px;line-height:1.55}
       .unlock-member{min-height:46px;display:flex;align-items:center;justify-content:center;border-radius:12px;background:linear-gradient(135deg,#ed5b96,#c93370);color:#fff;text-decoration:none;font-size:11px;font-weight:950}
       @media(max-width:390px){.chat-home-main{grid-template-columns:142px minmax(0,1fr);gap:12px;padding-left:11px;padding-right:11px}.chat-home-photo{width:142px}.chat-home-slider-wrap{padding-left:11px;padding-right:11px}}
-      @media(max-width:340px){.chat-home-main{grid-template-columns:125px minmax(0,1fr);gap:10px}.chat-home-photo{width:125px}.chat-home-text{font-size:8.3px}.kiss-button{font-size:9.5px}}
-      @media(prefers-reduced-motion:reduce){.kiss-button,.kiss-modal{transition:none!important}}
+      @media(max-width:340px){.chat-home-main{grid-template-columns:125px minmax(0,1fr);gap:10px}.chat-home-photo{width:125px}.chat-home-text{font-size:8.3px}.kiss-button,.sniff-button{font-size:9.5px}}
+      @media(prefers-reduced-motion:reduce){.kiss-button,.sniff-button,.kiss-modal{transition:none!important}}
     `;
     document.head.appendChild(style);
   }
@@ -121,6 +124,16 @@
     }
   }
 
+  function openSniff(){
+    if(selectedIndex === 0){
+      const img = $("#sniff-special-image");
+      if(img && img.getAttribute("src") !== SNIFF_IMAGE_URL) img.src = SNIFF_IMAGE_URL;
+      setModal($("#sniff-image-modal"),true);
+    } else {
+      setModal($("#kiss-unlock-modal"),true);
+    }
+  }
+
   function buildKiss(){
     if($("#panel-chat-home")) return;
     const nav = $(".media-tabs");
@@ -143,9 +156,10 @@
           <div class="chat-home-copy">
             <div class="chat-home-kicker">Bluia Sisters</div>
             <div class="chat-home-title">Kiss 💋</div>
-            <p class="chat-home-text">Choose a Bluia Sister below, then tap Kiss.</p>
-            <p class="chat-home-small">The first Bluia Sister has a special kiss waiting for you.</p>
+            <p class="chat-home-text">Choose a Bluia Sister below, then tap Kiss or Sniff.</p>
+            <p class="chat-home-small">The first Bluia Sister has special Kiss and Sniff moments waiting for you.</p>
             <button class="kiss-button" id="kiss-button" type="button"><span class="kiss-icon">💋</span><span>Kiss</span></button>
+            <button class="sniff-button" id="sniff-button" type="button"><span class="sniff-icon">✨</span><span>Sniff</span></button>
           </div>
         </div>
         <div class="chat-home-slider-wrap">
@@ -162,6 +176,12 @@
           <img class="kiss-preview" id="kiss-special-image" alt="Bluia Sisters kiss" decoding="async">
         </div>
       </div>
+      <div class="kiss-modal" id="sniff-image-modal" aria-hidden="true">
+        <div class="kiss-modal-card" role="dialog" aria-modal="true" aria-label="Special sniff">
+          <button class="kiss-close" type="button" aria-label="Close">×</button>
+          <img class="kiss-preview" id="sniff-special-image" alt="Bluia Sisters sniff" decoding="async">
+        </div>
+      </div>
       <div class="kiss-modal" id="kiss-unlock-modal" aria-hidden="true">
         <div class="kiss-modal-card unlock-card" role="dialog" aria-modal="true" aria-labelledby="unlock-more-title">
           <button class="kiss-close" type="button" aria-label="Close">×</button>
@@ -174,6 +194,7 @@
 
     renderSlider();
     $("#kiss-button")?.addEventListener("click",openKiss);
+    $("#sniff-button")?.addEventListener("click",openSniff);
     tab.addEventListener("click",() => activateKiss(tab,panel));
     $$(".media-tab:not(.chat-home-tab)").forEach(other => other.addEventListener("click",() => {
       tab.classList.remove("active");
