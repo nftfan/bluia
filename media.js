@@ -15,6 +15,11 @@ window.BluiaMedia = {
   // Bluia Sisters used by Kiss
   models: [
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_49_55%20AM.png?download=true",
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_14_11%20PM.png?download=true",
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_13_56%20PM.png?download=true",
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_13_33%20PM.png?download=true",
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_13_22%20PM.png?download=true",
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_13_11%20PM.png?download=true",
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_50_09%20AM.png?download=true",
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_50_19%20AM.png?download=true",
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_50_36%20AM.png?download=true",
@@ -129,11 +134,11 @@ window.BluiaMedia = {
   else removeTelegram();
 })();
 
-// Kiss experience
+// Kiss + Sniff experience
 (() => {
   if (document.querySelector('script[data-bluia-chat-home]')) return;
   const script = document.createElement("script");
-  script.src = "/chat-home.js?v=20261008-kiss-1";
+  script.src = "/chat-home.js?v=20261009-kiss-sniff-1";
   script.defer = true;
   script.dataset.bluiaChatHome = "1";
   document.head.appendChild(script);
