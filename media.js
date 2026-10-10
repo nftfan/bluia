@@ -143,3 +143,13 @@ window.BluiaMedia = {
   script.dataset.bluiaChatHome = "1";
   document.head.appendChild(script);
 })();
+
+// Bluia Sisters Lifestyle PDF book card under Telegram groups
+(() => {
+  if (document.querySelector('script[data-bluia-book-card]')) return;
+  const script = document.createElement("script");
+  script.src = "/book-card.js?v=20261010-1";
+  script.defer = true;
+  script.dataset.bluiaBookCard = "1";
+  document.head.appendChild(script);
+})();
