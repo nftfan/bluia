@@ -49,7 +49,17 @@
     return true;
   }
 
+  function loadMemberGate(){
+    if(document.querySelector('script[data-bluia-member-gate]')) return;
+    const script = document.createElement("script");
+    script.src = "/member-gate.js?v=20261010-1";
+    script.defer = true;
+    script.dataset.bluiaMemberGate = "1";
+    document.head.appendChild(script);
+  }
+
   function start(){
+    loadMemberGate();
     if(addBookCard()) return;
     const observer = new MutationObserver(() => {
       if(addBookCard()) observer.disconnect();
