@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#080608">
+  <title>Bluia Sisters Pro</title>
+  <style>
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    :root{--bg:#080608;--panel:#110c0f;--panel2:#171015;--line:#2b2026;--text:#fff;--muted:#aa98a1;--pink:#ef5f9b;--pink2:#c83672;--gold:#dec05f}
+    html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+    body{min-height:100svh;overflow-x:hidden}
+    button{font:inherit}
+    button,a{touch-action:manipulation}
+    .app{width:min(100%,720px);margin:0 auto;min-height:100svh;background:linear-gradient(180deg,#10090d 0,#080608 240px)}
+    .topbar{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:calc(12px + env(safe-area-inset-top)) 16px 10px;background:rgba(8,6,8,.94);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+    .brand{min-width:0}.brand-kicker{color:var(--pink);font-size:8px;font-weight:900;letter-spacing:1.3px;text-transform:uppercase}.brand-title{margin-top:2px;font:700 20px/1 Georgia,"Times New Roman",serif;letter-spacing:-.4px}.pro-pill{flex:0 0 auto;padding:7px 10px;border:1px solid #6f5420;border-radius:999px;background:linear-gradient(135deg,#f3d477,#a97820);color:#160f03;font-size:8px;font-weight:950;letter-spacing:.8px;text-transform:uppercase}
+    .tabs{position:sticky;top:64px;z-index:90;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;padding:8px 10px;background:rgba(8,6,8,.95);border-bottom:1px solid #1f171b}
+    .tab{height:36px;border:1px solid #35262e;border-radius:999px;background:#0d0b0c;color:#9e8e96;font-size:9px;font-weight:850;cursor:pointer}.tab.active{background:linear-gradient(135deg,var(--pink),var(--pink2));border-color:transparent;color:#fff}
+    .panel{display:none;padding:14px}.panel.active{display:block}
+    .hero{position:relative;overflow:hidden;border:1px solid #3a2631;border-radius:22px;background:radial-gradient(circle at 88% 4%,rgba(239,95,155,.22),transparent 30%),linear-gradient(160deg,#1a0d14,#0f0b0d 58%,#0a0909);padding:22px 18px 20px;box-shadow:0 20px 50px rgba(0,0,0,.32)}
+    .hero-label{color:#f0bfd2;font-size:8px;font-weight:900;letter-spacing:1.3px;text-transform:uppercase}.hero h1{margin:7px 0 8px;font:700 30px/1.02 Georgia,"Times New Roman",serif;letter-spacing:-1px}.hero h1 span{color:var(--pink);font-style:italic}.hero p{max-width:480px;margin:0;color:#c4b5bc;font-size:11px;line-height:1.6}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}.stat{padding:11px 10px;border:1px solid #2f2229;border-radius:14px;background:#100d0f}.stat strong{display:block;color:#fff;font-size:16px}.stat span{display:block;margin-top:2px;color:#8f7e87;font-size:8px}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:20px 0 9px}.section-head h2{margin:0;font-size:15px}.section-head span{color:#8e7e86;font-size:8px}
+    .featured-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:9px}.feature-card{overflow:hidden;border:1px solid #2c2026;border-radius:16px;background:#0f0d0e}.feature-card img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;object-position:top}.feature-copy{padding:10px}.feature-copy strong{display:block;font-size:10px}.feature-copy span{display:block;margin-top:3px;color:#8e7e86;font-size:8px}
+    .video-shell{overflow:hidden;border:1px solid #2a2025;border-radius:18px;background:#000;box-shadow:0 15px 40px rgba(0,0,0,.24)}.video-shell video{display:block;width:100%;background:#000}.tv-video{aspect-ratio:16/9}.reel-wrap{width:min(100%,420px);margin:0 auto}.reel-video{aspect-ratio:9/16;object-fit:contain}
+    .controls{display:flex;align-items:center;justify-content:center;gap:8px;padding:10px}.control{width:38px;height:38px;display:grid;place-items:center;border:1px solid #372930;border-radius:50%;background:#151114;color:#ff72aa;cursor:pointer}.control.primary{background:linear-gradient(135deg,var(--pink),var(--pink2));color:#fff;border:0}.control svg{width:16px;height:16px;fill:currentColor}.count{min-width:54px;color:#95858d;font-size:8px;text-align:center}
+    .photo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.photo-grid img{display:block;width:100%;aspect-ratio:2/3;object-fit:cover;object-position:top;border-radius:14px;background:#111;border:1px solid #281e23}
+    .play-top{display:grid;grid-template-columns:170px minmax(0,1fr);gap:15px;align-items:center}.model-main{width:170px;aspect-ratio:2/3;object-fit:cover;object-position:top;border-radius:18px;border:1px solid #5f3b4c;background:#171014}.play-copy h2{margin:0 0 6px;font:700 22px/1.1 Georgia,"Times New Roman",serif}.play-copy p{margin:0;color:#bcaab3;font-size:9.5px;line-height:1.55}.play-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px}.action{min-height:43px;display:flex;align-items:center;justify-content:center;gap:7px;border:1px solid #eadde3;border-radius:12px;background:#fff;font-size:10px;font-weight:900;cursor:pointer}.action.kiss{color:#d83f79}.action.sniff{color:#b17e00}.action svg{width:16px;height:16px;fill:currentColor}.slider{display:flex;gap:8px;overflow-x:auto;padding:2px 0 6px;margin-top:13px;scrollbar-width:none;scroll-snap-type:x proximity}.slider::-webkit-scrollbar{display:none}.thumb{flex:0 0 68px;width:68px;aspect-ratio:2/3;padding:0;border:2px solid transparent;border-radius:11px;overflow:hidden;background:#1a1015;cursor:pointer}.thumb.selected{border-color:#fff}.thumb img{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+    .lifestyle{display:grid;grid-template-columns:110px minmax(0,1fr);gap:14px;align-items:center;margin-top:18px;padding:12px;border:1px solid #2b2026;border-radius:17px;background:#100d0f}.lifestyle img{display:block;width:110px;aspect-ratio:210/297;object-fit:cover;border-radius:11px}.lifestyle h3{margin:0 0 5px;font-size:13px}.lifestyle p{margin:0;color:#96858d;font-size:8.5px;line-height:1.5}.lifestyle a{min-height:38px;display:inline-flex;align-items:center;justify-content:center;margin-top:9px;padding:0 13px;border-radius:10px;background:linear-gradient(135deg,var(--pink),var(--pink2));color:#fff;text-decoration:none;font-size:9px;font-weight:900}
+    .modal{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:16px;background:rgba(0,0,0,.86);opacity:0;visibility:hidden;pointer-events:none;transition:.16s}.modal.open{opacity:1;visibility:visible;pointer-events:auto}.modal-card{position:relative;width:min(94vw,430px);max-height:92dvh;overflow:auto;border:1px solid #523241;border-radius:20px;background:#0d0a0c}.modal-card img{display:block;width:100%;height:auto;border-radius:19px}.modal-close{position:absolute;top:9px;right:9px;z-index:2;width:36px;height:36px;border:1px solid rgba(255,255,255,.4);border-radius:50%;background:rgba(0,0,0,.72);color:#fff;font-size:21px;cursor:pointer}.modal-note{padding:27px 18px;text-align:center}.modal-note strong{display:block;font-size:16px}.modal-note span{display:block;margin-top:6px;color:#988790;font-size:9px;line-height:1.5}
+    footer{padding:22px 14px calc(24px + env(safe-area-inset-bottom));color:#70636a;font-size:8px;text-align:center}
+    @media(max-width:420px){.tabs{gap:4px;padding-left:7px;padding-right:7px}.tab{font-size:8px}.play-top{grid-template-columns:145px minmax(0,1fr)}.model-main{width:145px}.featured-grid{grid-template-columns:1fr 1fr}.lifestyle{grid-template-columns:92px minmax(0,1fr)}.lifestyle img{width:92px}}
+    @media(max-width:340px){.brand-title{font-size:18px}.play-top{grid-template-columns:125px minmax(0,1fr);gap:10px}.model-main{width:125px}.action{font-size:9px}.stats{gap:5px}.stat{padding:9px 7px}}
+  </style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand"><div class="brand-kicker">Bluia Sisters</div><div class="brand-title">Private Collection</div></div>
+    <div class="pro-pill">Pro</div>
+  </header>
+  <nav class="tabs" aria-label="Content sections">
+    <button class="tab active" data-panel="home">Home</button>
+    <button class="tab" data-panel="tv">TV</button>
+    <button class="tab" data-panel="reels">Reels</button>
+    <button class="tab" data-panel="photos">Photos</button>
+    <button class="tab" data-panel="play">Play</button>
+  </nav>
+
+  <main>
+    <section class="panel active" id="panel-home">
+      <div class="hero">
+        <div class="hero-label">Bluia Sisters Pro</div>
+        <h1>Everything in one <span>beautiful place.</span></h1>
+        <p>Watch the full video collection, browse every photo, explore reels, and play with the Bluia Sisters from one fast, polished experience.</p>
+        <div class="stats"><div class="stat"><strong>5</strong><span>TV videos</span></div><div class="stat"><strong>3</strong><span>Reels</span></div><div class="stat"><strong>18</strong><span>Photos</span></div></div>
+      </div>
+      <div class="section-head"><h2>Featured</h2><span>Latest collection</span></div>
+      <div class="featured-grid">
+        <article class="feature-card"><img src="https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%205%2C%202026%2C%2011_08_28%20AM.png?download=true" alt="Bluia Sisters featured photo"><div class="feature-copy"><strong>New photos</strong><span>Browse the complete photo collection</span></div></article>
+        <article class="feature-card"><img src="https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_49_55%20AM.png?download=true" alt="Bluia Sisters Play"><div class="feature-copy"><strong>Play</strong><span>Kiss and Sniff interactions</span></div></article>
+      </div>
+      <div class="lifestyle">
+        <img src="https://huggingface.co/buckets/veebluia/bluiaimages/resolve/hbvnf.JPG?download=true" alt="Bluia Sisters Lifestyle book cover" loading="lazy">
+        <div><h3>Bluia Sisters Lifestyle</h3><p>Digital PDF book with the Bluia Sisters lifestyle collection.</p><a href="https://buy.stripe.com/fZufZ98nS0jc6SZb7xbAs05" target="_blank" rel="noopener noreferrer">Get the PDF Book</a></div>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-tv">
+      <div class="section-head"><h2>Bluia TV</h2><span id="tv-meta">1 / 5</span></div>
+      <div class="video-shell"><video id="tv-video" class="tv-video" playsinline preload="metadata"></video><div class="controls"><button class="control" id="tv-prev" aria-label="Previous video">‹</button><button class="control primary" id="tv-play" aria-label="Play or pause"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7L8 5Z"/></svg></button><button class="control" id="tv-next" aria-label="Next video">›</button></div></div>
+    </section>
+
+    <section class="panel" id="panel-reels">
+      <div class="section-head"><h2>Reels</h2><span id="reel-meta">1 / 3</span></div>
+      <div class="reel-wrap"><div class="video-shell"><video id="reel-video" class="reel-video" playsinline preload="metadata"></video><div class="controls"><button class="control" id="reel-prev" aria-label="Previous reel">‹</button><button class="control primary" id="reel-play" aria-label="Play or pause"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7L8 5Z"/></svg></button><button class="control" id="reel-next" aria-label="Next reel">›</button></div></div></div>
+    </section>
+
+    <section class="panel" id="panel-photos"><div class="section-head"><h2>Photos</h2><span>Complete collection</span></div><div class="photo-grid" id="photo-grid"></div></section>
+
+    <section class="panel" id="panel-play">
+      <div class="section-head"><h2>Play</h2><span>Choose a Bluia Sister</span></div>
+      <div class="play-top"><img class="model-main" id="model-main" alt="Selected Bluia Sister"><div class="play-copy"><h2>Choose your moment</h2><p>Select a Bluia Sister below, then choose Kiss or Sniff.</p><div class="play-actions"><button class="action kiss" id="kiss-button"><svg viewBox="0 0 24 24"><path d="M3.4 11.1c2.2-2.6 4.6-4 7-4.1 1.2 0 2.1.4 2.8 1.1.7-.7 1.7-1.1 2.8-1.1 2.2.1 4.1 1.5 5.7 4.1-2.9 3.8-6.1 5.8-9.4 5.9-3.3-.1-6.2-2.1-8.9-5.9Zm3.1.3c1.9 1.7 3.8 2.6 5.8 2.7 2-.1 4-.9 5.9-2.7-1-.9-2-1.4-3-1.4-1 0-1.9.4-2.8 1.2-.9-.8-1.8-1.2-2.8-1.2-1 0-2.1.5-3.1 1.4Z"/></svg>Kiss</button><button class="action sniff" id="sniff-button"><svg viewBox="0 0 24 24"><path d="M13.3 3.2c.8 2.2.8 4.3.1 6.2-.4 1.1-1 2.2-1.8 3.3-.5.7-.7 1.3-.5 1.7.2.4.8.7 1.8.7h2.4c1.4 0 2.3.7 2.3 1.8 0 1.5-1.5 3-3.6 3-1.5 0-2.8-.7-3.6-1.9l1.5-1c.5.7 1.2 1.1 2.1 1.1 1 0 1.7-.6 1.8-1.1-.1-.1-.3-.1-.6-.1h-2.4c-1.8 0-3-.6-3.5-1.8-.5-1.2-.2-2.4.8-3.8.7-1 1.2-1.9 1.5-2.7.5-1.5.5-3.1-.1-4.8l1.8-.6Z"/></svg>Sniff</button></div></div></div>
+      <div class="slider" id="model-slider"></div>
+    </section>
+  </main>
+  <footer>Bluia Sisters Pro · © 2026 Bluia Sisters</footer>
+</div>
+
+<div class="modal" id="image-modal" aria-hidden="true"><div class="modal-card"><button class="modal-close" aria-label="Close">×</button><img id="modal-image" alt="Bluia Sisters special moment"></div></div>
+<div class="modal" id="note-modal" aria-hidden="true"><div class="modal-card"><button class="modal-close" aria-label="Close">×</button><div class="modal-note"><strong>More moments are being added.</strong><span>This Bluia Sister is already available in the full model collection. Additional Kiss and Sniff scenes will appear here as they are added.</span></div></div></div>
+
+<script>
+const TV=[
+"https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-a4f971c6-547e-4f13-8642-a3dd06da3ee2.mp4?download=true",
+"https://huggingface.co/buckets/veebluia/drama/resolve/cgrok-video-ded4afea-ee3c-4c53-b246-290070da4d42.mp4?download=true",
+"https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-10dd7878-96b4-4946-926b-33e22bc8cb9e.mp4?download=true",
+"https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-344b021b-a159-4251-90d8-aeb92164a4b3.mp4?download=true",
+"https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-6c0d70db-a7e0-4a2f-b093-1d0f6b1266ed.mp4?download=true"];
+const REELS=[
+"https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-66e1277e-ffcc-47eb-b056-82e1d33f48ed.mp4?download=true",
+"https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-cdec6d71-9fad-4460-9bd4-b5ee3ccb3f74.mp4?download=true",
+"https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-7ef55572-64ad-46c5-9c2e-ae777e88f28b.mp4?download=true"];
+const MODELS=[
+"https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_49_55%20AM.png?download=true",
+"https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_14_11%20PM.png?download=true",
+"https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_13_56%20PM.png?download=true",
+"https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_13_33%20PM.png?download=true",
+"https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_13_22%20PM.png?download=true",
+"https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_13_11%20PM.png?download=true",
+"https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_50_09%20AM.png?download=true",
+"https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_50_19%20AM.png?download=true",
+"https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_50_36%20AM.png?download=true",
+"https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_11_06%20AM.png?download=true",
+"https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_10_51%20AM.png?download=true",
+"https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_10_31%20AM.png?download=true",
+"https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_10_25%20AM.png?download=true",
+"https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_10_11%20AM.png?download=true"];
+const PHOTOS=[
+"https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%205%2C%202026%2C%2011_08_28%20AM.png?download=true",
+"https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%205%2C%202026%2C%2011_08_08%20AM.png?download=true",
+"https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_01_28%20AM.png?download=true",
+"https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_01_37%20AM.png?download=true",
+"https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_01_49%20AM.png?download=true",
+"https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_48_51%20AM.png?download=true",
+"https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_13_47%20AM.png?download=true",
+"https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_13_28%20AM.png?download=true",
+"https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2007_19_21%20AM.png?download=true",
+"https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2007_18_43%20AM.png?download=true",
+"https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2007_19_05%20AM.png?download=true",
+"https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%201%2C%202026%2C%2010_27_11%20PM.png?download=true",
+"https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%201%2C%202026%2C%2010_27_29%20PM.png?download=true",
+"https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%201%2C%202026%2C%2010_27_45%20PM.png?download=true",
+"https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_12%20AM.png?download=true",
+"https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_27%20AM.png?download=true",
+"https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_33%20AM.png?download=true",
+"https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_44%20AM.png?download=true"];
+const KISS="https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%208%2C%202026%2C%2009_45_20%20PM.png?download=true";
+const SNIFF="https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_11_13%20PM.png?download=true";
+
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+$$('.tab').forEach(btn=>btn.addEventListener('click',()=>{ $$('.tab').forEach(x=>x.classList.toggle('active',x===btn)); $$('.panel').forEach(x=>x.classList.toggle('active',x.id===`panel-${btn.dataset.panel}`)); if(btn.dataset.panel!=='tv') $('#tv-video').pause(); if(btn.dataset.panel!=='reels') $('#reel-video').pause(); window.scrollTo({top:0,behavior:'smooth'}); }));
+
+function setupVideo(videoId,playId,prevId,nextId,metaId,list){let i=0;const v=$(videoId),meta=$(metaId);const load=()=>{v.src=list[i];meta.textContent=`${i+1} / ${list.length}`;v.load()};const toggle=()=>v.paused?v.play():v.pause();$(playId).addEventListener('click',toggle);$(prevId).addEventListener('click',()=>{i=(i-1+list.length)%list.length;load();v.play().catch(()=>{})});$(nextId).addEventListener('click',()=>{i=(i+1)%list.length;load();v.play().catch(()=>{})});v.addEventListener('ended',()=>{i=(i+1)%list.length;load();v.play().catch(()=>{})});load()}
+setupVideo('#tv-video','#tv-play','#tv-prev','#tv-next','#tv-meta',TV);setupVideo('#reel-video','#reel-play','#reel-prev','#reel-next','#reel-meta',REELS);
+
+const grid=$('#photo-grid');PHOTOS.forEach((url,i)=>{const img=document.createElement('img');img.src=url;img.alt=`Bluia Sisters photo ${i+1}`;img.loading='lazy';img.decoding='async';grid.appendChild(img)});
+let selected=0;const main=$('#model-main'),slider=$('#model-slider');function choose(i){selected=i;main.src=MODELS[i];[...slider.children].forEach((x,n)=>x.classList.toggle('selected',n===i))}MODELS.forEach((url,i)=>{const b=document.createElement('button');b.className='thumb';b.type='button';const img=document.createElement('img');img.src=url;img.alt=`Bluia Sister ${i+1}`;img.loading=i<5?'eager':'lazy';b.appendChild(img);b.addEventListener('click',()=>choose(i));slider.appendChild(b)});choose(0);
+const modal=$('#image-modal'),note=$('#note-modal'),modalImg=$('#modal-image');function openModal(el){el.classList.add('open');document.documentElement.style.overflow='hidden'}function closeModal(el){el.classList.remove('open');document.documentElement.style.overflow=''}$('#kiss-button').addEventListener('click',()=>{if(selected===0){modalImg.src=KISS;openModal(modal)}else openModal(note)});$('#sniff-button').addEventListener('click',()=>{if(selected===0){modalImg.src=SNIFF;openModal(modal)}else openModal(note)});$$('.modal-close').forEach(b=>b.addEventListener('click',()=>closeModal(b.closest('.modal'))));$$('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModal(m)}));document.addEventListener('keydown',e=>{if(e.key==='Escape')$$('.modal.open').forEach(closeModal)});
+</script>
+</body>
+</html>
