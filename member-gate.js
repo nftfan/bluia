@@ -3,6 +3,7 @@
 
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+  const FREE_PREVIEW_PANELS = new Set(["tv","reels","photos"]);
 
   function addStyles(){
     if($("#bluia-member-gate-style")) return;
@@ -18,6 +19,8 @@
       .member-gate-card p{margin:0 0 18px;color:#bcaab3;font-size:10px;line-height:1.6}
       .member-gate-button{width:100%;min-height:48px;border:0;border-radius:13px;background:linear-gradient(135deg,#ed5b96,#d43c77);color:#fff;font-size:11px;font-weight:950;cursor:pointer}
       .member-gate-button:active{transform:scale(.985)}
+      .free-preview-label{width:min(100%,440px);margin:0 auto;padding:9px 14px 8px;color:#c8b7bf;font-size:9px;line-height:1.35;text-align:center;background:#000;border-bottom:1px solid #23191f}
+      .free-preview-label strong{color:#ff6fa8;font-size:9px;letter-spacing:.55px;text-transform:uppercase}
     `;
     document.head.appendChild(style);
   }
@@ -43,6 +46,22 @@
     return panel;
   }
 
+  function addPreviewLabels(){
+    const copy = {
+      tv: "1 TV video included",
+      reels: "1 Reel included",
+      photos: "3 photos included"
+    };
+    FREE_PREVIEW_PANELS.forEach(name => {
+      const panel = $(`#panel-${name}`);
+      if(!panel || panel.querySelector(".free-preview-label")) return;
+      const label = document.createElement("div");
+      label.className = "free-preview-label";
+      label.innerHTML = `<strong>Free Preview</strong> · ${copy[name]}`;
+      panel.insertBefore(label,panel.firstChild);
+    });
+  }
+
   function openGate(tab){
     const panel = ensurePanel();
     if(!panel) return;
@@ -55,9 +74,13 @@
   function start(){
     addStyles();
     ensurePanel();
+    addPreviewLabels();
+
     document.addEventListener("click",event => {
       const tab = event.target.closest?.(".media-tab");
       if(!tab || tab.classList.contains("chat-home-tab")) return;
+      const panelName = tab.dataset.panel || "";
+      if(FREE_PREVIEW_PANELS.has(panelName)) return;
       event.preventDefault();
       event.stopImmediatePropagation();
       openGate(tab);
