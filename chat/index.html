@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1,user-scalable=no">
+  <meta name="theme-color" content="#09090b">
+  <title>Bluia Sisters Chat</title>
+  <meta name="description" content="Private Bluia Sisters chat experience.">
+  <style>
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    html,body{margin:0;min-height:100%;background:#09090b;color:#fff;font-family:Inter,Arial,Helvetica,sans-serif}
+    body{min-height:100svh;overflow-x:hidden}
+    button,input,textarea{font:inherit}
+    button{touch-action:manipulation}
+    .app{min-height:100svh;background:radial-gradient(circle at 50% -10%,rgba(255,86,151,.11),transparent 34%),#09090b}
+    .topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:58px;padding:calc(9px + env(safe-area-inset-top)) 13px 9px;border-bottom:1px solid #202027;background:rgba(9,9,11,.92);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+    .brand{min-width:0}.brand strong{display:block;font-size:13px;line-height:1.1}.brand span{display:block;margin-top:3px;color:#777782;font-size:8px;letter-spacing:.5px;text-transform:uppercase}
+    .login-btn{min-height:36px;padding:0 13px;border:1px solid #35353d;border-radius:11px;background:#151519;color:#f5f5f7;font-size:10px;font-weight:800;cursor:pointer}
+    .login-btn.signed{border-color:#7b3350;background:#23131a;color:#ff9bc1}
+    .main{width:min(100%,520px);margin:0 auto;padding:12px 12px calc(90px + env(safe-area-inset-bottom))}
+    .section-title{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:2px 2px 9px}.section-title strong{font-size:12px}.section-title span{color:#74747e;font-size:8px}
+    .sisters{display:flex;gap:9px;overflow-x:auto;padding:1px 1px 10px;scrollbar-width:none;scroll-snap-type:x proximity}.sisters::-webkit-scrollbar{display:none}
+    .sister{flex:0 0 78px;width:78px;padding:0;border:1px solid #292931;border-radius:15px;background:#111115;overflow:hidden;cursor:pointer;scroll-snap-align:start;transition:transform .15s ease,border-color .15s ease}.sister:active{transform:scale(.97)}.sister.active{border-color:#ff5c99;box-shadow:0 0 0 1px rgba(255,92,153,.18)}
+    .sister img{display:block;width:100%;aspect-ratio:2/3;object-fit:cover;object-position:top center;background:#16161b}.sister span{display:block;padding:7px 5px 8px;color:#c9c9cf;font-size:8px;font-weight:800;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sister.active span{color:#ff8fba}
+    .panel{margin-top:4px;border:1px solid #222229;border-radius:18px;background:linear-gradient(180deg,#111114,#0c0c0f);overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.22)}
+    .panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 13px;border-bottom:1px solid #202027}.panel-head-left{min-width:0}.panel-head strong{display:block;font-size:11px}.panel-head span{display:block;margin-top:3px;color:#777781;font-size:8px}.status{flex:0 0 auto;padding:5px 8px;border:1px solid #2e2e35;border-radius:999px;color:#9797a0;font-size:7px;font-weight:800}.status.member{border-color:#68432f;color:#e9b777;background:#1b1510}.status.staff{border-color:#6b2d48;color:#ff98c0;background:#1e1017}
+    .empty{padding:42px 20px;color:#6f6f79;text-align:center;font-size:9px;line-height:1.6}
+    .inbox{display:grid;gap:0}.thread-row{width:100%;display:grid;grid-template-columns:38px minmax(0,1fr) auto;gap:9px;align-items:center;padding:11px 12px;border:0;border-bottom:1px solid #1c1c22;background:transparent;color:#fff;text-align:left;cursor:pointer}.thread-row:last-child{border-bottom:0}.thread-avatar{width:38px;height:38px;display:grid;place-items:center;border-radius:12px;background:#20131a;color:#ff7eaf;font-size:11px;font-weight:900}.thread-copy{min-width:0}.thread-copy strong{display:block;font-size:9.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.thread-copy span{display:block;margin-top:3px;color:#73737c;font-size:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.thread-time{color:#55555d;font-size:7px}
+    .chat{display:none;min-height:420px}.chat.show{display:flex;flex-direction:column}.chat-top{display:flex;align-items:center;gap:9px;padding:10px 12px;border-bottom:1px solid #1d1d23}.back-btn{display:none;width:34px;height:34px;border:1px solid #2e2e35;border-radius:10px;background:#16161a;color:#ddd;cursor:pointer}.back-btn.show{display:block}.chat-sister{width:34px;height:34px;border-radius:10px;object-fit:cover;object-position:top center;background:#19191e}.chat-meta{min-width:0}.chat-meta strong{display:block;font-size:10px}.chat-meta span{display:block;margin-top:2px;color:#777781;font-size:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .messages{flex:1;min-height:310px;max-height:52svh;overflow-y:auto;padding:12px;scroll-behavior:smooth}.msg{max-width:82%;margin:0 0 8px;padding:9px 10px;border-radius:13px;font-size:9.5px;line-height:1.45;word-break:break-word}.msg.user{margin-left:auto;border-bottom-right-radius:5px;background:linear-gradient(135deg,#e54983,#c7336e);color:#fff}.msg.sister{margin-right:auto;border-bottom-left-radius:5px;background:#1a1a20;color:#e8e8eb;border:1px solid #292930}.msg small{display:block;margin-top:5px;font-size:6.5px;opacity:.6}
+    .composer{display:grid;grid-template-columns:minmax(0,1fr) 42px;gap:8px;padding:10px;border-top:1px solid #1e1e24;background:#0e0e11}.composer textarea{width:100%;height:42px;max-height:110px;resize:none;padding:10px 11px;border:1px solid #2d2d34;border-radius:12px;background:#16161a;color:#fff;outline:none;font-size:16px;line-height:1.25}.composer textarea:focus{border-color:#7d3652;box-shadow:0 0 0 3px rgba(229,73,131,.08)}.send{width:42px;height:42px;border:0;border-radius:12px;background:linear-gradient(135deg,#ed5b96,#c93470);color:#fff;cursor:pointer}.send svg{width:16px;height:16px;fill:currentColor}.send:disabled{opacity:.35;cursor:not-allowed}.limit-note{grid-column:1/-1;margin:-1px 2px 0;color:#75757f;font-size:7px;line-height:1.35}.limit-note.warn{color:#e0a261}
+    .modal{position:fixed;inset:0;z-index:100;display:flex;align-items:flex-end;justify-content:center;padding:14px;background:rgba(0,0,0,.78);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);opacity:0;visibility:hidden;pointer-events:none;transition:.18s ease}.modal.open{opacity:1;visibility:visible;pointer-events:auto}.modal-card{width:min(100%,420px);padding:17px;border:1px solid #2b2b33;border-radius:20px;background:#111115;box-shadow:0 28px 80px rgba(0,0,0,.5);transform:translateY(15px);transition:transform .2s ease}.modal.open .modal-card{transform:none}.modal-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}.modal-head strong{font-size:13px}.close{width:34px;height:34px;border:1px solid #303038;border-radius:10px;background:#18181d;color:#ddd;font-size:17px;cursor:pointer}.field{margin-bottom:10px}.field label{display:block;margin:0 0 5px;color:#8b8b95;font-size:8px;font-weight:800}.field input{width:100%;height:46px;padding:0 12px;border:1px solid #2d2d35;border-radius:12px;background:#17171b;color:#fff;outline:none;font-size:16px}.field input:focus{border-color:#7d3652;box-shadow:0 0 0 3px rgba(229,73,131,.08)}.login-submit{width:100%;height:47px;border:0;border-radius:12px;background:linear-gradient(135deg,#ed5b96,#c8336f);color:#fff;font-size:11px;font-weight:900;cursor:pointer}.login-help{margin:10px 2px 0;color:#696973;font-size:7.5px;line-height:1.5}.error{display:none;margin:0 0 10px;padding:8px 9px;border:1px solid #5b293a;border-radius:10px;background:#1d1016;color:#ff9fbd;font-size:8px}.error.show{display:block}
+    .toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));z-index:200;max-width:88vw;padding:9px 12px;border:1px solid #303038;border-radius:999px;background:#18181d;color:#eee;font-size:8px;transform:translate(-50%,20px);opacity:0;pointer-events:none;transition:.2s ease}.toast.show{transform:translate(-50%,0);opacity:1}
+    @media(min-width:700px){.main{padding-top:20px}.modal{align-items:center}.panel{min-height:520px}.messages{max-height:58vh}}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+  </style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand"><strong>Bluia Sisters Chat</strong><span>Private conversations</span></div>
+    <button class="login-btn" id="login-btn" type="button">Login</button>
+  </header>
+
+  <main class="main">
+    <div class="section-title"><strong>Choose a Bluia Sister</strong><span>Tap a photo</span></div>
+    <div class="sisters" id="sisters"></div>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div class="panel-head-left"><strong id="panel-title">Chat</strong><span id="panel-subtitle">Login to start a conversation</span></div>
+        <div class="status" id="account-status">Guest</div>
+      </div>
+      <div id="inbox-wrap"><div class="empty">Login, then choose a Bluia Sister to start.</div></div>
+      <div class="chat" id="chat-view">
+        <div class="chat-top">
+          <button class="back-btn" id="back-btn" type="button" aria-label="Back">‹</button>
+          <img class="chat-sister" id="chat-sister-img" alt="Bluia Sister">
+          <div class="chat-meta"><strong id="chat-title">Bluia Sister</strong><span id="chat-peer"></span></div>
+        </div>
+        <div class="messages" id="messages"></div>
+        <div class="composer">
+          <textarea id="message-input" maxlength="700" placeholder="Write a message…" aria-label="Message"></textarea>
+          <button class="send" id="send-btn" type="button" aria-label="Send message"><svg viewBox="0 0 24 24"><path d="M3 20.5 22 12 3 3.5v6.6l13.5 1.9L3 13.9v6.6Z"/></svg></button>
+          <div class="limit-note" id="limit-note"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="modal" id="login-modal" aria-hidden="true">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="login-title">
+    <div class="modal-head"><strong id="login-title">Login to Bluia Sisters Chat</strong><button class="close" id="close-login" type="button" aria-label="Close">×</button></div>
+    <div class="error" id="login-error"></div>
+    <div class="field"><label for="email-input">EMAIL</label><input id="email-input" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com"></div>
+    <div class="field"><label for="pin-input">PIN</label><input id="pin-input" type="password" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="6-digit PIN"></div>
+    <button class="login-submit" id="login-submit" type="button">Login</button>
+    <div class="login-help">Your email identifies your private chat. Standard accounts can send up to 2 messages. Approved accounts have unlimited messaging.</div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+  import { getDatabase, ref, push, set, onValue, get, update } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDmDAHuk6CEObzaJMhIlvNReOI0K83wK0k",
+    authDomain: "bluias.firebaseapp.com",
+    databaseURL: "https://bluias-default-rtdb.firebaseio.com",
+    projectId: "bluias",
+    storageBucket: "bluias.firebasestorage.app",
+    messagingSenderId: "604309456152",
+    appId: "1:604309456152:web:71dfcb29cbcda483260a6d",
+    measurementId: "G-GQJY1FF8BT"
+  };
+
+  const PIN_HASH = "140aad4eed691c1903be069952dbd64cc2d8c8866c971039c4b1526b5fb32424";
+  const STAFF_EMAIL = "bluia@sister.com";
+  const MEMBERS_URL = "/members/members.json";
+  const MODELS = [
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_49_55%20AM.png?download=true",
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_14_11%20PM.png?download=true",
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_13_56%20PM.png?download=true",
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_13_33%20PM.png?download=true",
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_13_22%20PM.png?download=true",
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_13_11%20PM.png?download=true",
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_50_09%20AM.png?download=true",
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_50_19%20AM.png?download=true",
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_50_36%20AM.png?download=true",
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_11_06%20AM.png?download=true",
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_10_51%20AM.png?download=true",
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_10_31%20AM.png?download=true",
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_10_25%20AM.png?download=true",
+    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_10_11%20AM.png?download=true"
+  ];
+
+  const app = initializeApp(firebaseConfig,"bluia-sisters-chat-v1");
+  const db = getDatabase(app);
+  const $ = s => document.querySelector(s);
+  let members = new Set();
+  let session = null;
+  let selectedSister = 0;
+  let selectedPeer = null;
+  let stopMessages = null;
+  let stopInbox = null;
+
+  const emailKey = email => email.toLowerCase().trim().replace(/\./g,",").replace(/@/g,"_at_").replace(/[^a-z0-9_,]/g,"_");
+  const displayEmail = key => key.replace(/_at_/g,"@").replace(/,/g,".");
+  const sisterId = i => `sister_${String(i+1).padStart(2,"0")}`;
+  const sisterName = i => `Bluia Sister ${i+1}`;
+  const esc = s => String(s ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const timeLabel = t => t ? new Date(t).toLocaleString([], {month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"}) : "";
+
+  async function sha256(text){
+    const data = new TextEncoder().encode(text);
+    const hash = await crypto.subtle.digest("SHA-256",data);
+    return [...new Uint8Array(hash)].map(b=>b.toString(16).padStart(2,"0")).join("");
+  }
+
+  function toast(text){
+    const el=$("#toast");el.textContent=text;el.classList.add("show");clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove("show"),1800);
+  }
+
+  async function loadMembers(){
+    try{
+      const r=await fetch(MEMBERS_URL,{cache:"no-store"});
+      const data=await r.json();
+      members=new Set((data.members||[]).map(x=>String(x).toLowerCase().trim()));
+    }catch{members=new Set();}
+  }
+
+  function roleFor(email){
+    const e=email.toLowerCase();
+    if(e===STAFF_EMAIL) return "staff";
+    if(members.has(e)) return "member";
+    return "user";
+  }
+
+  function saveSession(){
+    if(session) localStorage.setItem("bluia_chat_session",JSON.stringify({email:session.email,role:session.role}));
+    else localStorage.removeItem("bluia_chat_session");
+  }
+
+  function restoreSession(){
+    try{
+      const raw=JSON.parse(localStorage.getItem("bluia_chat_session")||"null");
+      if(raw?.email){session={email:raw.email.toLowerCase(),role:roleFor(raw.email)};}
+    }catch{}
+  }
+
+  function renderSisters(){
+    const root=$("#sisters");
+    root.innerHTML="";
+    MODELS.forEach((url,i)=>{
+      const b=document.createElement("button");
+      b.className="sister"+(i===selectedSister?" active":"");
+      b.type="button";
+      b.innerHTML=`<img src="${url}" alt="${sisterName(i)}" loading="${i<4?"eager":"lazy"}" decoding="async"><span>${sisterName(i)}</span>`;
+      b.addEventListener("click",()=>selectSister(i));
+      root.appendChild(b);
+    });
+  }
+
+  function updateAccountUI(){
+    const btn=$("#login-btn"),status=$("#account-status");
+    if(!session){
+      btn.textContent="Login";btn.classList.remove("signed");status.textContent="Guest";status.className="status";
+      return;
+    }
+    btn.textContent="Logout";btn.classList.add("signed");
+    status.textContent=session.role==="staff"?"Sister account":session.role==="member"?"Member":"2-message access";
+    status.className="status "+(session.role==="staff"?"staff":session.role==="member"?"member":"");
+  }
+
+  function selectSister(i){
+    selectedSister=i;selectedPeer=null;renderSisters();
+    if(!session){showLoggedOut();return;}
+    if(session.role==="staff") showInbox(); else openConversation(session.email);
+  }
+
+  function showLoggedOut(){
+    cleanupListeners();
+    $("#panel-title").textContent=sisterName(selectedSister);
+    $("#panel-subtitle").textContent="Login to start a conversation";
+    $("#inbox-wrap").style.display="block";
+    $("#inbox-wrap").innerHTML='<div class="empty">Login with your email and PIN to message this Bluia Sister.</div>';
+    $("#chat-view").classList.remove("show");
+  }
+
+  function cleanupListeners(){
+    if(stopMessages){stopMessages();stopMessages=null;}
+    if(stopInbox){stopInbox();stopInbox=null;}
+  }
+
+  function showInbox(){
+    cleanupListeners();
+    const id=sisterId(selectedSister);
+    $("#panel-title").textContent=sisterName(selectedSister)+" inbox";
+    $("#panel-subtitle").textContent="Chats received from users";
+    $("#chat-view").classList.remove("show");
+    $("#inbox-wrap").style.display="block";
+    $("#inbox-wrap").innerHTML='<div class="empty">Loading chats…</div>';
+    stopInbox=onValue(ref(db,`bluiaChat/v1/conversations/${id}`),snap=>{
+      const rows=[];
+      snap.forEach(child=>{
+        const v=child.val()||{};
+        rows.push({key:child.key,email:v.email||displayEmail(child.key),lastMessage:v.lastMessage||"",updatedAt:v.updatedAt||0});
+      });
+      rows.sort((a,b)=>b.updatedAt-a.updatedAt);
+      if(!rows.length){$("#inbox-wrap").innerHTML='<div class="empty">No chats received for this Bluia Sister yet.</div>';return;}
+      const box=document.createElement("div");box.className="inbox";
+      rows.forEach(r=>{
+        const b=document.createElement("button");b.type="button";b.className="thread-row";
+        b.innerHTML=`<span class="thread-avatar">${esc((r.email||"?")[0]?.toUpperCase()||"?")}</span><span class="thread-copy"><strong>${esc(r.email)}</strong><span>${esc(r.lastMessage||"Open conversation")}</span></span><span class="thread-time">${esc(timeLabel(r.updatedAt))}</span>`;
+        b.addEventListener("click",()=>openConversation(r.email,true));box.appendChild(b);
+      });
+      $("#inbox-wrap").replaceChildren(box);
+    });
+  }
+
+  function openConversation(email,fromInbox=false){
+    cleanupListeners();
+    selectedPeer=email.toLowerCase();
+    const id=sisterId(selectedSister),key=emailKey(selectedPeer);
+    $("#panel-title").textContent=sisterName(selectedSister);
+    $("#panel-subtitle").textContent=session.role==="staff"?"Replying to a received chat":"Private conversation";
+    $("#inbox-wrap").style.display="none";
+    $("#chat-view").classList.add("show");
+    $("#back-btn").classList.toggle("show",session.role==="staff"&&fromInbox);
+    $("#chat-sister-img").src=MODELS[selectedSister];
+    $("#chat-title").textContent=sisterName(selectedSister);
+    $("#chat-peer").textContent=session.role==="staff"?selectedPeer:session.email;
+    $("#messages").innerHTML='<div class="empty">Loading messages…</div>';
+    stopMessages=onValue(ref(db,`bluiaChat/v1/conversations/${id}/${key}/messages`),snap=>{
+      const items=[];snap.forEach(c=>items.push({id:c.key,...(c.val()||{})}));items.sort((a,b)=>(a.createdAt||0)-(b.createdAt||0));
+      renderMessages(items);
+      updateLimit(items);
+    });
+  }
+
+  function renderMessages(items){
+    const root=$("#messages");root.innerHTML="";
+    if(!items.length){root.innerHTML='<div class="empty">No messages yet. Say hello.</div>';return;}
+    items.forEach(m=>{
+      const own=session.role==="staff"?m.senderRole==="staff":m.senderRole!=="staff";
+      const d=document.createElement("div");d.className="msg "+(own?"user":"sister");
+      d.innerHTML=`${esc(m.text)}<small>${esc(timeLabel(m.createdAt))}</small>`;root.appendChild(d);
+    });
+    requestAnimationFrame(()=>{root.scrollTop=root.scrollHeight;});
+  }
+
+  function updateLimit(items){
+    const note=$("#limit-note"),send=$("#send-btn");
+    if(!session){send.disabled=true;note.textContent="Login required.";return;}
+    if(session.role==="staff"){send.disabled=false;note.textContent="Sister account · reply access";note.className="limit-note";return;}
+    if(session.role==="member"){send.disabled=false;note.textContent="Unlimited messaging";note.className="limit-note";return;}
+    const sent=items.filter(m=>m.senderRole!=="staff").length;
+    const left=Math.max(0,2-sent);
+    send.disabled=left<=0;
+    note.textContent=left>0?`${left} free message${left===1?"":"s"} remaining`:"Your 2-message limit has been reached.";
+    note.className="limit-note"+(left<=0?" warn":"");
+  }
+
+  async function sendMessage(){
+    if(!session||!selectedPeer) return;
+    const input=$("#message-input"),text=input.value.trim();if(!text)return;
+    const id=sisterId(selectedSister),key=emailKey(selectedPeer),conversationRef=ref(db,`bluiaChat/v1/conversations/${id}/${key}`);
+    if(session.role!=="staff"&&session.role!=="member"){
+      const snap=await get(ref(db,`bluiaChat/v1/conversations/${id}/${key}/messages`));let sent=0;snap.forEach(c=>{if((c.val()||{}).senderRole!=="staff")sent++;});
+      if(sent>=2){toast("2-message limit reached");return;}
+    }
+    const now=Date.now();
+    const msgRef=push(ref(db,`bluiaChat/v1/conversations/${id}/${key}/messages`));
+    await set(msgRef,{text,createdAt:now,senderEmail:session.email,senderRole:session.role==="staff"?"staff":"user"});
+    await update(conversationRef,{email:selectedPeer,lastMessage:text,updatedAt:now,sisterId:id,sisterName:sisterName(selectedSister)});
+    input.value="";input.focus();
+  }
+
+  function openLogin(){
+    $("#login-error").classList.remove("show");$("#login-modal").classList.add("open");$("#login-modal").setAttribute("aria-hidden","false");setTimeout(()=>$("#email-input").focus(),120);
+  }
+  function closeLogin(){$("#login-modal").classList.remove("open");$("#login-modal").setAttribute("aria-hidden","true");}
+
+  async function login(){
+    const email=$("#email-input").value.trim().toLowerCase(),pin=$("#pin-input").value.trim(),err=$("#login-error");
+    if(!/^\S+@\S+\.\S+$/.test(email)){err.textContent="Enter a valid email address.";err.classList.add("show");return;}
+    if(await sha256(pin)!==PIN_HASH){err.textContent="Incorrect PIN.";err.classList.add("show");return;}
+    session={email,role:roleFor(email)};saveSession();updateAccountUI();closeLogin();$("#pin-input").value="";
+    if(session.role==="staff") showInbox(); else openConversation(session.email);
+    toast("Logged in");
+  }
+
+  function logout(){session=null;selectedPeer=null;saveSession();cleanupListeners();updateAccountUI();showLoggedOut();toast("Logged out");}
+
+  $("#login-btn").addEventListener("click",()=>session?logout():openLogin());
+  $("#close-login").addEventListener("click",closeLogin);
+  $("#login-modal").addEventListener("click",e=>{if(e.target===$("#login-modal"))closeLogin();});
+  $("#login-submit").addEventListener("click",login);
+  $("#pin-input").addEventListener("keydown",e=>{if(e.key==="Enter")login();});
+  $("#send-btn").addEventListener("click",sendMessage);
+  $("#message-input").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendMessage();}});
+  $("#back-btn").addEventListener("click",showInbox);
+
+  await loadMembers();restoreSession();renderSisters();updateAccountUI();
+  if(session){if(session.role==="staff")showInbox();else openConversation(session.email);}else showLoggedOut();
+</script>
+</body>
+</html>
