@@ -76,7 +76,7 @@
     <div class="field"><label for="email-input">EMAIL</label><input id="email-input" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com"></div>
     <div class="field"><label for="pin-input">PIN</label><input id="pin-input" type="password" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="6-digit PIN"></div>
     <button class="login-submit" id="login-submit" type="button">Login</button>
-    <div class="login-help">Your email identifies your private chat. Standard accounts can send up to 2 messages. Approved accounts have unlimited messaging.</div>
+    <div class="login-help">Your email identifies your private chat. Standard accounts can send up to 2 messages total across all Bluia Sisters. Approved accounts have unlimited messaging.</div>
   </div>
 </div>
 <div class="toast" id="toast"></div>
@@ -190,7 +190,7 @@
       return;
     }
     btn.textContent="Logout";btn.classList.add("signed");
-    status.textContent=session.role==="staff"?"Sister account":session.role==="member"?"Member":"2-message access";
+    status.textContent=session.role==="staff"?"Sister account":session.role==="member"?"Member":"2 messages total";
     status.className="status "+(session.role==="staff"?"staff":session.role==="member"?"member":"");
   }
 
@@ -242,7 +242,8 @@
 
   function openConversation(email,fromInbox=false){
     cleanupListeners();
-    selectedPeer=email.toLowerCase();
+    selectedPeer=String(email||"").trim().toLowerCase();
+    if(!selectedPeer){toast("Could not open this chat");showInbox();return;}
     const id=sisterId(selectedSister),key=emailKey(selectedPeer);
     $("#panel-title").textContent=sisterName(selectedSister);
     $("#panel-subtitle").textContent=session.role==="staff"?"Replying to a received chat":"Private conversation";
@@ -256,7 +257,7 @@
     stopMessages=onValue(ref(db,`bluiaChat/v1/conversations/${id}/${key}/messages`),snap=>{
       const items=[];snap.forEach(c=>items.push({id:c.key,...(c.val()||{})}));items.sort((a,b)=>(a.createdAt||0)-(b.createdAt||0));
       renderMessages(items);
-      updateLimit(items);
+      updateLimit();
     });
   }
 
@@ -271,31 +272,77 @@
     requestAnimationFrame(()=>{root.scrollTop=root.scrollHeight;});
   }
 
-  function updateLimit(items){
+  async function globalSentCount(email){
+    const target=String(email||"").trim().toLowerCase();
+    if(!target) return 0;
+    const snap=await get(ref(db,"bluiaChat/v1/conversations"));
+    let count=0;
+    snap.forEach(sisterSnap=>{
+      sisterSnap.forEach(conversationSnap=>{
+        const conversation=conversationSnap.val()||{};
+        const conversationEmail=String(conversation.email||displayEmail(conversationSnap.key)||"").trim().toLowerCase();
+        if(conversationEmail!==target) return;
+        const messages=conversation.messages||{};
+        Object.values(messages).forEach(message=>{
+          const m=message||{};
+          const senderEmail=String(m.senderEmail||conversationEmail).trim().toLowerCase();
+          if(m.senderRole!=="staff"&&senderEmail===target) count++;
+        });
+      });
+    });
+    return count;
+  }
+
+  async function updateLimit(){
     const note=$("#limit-note"),send=$("#send-btn");
     if(!session){send.disabled=true;note.textContent="Login required.";return;}
     if(session.role==="staff"){send.disabled=false;note.textContent="Sister account · reply access";note.className="limit-note";return;}
     if(session.role==="member"){send.disabled=false;note.textContent="Unlimited messaging";note.className="limit-note";return;}
-    const sent=items.filter(m=>m.senderRole!=="staff").length;
-    const left=Math.max(0,2-sent);
-    send.disabled=left<=0;
-    note.textContent=left>0?`${left} free message${left===1?"":"s"} remaining`:"Your 2-message limit has been reached.";
-    note.className="limit-note"+(left<=0?" warn":"");
+    send.disabled=true;
+    note.textContent="Checking free-message access…";
+    note.className="limit-note";
+    try{
+      const sent=await globalSentCount(session.email);
+      if(!session||session.role!=="user") return;
+      const left=Math.max(0,2-sent);
+      send.disabled=left<=0;
+      note.textContent=left>0?`${left} free message${left===1?"":"s"} remaining across all sisters`:"Your 2-message limit has been reached.";
+      note.className="limit-note"+(left<=0?" warn":"");
+    }catch(error){
+      console.error(error);
+      send.disabled=false;
+      note.textContent="Unable to check message limit. Try again.";
+      note.className="limit-note warn";
+    }
   }
 
   async function sendMessage(){
     if(!session||!selectedPeer) return;
-    const input=$("#message-input"),text=input.value.trim();if(!text)return;
+    const input=$("#message-input"),send=$("#send-btn"),text=input.value.trim();if(!text)return;
     const id=sisterId(selectedSister),key=emailKey(selectedPeer),conversationRef=ref(db,`bluiaChat/v1/conversations/${id}/${key}`);
-    if(session.role!=="staff"&&session.role!=="member"){
-      const snap=await get(ref(db,`bluiaChat/v1/conversations/${id}/${key}/messages`));let sent=0;snap.forEach(c=>{if((c.val()||{}).senderRole!=="staff")sent++;});
-      if(sent>=2){toast("2-message limit reached");return;}
+    send.disabled=true;
+    try{
+      if(session.role!=="staff"&&session.role!=="member"){
+        const sent=await globalSentCount(session.email);
+        if(sent>=2){toast("2-message limit reached");await updateLimit();return;}
+      }
+      const now=Date.now();
+      const msgRef=push(ref(db,`bluiaChat/v1/conversations/${id}/${key}/messages`));
+      await set(msgRef,{text,createdAt:now,senderEmail:session.email,senderRole:session.role==="staff"?"staff":"user"});
+      try{
+        await update(conversationRef,{email:selectedPeer,lastMessage:text,updatedAt:now,sisterId:id,sisterName:sisterName(selectedSister)});
+      }catch(metaError){
+        console.warn("Message saved but conversation metadata could not be updated",metaError);
+      }
+      input.value="";
+      if(session.role==="staff") toast("Reply sent");
+      await updateLimit();
+      input.focus();
+    }catch(error){
+      console.error("Chat send failed",error);
+      toast(session.role==="staff"?"Reply could not be sent. Check Firebase permissions.":"Message could not be sent. Try again.");
+      send.disabled=false;
     }
-    const now=Date.now();
-    const msgRef=push(ref(db,`bluiaChat/v1/conversations/${id}/${key}/messages`));
-    await set(msgRef,{text,createdAt:now,senderEmail:session.email,senderRole:session.role==="staff"?"staff":"user"});
-    await update(conversationRef,{email:selectedPeer,lastMessage:text,updatedAt:now,sisterId:id,sisterName:sisterName(selectedSister)});
-    input.value="";input.focus();
   }
 
   function openLogin(){
