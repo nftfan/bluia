@@ -124,6 +124,16 @@ window.BluiaMedia = {
   document.head.appendChild(script);
 })();
 
+// Private chat booking button + email popup
+(() => {
+  if (document.querySelector('script[data-bluia-private-chat]')) return;
+  const script = document.createElement("script");
+  script.src = "/private-chat.js?v=20261012-1";
+  script.defer = true;
+  script.dataset.bluiaPrivateChat = "1";
+  document.head.appendChild(script);
+})();
+
 // Bluia Sisters Lifestyle PDF book card under Telegram groups
 (() => {
   if (document.querySelector('script[data-bluia-book-card]')) return;
