@@ -25,10 +25,11 @@
     .panel{margin-top:4px;border:1px solid #222229;border-radius:18px;background:linear-gradient(180deg,#111114,#0c0c0f);overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.22)}
     .panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 13px;border-bottom:1px solid #202027}.panel-head-left{min-width:0}.panel-head strong{display:block;font-size:11px}.panel-head span{display:block;margin-top:3px;color:#777781;font-size:8px}.status{flex:0 0 auto;padding:5px 8px;border:1px solid #2e2e35;border-radius:999px;color:#9797a0;font-size:7px;font-weight:800}.status.member{border-color:#68432f;color:#e9b777;background:#1b1510}.status.staff{border-color:#6b2d48;color:#ff98c0;background:#1e1017}
     .empty{padding:42px 20px;color:#6f6f79;text-align:center;font-size:9px;line-height:1.6}
-    .inbox{display:grid;gap:0}.thread-row{width:100%;display:grid;grid-template-columns:38px minmax(0,1fr) auto;gap:9px;align-items:center;padding:11px 12px;border:0;border-bottom:1px solid #1c1c22;background:transparent;color:#fff;text-align:left;cursor:pointer}.thread-row:last-child{border-bottom:0}.thread-avatar{width:38px;height:38px;display:grid;place-items:center;border-radius:12px;background:#20131a;color:#ff7eaf;font-size:11px;font-weight:900}.thread-copy{min-width:0}.thread-copy strong{display:block;font-size:9.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.thread-copy span{display:block;margin-top:3px;color:#73737c;font-size:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.thread-time{color:#55555d;font-size:7px}
+    .inbox{display:grid}.thread-row{width:100%;display:grid;grid-template-columns:38px minmax(0,1fr) auto;gap:9px;align-items:center;padding:11px 12px;border:0;border-bottom:1px solid #1c1c22;background:transparent;color:#fff;text-align:left;cursor:pointer}.thread-row:last-child{border-bottom:0}.thread-avatar{width:38px;height:38px;display:grid;place-items:center;border-radius:12px;background:#20131a;color:#ff7eaf;font-size:11px;font-weight:900}.thread-copy{min-width:0}.thread-copy strong{display:block;font-size:9.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.thread-copy span{display:block;margin-top:3px;color:#73737c;font-size:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.thread-time{color:#55555d;font-size:7px}
     .chat{display:none;min-height:420px}.chat.show{display:flex;flex-direction:column}.chat-top{display:flex;align-items:center;gap:9px;padding:10px 12px;border-bottom:1px solid #1d1d23}.back-btn{display:none;width:34px;height:34px;border:1px solid #2e2e35;border-radius:10px;background:#16161a;color:#ddd;cursor:pointer}.back-btn.show{display:block}.chat-sister{width:34px;height:34px;border-radius:10px;object-fit:cover;object-position:top center;background:#19191e}.chat-meta{min-width:0}.chat-meta strong{display:block;font-size:10px}.chat-meta span{display:block;margin-top:2px;color:#777781;font-size:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .messages{flex:1;min-height:310px;max-height:52svh;overflow-y:auto;padding:12px;scroll-behavior:smooth}.msg{max-width:82%;margin:0 0 8px;padding:9px 10px;border-radius:13px;font-size:9.5px;line-height:1.45;word-break:break-word}.msg.user{margin-left:auto;border-bottom-right-radius:5px;background:linear-gradient(135deg,#e54983,#c7336e);color:#fff}.msg.sister{margin-right:auto;border-bottom-left-radius:5px;background:#1a1a20;color:#e8e8eb;border:1px solid #292930}.msg small{display:block;margin-top:5px;font-size:6.5px;opacity:.6}
-    .composer{display:grid;grid-template-columns:minmax(0,1fr) 42px;gap:8px;padding:10px;border-top:1px solid #1e1e24;background:#0e0e11}.composer textarea{width:100%;height:42px;max-height:110px;resize:none;padding:10px 11px;border:1px solid #2d2d34;border-radius:12px;background:#16161a;color:#fff;outline:none;font-size:16px;line-height:1.25}.composer textarea:focus{border-color:#7d3652;box-shadow:0 0 0 3px rgba(229,73,131,.08)}.send{width:42px;height:42px;border:0;border-radius:12px;background:linear-gradient(135deg,#ed5b96,#c93470);color:#fff;cursor:pointer}.send svg{width:16px;height:16px;fill:currentColor}.send:disabled{opacity:.35;cursor:not-allowed}.limit-note{grid-column:1/-1;margin:-1px 2px 0;color:#75757f;font-size:7px;line-height:1.35}.limit-note.warn{color:#e0a261}
+    .messages{flex:1;min-height:310px;max-height:52svh;overflow-y:auto;padding:12px;scroll-behavior:smooth}.msg{max-width:82%;margin:0 0 8px;padding:9px 10px;border-radius:13px;font-size:9.5px;line-height:1.45;word-break:break-word}.msg.user{margin-left:auto;border-bottom-right-radius:5px;background:linear-gradient(135deg,#e54983,#c7336e);color:#fff}.msg.sister{margin-right:auto;border-bottom-left-radius:5px;background:#1a1a20;color:#e8e8eb;border:1px solid #292930}.msg small{display:block;margin-top:5px;font-size:6.5px;opacity:.6}.msg.image{padding:5px}.msg.image img{display:block;max-width:min(100%,280px);width:auto;height:auto;max-height:380px;border-radius:10px;object-fit:cover;background:#111}.msg.image small{padding:1px 4px 3px}
+    .composer{display:grid;grid-template-columns:42px minmax(0,1fr) 42px;gap:8px;padding:10px;border-top:1px solid #1e1e24;background:#0e0e11}.composer textarea{width:100%;height:42px;max-height:110px;resize:none;padding:10px 11px;border:1px solid #2d2d34;border-radius:12px;background:#16161a;color:#fff;outline:none;font-size:16px;line-height:1.25}.composer textarea:focus{border-color:#7d3652;box-shadow:0 0 0 3px rgba(229,73,131,.08)}
+    .send,.photo-btn{width:42px;height:42px;border:0;border-radius:12px;color:#fff;cursor:pointer;display:grid;place-items:center}.send{background:linear-gradient(135deg,#ed5b96,#c93470)}.photo-btn{background:#1a1a20;border:1px solid #32323a}.send svg,.photo-btn svg{width:16px;height:16px;fill:currentColor}.send:disabled,.photo-btn:disabled{opacity:.35;cursor:not-allowed}.photo-btn[hidden]{display:none!important}.limit-note{grid-column:1/-1;margin:-1px 2px 0;color:#75757f;font-size:7px;line-height:1.35}.limit-note.warn{color:#e0a261}.upload-state{grid-column:1/-1;display:none;margin:0 2px;color:#9a9aa5;font-size:7px}.upload-state.show{display:block}.upload-state.error{color:#ff8eae}.upload-state.success{color:#8ed9ad}
     .modal{position:fixed;inset:0;z-index:100;display:flex;align-items:flex-end;justify-content:center;padding:14px;background:rgba(0,0,0,.78);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);opacity:0;visibility:hidden;pointer-events:none;transition:.18s ease}.modal.open{opacity:1;visibility:visible;pointer-events:auto}.modal-card{width:min(100%,420px);padding:17px;border:1px solid #2b2b33;border-radius:20px;background:#111115;box-shadow:0 28px 80px rgba(0,0,0,.5);transform:translateY(15px);transition:transform .2s ease}.modal.open .modal-card{transform:none}.modal-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}.modal-head strong{font-size:13px}.close{width:34px;height:34px;border:1px solid #303038;border-radius:10px;background:#18181d;color:#ddd;font-size:17px;cursor:pointer}.field{margin-bottom:10px}.field label{display:block;margin:0 0 5px;color:#8b8b95;font-size:8px;font-weight:800}.field input{width:100%;height:46px;padding:0 12px;border:1px solid #2d2d35;border-radius:12px;background:#17171b;color:#fff;outline:none;font-size:16px}.field input:focus{border-color:#7d3652;box-shadow:0 0 0 3px rgba(229,73,131,.08)}.login-submit{width:100%;height:47px;border:0;border-radius:12px;background:linear-gradient(135deg,#ed5b96,#c8336f);color:#fff;font-size:11px;font-weight:900;cursor:pointer}.login-help{margin:10px 2px 0;color:#696973;font-size:7.5px;line-height:1.5}.error{display:none;margin:0 0 10px;padding:8px 9px;border:1px solid #5b293a;border-radius:10px;background:#1d1016;color:#ff9fbd;font-size:8px}.error.show{display:block}
     .toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));z-index:200;max-width:88vw;padding:9px 12px;border:1px solid #303038;border-radius:999px;background:#18181d;color:#eee;font-size:8px;transform:translate(-50%,20px);opacity:0;pointer-events:none;transition:.2s ease}.toast.show{transform:translate(-50%,0);opacity:1}
     @media(min-width:700px){.main{padding-top:20px}.modal{align-items:center}.panel{min-height:520px}.messages{max-height:58vh}}
@@ -60,8 +61,11 @@
         </div>
         <div class="messages" id="messages"></div>
         <div class="composer">
+          <button class="photo-btn" id="photo-btn" type="button" aria-label="Upload photo" hidden><svg viewBox="0 0 24 24"><path d="M4 5h4l1.2-2h5.6L16 5h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Zm8 4a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9Zm0 2a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z"/></svg></button>
+          <input id="photo-input" type="file" accept="image/*" hidden>
           <textarea id="message-input" maxlength="700" placeholder="Write a message…" aria-label="Message"></textarea>
           <button class="send" id="send-btn" type="button" aria-label="Send message"><svg viewBox="0 0 24 24"><path d="M3 20.5 22 12 3 3.5v6.6l13.5 1.9L3 13.9v6.6Z"/></svg></button>
+          <div class="upload-state" id="upload-state"></div>
           <div class="limit-note" id="limit-note"></div>
         </div>
       </div>
@@ -99,6 +103,13 @@
   const PIN_HASH = "140aad4eed691c1903be069952dbd64cc2d8c8866c971039c4b1526b5fb32424";
   const STAFF_EMAIL = "bluia@sister.com";
   const MEMBERS_URL = "/members/members.json";
+  const UPLOAD_ENDPOINT = "https://upload-proxy.gotshotu.workers.dev";
+  const PUBLIC_IMAGE_BASE = "https://pub-09d49e1729be4c218a60f330ac3b61b2.r2.dev/";
+  const MAX_INPUT_BYTES = 10 * 1024 * 1024;
+  const SMALL_IMAGE_BYTES = 300 * 1024;
+  const MAX_IMAGE_SIDE = 1280;
+  const JPEG_QUALITY = 0.72;
+
   const MODELS = [
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_49_55%20AM.png?download=true",
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_14_11%20PM.png?download=true",
@@ -125,6 +136,7 @@
   let selectedPeer = null;
   let stopMessages = null;
   let stopInbox = null;
+  let uploadBusy = false;
 
   const emailKey = email => email.toLowerCase().trim().replace(/\./g,",").replace(/@/g,"_at_").replace(/[^a-z0-9_,]/g,"_");
   const displayEmail = key => key.replace(/_at_/g,"@").replace(/,/g,".");
@@ -141,6 +153,12 @@
 
   function toast(text){
     const el=$("#toast");el.textContent=text;el.classList.add("show");clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove("show"),1800);
+  }
+
+  function setUploadState(text,type=""){
+    const el=$("#upload-state");
+    el.textContent=text||"";
+    el.className="upload-state"+(text?" show":"")+(type?` ${type}`:"");
   }
 
   async function loadMembers(){
@@ -166,32 +184,29 @@
   function restoreSession(){
     try{
       const raw=JSON.parse(localStorage.getItem("bluia_chat_session")||"null");
-      if(raw?.email){session={email:raw.email.toLowerCase(),role:roleFor(raw.email)};}
+      if(raw?.email) session={email:raw.email.toLowerCase(),role:roleFor(raw.email)};
     }catch{}
   }
 
   function renderSisters(){
-    const root=$("#sisters");
-    root.innerHTML="";
+    const root=$("#sisters");root.innerHTML="";
     MODELS.forEach((url,i)=>{
       const b=document.createElement("button");
-      b.className="sister"+(i===selectedSister?" active":"");
-      b.type="button";
+      b.className="sister"+(i===selectedSister?" active":"");b.type="button";
       b.innerHTML=`<img src="${url}" alt="${sisterName(i)}" loading="${i<4?"eager":"lazy"}" decoding="async"><span>${sisterName(i)}</span>`;
-      b.addEventListener("click",()=>selectSister(i));
-      root.appendChild(b);
+      b.addEventListener("click",()=>selectSister(i));root.appendChild(b);
     });
   }
 
   function updateAccountUI(){
-    const btn=$("#login-btn"),status=$("#account-status");
+    const btn=$("#login-btn"),status=$("#account-status"),photoBtn=$("#photo-btn");
     if(!session){
-      btn.textContent="Login";btn.classList.remove("signed");status.textContent="Guest";status.className="status";
-      return;
+      btn.textContent="Login";btn.classList.remove("signed");status.textContent="Guest";status.className="status";photoBtn.hidden=true;return;
     }
     btn.textContent="Logout";btn.classList.add("signed");
-    status.textContent=session.role==="staff"?"Sister account":session.role==="member"?"Member":"2 messages total";
+    status.textContent=session.role==="staff"?"Sister account":session.role==="member"?"Member":"2-message access";
     status.className="status "+(session.role==="staff"?"staff":session.role==="member"?"member":"");
+    photoBtn.hidden=session.role!=="staff";
   }
 
   function selectSister(i){
@@ -201,162 +216,127 @@
   }
 
   function showLoggedOut(){
-    cleanupListeners();
-    $("#panel-title").textContent=sisterName(selectedSister);
-    $("#panel-subtitle").textContent="Login to start a conversation";
-    $("#inbox-wrap").style.display="block";
-    $("#inbox-wrap").innerHTML='<div class="empty">Login with your email and PIN to message this Bluia Sister.</div>';
-    $("#chat-view").classList.remove("show");
+    cleanupListeners();$("#panel-title").textContent=sisterName(selectedSister);$("#panel-subtitle").textContent="Login to start a conversation";
+    $("#inbox-wrap").style.display="block";$("#inbox-wrap").innerHTML='<div class="empty">Login with your email and PIN to message this Bluia Sister.</div>';$("#chat-view").classList.remove("show");
   }
 
-  function cleanupListeners(){
-    if(stopMessages){stopMessages();stopMessages=null;}
-    if(stopInbox){stopInbox();stopInbox=null;}
-  }
+  function cleanupListeners(){if(stopMessages){stopMessages();stopMessages=null;}if(stopInbox){stopInbox();stopInbox=null;}}
 
   function showInbox(){
-    cleanupListeners();
-    const id=sisterId(selectedSister);
-    $("#panel-title").textContent=sisterName(selectedSister)+" inbox";
-    $("#panel-subtitle").textContent="Chats received from users";
-    $("#chat-view").classList.remove("show");
-    $("#inbox-wrap").style.display="block";
-    $("#inbox-wrap").innerHTML='<div class="empty">Loading chats…</div>';
+    cleanupListeners();const id=sisterId(selectedSister);$("#panel-title").textContent=sisterName(selectedSister)+" inbox";$("#panel-subtitle").textContent="Chats received from users";$("#chat-view").classList.remove("show");$("#inbox-wrap").style.display="block";$("#inbox-wrap").innerHTML='<div class="empty">Loading chats…</div>';
     stopInbox=onValue(ref(db,`bluiaChat/v1/conversations/${id}`),snap=>{
-      const rows=[];
-      snap.forEach(child=>{
-        const v=child.val()||{};
-        rows.push({key:child.key,email:v.email||displayEmail(child.key),lastMessage:v.lastMessage||"",updatedAt:v.updatedAt||0});
-      });
-      rows.sort((a,b)=>b.updatedAt-a.updatedAt);
+      const rows=[];snap.forEach(child=>{const v=child.val()||{};rows.push({key:child.key,email:v.email||displayEmail(child.key),lastMessage:v.lastMessage||"",updatedAt:v.updatedAt||0});});rows.sort((a,b)=>b.updatedAt-a.updatedAt);
       if(!rows.length){$("#inbox-wrap").innerHTML='<div class="empty">No chats received for this Bluia Sister yet.</div>';return;}
-      const box=document.createElement("div");box.className="inbox";
-      rows.forEach(r=>{
-        const b=document.createElement("button");b.type="button";b.className="thread-row";
-        b.innerHTML=`<span class="thread-avatar">${esc((r.email||"?")[0]?.toUpperCase()||"?")}</span><span class="thread-copy"><strong>${esc(r.email)}</strong><span>${esc(r.lastMessage||"Open conversation")}</span></span><span class="thread-time">${esc(timeLabel(r.updatedAt))}</span>`;
-        b.addEventListener("click",()=>openConversation(r.email,true));box.appendChild(b);
-      });
-      $("#inbox-wrap").replaceChildren(box);
+      const box=document.createElement("div");box.className="inbox";rows.forEach(r=>{const b=document.createElement("button");b.type="button";b.className="thread-row";b.innerHTML=`<span class="thread-avatar">${esc((r.email||"?")[0]?.toUpperCase()||"?")}</span><span class="thread-copy"><strong>${esc(r.email)}</strong><span>${esc(r.lastMessage||"Open conversation")}</span></span><span class="thread-time">${esc(timeLabel(r.updatedAt))}</span>`;b.addEventListener("click",()=>openConversation(r.email,true));box.appendChild(b);});$("#inbox-wrap").replaceChildren(box);
     });
   }
 
   function openConversation(email,fromInbox=false){
-    cleanupListeners();
-    selectedPeer=String(email||"").trim().toLowerCase();
-    if(!selectedPeer){toast("Could not open this chat");showInbox();return;}
-    const id=sisterId(selectedSister),key=emailKey(selectedPeer);
-    $("#panel-title").textContent=sisterName(selectedSister);
-    $("#panel-subtitle").textContent=session.role==="staff"?"Replying to a received chat":"Private conversation";
-    $("#inbox-wrap").style.display="none";
-    $("#chat-view").classList.add("show");
-    $("#back-btn").classList.toggle("show",session.role==="staff"&&fromInbox);
-    $("#chat-sister-img").src=MODELS[selectedSister];
-    $("#chat-title").textContent=sisterName(selectedSister);
-    $("#chat-peer").textContent=session.role==="staff"?selectedPeer:session.email;
-    $("#messages").innerHTML='<div class="empty">Loading messages…</div>';
-    stopMessages=onValue(ref(db,`bluiaChat/v1/conversations/${id}/${key}/messages`),snap=>{
-      const items=[];snap.forEach(c=>items.push({id:c.key,...(c.val()||{})}));items.sort((a,b)=>(a.createdAt||0)-(b.createdAt||0));
-      renderMessages(items);
-      updateLimit();
-    });
+    cleanupListeners();selectedPeer=email.toLowerCase();const id=sisterId(selectedSister),key=emailKey(selectedPeer);
+    $("#panel-title").textContent=sisterName(selectedSister);$("#panel-subtitle").textContent=session.role==="staff"?"Replying to a received chat":"Private conversation";$("#inbox-wrap").style.display="none";$("#chat-view").classList.add("show");$("#back-btn").classList.toggle("show",session.role==="staff"&&fromInbox);$("#chat-sister-img").src=MODELS[selectedSister];$("#chat-title").textContent=sisterName(selectedSister);$("#chat-peer").textContent=session.role==="staff"?selectedPeer:session.email;$("#messages").innerHTML='<div class="empty">Loading messages…</div>';
+    stopMessages=onValue(ref(db,`bluiaChat/v1/conversations/${id}/${key}/messages`),snap=>{const items=[];snap.forEach(c=>items.push({id:c.key,...(c.val()||{})}));items.sort((a,b)=>(a.createdAt||0)-(b.createdAt||0));renderMessages(items);updateLimit();});
   }
 
   function renderMessages(items){
-    const root=$("#messages");root.innerHTML="";
-    if(!items.length){root.innerHTML='<div class="empty">No messages yet. Say hello.</div>';return;}
+    const root=$("#messages");root.innerHTML="";if(!items.length){root.innerHTML='<div class="empty">No messages yet. Say hello.</div>';return;}
     items.forEach(m=>{
       const own=session.role==="staff"?m.senderRole==="staff":m.senderRole!=="staff";
-      const d=document.createElement("div");d.className="msg "+(own?"user":"sister");
-      d.innerHTML=`${esc(m.text)}<small>${esc(timeLabel(m.createdAt))}</small>`;root.appendChild(d);
+      const d=document.createElement("div");d.className="msg "+(own?"user":"sister")+(m.type==="image"||m.imageUrl?" image":"");
+      if(m.type==="image"||m.imageUrl){d.innerHTML=`<img src="${esc(m.imageUrl||"")}" alt="Shared photo" loading="lazy" decoding="async"><small>${esc(timeLabel(m.createdAt))}</small>`;}
+      else d.innerHTML=`${esc(m.text)}<small>${esc(timeLabel(m.createdAt))}</small>`;
+      root.appendChild(d);
     });
     requestAnimationFrame(()=>{root.scrollTop=root.scrollHeight;});
   }
 
-  async function globalSentCount(email){
-    const target=String(email||"").trim().toLowerCase();
-    if(!target) return 0;
-    const snap=await get(ref(db,"bluiaChat/v1/conversations"));
-    let count=0;
-    snap.forEach(sisterSnap=>{
-      sisterSnap.forEach(conversationSnap=>{
-        const conversation=conversationSnap.val()||{};
-        const conversationEmail=String(conversation.email||displayEmail(conversationSnap.key)||"").trim().toLowerCase();
-        if(conversationEmail!==target) return;
-        const messages=conversation.messages||{};
-        Object.values(messages).forEach(message=>{
-          const m=message||{};
-          const senderEmail=String(m.senderEmail||conversationEmail).trim().toLowerCase();
-          if(m.senderRole!=="staff"&&senderEmail===target) count++;
-        });
-      });
-    });
-    return count;
+  async function getGlobalSentCount(email){
+    const key=emailKey(email);const rootSnap=await get(ref(db,"bluiaChat/v1/conversations"));let sent=0;
+    rootSnap.forEach(sisterSnap=>{const conv=sisterSnap.child(key);if(!conv.exists())return;const msgs=conv.child("messages");msgs.forEach(c=>{const v=c.val()||{};if(v.senderRole!=="staff")sent++;});});
+    return sent;
   }
 
   async function updateLimit(){
     const note=$("#limit-note"),send=$("#send-btn");
     if(!session){send.disabled=true;note.textContent="Login required.";return;}
-    if(session.role==="staff"){send.disabled=false;note.textContent="Sister account · reply access";note.className="limit-note";return;}
+    if(session.role==="staff"){send.disabled=false;note.textContent="Sister account · reply and photo access";note.className="limit-note";return;}
     if(session.role==="member"){send.disabled=false;note.textContent="Unlimited messaging";note.className="limit-note";return;}
-    send.disabled=true;
-    note.textContent="Checking free-message access…";
-    note.className="limit-note";
-    try{
-      const sent=await globalSentCount(session.email);
-      if(!session||session.role!=="user") return;
-      const left=Math.max(0,2-sent);
-      send.disabled=left<=0;
-      note.textContent=left>0?`${left} free message${left===1?"":"s"} remaining across all sisters`:"Your 2-message limit has been reached.";
-      note.className="limit-note"+(left<=0?" warn":"");
-    }catch(error){
-      console.error(error);
-      send.disabled=false;
-      note.textContent="Unable to check message limit. Try again.";
-      note.className="limit-note warn";
-    }
+    try{const sent=await getGlobalSentCount(session.email),left=Math.max(0,2-sent);send.disabled=left<=0;note.textContent=left>0?`${left} free message${left===1?"":"s"} remaining across all Bluia Sisters`:"Your 2-message total limit has been reached.";note.className="limit-note"+(left<=0?" warn":"");}
+    catch{send.disabled=false;note.textContent="2-message total access";note.className="limit-note";}
   }
 
   async function sendMessage(){
-    if(!session||!selectedPeer) return;
-    const input=$("#message-input"),send=$("#send-btn"),text=input.value.trim();if(!text)return;
+    if(!session||!selectedPeer)return;const input=$("#message-input"),text=input.value.trim();if(!text)return;
     const id=sisterId(selectedSister),key=emailKey(selectedPeer),conversationRef=ref(db,`bluiaChat/v1/conversations/${id}/${key}`);
-    send.disabled=true;
     try{
-      if(session.role!=="staff"&&session.role!=="member"){
-        const sent=await globalSentCount(session.email);
-        if(sent>=2){toast("2-message limit reached");await updateLimit();return;}
-      }
-      const now=Date.now();
-      const msgRef=push(ref(db,`bluiaChat/v1/conversations/${id}/${key}/messages`));
-      await set(msgRef,{text,createdAt:now,senderEmail:session.email,senderRole:session.role==="staff"?"staff":"user"});
-      try{
-        await update(conversationRef,{email:selectedPeer,lastMessage:text,updatedAt:now,sisterId:id,sisterName:sisterName(selectedSister)});
-      }catch(metaError){
-        console.warn("Message saved but conversation metadata could not be updated",metaError);
-      }
-      input.value="";
-      if(session.role==="staff") toast("Reply sent");
-      await updateLimit();
-      input.focus();
-    }catch(error){
-      console.error("Chat send failed",error);
-      toast(session.role==="staff"?"Reply could not be sent. Check Firebase permissions.":"Message could not be sent. Try again.");
-      send.disabled=false;
-    }
+      if(session.role!=="staff"&&session.role!=="member"){const sent=await getGlobalSentCount(session.email);if(sent>=2){toast("2-message total limit reached");await updateLimit();return;}}
+      const now=Date.now(),msgRef=push(ref(db,`bluiaChat/v1/conversations/${id}/${key}/messages`));
+      await set(msgRef,{type:"text",text,createdAt:now,senderEmail:session.email,senderRole:session.role==="staff"?"staff":"user"});
+      await update(conversationRef,{email:selectedPeer,lastMessage:text,updatedAt:now,sisterId:id,sisterName:sisterName(selectedSister)});
+      input.value="";input.focus();await updateLimit();
+    }catch(err){console.error(err);toast(session.role==="staff"?"Reply failed. Check Firebase permissions.":"Message failed to send.");}
   }
 
-  function openLogin(){
-    $("#login-error").classList.remove("show");$("#login-modal").classList.add("open");$("#login-modal").setAttribute("aria-hidden","false");setTimeout(()=>$("#email-input").focus(),120);
+  async function compressImage(file){
+    if(!(file instanceof File)) throw new Error("Please choose an image file.");
+    if(!file.type.startsWith("image/")) throw new Error("Only image files are allowed.");
+    if(file.size>MAX_INPUT_BYTES) throw new Error("Image is larger than 10 MB.");
+    if(file.size<SMALL_IMAGE_BYTES) return file;
+
+    let objectUrl="";
+    try{
+      objectUrl=URL.createObjectURL(file);
+      const img=await new Promise((resolve,reject)=>{
+        const el=new Image();
+        el.onload=()=>resolve(el);
+        el.onerror=()=>reject(new Error("Could not read the selected image."));
+        el.src=objectUrl;
+      });
+      const longest=Math.max(img.naturalWidth,img.naturalHeight);
+      const scale=longest>MAX_IMAGE_SIDE?MAX_IMAGE_SIDE/longest:1;
+      const width=Math.max(1,Math.round(img.naturalWidth*scale));
+      const height=Math.max(1,Math.round(img.naturalHeight*scale));
+      const canvas=document.createElement("canvas");canvas.width=width;canvas.height=height;
+      const ctx=canvas.getContext("2d",{alpha:false});if(!ctx) throw new Error("Canvas is unavailable.");
+      ctx.fillStyle="#fff";ctx.fillRect(0,0,width,height);ctx.drawImage(img,0,0,width,height);
+      const blob=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error("Image compression failed.")),"image/jpeg",JPEG_QUALITY));
+      const base=(file.name||"photo").replace(/\.[^.]+$/,"").replace(/[^a-z0-9_-]+/gi,"-")||"photo";
+      const compressed=new File([blob],`${base}.jpg`,{type:"image/jpeg",lastModified:Date.now()});
+      return compressed.size<file.size?compressed:file;
+    }catch(err){console.warn("Compression failed; using original image.",err);return file;}
+    finally{if(objectUrl)URL.revokeObjectURL(objectUrl);}
   }
+
+  async function uploadPhoto(file){
+    if(uploadBusy)return;
+    if(!session||session.role!=="staff"){toast("Only the Sister account can upload photos.");return;}
+    if(!selectedPeer){toast("Open a chat first.");return;}
+    uploadBusy=true;const photoBtn=$("#photo-btn");photoBtn.disabled=true;setUploadState("Compressing…");
+    try{
+      const uploadFile=await compressImage(file);
+      setUploadState("Uploading…");
+      const form=new FormData();form.append("file",uploadFile,uploadFile.name);
+      const response=await fetch(UPLOAD_ENDPOINT,{method:"POST",body:form});
+      let data=null;try{data=await response.json();}catch{}
+      if(!response.ok) throw new Error(data?.error||`Upload failed with HTTP ${response.status}.`);
+      if(!data?.success||!data?.fileName) throw new Error(data?.error||"Upload API did not return a file name.");
+      const imageUrl=PUBLIC_IMAGE_BASE+encodeURIComponent(data.fileName).replace(/%2F/g,"/");
+      const id=sisterId(selectedSister),key=emailKey(selectedPeer),conversationRef=ref(db,`bluiaChat/v1/conversations/${id}/${key}`),now=Date.now();
+      const msgRef=push(ref(db,`bluiaChat/v1/conversations/${id}/${key}/messages`));
+      await set(msgRef,{type:"image",imageUrl,fileName:data.fileName,originalName:file.name,uploadedName:uploadFile.name,uploadedBytes:uploadFile.size,createdAt:now,senderEmail:session.email,senderRole:"staff"});
+      await update(conversationRef,{email:selectedPeer,lastMessage:"Photo",updatedAt:now,sisterId:id,sisterName:sisterName(selectedSister)});
+      setUploadState("Photo sent.","success");toast("Photo sent");setTimeout(()=>setUploadState(""),1800);
+    }catch(err){console.error(err);setUploadState(err?.message||"Photo upload failed.","error");toast(err?.message||"Photo upload failed.");}
+    finally{uploadBusy=false;photoBtn.disabled=false;$("#photo-input").value="";}
+  }
+
+  function openLogin(){$("#login-error").classList.remove("show");$("#login-modal").classList.add("open");$("#login-modal").setAttribute("aria-hidden","false");setTimeout(()=>$("#email-input").focus(),120);}
   function closeLogin(){$("#login-modal").classList.remove("open");$("#login-modal").setAttribute("aria-hidden","true");}
 
   async function login(){
     const email=$("#email-input").value.trim().toLowerCase(),pin=$("#pin-input").value.trim(),err=$("#login-error");
     if(!/^\S+@\S+\.\S+$/.test(email)){err.textContent="Enter a valid email address.";err.classList.add("show");return;}
     if(await sha256(pin)!==PIN_HASH){err.textContent="Incorrect PIN.";err.classList.add("show");return;}
-    session={email,role:roleFor(email)};saveSession();updateAccountUI();closeLogin();$("#pin-input").value="";
-    if(session.role==="staff") showInbox(); else openConversation(session.email);
-    toast("Logged in");
+    session={email,role:roleFor(email)};saveSession();updateAccountUI();closeLogin();$("#pin-input").value="";if(session.role==="staff")showInbox();else openConversation(session.email);toast("Logged in");
   }
 
   function logout(){session=null;selectedPeer=null;saveSession();cleanupListeners();updateAccountUI();showLoggedOut();toast("Logged out");}
@@ -369,9 +349,10 @@
   $("#send-btn").addEventListener("click",sendMessage);
   $("#message-input").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendMessage();}});
   $("#back-btn").addEventListener("click",showInbox);
+  $("#photo-btn").addEventListener("click",()=>{if(!uploadBusy)$("#photo-input").click();});
+  $("#photo-input").addEventListener("change",e=>{const file=e.target.files?.[0];if(file)uploadPhoto(file);});
 
-  await loadMembers();restoreSession();renderSisters();updateAccountUI();
-  if(session){if(session.role==="staff")showInbox();else openConversation(session.email);}else showLoggedOut();
+  await loadMembers();restoreSession();renderSisters();updateAccountUI();if(session){if(session.role==="staff")showInbox();else openConversation(session.email);}else showLoggedOut();
 </script>
 </body>
 </html>
