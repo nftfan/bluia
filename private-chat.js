@@ -2,6 +2,7 @@
   "use strict";
 
   const EMAIL = "vbluia@outlook.com";
+  const CHAT_URL = "https://bluia.online/chat";
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 
@@ -33,8 +34,11 @@
       .private-chat-email{width:100%;min-height:46px;display:flex;align-items:center;justify-content:center;gap:7px;border-radius:12px;background:linear-gradient(135deg,#ed5b96,#cb3471);color:#fff;text-decoration:none;font-size:10.5px;font-weight:950}
       .private-chat-email svg{width:16px;height:16px;fill:currentColor}
       .private-chat-note{margin-top:10px!important;color:#8f7a85!important;font-size:8px!important;text-align:center}
+      .members-chat-button{width:100%;min-height:48px;margin-top:9px;display:flex;align-items:center;justify-content:center;gap:8px;border:1px solid #6a4ee8;border-radius:12px;background:linear-gradient(135deg,#2b2147,#171225);color:#c9bcff;text-decoration:none;font-size:10.5px;font-weight:900;box-shadow:0 8px 20px rgba(37,25,70,.28);transition:transform .14s ease,border-color .14s ease}
+      .members-chat-button:active{transform:scale(.98)}
+      .members-chat-button svg{width:16px;height:16px;fill:currentColor}
       @media(max-width:350px){.private-chat-button{font-size:9px;gap:4px}.private-chat-button svg{width:14px;height:14px;flex-basis:14px}}
-      @media(prefers-reduced-motion:reduce){.private-chat-button,.private-chat-modal{transition:none!important}}
+      @media(prefers-reduced-motion:reduce){.private-chat-button,.private-chat-modal,.members-chat-button{transition:none!important}}
     `;
     document.head.appendChild(style);
   }
@@ -77,7 +81,7 @@
     document.documentElement.style.overflow = "";
   }
 
-  function build(){
+  function buildPlayBooking(){
     if($("#private-chat-button")) return true;
     const actions = $(".play-actions");
     if(!actions) return false;
@@ -89,34 +93,54 @@
     button.innerHTML = `${chatIcon}<span>Chat</span>`;
     actions.appendChild(button);
 
-    document.body.insertAdjacentHTML("beforeend",`
-      <div class="private-chat-modal" id="private-chat-modal" aria-hidden="true">
-        <div class="private-chat-card" role="dialog" aria-modal="true" aria-labelledby="private-chat-title">
-          <button class="private-chat-close" type="button" aria-label="Close">×</button>
-          <div class="private-chat-badge">Private chat</div>
-          <h3 id="private-chat-title">Schedule a private chat</h3>
-          <p>Book a private chat session with the Bluia Sister you selected. Send us an email with your preferred date, time and timezone, and we’ll reply with availability and the next steps.</p>
-          <div class="private-chat-sister">
-            <img id="private-chat-sister-image" alt="Selected Bluia Sister" decoding="async">
-            <div><strong id="private-chat-sister-label">Bluia Sister</strong><span>Your selected model</span></div>
+    if(!$("#private-chat-modal")){
+      document.body.insertAdjacentHTML("beforeend",`
+        <div class="private-chat-modal" id="private-chat-modal" aria-hidden="true">
+          <div class="private-chat-card" role="dialog" aria-modal="true" aria-labelledby="private-chat-title">
+            <button class="private-chat-close" type="button" aria-label="Close">×</button>
+            <div class="private-chat-badge">Private chat</div>
+            <h3 id="private-chat-title">Schedule a private chat</h3>
+            <p>Book a private chat session with the Bluia Sister you selected. Send us an email with your preferred date, time and timezone, and we’ll reply with availability and the next steps.</p>
+            <div class="private-chat-sister">
+              <img id="private-chat-sister-image" alt="Selected Bluia Sister" decoding="async">
+              <div><strong id="private-chat-sister-label">Bluia Sister</strong><span>Your selected model</span></div>
+            </div>
+            <a class="private-chat-email" id="private-chat-email-link" href="mailto:${EMAIL}">${chatIcon}<span>Email to schedule your chat</span></a>
+            <p class="private-chat-note">Email: ${EMAIL}</p>
           </div>
-          <a class="private-chat-email" id="private-chat-email-link" href="mailto:${EMAIL}">${chatIcon}<span>Email to schedule your chat</span></a>
-          <p class="private-chat-note">Email: ${EMAIL}</p>
-        </div>
-      </div>`);
+        </div>`);
+
+      $(".private-chat-close")?.addEventListener("click",closeModal);
+      $("#private-chat-modal")?.addEventListener("click",event => { if(event.target.id === "private-chat-modal") closeModal(); });
+      document.addEventListener("keydown",event => { if(event.key === "Escape") closeModal(); });
+    }
 
     button.addEventListener("click",openModal);
-    $(".private-chat-close")?.addEventListener("click",closeModal);
-    $("#private-chat-modal")?.addEventListener("click",event => { if(event.target.id === "private-chat-modal") closeModal(); });
-    document.addEventListener("keydown",event => { if(event.key === "Escape") closeModal(); });
+    return true;
+  }
+
+  function buildMembersChat(){
+    if($("#members-chat-button")) return true;
+    const card = $(".members-card");
+    if(!card) return false;
+    const note = card.querySelector(".members-note");
+    const link = document.createElement("a");
+    link.id = "members-chat-button";
+    link.className = "members-chat-button";
+    link.href = CHAT_URL;
+    link.innerHTML = `${chatIcon}<span>Open Members Chat</span>`;
+    link.setAttribute("aria-label","Open Bluia Sisters Chat");
+    if(note) note.insertAdjacentElement("beforebegin",link);
+    else card.appendChild(link);
     return true;
   }
 
   function start(){
     addStyles();
-    if(build()) return;
+    const tryBuild = () => buildPlayBooking() && buildMembersChat();
+    if(tryBuild()) return;
     const observer = new MutationObserver(() => {
-      if(build()) observer.disconnect();
+      if(tryBuild()) observer.disconnect();
     });
     observer.observe(document.documentElement,{childList:true,subtree:true});
     setTimeout(() => observer.disconnect(),10000);
