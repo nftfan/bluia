@@ -8,6 +8,7 @@
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 
   const models = () => Array.isArray(window.BluiaMedia?.models) ? window.BluiaMedia.models : [];
+  let selectedIndex = 0;
 
   const kissIcon = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.4 11.1c2.2-2.6 4.6-4 7-4.1 1.2 0 2.1.4 2.8 1.1.7-.7 1.7-1.1 2.8-1.1 2.2.1 4.1 1.5 5.7 4.1-2.9 3.8-6.1 5.8-9.4 5.9-3.3-.1-6.2-2.1-8.9-5.9Zm3.1.3c1.9 1.7 3.8 2.6 5.8 2.7 2-.1 4-.9 5.9-2.7-1-.9-2-1.4-3-1.4-1 0-1.9.4-2.8 1.2-.9-.8-1.8-1.2-2.8-1.2-1 0-2.1.5-3.1 1.4Z"/></svg>`;
   const sniffIcon = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.3 3.2c.8 2.2.8 4.3.1 6.2-.4 1.1-1 2.2-1.8 3.3-.5.7-.7 1.3-.5 1.7.2.4.8.7 1.8.7h2.4c1.4 0 2.3.7 2.3 1.8 0 1.5-1.5 3-3.6 3-1.5 0-2.8-.7-3.6-1.9l1.5-1c.5.7 1.2 1.1 2.1 1.1 1 0 1.7-.6 1.8-1.1-.1-.1-.3-.1-.6-.1h-2.4c-1.8 0-3-.6-3.5-1.8-.5-1.2-.2-2.4.8-3.8.7-1 1.2-1.9 1.5-2.7.5-1.5.5-3.1-.1-4.8l1.8-.6Z"/></svg>`;
@@ -29,6 +30,12 @@
       .kiss-button{color:#dd3f7b}.sniff-button{color:#bd8900}
       .kiss-button:active,.sniff-button:active{transform:scale(.975)}
       .kiss-button svg,.sniff-button svg{width:17px;height:17px;fill:currentColor;flex:0 0 17px}
+      .chat-home-slider{display:flex;width:100%;gap:8px;overflow-x:auto;padding:14px 1px 4px;scrollbar-width:none;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
+      .chat-home-slider::-webkit-scrollbar{display:none}
+      .chat-home-thumb{flex:0 0 66px;width:66px;aspect-ratio:2/3;padding:0;border:2px solid transparent;border-radius:12px;overflow:hidden;background:#b52c62;cursor:pointer;scroll-snap-align:start;box-shadow:0 6px 15px rgba(74,5,31,.16);transition:transform .14s ease,border-color .14s ease}
+      .chat-home-thumb:active{transform:scale(.97)}
+      .chat-home-thumb img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center}
+      .chat-home-thumb.selected{border-color:#fff;box-shadow:0 0 0 2px rgba(255,255,255,.16),0 7px 18px rgba(74,5,31,.2)}
       .kiss-modal{position:fixed;inset:0;z-index:100005;display:grid;place-items:center;padding:16px;background:rgba(0,0,0,.84);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s ease,visibility .16s ease}
       .kiss-modal.open{opacity:1;visibility:visible;pointer-events:auto}
       .kiss-modal-card{position:relative;width:min(94vw,410px);max-height:92dvh;overflow:auto;border:1px solid #60364b;border-radius:20px;background:#120d10;box-shadow:0 28px 80px rgba(0,0,0,.65)}
@@ -40,8 +47,8 @@
       .unlock-card h3{margin:0 0 7px;color:#fff;font-size:17px}
       .unlock-card p{margin:0 auto 15px;max-width:280px;color:#bca9b2;font-size:9.5px;line-height:1.55}
       .unlock-member{min-height:46px;display:flex;align-items:center;justify-content:center;border-radius:12px;background:linear-gradient(135deg,#ed5b96,#c93370);color:#fff;text-decoration:none;font-size:11px;font-weight:950}
-      @media(max-width:350px){#panel-chat-home{padding-left:10px;padding-right:10px}.play-actions{gap:6px}.kiss-button,.sniff-button{font-size:9.5px}}
-      @media(prefers-reduced-motion:reduce){.kiss-button,.sniff-button,.kiss-modal{transition:none!important}}
+      @media(max-width:350px){#panel-chat-home{padding-left:10px;padding-right:10px}.play-actions{gap:6px}.kiss-button,.sniff-button{font-size:9.5px}.chat-home-thumb{flex-basis:60px;width:60px}}
+      @media(prefers-reduced-motion:reduce){.kiss-button,.sniff-button,.chat-home-thumb,.kiss-modal{transition:none!important}}
     `;
     document.head.appendChild(style);
   }
@@ -72,13 +79,45 @@
     document.documentElement.style.overflow = open ? "hidden" : "";
   }
 
+  function selectSister(index){
+    const list=models();
+    if(!list.length) return;
+    selectedIndex=Math.max(0,Math.min(Number(index)||0,list.length-1));
+    const preview=$("#chat-home-photo");
+    if(preview) preview.src=list[selectedIndex];
+    $$(".chat-home-thumb").forEach((button,i)=>button.classList.toggle("selected",i===selectedIndex));
+  }
+
+  function renderSlider(){
+    const slider=$("#chat-home-slider");
+    if(!slider) return;
+    const fragment=document.createDocumentFragment();
+    models().forEach((url,index)=>{
+      const button=document.createElement("button");
+      button.type="button";
+      button.className="chat-home-thumb";
+      button.setAttribute("aria-label",`Choose Bluia Sister ${index+1}`);
+      const img=document.createElement("img");
+      img.src=url;
+      img.alt=`Bluia Sister ${index+1}`;
+      img.loading=index<4?"eager":"lazy";
+      img.decoding="async";
+      button.appendChild(img);
+      button.addEventListener("click",()=>selectSister(index));
+      fragment.appendChild(button);
+    });
+    slider.replaceChildren(fragment);
+  }
+
   function openKiss(){
+    if(selectedIndex!==0){setModal($("#kiss-unlock-modal"),true);return;}
     const img = $("#kiss-special-image");
     if(img) img.src = KISS_IMAGE_URL;
     setModal($("#kiss-image-modal"),true);
   }
 
   function openSniff(){
+    if(selectedIndex!==0){setModal($("#kiss-unlock-modal"),true);return;}
     const img = $("#sniff-special-image");
     if(img) img.src = SNIFF_IMAGE_URL;
     setModal($("#sniff-image-modal"),true);
@@ -106,6 +145,7 @@
           <button class="kiss-button" id="kiss-button" type="button">${kissIcon}<span>Kiss</span></button>
           <button class="sniff-button" id="sniff-button" type="button">${sniffIcon}<span>Sniff</span></button>
         </div>
+        <div class="chat-home-slider" id="chat-home-slider" aria-label="Choose a Bluia Sister"></div>
       </div>`;
     main.insertBefore(panel,main.querySelector(".page-content") || null);
 
@@ -114,8 +154,8 @@
       <div class="kiss-modal" id="sniff-image-modal" aria-hidden="true"><div class="kiss-modal-card" role="dialog" aria-modal="true" aria-label="Special sniff"><button class="kiss-close" type="button" aria-label="Close">×</button><img class="kiss-preview" id="sniff-special-image" alt="Bluia Sisters sniff" decoding="async"></div></div>
       <div class="kiss-modal" id="kiss-unlock-modal" aria-hidden="true"><div class="kiss-modal-card unlock-card" role="dialog" aria-modal="true"><button class="kiss-close" type="button" aria-label="Close">×</button><div class="unlock-icon">${lockIcon}</div><h3>Unlock more</h3><p>Become a member to unlock more Bluia Sisters content and special moments.</p><a class="unlock-member" href="${STRIPE_URL}" target="_blank" rel="noopener noreferrer">Become member</a></div></div>`);
 
-    const preview = models()[0];
-    if(preview) $("#chat-home-photo").src = preview;
+    renderSlider();
+    selectSister(0);
 
     $("#kiss-button")?.addEventListener("click",openKiss);
     $("#sniff-button")?.addEventListener("click",openSniff);
