@@ -118,7 +118,7 @@ window.BluiaMedia = {
 (() => {
   if (document.querySelector('script[data-bluia-chat-home]')) return;
   const script = document.createElement("script");
-  script.src = "/chat-home.js?v=20261014-model-slider-1";
+  script.src = "/chat-home.js?v=20261014-marry-1";
   script.defer = true;
   script.dataset.bluiaChatHome = "1";
   document.head.appendChild(script);
