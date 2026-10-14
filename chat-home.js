@@ -64,18 +64,23 @@
       .chat-home-thumb{flex:0 0 64px;width:64px;aspect-ratio:2/3;padding:0;border:2px solid transparent;border-radius:11px;overflow:hidden;background:#ba2c65;cursor:pointer;scroll-snap-align:start;box-shadow:0 5px 14px rgba(88,7,39,.12)}
       .chat-home-thumb img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center}
       .chat-home-thumb.selected{border-color:#fff;box-shadow:0 0 0 2px rgba(255,255,255,.16),0 6px 16px rgba(88,7,39,.18)}
-      .telegram-groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:7px 14px 0}
-      .telegram-group{min-width:0;display:flex;align-items:center;gap:8px;padding:10px;border:1px solid rgba(255,255,255,.32);border-radius:13px;background:rgba(255,255,255,.94);text-decoration:none;box-shadow:0 7px 18px rgba(87,10,40,.10);transition:transform .14s ease}
-      .telegram-group:active{transform:scale(.98)}
-      .telegram-group-icon{width:30px;height:30px;display:grid;place-items:center;flex:0 0 30px;border-radius:9px}
-      .telegram-group-icon svg{width:17px;height:17px;fill:currentColor}
-      .telegram-group.free{color:#229ed9}
-      .telegram-group.free .telegram-group-icon{background:#eaf7fd}
-      .telegram-group.premium{color:#b88928}
-      .telegram-group.premium .telegram-group-icon{background:#fff6d7}
-      .telegram-group-copy{min-width:0;display:flex;flex-direction:column;gap:2px}
-      .telegram-group-copy strong{color:#25131b;font-size:9px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-      .telegram-group-copy span{color:#7d6871;font-size:7px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+      .telegram-groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:10px 14px 2px}
+      .telegram-group{position:relative;min-width:0;min-height:72px;display:flex;align-items:center;gap:10px;padding:12px 11px;border-radius:17px;text-decoration:none;overflow:hidden;isolation:isolate;box-shadow:0 10px 26px rgba(71,8,31,.18);transition:transform .16s ease,box-shadow .16s ease}
+      .telegram-group::before{content:"";position:absolute;inset:0;z-index:-2}
+      .telegram-group::after{content:"";position:absolute;z-index:-1;width:78px;height:78px;right:-26px;top:-34px;border-radius:50%;background:rgba(255,255,255,.16);filter:blur(1px)}
+      .telegram-group:active{transform:scale(.975)}
+      .telegram-group.free{border:1px solid rgba(95,206,255,.7);background:linear-gradient(135deg,#f8fdff 0%,#e7f8ff 58%,#d2f1ff 100%);color:#168fcb;box-shadow:0 11px 28px rgba(25,149,207,.2)}
+      .telegram-group.premium{border:1px solid rgba(255,221,116,.72);background:linear-gradient(135deg,#fffdf4 0%,#fff2bd 58%,#f6dda0 100%);color:#9b7116;box-shadow:0 11px 28px rgba(157,111,15,.2)}
+      .telegram-group-icon{width:39px;height:39px;display:grid;place-items:center;flex:0 0 39px;border-radius:12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 5px 12px rgba(0,0,0,.08)}
+      .telegram-group-icon svg{width:21px;height:21px;fill:currentColor}
+      .telegram-group.free .telegram-group-icon{background:linear-gradient(145deg,#34baf2,#168ed0);color:#fff}
+      .telegram-group.premium .telegram-group-icon{background:linear-gradient(145deg,#e8c253,#ad7c19);color:#fff}
+      .telegram-group-copy{min-width:0;display:flex;flex-direction:column;gap:3px;flex:1}
+      .telegram-group-copy strong{color:#201219;font-size:10px;line-height:1.12;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+      .telegram-group-copy span{color:#725d67;font-size:7.4px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+      .telegram-group-badge{position:absolute;right:8px;bottom:7px;padding:3px 6px;border-radius:999px;font-size:6px;line-height:1;font-weight:950;letter-spacing:.45px;text-transform:uppercase}
+      .telegram-group.free .telegram-group-badge{background:rgba(24,151,210,.12);color:#168fcb}
+      .telegram-group.premium .telegram-group-badge{background:rgba(155,113,22,.13);color:#8f6815}
       .kiss-modal{position:fixed;inset:0;z-index:100005;display:grid;place-items:center;padding:16px;background:rgba(0,0,0,.84);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .16s ease,visibility .16s ease}
       .kiss-modal.open{opacity:1;visibility:visible;pointer-events:auto}
       .kiss-modal-card{position:relative;width:min(94vw,410px);max-height:92dvh;overflow:auto;border:1px solid #60364b;border-radius:20px;background:#120d10;box-shadow:0 28px 80px rgba(0,0,0,.65)}
@@ -88,7 +93,7 @@
       .unlock-card p{margin:0 auto 15px;max-width:280px;color:#bca9b2;font-size:9.5px;line-height:1.55}
       .unlock-member{min-height:46px;display:flex;align-items:center;justify-content:center;border-radius:12px;background:linear-gradient(135deg,#ed5b96,#c93370);color:#fff;text-decoration:none;font-size:11px;font-weight:950}
       @media(max-width:390px){.chat-home-main{grid-template-columns:142px minmax(0,1fr);gap:12px;padding-left:11px;padding-right:11px}.chat-home-photo{width:142px}.chat-home-slider-wrap,.telegram-groups{padding-left:11px;padding-right:11px}}
-      @media(max-width:340px){.chat-home-main{grid-template-columns:125px minmax(0,1fr);gap:10px}.chat-home-photo{width:125px}.chat-home-text{font-size:8.3px}.kiss-button,.sniff-button{font-size:9.5px}.telegram-group{padding:8px 7px;gap:6px}.telegram-group-icon{width:27px;height:27px;flex-basis:27px}}
+      @media(max-width:340px){.chat-home-main{grid-template-columns:125px minmax(0,1fr);gap:10px}.chat-home-photo{width:125px}.chat-home-text{font-size:8.3px}.kiss-button,.sniff-button{font-size:9.5px}.telegram-groups{gap:7px}.telegram-group{min-height:68px;padding:9px 8px;gap:7px}.telegram-group-icon{width:34px;height:34px;flex-basis:34px}.telegram-group-copy strong{font-size:8.8px}.telegram-group-copy span{font-size:6.8px}}
       @media(prefers-reduced-motion:reduce){.kiss-button,.sniff-button,.telegram-group,.kiss-modal{transition:none!important}}
     `;
     document.head.appendChild(style);
@@ -208,11 +213,13 @@
         <div class="telegram-groups" aria-label="Bluia Sisters Telegram groups">
           <a class="telegram-group free" href="${FREE_TELEGRAM_URL}" target="_blank" rel="noopener noreferrer">
             <span class="telegram-group-icon">${telegramIcon}</span>
-            <span class="telegram-group-copy"><strong>Free Telegram</strong><span>Join the free group</span></span>
+            <span class="telegram-group-copy"><strong>Join Free Telegram</strong><span>Updates, previews & community</span></span>
+            <span class="telegram-group-badge">Free</span>
           </a>
           <a class="telegram-group premium" href="${PREMIUM_TELEGRAM_URL}" target="_blank" rel="noopener noreferrer">
             <span class="telegram-group-icon">${premiumIcon}</span>
-            <span class="telegram-group-copy"><strong>Premium Telegram</strong><span>500 Stars / month</span></span>
+            <span class="telegram-group-copy"><strong>Premium Telegram</strong><span>Exclusive access · 500 Stars/month</span></span>
+            <span class="telegram-group-badge">VIP</span>
           </a>
         </div>
       </div>`;
