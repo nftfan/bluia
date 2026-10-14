@@ -26,12 +26,15 @@
       #panel-chat-home{min-height:calc(100svh - 52px);padding:24px 14px 34px;background:linear-gradient(180deg,#f4518f 0%,#e74282 54%,#ca306c 100%)}
       .chat-home-shell{width:min(100%,420px);margin:0 auto;display:flex;flex-direction:column;align-items:center}
       .chat-home-photo{display:block;width:min(72vw,270px);aspect-ratio:2/3;object-fit:cover;object-position:top center;border:1px solid rgba(255,255,255,.52);border-radius:20px;background:#d9457f;box-shadow:0 18px 42px rgba(74,5,31,.24)}
-      .play-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px;width:min(100%,360px);margin-top:14px}
-      .kiss-button,.sniff-button,.marry-button{min-height:47px;display:flex;align-items:center;justify-content:center;gap:7px;width:100%;border:1px solid rgba(255,255,255,.96);border-radius:13px;background:#fff;font-size:10.5px;font-weight:950;cursor:pointer;box-shadow:0 8px 20px rgba(87,10,40,.15);transition:transform .14s ease,box-shadow .14s ease}
+      .play-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-template-rows:46px 49px;gap:8px;width:min(100%,360px);margin-top:14px;align-items:stretch}
+      .kiss-button,.sniff-button,.marry-button{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;border:1px solid rgba(255,255,255,.96);border-radius:13px;background:#fff;font-size:10.5px;font-weight:950;cursor:pointer;box-shadow:0 8px 20px rgba(87,10,40,.15);transition:transform .14s ease,box-shadow .14s ease}
+      .play-actions>.kiss-button{grid-column:1;grid-row:1;height:46px!important;min-height:46px!important;margin:0!important;padding:0 6px!important}
+      .play-actions>.sniff-button{grid-column:2;grid-row:1;height:46px!important;min-height:46px!important;margin:0!important;padding:0 6px!important}
+      .play-actions>.private-chat-button{grid-column:3!important;grid-row:1!important;height:46px!important;min-height:46px!important;margin:0!important;padding:0 6px!important;width:100%!important;border-radius:13px!important}
       .kiss-button{color:#dd3f7b}.sniff-button{color:#bd8900}
       .kiss-button:active,.sniff-button:active,.marry-button:active{transform:scale(.975)}
       .kiss-button svg,.sniff-button svg,.marry-button svg{width:17px;height:17px;fill:currentColor;flex:0 0 17px}
-      .marry-button{grid-column:1/-1;justify-self:center;width:76%;min-height:49px;margin-top:2px;border-color:#ffd3e4;background:linear-gradient(135deg,#fff,#ffe8f1);color:#d62d6d;font-size:11.5px;box-shadow:0 10px 24px rgba(117,8,49,.2)}
+      .marry-button{grid-column:1/-1;grid-row:2;width:100%;height:49px;min-height:49px;margin:0;border-color:#ffd3e4;background:linear-gradient(135deg,#fff,#ffe8f1);color:#d62d6d;font-size:11.5px;box-shadow:0 10px 24px rgba(117,8,49,.2)}
       .chat-home-slider{display:flex;width:100%;gap:8px;overflow-x:auto;padding:14px 1px 4px;scrollbar-width:none;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
       .chat-home-slider::-webkit-scrollbar{display:none}
       .chat-home-thumb{flex:0 0 66px;width:66px;aspect-ratio:2/3;padding:0;border:2px solid transparent;border-radius:12px;overflow:hidden;background:#b52c62;cursor:pointer;scroll-snap-align:start;box-shadow:0 6px 15px rgba(74,5,31,.16);transition:transform .14s ease,border-color .14s ease}
@@ -56,7 +59,7 @@
       .marry-burst svg{width:58px;height:58px;fill:currentColor;filter:drop-shadow(0 6px 12px rgba(214,45,109,.25))}
       @keyframes heartFall{0%{transform:translate3d(0,-10vh,0) rotate(0deg);opacity:0}10%{opacity:1}100%{transform:translate3d(var(--drift),115vh,0) rotate(var(--spin));opacity:.85}}
       @keyframes marryBurst{0%{transform:translate(-50%,-50%) scale(.25);opacity:0}20%{opacity:1}55%{transform:translate(-50%,-50%) scale(1.08);opacity:1}100%{transform:translate(-50%,-50%) scale(.92);opacity:0}}
-      @media(max-width:350px){#panel-chat-home{padding-left:10px;padding-right:10px}.play-actions{gap:6px}.kiss-button,.sniff-button,.marry-button{font-size:9.5px}.chat-home-thumb{flex-basis:60px;width:60px}}
+      @media(max-width:350px){#panel-chat-home{padding-left:10px;padding-right:10px}.play-actions{gap:6px}.kiss-button,.sniff-button,.marry-button,.play-actions>.private-chat-button{font-size:9.5px!important}.chat-home-thumb{flex-basis:60px;width:60px}}
       @media(prefers-reduced-motion:reduce){.kiss-button,.sniff-button,.marry-button,.chat-home-thumb,.kiss-modal{transition:none!important}.marry-heart{animation-duration:.01ms!important}.marry-burst{animation-duration:.01ms!important}}
     `;
     document.head.appendChild(style);
