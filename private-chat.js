@@ -2,6 +2,7 @@
   "use strict";
 
   const CHAT_URL = "https://bluia.online/chat";
+  const MEMBERS_URL = "/members/members.json";
   const FIREBASE_REQUEST_URL = "https://bluias-default-rtdb.firebaseio.com/bluiaChat/v1/contactRequests.json";
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -52,6 +53,14 @@
     return {index,name:`Bluia Sister ${index + 1}`};
   }
 
+  async function isMember(email){
+    const response = await fetch(MEMBERS_URL,{cache:"no-store"});
+    if(!response.ok) throw new Error(`Member list failed (${response.status})`);
+    const data = await response.json();
+    const members = Array.isArray(data?.members) ? data.members : [];
+    return members.some(member => String(member).trim().toLowerCase() === email);
+  }
+
   function openModal(){
     const modal = $("#private-chat-modal");
     if(!modal) return;
@@ -86,12 +95,24 @@
       return;
     }
 
-    const sister = selectedSister();
     submitting = true;
-    if(button){button.disabled=true;button.innerHTML="Sending…";}
-    if(status){status.textContent="Checking your request…";status.className="private-chat-status";}
+    if(button){button.disabled=true;button.textContent="Checking…";}
+    if(status){status.textContent="Checking membership…";status.className="private-chat-status";}
 
     try{
+      const member = await isMember(email);
+      if(!member){
+        if(status){
+          status.textContent="You are not a member yet. First buy a membership, then use the same email address here.";
+          status.className="private-chat-status error";
+        }
+        return;
+      }
+
+      const sister = selectedSister();
+      if(button) button.textContent="Sending…";
+      if(status){status.textContent="Membership confirmed. Sending your request…";status.className="private-chat-status";}
+
       const response = await fetch(FIREBASE_REQUEST_URL,{
         method:"POST",
         headers:{"Content-Type":"application/json"},
@@ -99,6 +120,7 @@
           email,
           sisterId:`sister_${String(sister.index + 1).padStart(2,"0")}`,
           sisterName:sister.name,
+          member:true,
           createdAt:Date.now(),
           source:"main_play_chat"
         })
@@ -107,13 +129,13 @@
       const data = await response.json();
       if(!data?.name) throw new Error("Firebase did not confirm the request");
       if(status){
-        status.textContent="Request received. A Bluia Sister will email you her private contact if your membership email is confirmed.";
+        status.textContent="Membership confirmed. Your request was received. A Bluia Sister will email you her private contact.";
         status.className="private-chat-status success";
       }
       if(input) input.value="";
     }catch(error){
       if(status){
-        status.textContent="Could not save your request. Please try again.";
+        status.textContent="Could not verify or save your request. Please try again.";
         status.className="private-chat-status error";
       }
       console.error("Bluia chat request error",error);
@@ -142,7 +164,7 @@
             <button class="private-chat-close" type="button" aria-label="Close">×</button>
             <div class="private-chat-badge">Members chat</div>
             <h3 id="private-chat-title">Get her private contact</h3>
-            <p>Enter the email address you used to buy your Bluia Sisters membership. A Bluia Sister will send you an email with her private contact after your membership email is confirmed.</p>
+            <p>Enter the email address you used to buy your Bluia Sisters membership. Only active member emails can send a request.</p>
             <label class="private-chat-field" for="private-chat-member-email">Membership email</label>
             <input class="private-chat-input" id="private-chat-member-email" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" placeholder="you@example.com">
             <button class="private-chat-submit" id="private-chat-submit" type="button">${chatIcon}<span>Send request</span></button>
