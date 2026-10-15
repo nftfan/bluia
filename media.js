@@ -108,7 +108,7 @@ window.BluiaMedia = {
 (() => {
   if (document.querySelector('script[data-bluia-telegram-main]')) return;
   const script = document.createElement("script");
-  script.src = "/telegram-main.js?v=20261015-1";
+  script.src = "/telegram-main.js?v=20261015-premium-card-1";
   script.defer = true;
   script.dataset.bluiaTelegramMain = "1";
   document.head.appendChild(script);
