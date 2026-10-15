@@ -124,11 +124,11 @@ window.BluiaMedia = {
   document.head.appendChild(script);
 })();
 
-// Private chat booking button + email popup
+// Member contact request popup
 (() => {
   if (document.querySelector('script[data-bluia-private-chat]')) return;
   const script = document.createElement("script");
-  script.src = "/private-chat.js?v=20261012-1";
+  script.src = "/private-chat.js?v=20261015-member-contact-1";
   script.defer = true;
   script.dataset.bluiaPrivateChat = "1";
   document.head.appendChild(script);
