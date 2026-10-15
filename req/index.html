@@ -25,6 +25,15 @@
     .pill{padding:5px 7px;border-radius:999px;background:#241820;color:#d4bec8;font-size:8px}
     .empty,.error{padding:24px 14px;text-align:center;border:1px dashed #3b2a32;border-radius:14px;color:#9c8992;font-size:10px}
     .error{color:#ff9ab7}
+    .latest{margin-top:24px;padding-top:18px;border-top:1px solid #2b1e24}
+    .latest-head{display:flex;align-items:end;justify-content:space-between;gap:10px;margin-bottom:10px}
+    .latest-head h2{margin:0;font-size:14px}
+    .latest-head span{color:#8f7b85;font-size:8px}
+    .latest-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+    .latest-card{overflow:hidden;border:1px solid #35252d;border-radius:14px;background:#151013;box-shadow:0 8px 22px rgba(0,0,0,.18)}
+    .latest-card img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;object-position:top center;background:#111}
+    .latest-card p{margin:0;padding:8px;color:#baa7b0;font-size:7.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    @media(max-width:520px){.latest-grid{gap:6px}.latest-card{border-radius:11px}.latest-card p{display:none}}
   </style>
 </head>
 <body>
@@ -38,93 +47,30 @@
     </div>
     <div class="summary" id="summary">Opening requests…</div>
     <div class="list" id="list"><div class="empty">Loading requests…</div></div>
+
+    <section class="latest" aria-label="Latest generated images">
+      <div class="latest-head">
+        <h2>Latest Images</h2>
+        <span>Latest 3 from ChatGPT Library</span>
+      </div>
+      <div class="latest-grid">
+        <article class="latest-card"><img alt="Emerald Gown in Marble Interiors" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABcQERQRDhcUEhQaGBcbIjklIh8fIkYyNSk5UkhXVVFIUE5bZoNvW2F8Yk5QcptzfIeLkpSSWG2grJ+OqoOPko3/2wBDARgaGiIeIkMlJUONXlBejY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY3/wAARCACvAIwDASIAAhEBAxEB/8QAGgABAAMBAQEAAAAAAAAAAAAABQIDBAEGAP/EAEMQAAEDAgQCBgYHBgQHAAAAAAEAAgMEEQUSITFBURMiMmFxsQYUNUKBkRUlM1JyocEjJDQ2YoImQ5LRRlOisuHw8f/EABgBAQEBAQEAAAAAAAAAAAAAAAABAwIE/8QAIBEBAQACAgICAwAAAAAAAAAAAAECESExEhMDQSJRYf/aAAwDAQACEQMRAD8AtwP2axbdvEOWHAx9WsI3ut9sxJ/qFly6Cf8AEj/h5plzXa22Q509JX/DzTqCoCQC2Zdzub2m37wpbb7eSlsNdkEA9pdYHhxU7I2fFaVkxjyF9uI2uuwYlBICWXY7bK5Q039nwXeCrbK61y0EHkuh4HAgKiFZ/By/hR3oxsP7kjVFrqOax91HejH6uVR6iEaFEekw+rneCWjdlYXIv0m1w5xHJAfghtSt/APNJWIN90Vg7rUrbGxy/qk2TDZ+hQcfqfAIuq+1+CTuMrnDUdyOqLmT4KKuwM/Vjbb30SQFgAjMC/gG+KTQAyaekrvh5p743QUv8ynwHmnSASg4VjxV7o6F2VwaDoSeAW0t5LFisInonMcSLa6KLO3mS0PAcLsj5k6ldLwy2Ro33Jup1FjdzWgBujVN1JNI1krY8rSFdmq2Yfibo3Bkouw/9KeaQ9oI1BXkywgWy9YcE/hU2ajaHX6ul0K0VLQKSY9xR3ox+rvJIzkGjm52KN9GD1rd7vJVy9PtC74InHyThbweAKX/AMpyJx4fVj/BT7GHAgDTAH7n6pAwDg4gI/Av4dv4P1SZvkJdvZUUWLY7W4bhYJu3twSLSOi0OqOqr9LobaKKswH2ePFKX4IzAB9XjxSXG6AOo/mX4DzThNt9EHU/zJ8B5pywvqg6DpzVdSzpKeRo3LVINDdOC664BO6DyTNJSx+gbe4K9DFLG+AtjAdYbWsiZobYi/gDYEjhcJGCnbBGHNcXHiSblZ5N8IOkgmdKXsYerqTw8LLTh7+hc2xPRyG1uSQbK09VtiTw5BYaeIZgwcJv/KSplNQlU2dSS6e6jPRjt/3O8krUD92l190or0Y7X97vJasHqB9m5F497Nk8ClW/ZuRWPezZPAqfZB2BECnbf7h80iASXEjqna6MwHrQgcAw6fFLvBy6WVFEkeUAt8fBYKn7TXkkn3tqjph+02uoqeAez/ik0PgTyyg5i6WDgddxzQCVWnpIPBOlBVmnpG38ITh0KUcOg7r78lLdcWed+QBoUt0sm6zy0b/WHPaWvvuFl9YImdDLGQeWyVhcCFXX0gla2Vg67DcHuWfbacK4cjWWYDc8+C+iZ0dQCey/UeKtY05QoPfkkjD23Z97l4q4mfLROf3aX8BRXox9p/e7ySkhDonsG5FkfgEElNVmKZuV2cnx0WkrCyx6VvYcjMe9myeBSjey5F497Nf4FPtILwEAwt/AfNKvuLcUTgDv2LfwnzS7tbIqt57isM2shst0hsLDdYpbZ0FOBtzUFxuDskGhzHE5TbisHo//AAJtzSeYXtfXkgErj/iFtvup2+/FA1+npAzvCbfdpB/Pkgk08FjqHgyXvoFs4a6EI4nPe/gQucuneHbRC6y2scHNsURDMGSdE5wvwW6KRcNVrmZNtlTUQ9NE5oNiRotYs4KsCzy08NkRhpanPCHPPXBynxW+At6Vjz7qHko6j117oLdCXZtTxW+ISx2D2/EHRXq7TuaptvZKMx72bJ4FaqacFuRx8Cs2Oj6tk8CtN7Y2aEYB9iz8Lv8AuS7j+aIwD7Fn4XeaXGpJ4cEFLm6aCyyyjrrZIeQuVmkHW+CArC8QhpaQNe9oceBvotZxyn+8z8/9lRgtLTzUZMkTXuvuVtFLSg600dvBED1NfDPijKgGzA2x0SBx6H7zf9JWSuhijxmJjGNDLXtbRMeqUw2gj+SowfTkTgAHDT+kquOQPf0hFw5xB7uI80jJTQZOrExvfbZEFuWtdGzsyO2tsAVzXUulD5QTI4dVxOluACQoq4uIimNpOfByPq4nNe4tBLLkNP6LI6cloYL6aDmE1tJlZXr458u50Vrw2YDWx7kNRzTshHrA/wDi3xVDbaLN6O2sMLRpqrWtuyyoZMrmyA8VURiG4O40WPFjUPpZGRXkIGrCeHMLeBZ+YcVVUEska8A22Kb0lm3maGvkpoAxlO95F+sCtBxWqO1K/wD1FMtiYyQPiaAyS5cBzVhbe/5LTe2NmgDsRrHDSmcPiVWaysv9gU+5tr9W6oe0ZtggwYJKyKjOd1rnktzqmE+/+RQeH4cKqnz9M9muwWr6F5VT0EK54fjELmkEFu/wS3rMXGQLz89EYa6OASuJd719lsGDycKx3zKBTp4Xbvb4IeZ4NZK6N9gTbPbYdy+mon0paXVTnknRt/NfR1TYxYdYNBsbdp3PwUqbRqqmJkAp4r6donRWYZh+ZwqJWn+hp81XQUhq5s0jR0TN9O0V6BjO5S3XEaYTy5qAgaRqFTLTZAXMJC3gaKqbslcNR1PNM4uGhsbLbG+Y/wCWD4FYKV4FRI3vuko3Wf4qog6u6FwbKxzSdrq+lrYpnFodqFnxLo5DDG4E3NzYcF9FSkftDlZLu1o2aORQ7Ilrcpa0ALK6VjXEF7QRuCVNlSHsJsQ9psRyKDlocQfK94qAMziQOS6jPMuZo/vt+apc5hPaHzRLqHEBvUBR9Tr/APnrpwuwM/uh8UiicIlbHSdZ1jfZI+sRH3vySg7EPa8B7kpJ1Lv93c9yKrnB2KwOabiy14hUN9Uc1rwS45UB9ROaioLwBf3bjSygWXvfXLueHgotIDie/RfA3cBYd5VYWn8PiDKVgtvqVtFlmpDenjI4tC0XWT24ziJE6LPOeqVa5yzVDuqjoTctqy9vDdKQy52ghHtbcudzKugcWEn3URoZVOfM5slm2NgBqT+i2Ry3IYBfmRsPHmVXBkMgLmtJGxIWiaFkcjZmjc9ZVIpmjMdU1wPVeNfgF12outE7Q+Njx7p/RZycru4rqM8u3DZ7ddx+SrdvvdSLmkkX+Si466o5Atw2NwuM3zXfowcHSfNKQMDWFVProWGwLiL2u0aJul1Oxpw4h4tI8O4XUZ6d8DRnkc8Hg5aKiuL5LwgEbAnmslVUPmcMzg7LyFleXFs6jl72PNdjJJJv2WnTkqQ8WsTuroiRFI4gaggKs70bw2a9M1p3bot2dBUkpic257QSTZrjdZ5Tl6viy3i0OeslTJZvedFJ8mm6wyTB8u+jfNRpat2aAslZUZXNgYde07/ZfT1Yibpq89kI4OIlD3G7r3J5rvGMfky41D1FVgxh0hy5eJO4SsdUKmF0cMb5Dbe1hfxK83RttM0uaHR5rNJXpaOTqjh3KXirhblirgmqpaeRogDS3QZna/JEOxuNwyuv8WL0JIZKJAOq7R3iia+CCKqcH2bn6wuN0lMprnbK3GYWjQj5FffS8B3LfzVpoI3C4awg9yrOGR/cauuHLEXP6xL3ZTuNx8lBjW8Nfmu9W/af87rttRvY7Amyrz7VkDLctAd7pO9vBcyEsJc3W97ngrOicO0XC+1gVHIRcAHX3nFF2xuYW35cSVrtaBjADfLex/8AeS50Be8NDS63Bo3VgaekLnMDmgajWx7tFS3bjHWgjcOBF1b60Y3ZSHd2ipax7oS0MN7jshXQ0UswFy5tuJapdLhcpeEJ61725Yxa/FZs8obYmwSf0ZYdZx+Gi+GGsGoafmpw1/OimtzEnUu5lfGHNoNxwSfqMQN+j81NscbNOjHxF0248Mv2y08oggMcgNiQ5p43HBPU7mPAdGb5tUZIWP6Lufxb3LglNJVl0NiwNDnNHjuFLNtMb49vSM6zLO2Ky11KaqnLBYSMN2khWU1TFJCJMwDbXvfRQnxCBlnMcHO2sOKkd5Wa1WSlojBYl5Omw0WgsHJfQTPlD3PDWtB0N1YWjiq4xkk4ASNmY4AU0luJa3ZRkiJGrDlPdqvRaW1UwFfJn6o8wKc3DmOI7ht8lP1SUjqxPcfCwXozfNpopPaC3vU8l9X9edjoqmS2aEMI2IcLLTHhRFg99hvZuqVDbLpAsE2vrjLHTRxCzG68yrRGVcBopWPJRpJpQWWG11AxknVa8tx3KLmC2qjpkdBmVbqMcCt1uAXxAG6qDX4eSG2cQQ6+hUH0colNgHDKlQy5BJvquvFn6BNpp5xsFTTvI6B0kY7LTqAVogqamMtL6aQloOtuKcbG22oUmxi6u08Q731NZIGxxuiG13ApKKNzImte7M4DUq7Lr3KJvdB//9k="><p>Emerald Gown in Marble Interiors</p></article>
+        <article class="latest-card"><img alt="Cozy Evening Living Room Pose" src="data:image/jpeg;base64,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"><p>Cozy Evening Living Room Pose</p></article>
+        <article class="latest-card"><img alt="Glamorous Freckled Portrait in Gold" src="data:image/jpeg;base64,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"><p>Glamorous Freckled Portrait in Gold</p></article>
+      </div>
+    </section>
   </main>
 
   <script type="module">
     const list=document.getElementById("list");
     const summary=document.getElementById("summary");
     const refresh=document.getElementById("refresh");
-
     const escapeHtml=value=>String(value??"").replace(/[&<>'\"]/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'\"':"&quot;"}[ch]));
-
-    function formatTime(value){
-      const n=Number(value||0);
-      if(!n) return "Unknown time";
-      const d=new Date(n);
-      if(Number.isNaN(d.getTime())) return "Unknown time";
-      return d.toLocaleString(undefined,{year:"numeric",month:"short",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit"});
-    }
-
-    function render(data){
-      const items=data&&typeof data==="object"
-        ? Object.entries(data).map(([id,value])=>({id,...(value||{})}))
-        : [];
-      items.sort((a,b)=>(Number(b.createdAt)||0)-(Number(a.createdAt)||0));
-      summary.textContent=`${items.length} request${items.length===1?"":"s"} · newest first`;
-      if(!items.length){
-        list.innerHTML='<div class="empty">No contact requests yet.</div>';
-        return;
-      }
-      list.innerHTML=items.map(item=>`
-        <article class="request">
-          <div class="row">
-            <div class="email">${escapeHtml(item.email||"No email")}</div>
-            <div class="time">${escapeHtml(formatTime(item.createdAt))}</div>
-          </div>
-          <div class="meta">
-            <span class="pill">${escapeHtml(item.sisterName||item.sisterId||"Bluia Sister")}</span>
-            <span class="pill">${escapeHtml(item.source||"request")}</span>
-          </div>
-        </article>`).join("");
-    }
-
-    async function withTimeout(promise,ms){
-      let timer;
-      try{
-        return await Promise.race([
-          promise,
-          new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error("Request timed out")),ms);})
-        ]);
-      }finally{
-        clearTimeout(timer);
-      }
-    }
-
-    async function load(){
-      refresh.disabled=true;
-      refresh.textContent="Loading…";
-      summary.textContent="Loading requests…";
-      list.innerHTML='<div class="empty">Connecting to Firebase…</div>';
-      try{
-        const [{initializeApp},{getDatabase,ref,get}]=await withTimeout(Promise.all([
-          import("https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js"),
-          import("https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js")
-        ]),8000);
-
-        const app=initializeApp({
-          apiKey:"AIzaSyDmDAHuk6CEObzaJMhIlvNReOI0K83wK0k",
-          authDomain:"bluias.firebaseapp.com",
-          databaseURL:"https://bluias-default-rtdb.firebaseio.com",
-          projectId:"bluias",
-          storageBucket:"bluias.firebasestorage.app",
-          messagingSenderId:"604309456152",
-          appId:"1:604309456152:web:71dfcb29cbcda483260a6d"
-        },"req-page");
-
-        const snap=await withTimeout(get(ref(getDatabase(app),"bluiaChat/v1/contactRequests")),8000);
-        render(snap.exists()?snap.val():null);
-      }catch(error){
-        console.error("Requests page error",error);
-        summary.textContent="Could not load requests.";
-        list.innerHTML='<div class="error">Firebase did not return the requests. If this stays here after Refresh, the database read rule for contactRequests must allow this page to read them.</div>';
-      }finally{
-        refresh.disabled=false;
-        refresh.textContent="Refresh";
-      }
-    }
-
-    refresh.addEventListener("click",load);
-    load();
+    function formatTime(value){const n=Number(value||0);if(!n)return"Unknown time";const d=new Date(n);if(Number.isNaN(d.getTime()))return"Unknown time";return d.toLocaleString(undefined,{year:"numeric",month:"short",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit"});}
+    function render(data){const items=data&&typeof data==="object"?Object.entries(data).map(([id,value])=>({id,...(value||{})})):[];items.sort((a,b)=>(Number(b.createdAt)||0)-(Number(a.createdAt)||0));summary.textContent=`${items.length} request${items.length===1?"":"s"} · newest first`;if(!items.length){list.innerHTML='<div class="empty">No contact requests yet.</div>';return;}list.innerHTML=items.map(item=>`<article class="request"><div class="row"><div class="email">${escapeHtml(item.email||"No email")}</div><div class="time">${escapeHtml(formatTime(item.createdAt))}</div></div><div class="meta"><span class="pill">${escapeHtml(item.sisterName||item.sisterId||"Bluia Sister")}</span><span class="pill">${escapeHtml(item.source||"request")}</span></div></article>`).join("");}
+    async function withTimeout(promise,ms){let timer;try{return await Promise.race([promise,new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error("Request timed out")),ms);})]);}finally{clearTimeout(timer);}}
+    async function load(){refresh.disabled=true;refresh.textContent="Loading…";summary.textContent="Loading requests…";list.innerHTML='<div class="empty">Connecting to Firebase…</div>';try{const [{initializeApp},{getDatabase,ref,get}]=await withTimeout(Promise.all([import("https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js"),import("https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js")]),8000);const app=initializeApp({apiKey:"AIzaSyDmDAHuk6CEObzaJMhIlvNReOI0K83wK0k",authDomain:"bluias.firebaseapp.com",databaseURL:"https://bluias-default-rtdb.firebaseio.com",projectId:"bluias",storageBucket:"bluias.firebasestorage.app",messagingSenderId:"604309456152",appId:"1:604309456152:web:71dfcb29cbcda483260a6d"},"req-page");const snap=await withTimeout(get(ref(getDatabase(app),"bluiaChat/v1/contactRequests")),8000);render(snap.exists()?snap.val():null);}catch(error){console.error("Requests page error",error);summary.textContent="Could not load requests.";list.innerHTML='<div class="error">Firebase did not return the requests. If this stays here after Refresh, the database read rule for contactRequests must allow this page to read them.</div>';}finally{refresh.disabled=false;refresh.textContent="Refresh";}}
+    refresh.addEventListener("click",load);load();
   </script>
 </body>
 </html>
