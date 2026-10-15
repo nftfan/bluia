@@ -143,3 +143,13 @@ window.BluiaMedia = {
   script.dataset.bluiaBookCard = "1";
   document.head.appendChild(script);
 })();
+
+// Latest generated images on the main page
+(() => {
+  if (document.querySelector('script[data-bluia-latest-images]')) return;
+  const script = document.createElement("script");
+  script.src = "/latest-images-main.js?v=20261015-1";
+  script.defer = true;
+  script.dataset.bluiaLatestImages = "1";
+  document.head.appendChild(script);
+})();
