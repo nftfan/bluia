@@ -104,14 +104,14 @@ window.BluiaMedia = {
   else applyPhotosUI();
 })();
 
-// Remove the old Telegram CTA from the main page.
+// Telegram channels
 (() => {
-  const removeTelegram = () => {
-    document.querySelector(".telegram-button")?.remove();
-    document.getElementById("premium-telegram-info")?.remove();
-  };
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded",removeTelegram,{once:true});
-  else removeTelegram();
+  if (document.querySelector('script[data-bluia-telegram-main]')) return;
+  const script = document.createElement("script");
+  script.src = "/telegram-main.js?v=20261015-1";
+  script.defer = true;
+  script.dataset.bluiaTelegramMain = "1";
+  document.head.appendChild(script);
 })();
 
 // Play experience
