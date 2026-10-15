@@ -143,3 +143,13 @@ window.BluiaMedia = {
   script.dataset.bluiaBookCard = "1";
   document.head.appendChild(script);
 })();
+
+// Members tab hero image
+(() => {
+  if (document.querySelector('script[data-bluia-members-hero]')) return;
+  const script = document.createElement("script");
+  script.src = "/members-hero.js?v=20261015-1";
+  script.defer = true;
+  script.dataset.bluiaMembersHero = "1";
+  document.head.appendChild(script);
+})();
