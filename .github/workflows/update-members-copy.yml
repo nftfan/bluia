@@ -1,0 +1,40 @@
+name: Update members copy
+
+on:
+  push:
+    paths:
+      - '.github/workflows/update-members-copy.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update Members benefits
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text()
+          old='<div class="member-card member-card-simple"><h2>Unlock Unlimited Content</h2><div class="member-price">'
+          new='<div class="member-card member-card-simple"><h2 class="member-title-small">Unlock Hundreds of Reels, TV Episodes, Photos & Play</h2><ul class="member-benefits"><li>Hundreds of reels</li><li>TV episodes</li><li>Photos</li><li>Play with Bluia Sisters</li></ul><div class="member-price">'
+          if old not in s:
+              raise SystemExit('members heading marker not found')
+          s=s.replace(old,new,1)
+          css='.member-title-small{font-size:13px!important;line-height:1.2!important;white-space:nowrap;letter-spacing:-.25px;margin-bottom:12px!important}.member-benefits{margin:0 auto 15px;padding:0;list-style:none;display:grid;gap:6px;max-width:260px;text-align:left}.member-benefits li{position:relative;padding-left:15px;color:#d6ccb4;font-size:9.5px;line-height:1.35}.member-benefits li::before{content:"•";position:absolute;left:2px;color:#e9ca67;font-size:13px;line-height:1}'
+          marker='.member-card-simple{text-align:center;padding:22px 16px}'
+          if marker not in s:
+              raise SystemExit('member css marker not found')
+          s=s.replace(marker,css+marker,1)
+          p.write_text(s)
+          PY
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Update Members benefits copy" || exit 0
+          git push
