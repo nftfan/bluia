@@ -1,0 +1,41 @@
+name: Simplify members tab
+
+on:
+  push:
+    paths:
+      - '.github/workflows/simplify-members-tab.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Simplify members tab
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text()
+          old='''<section class="panel" id="panel-members"><div class="inner"><img class="member-hero" src="https://huggingface.co/buckets/Bluia/bimg/resolve/469AF640-2901-4D77-9B1B-1BD1E2B9A65C.png?download=true" alt="Bluia Sisters Members"><div class="member-card"><div class="section-kicker">Bluia Sisters Members</div><h2>Unlock the unlimited feed</h2><p>Become a member to unlock the unlimited Bluia Sisters feed with 1,500 media updates and everything added next.</p><div class="unlock-list"><div class="unlock-row">✓ Unlimited feed with TV episodes, reels and photos.</div><div class="unlock-row">✓ 1,500 media updates with new Bluia Sisters content added continuously.</div><div class="unlock-row">✓ Smooth mixed feed: photos always separate videos — never two videos together.</div><div class="unlock-row">✓ Your private viewing link is sent to the email used at checkout.</div></div><button class="member-buy" id="member-buy" type="button">Unlock All Updates — $5/month</button><div class="telegram-stack"><a class="telegram-link telegram-free" href="https://t.me/vbluia" target="_blank" rel="noopener noreferrer">Free Telegram<small>Official updates</small></a><a class="telegram-link telegram-premium" href="https://t.me/+vieXRo_X9rM5NzRk" target="_blank" rel="noopener noreferrer">Premium Telegram<small>500 Stars/month</small></a></div><p class="member-note">Use an email address you can access at checkout.</p></div></div></section>'''
+          new='''<section class="panel" id="panel-members"><div class="inner"><div class="member-card member-card-simple"><h2>Unlock Unlimited Content</h2><div class="member-price"><strong>$5</strong><span>/ month</span></div><button class="member-buy" id="member-buy" type="button">Unlock Unlimited Content</button><div class="telegram-stack"><a class="telegram-link telegram-free" href="https://t.me/vbluia" target="_blank" rel="noopener noreferrer"><span>Free Telegram</span><small>Official Bluia updates</small></a><a class="telegram-link telegram-premium" href="https://t.me/+vieXRo_X9rM5NzRk" target="_blank" rel="noopener noreferrer"><span>Premium Telegram</span><small>500 Stars/month</small></a></div><p class="member-note">Use an email address you can access at checkout. Your private viewing link will be sent to that email.</p></div></div></section>'''
+          if old not in s:
+              raise SystemExit('members section target not found')
+          s=s.replace(old,new,1)
+          marker='.member-note{margin:10px 0 0;color:#817664;font-size:8px;line-height:1.45;text-align:center}'
+          add='''.member-card-simple{text-align:center;padding:22px 16px}.member-card-simple h2{margin:0 0 8px}.member-price{display:flex;align-items:flex-end;justify-content:center;gap:5px;margin:0 0 14px;color:#fff}.member-price strong{font-size:31px;line-height:1;font-weight:900}.member-price span{font-size:10px;color:#b9a978;padding-bottom:3px}.member-card-simple .telegram-stack{margin-top:12px}.member-card-simple .telegram-link{min-height:58px;box-shadow:0 10px 24px rgba(0,0,0,.28)}.member-card-simple .telegram-free{background:linear-gradient(135deg,#1a5d85,#0a2e46);border-color:#4db8ef;color:#dff5ff}.member-card-simple .telegram-premium{background:linear-gradient(135deg,#5a4610,#211705);border-color:#efcf62;color:#ffe99a}.member-card-simple .telegram-link span{font-size:10.5px}.member-card-simple .telegram-link small{font-size:7.5px}'''
+          if add not in s:
+              if marker not in s:
+                  raise SystemExit('member note css marker not found')
+              s=s.replace(marker,marker+'\n    '+add,1)
+          p.write_text(s)
+          PY
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Simplify members tab" || exit 0
+          git push
