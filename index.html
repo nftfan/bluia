@@ -15,272 +15,76 @@
   <meta name="twitter:title" content="Bluia Sisters">
   <meta name="twitter:description" content="Bluia Sisters Official Website">
   <meta name="twitter:image" content="https://huggingface.co/buckets/Bluia/bimg/resolve/IMG_4923.jpeg?download=true">
-
   <style>
     *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-    :root{--pink:#f25c9a;--pink2:#d43f7d;--soft:#ffd8e7;--muted:#b8a8b0;--gold:#e9ca67}
+    :root{--pink:#f25c9a;--pink2:#d43f7d;--soft:#ffd8e7;--gold:#e9ca67}
     html,body{margin:0;min-height:100%;background:#000;color:#fff;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
-    body{min-height:100svh;overflow-x:hidden}
-    button,a{font:inherit}
-    button{touch-action:manipulation}
-    .topnav{position:sticky;top:0;z-index:1000;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;width:100%;padding:calc(8px + env(safe-area-inset-top)) 8px 8px;background:rgba(0,0,0,.88);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
-    .nav-btn{height:38px;border:1px solid #30232a;border-radius:999px;background:#0b0b0b;color:#a8959f;font-size:9.5px;font-weight:850;cursor:pointer;transition:.15s ease}
+    body{min-height:100svh;overflow-x:hidden}button,a{font:inherit}button{touch-action:manipulation}
+    .top-photo{display:block;width:100%;height:auto;max-height:46svh;object-fit:contain;background:#000}
+    .brand-line{height:10px;display:flex;align-items:center;justify-content:center;background:linear-gradient(90deg,#fff0f6,#ff8db9 35%,#fff 50%,#ff8db9 65%,#fff0f6);color:#1a0710;font-size:8px;line-height:10px;font-weight:950;letter-spacing:1.4px;text-transform:uppercase;text-shadow:0 0 8px #fff,0 0 10px #ff82b3;box-shadow:0 0 16px rgba(255,114,169,.75)}
+    .topnav{position:sticky;top:0;z-index:1000;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;width:100%;padding:8px;background:rgba(0,0,0,.88);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+    .nav-btn{height:38px;border:1px solid #30232a;border-radius:999px;background:#0b0b0b;color:#a8959f;font-size:9.5px;font-weight:850;cursor:pointer;transition:.15s ease;display:flex;align-items:center;justify-content:center;gap:5px}
     .nav-btn.active{border-color:transparent;background:linear-gradient(135deg,var(--pink),var(--pink2));color:#fff;box-shadow:0 6px 20px rgba(242,92,154,.2)}
-    .panel{display:none;width:100%;min-height:calc(100svh - 54px);background:#000}
-    .panel.active{display:block}
-
-    .feed{width:100%;margin:0;background:#000}
-    .feed-item{position:relative;width:100%;margin:0;background:#000}
-    .feed-media{display:block;width:100%;height:auto;border:0;margin:0;background:#000}
-    .feed-media.tv{aspect-ratio:16/9;object-fit:cover}
-    .feed-media.reel{aspect-ratio:9/16;object-fit:cover}
-    .feed-media.photo{object-fit:cover}
-    .video-controls{position:absolute;top:8px;right:8px;z-index:5;display:flex;gap:6px;opacity:.46;transition:opacity .18s ease}
-    .feed-item:hover .video-controls,.feed-item.controls-awake .video-controls{opacity:.95}
-    .mini-control{width:30px;height:30px;display:grid;place-items:center;padding:0;border:0;border-radius:50%;background:rgba(0,0,0,.48);color:#fff;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);cursor:pointer}
-    .mini-control svg{width:14px;height:14px;fill:currentColor}
-    .update-note{margin:12px 14px;padding:12px 14px;border:1px solid rgba(255,176,207,.38);border-radius:18px;background:linear-gradient(135deg,rgba(255,222,235,.12),rgba(240,93,153,.08));color:#ffd9e7;font-size:10px;line-height:1.45;text-align:left;box-shadow:0 8px 24px rgba(242,92,154,.06)}
-    .update-note strong{display:block;color:#fff;font-size:11px;margin-bottom:2px}
-    .feed-loader{padding:18px 0 26px;color:#806f77;font-size:9px;text-align:center}
-
-    .inner{width:min(100%,460px);margin:0 auto;padding:18px 14px 34px}
-    .section-kicker{color:#ff86b5;font-size:8px;font-weight:900;letter-spacing:1px;text-transform:uppercase}
-    .section-title{margin:6px 0 7px;font:700 28px/1.05 Georgia,"Times New Roman",serif;letter-spacing:-.7px}
-    .section-copy{margin:0 0 16px;color:#bbaab2;font-size:10px;line-height:1.6}
-
-    .play-stage{display:flex;flex-direction:column;align-items:center}
-    .model-main{display:block;width:min(70vw,280px);aspect-ratio:2/3;object-fit:cover;object-position:top center;border-radius:20px;background:#151015;box-shadow:0 18px 50px rgba(0,0,0,.32)}
-    .play-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:min(100%,360px);margin-top:13px}
-    .play-action{min-height:44px;border:0;border-radius:13px;background:#fff;font-size:10px;font-weight:900;cursor:pointer}
-    .play-action.kiss{color:#d43e7b}.play-action.sniff{color:#a87700}
-    .model-strip{display:flex;width:100%;gap:8px;overflow-x:auto;padding:14px 0 5px;scrollbar-width:none;scroll-snap-type:x proximity}
-    .model-strip::-webkit-scrollbar{display:none}
-    .model-thumb{flex:0 0 66px;width:66px;aspect-ratio:2/3;padding:0;border:2px solid transparent;border-radius:12px;overflow:hidden;background:#191015;cursor:pointer}
-    .model-thumb.active{border-color:#fff}
-    .model-thumb img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center}
-
-    .member-hero{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:18px;margin-bottom:14px;background:#111}
-    .member-card{padding:18px 16px;border:1px solid #5a451b;border-radius:20px;background:radial-gradient(circle at 90% 0,rgba(235,202,103,.16),transparent 34%),linear-gradient(180deg,#121009,#090909);box-shadow:0 18px 45px rgba(0,0,0,.28)}
-    .member-card h2{margin:0 0 8px;color:#f1d77d;font:700 24px/1.1 Georgia,"Times New Roman",serif}
-    .member-card p{margin:0 0 13px;color:#c6bda7;font-size:10px;line-height:1.65}
-    .unlock-list{display:grid;gap:8px;margin:0 0 15px}
-    .unlock-row{padding:10px 11px;border-radius:12px;background:#100e09;color:#d9d1bd;font-size:9.5px;line-height:1.45}
-    .member-buy{width:100%;min-height:50px;border:0;border-radius:13px;background:linear-gradient(135deg,#f0d36e,#b98724);color:#160f03;font-size:11px;font-weight:950;cursor:pointer;box-shadow:0 10px 24px rgba(196,153,49,.2)}
-    .telegram-stack{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
-    .telegram-link{min-height:50px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border-radius:13px;text-decoration:none;font-size:10px;font-weight:900}
-    .telegram-link small{font-size:7px;font-weight:700;opacity:.78}
-    .telegram-free{background:linear-gradient(135deg,#16374c,#0b2231);color:#78cfff;border:1px solid #2d8fc8}
-    .telegram-premium{background:linear-gradient(135deg,#392e0d,#171106);color:#f3d36d;border:1px solid #d8b24d}
-    .member-note{margin:10px 0 0;color:#817664;font-size:8px;line-height:1.45;text-align:center}
-
-    .moment-modal{position:fixed;inset:0;z-index:5000;display:grid;place-items:center;padding:16px;background:rgba(0,0,0,.86);opacity:0;visibility:hidden;pointer-events:none;transition:.16s ease}
-    .moment-modal.open{opacity:1;visibility:visible;pointer-events:auto}
-    .moment-card{position:relative;width:min(94vw,420px);max-height:92dvh;overflow:auto;border-radius:20px;background:#111}
-    .moment-card img{display:block;width:100%;height:auto;border-radius:20px}
-    .moment-close{position:absolute;top:9px;right:9px;width:34px;height:34px;border:0;border-radius:50%;background:rgba(0,0,0,.64);color:#fff;font-size:20px;cursor:pointer}
-    .moment-message{padding:25px 18px;color:#fff;text-align:center;font-size:11px;line-height:1.55}
-
-    @media(max-width:360px){.nav-btn{font-size:8.6px}.telegram-stack{grid-template-columns:1fr}.update-note{margin-left:10px;margin-right:10px}}
-    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+    .media-count{width:18px;height:18px;display:grid;place-items:center;border-radius:50%;background:#fff;color:#111;font-size:8px;font-weight:950;box-shadow:0 0 10px rgba(255,255,255,.55)}
+    .panel{display:none;width:100%;min-height:calc(100svh - 54px);background:#000}.panel.active{display:block}
+    .feed{width:100%;margin:0;background:#000}.feed-item{position:relative;width:100%;margin:0;background:#000}.feed-media{display:block;width:100%;height:auto;border:0;margin:0;background:#000}.feed-media.tv{aspect-ratio:16/9;object-fit:cover}.feed-media.reel{aspect-ratio:9/16;object-fit:cover}.feed-media.photo{object-fit:cover}
+    .video-controls{position:absolute;top:8px;right:8px;z-index:5;display:flex;gap:6px;opacity:.42;transition:opacity .18s ease}.feed-item:hover .video-controls,.feed-item.controls-awake .video-controls{opacity:.95}
+    .mini-control{width:30px;height:30px;display:grid;place-items:center;padding:0;border:0;border-radius:50%;background:rgba(0,0,0,.48);color:#fff;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);cursor:pointer}.mini-control svg{width:14px;height:14px;fill:currentColor}
+    .video-loader{position:absolute;inset:0;z-index:4;display:flex;align-items:center;justify-content:center;gap:6px;pointer-events:none;opacity:0;transition:opacity .15s ease}.video-loader.show{opacity:1}.video-loader span{width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 10px rgba(255,128,178,.95);animation:dotPulse .9s ease-in-out infinite}.video-loader span:nth-child(2){animation-delay:.12s}.video-loader span:nth-child(3){animation-delay:.24s}@keyframes dotPulse{0%,70%,100%{transform:translateY(0) scale(.75);opacity:.35}35%{transform:translateY(-5px) scale(1);opacity:1}}
+    .update-note{margin:12px 14px;padding:12px 14px;border:1px solid rgba(255,176,207,.38);border-radius:18px;background:linear-gradient(135deg,rgba(255,222,235,.12),rgba(240,93,153,.08));color:#ffd9e7;font-size:10px;line-height:1.45;text-align:left;box-shadow:0 8px 24px rgba(242,92,154,.06)}.update-note strong{display:block;color:#fff;font-size:11px;margin-bottom:2px}.feed-loader{padding:18px 0 26px;color:#806f77;font-size:9px;text-align:center}
+    .inner{width:min(100%,460px);margin:0 auto;padding:18px 14px 34px}.section-kicker{color:#ff86b5;font-size:8px;font-weight:900;letter-spacing:1px;text-transform:uppercase}.section-title{margin:6px 0 7px;font:700 28px/1.05 Georgia,"Times New Roman",serif;letter-spacing:-.7px}.section-copy{margin:0 0 16px;color:#bbaab2;font-size:10px;line-height:1.6}
+    .play-stage{display:flex;flex-direction:column;align-items:center}.model-main{display:block;width:min(70vw,280px);aspect-ratio:2/3;object-fit:cover;object-position:top center;border-radius:20px;background:#151015;box-shadow:0 18px 50px rgba(0,0,0,.32)}
+    .play-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:min(100%,360px);margin-top:13px}.play-action{min-height:44px;border:0;border-radius:13px;background:#fff;font-size:10px;font-weight:900;cursor:pointer}.play-action.kiss{color:#d43e7b}.play-action.sniff{color:#a87700}.play-action.chat{color:#247ca8}.play-action.marry{grid-column:1/-1;background:linear-gradient(135deg,#fff,#ffe5ef);color:#d92d70;box-shadow:0 0 18px rgba(255,103,164,.2)}
+    .model-strip{display:flex;width:100%;gap:8px;overflow-x:auto;padding:14px 0 5px;scrollbar-width:none;scroll-snap-type:x proximity}.model-strip::-webkit-scrollbar{display:none}.model-thumb{flex:0 0 66px;width:66px;aspect-ratio:2/3;padding:0;border:2px solid transparent;border-radius:12px;overflow:hidden;background:#191015;cursor:pointer}.model-thumb.active{border-color:#fff}.model-thumb img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center}
+    .member-hero{display:block;width:100%;height:auto;object-fit:contain;border-radius:18px;margin-bottom:14px;background:#111}.member-card{padding:18px 16px;border:1px solid #5a451b;border-radius:20px;background:radial-gradient(circle at 90% 0,rgba(235,202,103,.16),transparent 34%),linear-gradient(180deg,#121009,#090909);box-shadow:0 18px 45px rgba(0,0,0,.28)}.member-card h2{margin:0 0 8px;color:#f1d77d;font:700 24px/1.1 Georgia,"Times New Roman",serif}.member-card p{margin:0 0 13px;color:#c6bda7;font-size:10px;line-height:1.65}.unlock-list{display:grid;gap:8px;margin:0 0 15px}.unlock-row{padding:10px 11px;border-radius:12px;background:#100e09;color:#d9d1bd;font-size:9.5px;line-height:1.45}.member-buy{width:100%;min-height:50px;border:0;border-radius:13px;background:linear-gradient(135deg,#f0d36e,#b98724);color:#160f03;font-size:11px;font-weight:950;cursor:pointer}.telegram-stack{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.telegram-link{min-height:50px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border-radius:13px;text-decoration:none;font-size:10px;font-weight:900}.telegram-link small{font-size:7px;font-weight:700;opacity:.78}.telegram-free{background:linear-gradient(135deg,#16374c,#0b2231);color:#78cfff;border:1px solid #2d8fc8}.telegram-premium{background:linear-gradient(135deg,#392e0d,#171106);color:#f3d36d;border:1px solid #d8b24d}.member-note{margin:10px 0 0;color:#817664;font-size:8px;line-height:1.45;text-align:center}
+    .moment-modal,.chat-modal{position:fixed;inset:0;z-index:5000;display:grid;place-items:center;padding:16px;background:rgba(0,0,0,.86);opacity:0;visibility:hidden;pointer-events:none;transition:.16s ease}.moment-modal.open,.chat-modal.open{opacity:1;visibility:visible;pointer-events:auto}.moment-card,.chat-card{position:relative;width:min(94vw,420px);max-height:92dvh;overflow:auto;border-radius:20px;background:#111}.moment-card img{display:block;width:100%;height:auto;border-radius:20px}.moment-close,.chat-close{position:absolute;top:9px;right:9px;width:34px;height:34px;border:0;border-radius:50%;background:rgba(0,0,0,.64);color:#fff;font-size:20px;cursor:pointer}.moment-message{padding:25px 18px;color:#fff;text-align:center;font-size:11px;line-height:1.55}.chat-card{padding:22px 16px 16px}.chat-card h3{margin:0 40px 8px 0;font-size:18px}.chat-card p{margin:0 0 12px;color:#bbaab2;font-size:10px;line-height:1.55}.chat-input{width:100%;height:44px;border:1px solid #3a2931;border-radius:12px;background:#0a0a0a;color:#fff;padding:0 12px;font-size:11px;outline:none}.chat-submit{width:100%;height:44px;margin-top:8px;border:0;border-radius:12px;background:linear-gradient(135deg,var(--pink),var(--pink2));color:#fff;font-size:10px;font-weight:950}.chat-status{min-height:18px;margin-top:8px;color:#ffb7d1;font-size:9px;line-height:1.4}
+    .hearts-layer{position:fixed;inset:0;z-index:6000;pointer-events:none;overflow:hidden}.heart{position:absolute;top:-10vh;font-size:28px;animation:heartFall var(--d) linear forwards}@keyframes heartFall{to{transform:translate3d(var(--x),115vh,0) rotate(var(--r));opacity:.75}}
+    @media(max-width:360px){.nav-btn{font-size:8.4px}.telegram-stack{grid-template-columns:1fr}.update-note{margin-left:10px;margin-right:10px}}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}.video-loader span,.heart{animation:none!important}}
   </style>
 </head>
 <body>
+  <img class="top-photo" src="https://huggingface.co/buckets/Bluia/bimg/resolve/IMG_4923.jpeg?download=true" alt="Bluia Sisters">
+  <div class="brand-line">Bluia Sisters</div>
   <nav class="topnav" aria-label="Bluia Sisters main navigation">
-    <button class="nav-btn active" data-panel="updates" type="button">Bluia Updates</button>
+    <button class="nav-btn active" data-panel="updates" type="button">Bluia Updates <span class="media-count">26</span></button>
     <button class="nav-btn" data-panel="play" type="button">Play</button>
     <button class="nav-btn" data-panel="members" type="button">Members</button>
   </nav>
-
   <main>
-    <section class="panel active" id="panel-updates">
-      <div class="feed" id="feed"></div>
-      <div class="feed-loader" id="feed-loader">Loading more Bluia updates…</div>
-    </section>
-
-    <section class="panel" id="panel-play">
-      <div class="inner">
-        <div class="section-kicker">Bluia Sisters</div>
-        <h1 class="section-title">Play</h1>
-        <p class="section-copy">Choose a Bluia Sister and open a playful moment.</p>
-        <div class="play-stage">
-          <img class="model-main" id="model-main" alt="Selected Bluia Sister">
-          <div class="play-actions">
-            <button class="play-action kiss" id="kiss-button" type="button">Kiss</button>
-            <button class="play-action sniff" id="sniff-button" type="button">Sniff</button>
-          </div>
-          <div class="model-strip" id="model-strip"></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="panel" id="panel-members">
-      <div class="inner">
-        <img class="member-hero" src="https://huggingface.co/buckets/Bluia/bimg/resolve/469AF640-2901-4D77-9B1B-1BD1E2B9A65C.png?download=true" alt="Bluia Sisters Members">
-        <div class="member-card">
-          <div class="section-kicker">Bluia Sisters Members</div>
-          <h2>Unlock all the updates</h2>
-          <p>Become a member to unlock the complete Bluia Sisters feed instead of only the public preview.</p>
-          <div class="unlock-list">
-            <div class="unlock-row">✓ Full TV episodes, reels and photo updates.</div>
-            <div class="unlock-row">✓ New Bluia Sisters content as it is added.</div>
-            <div class="unlock-row">✓ Your private viewing link is sent to the email used at checkout.</div>
-          </div>
-          <button class="member-buy" id="member-buy" type="button">Unlock All Updates — $5/month</button>
-          <div class="telegram-stack">
-            <a class="telegram-link telegram-free" href="https://t.me/vbluia" target="_blank" rel="noopener noreferrer">Free Telegram<small>Official updates</small></a>
-            <a class="telegram-link telegram-premium" href="https://t.me/+vieXRo_X9rM5NzRk" target="_blank" rel="noopener noreferrer">Premium Telegram<small>500 Stars/month</small></a>
-          </div>
-          <p class="member-note">Use an email address you can access at checkout.</p>
-        </div>
-      </div>
-    </section>
+    <section class="panel active" id="panel-updates"><div class="feed" id="feed"></div><div class="feed-loader" id="feed-loader">Loading more Bluia updates…</div></section>
+    <section class="panel" id="panel-play"><div class="inner"><div class="section-kicker">Bluia Sisters</div><h1 class="section-title">Play</h1><p class="section-copy">Choose a Bluia Sister and open a playful moment.</p><div class="play-stage"><img class="model-main" id="model-main" alt="Selected Bluia Sister"><div class="play-actions"><button class="play-action kiss" id="kiss-button" type="button">Kiss</button><button class="play-action sniff" id="sniff-button" type="button">Sniff</button><button class="play-action chat" id="chat-button" type="button">Chat</button><button class="play-action marry" id="marry-button" type="button">Marry Me</button></div><div class="model-strip" id="model-strip"></div></div></div></section>
+    <section class="panel" id="panel-members"><div class="inner"><img class="member-hero" src="https://huggingface.co/buckets/Bluia/bimg/resolve/469AF640-2901-4D77-9B1B-1BD1E2B9A65C.png?download=true" alt="Bluia Sisters Members"><div class="member-card"><div class="section-kicker">Bluia Sisters Members</div><h2>Unlock all the updates</h2><p>Become a member to unlock the complete Bluia Sisters feed instead of only the public preview.</p><div class="unlock-list"><div class="unlock-row">✓ Full TV episodes, reels and photo updates.</div><div class="unlock-row">✓ New Bluia Sisters content as it is added.</div><div class="unlock-row">✓ Your private viewing link is sent to the email used at checkout.</div></div><button class="member-buy" id="member-buy" type="button">Unlock All Updates — $5/month</button><div class="telegram-stack"><a class="telegram-link telegram-free" href="https://t.me/vbluia" target="_blank" rel="noopener noreferrer">Free Telegram<small>Official updates</small></a><a class="telegram-link telegram-premium" href="https://t.me/+vieXRo_X9rM5NzRk" target="_blank" rel="noopener noreferrer">Premium Telegram<small>500 Stars/month</small></a></div><p class="member-note">Use an email address you can access at checkout.</p></div></div></section>
   </main>
-
-  <div class="moment-modal" id="moment-modal" aria-hidden="true">
-    <div class="moment-card">
-      <button class="moment-close" id="moment-close" type="button" aria-label="Close">×</button>
-      <img id="moment-image" alt="Bluia Sisters moment">
-      <div class="moment-message" id="moment-message" hidden></div>
-    </div>
-  </div>
-
+  <div class="moment-modal" id="moment-modal" aria-hidden="true"><div class="moment-card"><button class="moment-close" id="moment-close" type="button" aria-label="Close">×</button><img id="moment-image" alt="Bluia Sisters moment"><div class="moment-message" id="moment-message" hidden></div></div></div>
+  <div class="chat-modal" id="chat-modal" aria-hidden="true"><div class="chat-card"><button class="chat-close" id="chat-close" type="button" aria-label="Close">×</button><h3>Private Chat</h3><p>Enter the email address you used to become a member. A Bluia Sister will send you her private contact.</p><input class="chat-input" id="chat-email" type="email" inputmode="email" placeholder="you@email.com"><button class="chat-submit" id="chat-submit" type="button">Request Private Contact</button><div class="chat-status" id="chat-status"></div></div></div>
+  <div class="hearts-layer" id="hearts-layer"></div>
   <script>
   (()=>{
     "use strict";
-
     const PAYMENT_URL="https://buy.stripe.com/4gMbITgUo0jc1yF3F5bAs04";
+    const FIREBASE_REQUEST_URL="https://bluias-default-rtdb.firebaseio.com/bluiaChat/v1/contactRequests.json";
     const KISS="https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%208%2C%202026%2C%2009_45_20%20PM.png?download=true";
     const SNIFF="https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_11_13%20PM.png?download=true";
-
-    const TV=[
-      "https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-a4f971c6-547e-4f13-8642-a3dd06da3ee2.mp4?download=true",
-      "https://huggingface.co/buckets/veebluia/drama/resolve/cgrok-video-ded4afea-ee3c-4c53-b246-290070da4d42.mp4?download=true",
-      "https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-10dd7878-96b4-4946-926b-33e22bc8cb9e.mp4?download=true",
-      "https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-344b021b-a159-4251-90d8-aeb92164a4b3.mp4?download=true",
-      "https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-6c0d70db-a7e0-4a2f-b093-1d0f6b1266ed.mp4?download=true"
-    ];
-    const REELS=[
-      "https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-66e1277e-ffcc-47eb-b056-82e1d33f48ed.mp4?download=true",
-      "https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-cdec6d71-9fad-4460-9bd4-b5ee3ccb3f74.mp4?download=true",
-      "https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-7ef55572-64ad-46c5-9c2e-ae777e88f28b.mp4?download=true"
-    ];
-    const PHOTOS=[
-      "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%205%2C%202026%2C%2011_08_28%20AM.png?download=true",
-      "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%205%2C%202026%2C%2011_08_08%20AM.png?download=true",
-      "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_01_28%20AM.png?download=true",
-      "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_01_37%20AM.png?download=true",
-      "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_01_49%20AM.png?download=true",
-      "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_48_51%20AM.png?download=true",
-      "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_13_47%20AM.png?download=true",
-      "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_13_28%20AM.png?download=true",
-      "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2007_19_21%20AM.png?download=true",
-      "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2007_18_43%20AM.png?download=true",
-      "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2007_19_05%20AM.png?download=true",
-      "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%201%2C%202026%2C%2010_27_11%20PM.png?download=true",
-      "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%201%2C%202026%2C%2010_27_29%20PM.png?download=true",
-      "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%201%2C%202026%2C%2010_27_45%20PM.png?download=true",
-      "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_12%20AM.png?download=true",
-      "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_27%20AM.png?download=true",
-      "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_33%20AM.png?download=true",
-      "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_44%20AM.png?download=true"
-    ];
-    const MODELS=[
-      "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_49_55%20AM.png?download=true",
-      "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_13_56%20PM.png?download=true",
-      "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_13_33%20PM.png?download=true",
-      "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_13_22%20PM.png?download=true",
-      "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_13_11%20PM.png?download=true",
-      "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_50_09%20AM.png?download=true",
-      "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_50_19%20AM.png?download=true",
-      "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_50_36%20AM.png?download=true"
-    ];
-
-    const nav=[...document.querySelectorAll('.nav-btn')];
-    const panels=[...document.querySelectorAll('.panel')];
-    nav.forEach(btn=>btn.addEventListener('click',()=>{
-      nav.forEach(x=>x.classList.toggle('active',x===btn));
-      panels.forEach(p=>p.classList.toggle('active',p.id===`panel-${btn.dataset.panel}`));
-      document.querySelectorAll('.feed-media[type="video"],video.feed-media').forEach(v=>v.pause());
-      window.scrollTo({top:0,behavior:'smooth'});
-    }));
-
+    const TV=["https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-a4f971c6-547e-4f13-8642-a3dd06da3ee2.mp4?download=true","https://huggingface.co/buckets/veebluia/drama/resolve/cgrok-video-ded4afea-ee3c-4c53-b246-290070da4d42.mp4?download=true","https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-10dd7878-96b4-4946-926b-33e22bc8cb9e.mp4?download=true","https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-344b021b-a159-4251-90d8-aeb92164a4b3.mp4?download=true","https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-6c0d70db-a7e0-4a2f-b093-1d0f6b1266ed.mp4?download=true"];
+    const REELS=["https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-66e1277e-ffcc-47eb-b056-82e1d33f48ed.mp4?download=true","https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-cdec6d71-9fad-4460-9bd4-b5ee3ccb3f74.mp4?download=true","https://huggingface.co/buckets/veebluia/drama/resolve/grok-video-7ef55572-64ad-46c5-9c2e-ae777e88f28b.mp4?download=true"];
+    const PHOTOS=["https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%205%2C%202026%2C%2011_08_28%20AM.png?download=true","https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%205%2C%202026%2C%2011_08_08%20AM.png?download=true","https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_01_28%20AM.png?download=true","https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_01_37%20AM.png?download=true","https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_01_49%20AM.png?download=true","https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_48_51%20AM.png?download=true","https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_13_47%20AM.png?download=true","https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%204%2C%202026%2C%2010_13_28%20AM.png?download=true","https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2007_19_21%20AM.png?download=true","https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2007_18_43%20AM.png?download=true","https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2007_19_05%20AM.png?download=true","https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%201%2C%202026%2C%2010_27_11%20PM.png?download=true","https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%201%2C%202026%2C%2010_27_29%20PM.png?download=true","https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%201%2C%202026%2C%2010_27_45%20PM.png?download=true","https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_12%20AM.png?download=true","https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_27%20AM.png?download=true","https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_33%20AM.png?download=true","https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Sep%2029%2C%202026%2C%2009_49_44%20AM.png?download=true"];
+    const MODELS=["https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_49_55%20AM.png?download=true","https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_13_56%20PM.png?download=true","https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_13_33%20PM.png?download=true","https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_13_22%20PM.png?download=true","https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_13_11%20PM.png?download=true","https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_50_09%20AM.png?download=true","https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_50_19%20AM.png?download=true","https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_50_36%20AM.png?download=true"];
+    const nav=[...document.querySelectorAll('.nav-btn')],panels=[...document.querySelectorAll('.panel')];
+    nav.forEach(btn=>btn.addEventListener('click',()=>{nav.forEach(x=>x.classList.toggle('active',x===btn));panels.forEach(p=>p.classList.toggle('active',p.id===`panel-${btn.dataset.panel}`));document.querySelectorAll('video.feed-media').forEach(v=>v.pause());window.scrollTo({top:0,behavior:'smooth'})}));
     const shuffle=a=>{const x=[...a];for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]]}return x};
-    const baseItems=[
-      ...TV.map(src=>({type:'tv',src})),
-      ...REELS.map(src=>({type:'reel',src})),
-      ...PHOTOS.map(src=>({type:'photo',src}))
-    ];
-    let queue=shuffle(baseItems),cursor=0,loading=false;
-    const feed=document.getElementById('feed');
-    const loader=document.getElementById('feed-loader');
-
-    const iconMute=`<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4zM16.5 9.5 21 14M21 9.5 16.5 14"/></svg>`;
-    const iconSound=`<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4zM15.5 8.5a5 5 0 0 1 0 7M17.8 6a8.5 8.5 0 0 1 0 12"/></svg>`;
-    const iconFull=`<svg viewBox="0 0 24 24"><path d="M7 3H3v4h2V5h2V3Zm10 0v2h2v2h2V3h-4ZM5 17H3v4h4v-2H5v-2Zm14 2h-2v2h4v-4h-2v2Z"/></svg>`;
-
+    const baseItems=[...TV.map(src=>({type:'tv',src})),...REELS.map(src=>({type:'reel',src})),...PHOTOS.map(src=>({type:'photo',src}))];let queue=shuffle(baseItems),cursor=0,loading=false;const feed=document.getElementById('feed'),loader=document.getElementById('feed-loader');
+    const iconMute=`<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4zM16.5 9.5 21 14M21 9.5 16.5 14"/></svg>`,iconSound=`<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4zM15.5 8.5a5 5 0 0 1 0 7M17.8 6a8.5 8.5 0 0 1 0 12"/></svg>`,iconFull=`<svg viewBox="0 0 24 24"><path d="M7 3H3v4h2V5h2V3Zm10 0v2h2v2h2V3h-4ZM5 17H3v4h4v-2H5v-2Zm14 2h-2v2h4v-4h-2v2Z"/></svg>`;
     function noteFor(type){return type==='tv'?'Bluia Sisters Posted a TV Episode':type==='reel'?'Bluia Sisters Posted a Reel':'Bluia Sisters Posted a Photo'}
-
-    function buildMedia(item){
-      const wrap=document.createElement('article');wrap.className='feed-item';
-      if(item.type==='photo'){
-        const img=document.createElement('img');img.className='feed-media photo';img.src=item.src;img.alt='Bluia Sisters photo update';img.loading='lazy';img.decoding='async';wrap.appendChild(img);
-      }else{
-        const video=document.createElement('video');video.className=`feed-media ${item.type}`;video.src=item.src;video.playsInline=true;video.muted=true;video.loop=true;video.preload='metadata';video.setAttribute('webkit-playsinline','');wrap.appendChild(video);
-        const controls=document.createElement('div');controls.className='video-controls';
-        const mute=document.createElement('button');mute.className='mini-control';mute.type='button';mute.setAttribute('aria-label','Unmute');mute.innerHTML=iconMute;
-        const full=document.createElement('button');full.className='mini-control';full.type='button';full.setAttribute('aria-label','Full screen');full.innerHTML=iconFull;
-        mute.addEventListener('click',()=>{video.muted=!video.muted;mute.innerHTML=video.muted?iconMute:iconSound;mute.setAttribute('aria-label',video.muted?'Unmute':'Mute');wakeControls(wrap)});
-        full.addEventListener('click',async()=>{wakeControls(wrap);try{if(document.fullscreenElement)await document.exitFullscreen();else if(wrap.requestFullscreen)await wrap.requestFullscreen();else if(video.webkitEnterFullscreen)video.webkitEnterFullscreen()}catch(e){}});
-        controls.append(mute,full);wrap.appendChild(controls);
-        wrap.addEventListener('pointerdown',()=>wakeControls(wrap));
-        videoObserver.observe(video);
-      }
-      return wrap;
-    }
-
-    function wakeControls(wrap){wrap.classList.add('controls-awake');clearTimeout(wrap._fadeTimer);wrap._fadeTimer=setTimeout(()=>wrap.classList.remove('controls-awake'),1600)}
-
-    const videoObserver=new IntersectionObserver(entries=>{
-      entries.forEach(entry=>{
-        const v=entry.target;
-        if(entry.isIntersecting&&entry.intersectionRatio>=.62){
-          document.querySelectorAll('video.feed-media').forEach(other=>{if(other!==v)other.pause()});
-          v.play().catch(()=>{});
-        }else v.pause();
-      });
-    },{threshold:[0,.3,.62,.85]});
-
-    function appendBatch(count=7){
-      if(loading)return;loading=true;
-      const frag=document.createDocumentFragment();
-      for(let n=0;n<count;n++){
-        if(cursor>=queue.length){queue=shuffle(baseItems);cursor=0}
-        const item=queue[cursor++];
-        if(feed.children.length){const note=document.createElement('div');note.className='update-note';note.innerHTML=`<strong>${noteFor(item.type)}</strong><span>New from Bluia Sisters</span>`;frag.appendChild(note)}
-        frag.appendChild(buildMedia(item));
-      }
-      feed.appendChild(frag);loading=false;
-    }
-    appendBatch(8);
-
-    const sentinelObserver=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting))appendBatch(7)},{rootMargin:'800px 0px'});
-    sentinelObserver.observe(loader);
-
-    let selected=0;
-    const main=document.getElementById('model-main');
-    const strip=document.getElementById('model-strip');
-    function selectModel(i){selected=i;main.src=MODELS[i];[...strip.children].forEach((b,n)=>b.classList.toggle('active',n===i))}
-    MODELS.forEach((src,i)=>{const b=document.createElement('button');b.type='button';b.className='model-thumb';const img=document.createElement('img');img.src=src;img.alt=`Bluia Sister ${i+1}`;img.loading=i<4?'eager':'lazy';b.appendChild(img);b.addEventListener('click',()=>selectModel(i));strip.appendChild(b)});selectModel(0);
-
-    const modal=document.getElementById('moment-modal'),modalImg=document.getElementById('moment-image'),modalMsg=document.getElementById('moment-message');
-    function openMoment(kind){modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.documentElement.style.overflow='hidden';if(selected===0){modalImg.hidden=false;modalMsg.hidden=true;modalImg.src=kind==='kiss'?KISS:SNIFF}else{modalImg.hidden=true;modalMsg.hidden=false;modalMsg.textContent='This moment is available for members as new Bluia Sisters scenes are added.'}}
-    function closeMoment(){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');document.documentElement.style.overflow=''}
-    document.getElementById('kiss-button').addEventListener('click',()=>openMoment('kiss'));
-    document.getElementById('sniff-button').addEventListener('click',()=>openMoment('sniff'));
-    document.getElementById('moment-close').addEventListener('click',closeMoment);
-    modal.addEventListener('click',e=>{if(e.target===modal)closeMoment()});
-    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMoment()});
-    document.getElementById('member-buy').addEventListener('click',()=>{window.location.href=PAYMENT_URL});
+    function wakeControls(w){w.classList.add('controls-awake');clearTimeout(w._fadeTimer);w._fadeTimer=setTimeout(()=>w.classList.remove('controls-awake'),1600)}
+    const videoObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{const v=entry.target;if(entry.isIntersecting&&entry.intersectionRatio>=.62){document.querySelectorAll('video.feed-media').forEach(o=>{if(o!==v)o.pause()});v.play().catch(()=>{})}else v.pause()}),{threshold:[0,.3,.62,.85]});
+    function buildMedia(item){const wrap=document.createElement('article');wrap.className='feed-item';if(item.type==='photo'){const img=document.createElement('img');img.className='feed-media photo';img.src=item.src;img.alt='Bluia Sisters photo update';img.loading='lazy';img.decoding='async';wrap.appendChild(img)}else{const video=document.createElement('video');video.className=`feed-media ${item.type}`;video.src=item.src;video.playsInline=true;video.muted=true;video.loop=true;video.preload='metadata';video.setAttribute('webkit-playsinline','');wrap.appendChild(video);const dots=document.createElement('div');dots.className='video-loader show';dots.innerHTML='<span></span><span></span><span></span>';wrap.appendChild(dots);['loadstart','waiting','stalled'].forEach(e=>video.addEventListener(e,()=>dots.classList.add('show')));['canplay','playing'].forEach(e=>video.addEventListener(e,()=>dots.classList.remove('show')));const controls=document.createElement('div');controls.className='video-controls';const mute=document.createElement('button');mute.className='mini-control';mute.type='button';mute.setAttribute('aria-label','Unmute');mute.innerHTML=iconMute;const full=document.createElement('button');full.className='mini-control';full.type='button';full.setAttribute('aria-label','Full screen');full.innerHTML=iconFull;mute.addEventListener('click',()=>{video.muted=!video.muted;mute.innerHTML=video.muted?iconMute:iconSound;wakeControls(wrap)});full.addEventListener('click',async()=>{wakeControls(wrap);try{if(document.fullscreenElement)await document.exitFullscreen();else if(wrap.requestFullscreen)await wrap.requestFullscreen();else if(video.webkitEnterFullscreen)video.webkitEnterFullscreen()}catch(e){}});controls.append(mute,full);wrap.appendChild(controls);wrap.addEventListener('pointerdown',()=>wakeControls(wrap));videoObserver.observe(video)}return wrap}
+    function appendBatch(count=7){if(loading)return;loading=true;const frag=document.createDocumentFragment();for(let n=0;n<count;n++){if(cursor>=queue.length){queue=shuffle(baseItems);cursor=0}const item=queue[cursor++];if(feed.children.length){const note=document.createElement('div');note.className='update-note';note.innerHTML=`<strong>${noteFor(item.type)}</strong><span>New from Bluia Sisters</span>`;frag.appendChild(note)}frag.appendChild(buildMedia(item))}feed.appendChild(frag);loading=false}appendBatch(8);new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting))appendBatch(7)},{rootMargin:'800px 0px'}).observe(loader);
+    let selected=0;const main=document.getElementById('model-main'),strip=document.getElementById('model-strip');function selectModel(i){selected=i;main.src=MODELS[i];[...strip.children].forEach((b,n)=>b.classList.toggle('active',n===i))}MODELS.forEach((src,i)=>{const b=document.createElement('button');b.type='button';b.className='model-thumb';const img=document.createElement('img');img.src=src;img.alt=`Bluia Sister ${i+1}`;img.loading=i<4?'eager':'lazy';b.appendChild(img);b.addEventListener('click',()=>selectModel(i));strip.appendChild(b)});selectModel(0);
+    const modal=document.getElementById('moment-modal'),modalImg=document.getElementById('moment-image'),modalMsg=document.getElementById('moment-message');function showMoment(message,img){modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.documentElement.style.overflow='hidden';modalImg.hidden=!img;modalMsg.hidden=!!img;if(img)modalImg.src=img;else modalMsg.textContent=message}function closeMoment(){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');document.documentElement.style.overflow=''}document.getElementById('kiss-button').onclick=()=>selected===0?showMoment('',KISS):showMoment('This moment is available for members as new Bluia Sisters scenes are added.');document.getElementById('sniff-button').onclick=()=>selected===0?showMoment('',SNIFF):showMoment('This moment is available for members as new Bluia Sisters scenes are added.');document.getElementById('moment-close').onclick=closeMoment;modal.addEventListener('click',e=>{if(e.target===modal)closeMoment()});
+    document.getElementById('marry-button').onclick=()=>{if(selected!==0){showMoment('Become a member to unlock Marry Me for this Bluia Sister.');return}const layer=document.getElementById('hearts-layer');layer.innerHTML='';for(let i=0;i<32;i++){const h=document.createElement('div');h.className='heart';h.textContent='❤';h.style.left=`${Math.random()*100}%`;h.style.setProperty('--d',`${2.5+Math.random()*2}s`);h.style.setProperty('--x',`${-80+Math.random()*160}px`);h.style.setProperty('--r',`${-240+Math.random()*480}deg`);h.style.color=i%3===0?'#fff':'#ff4b91';layer.appendChild(h)}setTimeout(()=>layer.innerHTML='',5000)};
+    const chatModal=document.getElementById('chat-modal'),chatStatus=document.getElementById('chat-status'),chatEmail=document.getElementById('chat-email');document.getElementById('chat-button').onclick=()=>{chatStatus.textContent='';chatModal.classList.add('open');chatModal.setAttribute('aria-hidden','false');setTimeout(()=>chatEmail.focus(),60)};function closeChat(){chatModal.classList.remove('open');chatModal.setAttribute('aria-hidden','true')}document.getElementById('chat-close').onclick=closeChat;chatModal.addEventListener('click',e=>{if(e.target===chatModal)closeChat()});document.getElementById('chat-submit').onclick=async()=>{const email=chatEmail.value.trim().toLowerCase();if(!/^\S+@\S+\.\S+$/.test(email)){chatStatus.textContent='Enter a valid email address.';return}chatStatus.textContent='Checking membership…';try{const r=await fetch('/members/members.json',{cache:'no-store'});const data=await r.json();const members=Array.isArray(data?.members)?data.members.map(x=>String(x).trim().toLowerCase()):[];if(!members.includes(email)){chatStatus.textContent='You are not a member yet. First buy a membership, then use the same email address here.';return}await fetch(FIREBASE_REQUEST_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,sisterId:`sister_${String(selected+1).padStart(2,'0')}`,sisterName:`Bluia Sister ${selected+1}`,member:true,createdAt:Date.now(),source:'main_play_chat'})});chatStatus.textContent='Membership confirmed. Your request was received. A Bluia Sister will email you her private contact.'}catch(e){chatStatus.textContent='Could not verify or save your request. Please try again.'}};
+    document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeMoment();closeChat()}});document.getElementById('member-buy').onclick=()=>{window.location.href=PAYMENT_URL};
   })();
   </script>
 </body>
