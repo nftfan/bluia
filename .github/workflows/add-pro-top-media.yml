@@ -1,0 +1,37 @@
+name: Add Pro top media
+
+on:
+  push:
+    paths:
+      - '.github/workflows/add-pro-top-media.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add new Pro photos at top
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('pro/index.html')
+          s=p.read_text()
+          marker='const PHOTOS=['
+          prefix='const PHOTOS=["https://huggingface.co/buckets/Bluia/bimg/resolve/F434CB7E-6C2A-4DCD-B739-8D025984972E.png?download=true","https://huggingface.co/buckets/Bluia/bimg/resolve/DC7A7A10-5740-489B-9E2A-2686358B490D.png?download=true","https://huggingface.co/buckets/Bluia/bimg/resolve/B731E393-28EB-4A58-864D-CCF7E7656C02.png?download=true","https://huggingface.co/buckets/Bluia/bimg/resolve/84b068f8efcc6fe05686c33e99328ee4.jpeg?download=true","https://huggingface.co/buckets/Bluia/bimg/resolve/469AF640-2901-4D77-9B1B-1BD1E2B9A65C.png?download=true",'
+          if 'F434CB7E-6C2A-4DCD-B739-8D025984972E.png?download=true' in s:
+              raise SystemExit('new media already present')
+          if marker not in s:
+              raise SystemExit('PHOTOS marker not found')
+          s=s.replace(marker,prefix,1)
+          p.write_text(s)
+          PY
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add pro/index.html
+          git commit -m "Add new media to top of Pro feed" || exit 0
+          git push
