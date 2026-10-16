@@ -1,0 +1,45 @@
+name: Add social share card meta
+
+on:
+  push:
+    paths:
+      - '.github/workflows/add-share-card-meta.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add Open Graph metadata
+        shell: python
+        run: |
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text()
+          marker = '  <title>Bluia Sisters TV</title>'
+          block = '''  <title>Bluia Sisters TV</title>
+  <meta name="description" content="Bluia Sisters Official Website">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bluia.online/">
+  <meta property="og:title" content="Bluia Sisters">
+  <meta property="og:description" content="Bluia Sisters Official Website">
+  <meta property="og:image" content="https://huggingface.co/buckets/Bluia/bimg/resolve/IMG_4923.jpeg?download=true">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bluia Sisters">
+  <meta name="twitter:description" content="Bluia Sisters Official Website">
+  <meta name="twitter:image" content="https://huggingface.co/buckets/Bluia/bimg/resolve/IMG_4923.jpeg?download=true">'''
+          if 'property="og:image"' not in s:
+              s = s.replace(marker, block, 1)
+              p.write_text(s)
+      - name: Commit change
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if ! git diff --cached --quiet; then
+            git commit -m "Add Bluia Sisters share preview"
+            git push
+          fi
