@@ -20,17 +20,20 @@ jobs:
           p = Path('index.html')
           s = p.read_text()
           marker = '  <title>Bluia Sisters TV</title>'
-          block = '''  <title>Bluia Sisters TV</title>
-  <meta name="description" content="Bluia Sisters Official Website">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://bluia.online/">
-  <meta property="og:title" content="Bluia Sisters">
-  <meta property="og:description" content="Bluia Sisters Official Website">
-  <meta property="og:image" content="https://huggingface.co/buckets/Bluia/bimg/resolve/IMG_4923.jpeg?download=true">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Bluia Sisters">
-  <meta name="twitter:description" content="Bluia Sisters Official Website">
-  <meta name="twitter:image" content="https://huggingface.co/buckets/Bluia/bimg/resolve/IMG_4923.jpeg?download=true">'''
+          lines = [
+              '  <title>Bluia Sisters TV</title>',
+              '  <meta name="description" content="Bluia Sisters Official Website">',
+              '  <meta property="og:type" content="website">',
+              '  <meta property="og:url" content="https://bluia.online/">',
+              '  <meta property="og:title" content="Bluia Sisters">',
+              '  <meta property="og:description" content="Bluia Sisters Official Website">',
+              '  <meta property="og:image" content="https://huggingface.co/buckets/Bluia/bimg/resolve/IMG_4923.jpeg?download=true">',
+              '  <meta name="twitter:card" content="summary_large_image">',
+              '  <meta name="twitter:title" content="Bluia Sisters">',
+              '  <meta name="twitter:description" content="Bluia Sisters Official Website">',
+              '  <meta name="twitter:image" content="https://huggingface.co/buckets/Bluia/bimg/resolve/IMG_4923.jpeg?download=true">',
+          ]
+          block = '\n'.join(lines)
           if 'property="og:image"' not in s:
               p.write_text(s.replace(marker, block, 1))
           PY
