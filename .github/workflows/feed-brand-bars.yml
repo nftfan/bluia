@@ -1,0 +1,43 @@
+name: Feed brand bars
+
+on:
+  push:
+    paths:
+      - '.github/workflows/feed-brand-bars.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update main feed styling
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text()
+          s=s.replace('    .top-photo{display:block;width:100%;height:auto;max-height:46svh;object-fit:contain;background:#000}\n','')
+          s=s.replace('    .video-controls{position:absolute;top:8px;right:8px;', '    .feed-brand{height:10px;display:flex;align-items:center;justify-content:center;background:linear-gradient(90deg,#fff0f6,#ff8db9 35%,#fff 50%,#ff8db9 65%,#fff0f6);color:#1a0710;font-size:8px;line-height:10px;font-weight:950;letter-spacing:1.4px;text-transform:uppercase;text-shadow:0 0 8px #fff,0 0 10px #ff82b3;box-shadow:0 0 14px rgba(255,114,169,.58);position:relative;z-index:6}\n    .video-controls{position:absolute;top:18px;right:8px;')
+          s=s.replace('  <img class="top-photo" src="https://huggingface.co/buckets/Bluia/bimg/resolve/IMG_4923.jpeg?download=true" alt="Bluia Sisters">\n','')
+          old="function buildMedia(item){const wrap=document.createElement('article');wrap.className='feed-item';if(item.type==='photo'){const img=document.createElement('img');img.className='feed-media photo';img.src=item.src;img.alt='Bluia Sisters photo update';img.loading='lazy';img.decoding='async';wrap.appendChild(img)}else{"
+          new="function buildMedia(item){const wrap=document.createElement('article');wrap.className='feed-item';const topBrand=document.createElement('div');topBrand.className='feed-brand';topBrand.textContent='Bluia Sisters';wrap.appendChild(topBrand);if(item.type==='photo'){const img=document.createElement('img');img.className='feed-media photo';img.src=item.src;img.alt='Bluia Sisters photo update';img.loading='lazy';img.decoding='async';wrap.appendChild(img)}else{"
+          if old not in s:
+              raise SystemExit('buildMedia start not found')
+          s=s.replace(old,new,1)
+          old_end="wrap.addEventListener('pointerdown',()=>wakeControls(wrap));videoObserver.observe(video)}return wrap}"
+          new_end="wrap.addEventListener('pointerdown',()=>wakeControls(wrap));videoObserver.observe(video)}const bottomBrand=document.createElement('div');bottomBrand.className='feed-brand';bottomBrand.textContent='Bluia Sisters';wrap.appendChild(bottomBrand);return wrap}"
+          if old_end not in s:
+              raise SystemExit('buildMedia end not found')
+          s=s.replace(old_end,new_end,1)
+          p.write_text(s)
+          PY
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Remove top image and add feed brand bars" || exit 0
+          git push
