@@ -1,0 +1,30 @@
+name: Move member email note to popup
+on:
+  push:
+    paths:
+      - '.github/workflows/remove-member-email-note.yml'
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Remove duplicate visible email note
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text()
+          old='<p class="member-note">Use an email address you can access at checkout. Your private viewing link will be sent to that email.</p>'
+          if old not in s: raise SystemExit('visible member note not found')
+          s=s.replace(old,'',1)
+          p.write_text(s)
+          PY
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Move member email note into payment popup" || exit 0
+          git push
