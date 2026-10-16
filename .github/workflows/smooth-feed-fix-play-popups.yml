@@ -1,0 +1,67 @@
+name: Smooth feed loading and Play popups
+
+on:
+  push:
+    paths:
+      - '.github/workflows/smooth-feed-fix-play-popups.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Smooth feed loading and repair Play popups
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text()
+
+          css_marker='.feed-loader{height:1px;padding:0;margin:0;overflow:hidden;font-size:0}'
+          css_add='''\n    .feed-startup{height:110px;display:flex;align-items:center;justify-content:center;gap:6px;background:#000;transition:opacity .28s ease,height .28s ease;overflow:hidden}.feed-startup.done{opacity:0;height:0;pointer-events:none}.feed-startup span{width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 12px rgba(255,111,168,.95);animation:startupPulse .9s ease-in-out infinite}.feed-startup span:nth-child(2){animation-delay:.12s}.feed-startup span:nth-child(3){animation-delay:.24s}@keyframes startupPulse{0%,70%,100%{transform:translateY(0) scale(.72);opacity:.3}35%{transform:translateY(-5px) scale(1);opacity:1}}'''
+          if css_add.strip() not in s:
+              if css_marker not in s: raise SystemExit('feed css marker not found')
+              s=s.replace(css_marker,css_marker+css_add,1)
+
+          popup_css_marker='.moment-card img{display:block;width:100%;height:auto;border-radius:20px}'
+          popup_css_new='.moment-card img{display:block;width:100%;height:auto;max-height:86dvh;object-fit:contain;border-radius:20px;transition:opacity .18s ease}.moment-card [hidden]{display:none!important}.moment-message[hidden],#moment-image[hidden]{display:none!important}'
+          if popup_css_marker in s:
+              s=s.replace(popup_css_marker,popup_css_new,1)
+
+          old_updates='<section class="panel active" id="panel-updates"><div class="feed" id="feed"></div><div class="feed-loader" id="feed-loader" aria-hidden="true"></div></section>'
+          new_updates='<section class="panel active" id="panel-updates"><div class="feed-startup" id="feed-startup" aria-label="Loading Bluia Updates"><span></span><span></span><span></span></div><div class="feed" id="feed"></div><div class="feed-loader" id="feed-loader" aria-hidden="true"></div></section>'
+          if old_updates in s:
+              s=s.replace(old_updates,new_updates,1)
+
+          old_refs="let queue=buildQueue(),cursor=0,loading=false;const feed=document.getElementById('feed'),loader=document.getElementById('feed-loader');"
+          new_refs="let queue=buildQueue(),cursor=0,loading=false;const feed=document.getElementById('feed'),loader=document.getElementById('feed-loader'),startup=document.getElementById('feed-startup');"
+          if old_refs in s:
+              s=s.replace(old_refs,new_refs,1)
+
+          old_batch="function appendBatch(count=7){if(loading)return;loading=true;const frag=document.createDocumentFragment();for(let n=0;n<count;n++){if(cursor>=queue.length){queue=buildQueue();cursor=0}const item=queue[cursor++];frag.appendChild(buildMedia(item))}feed.appendChild(frag);loading=false}appendBatch(8);new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting))appendBatch(7)},{rootMargin:'800px 0px'}).observe(loader);"
+          new_batch="function appendBatch(count=7){if(loading)return;loading=true;const frag=document.createDocumentFragment();for(let n=0;n<count;n++){if(cursor>=queue.length){queue=buildQueue();cursor=0}const item=queue[cursor++];frag.appendChild(buildMedia(item))}feed.appendChild(frag);loading=false}function finishStartup(){if(!startup||startup.classList.contains('done'))return;startup.classList.add('done');setTimeout(()=>startup.remove(),320)}appendBatch(8);const firstMedia=feed.querySelector('.feed-media');if(firstMedia){if(firstMedia.tagName==='IMG'){if(firstMedia.complete)requestAnimationFrame(finishStartup);else{firstMedia.addEventListener('load',finishStartup,{once:true});firstMedia.addEventListener('error',finishStartup,{once:true})}}else{firstMedia.addEventListener('canplay',finishStartup,{once:true});firstMedia.addEventListener('error',finishStartup,{once:true})}}setTimeout(finishStartup,2600);new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting))appendBatch(7)},{rootMargin:'800px 0px'}).observe(loader);"
+          if old_batch not in s: raise SystemExit('feed batch target not found')
+          s=s.replace(old_batch,new_batch,1)
+
+          old_moment="const modal=document.getElementById('moment-modal'),modalImg=document.getElementById('moment-image'),modalMsg=document.getElementById('moment-message');function showMoment(message,img){modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.documentElement.style.overflow='hidden';modalImg.hidden=!img;modalMsg.hidden=!!img;if(img)modalImg.src=img;else modalMsg.textContent=message}function closeMoment(){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');document.documentElement.style.overflow=''}"
+          new_moment="const modal=document.getElementById('moment-modal'),modalImg=document.getElementById('moment-image'),modalMsg=document.getElementById('moment-message');function showMoment(message='',img=''){modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.documentElement.style.overflow='hidden';modalImg.onload=null;if(img){modalMsg.hidden=true;modalMsg.textContent='';modalImg.hidden=false;modalImg.style.opacity='0';modalImg.src=img;modalImg.onload=()=>{modalImg.style.opacity='1'}}else{modalImg.hidden=true;modalImg.removeAttribute('src');modalImg.style.opacity='1';modalMsg.hidden=false;modalMsg.textContent=message}}function closeMoment(){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');document.documentElement.style.overflow='';modalImg.onload=null;modalImg.hidden=true;modalImg.removeAttribute('src');modalImg.style.opacity='1';modalMsg.hidden=true;modalMsg.textContent=''}"
+          if old_moment not in s: raise SystemExit('moment popup target not found')
+          s=s.replace(old_moment,new_moment,1)
+
+          old_chat="document.getElementById('chat-button').onclick=()=>{chatStatus.textContent='';chatModal.classList.add('open');chatModal.setAttribute('aria-hidden','false');setTimeout(()=>chatEmail.focus(),60)};function closeChat(){chatModal.classList.remove('open');chatModal.setAttribute('aria-hidden','true')}"
+          new_chat="document.getElementById('chat-button').onclick=()=>{chatStatus.textContent='';chatModal.classList.add('open');chatModal.setAttribute('aria-hidden','false');document.documentElement.style.overflow='hidden';setTimeout(()=>chatEmail.focus(),60)};function closeChat(){chatModal.classList.remove('open');chatModal.setAttribute('aria-hidden','true');document.documentElement.style.overflow='';chatStatus.textContent=''}"
+          if old_chat not in s: raise SystemExit('chat popup target not found')
+          s=s.replace(old_chat,new_chat,1)
+
+          p.write_text(s)
+          PY
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Smooth feed loading and fix Play popups" || exit 0
+          git push
