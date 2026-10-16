@@ -11,7 +11,6 @@ window.BluiaMedia = {
   // Bluia Sisters used by Play
   models: [
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%202%2C%202026%2C%2008_49_55%20AM.png?download=true",
-    "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_14_11%20PM.png?download=true",
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_13_56%20PM.png?download=true",
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_13_33%20PM.png?download=true",
     "https://huggingface.co/buckets/veebluia/bluiaimages/resolve/ChatGPT%20Image%20Oct%209%2C%202026%2C%2001_13_22%20PM.png?download=true",
@@ -108,7 +107,7 @@ window.BluiaMedia = {
 (() => {
   if (document.querySelector('script[data-bluia-telegram-main]')) return;
   const script = document.createElement("script");
-  script.src = "/telegram-main.js?v=20261015-premium-card-1";
+  script.src = "/telegram-main.js?v=20261016-polish-1";
   script.defer = true;
   script.dataset.bluiaTelegramMain = "1";
   document.head.appendChild(script);
