@@ -14,8 +14,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Add Open Graph metadata
-        shell: python
         run: |
+          python3 - <<'PY'
           from pathlib import Path
           p = Path('index.html')
           s = p.read_text()
@@ -32,8 +32,8 @@ jobs:
   <meta name="twitter:description" content="Bluia Sisters Official Website">
   <meta name="twitter:image" content="https://huggingface.co/buckets/Bluia/bimg/resolve/IMG_4923.jpeg?download=true">'''
           if 'property="og:image"' not in s:
-              s = s.replace(marker, block, 1)
-              p.write_text(s)
+              p.write_text(s.replace(marker, block, 1))
+          PY
       - name: Commit change
         run: |
           git config user.name "github-actions[bot]"
