@@ -1,0 +1,55 @@
+name: Magazine default navigation
+
+on:
+  push:
+    paths:
+      - '.github/workflows/magazine-default-nav.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Make Magazine default and keep membership CTA visible
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text()
+
+          old_nav='''    <button class="nav-btn active" data-panel="updates" type="button">Bluia Updates <span class="media-count">26</span></button>\n    <button class="nav-btn" data-panel="play" type="button">Magazine</button>\n    <button class="nav-btn" data-panel="members" type="button">Members <span class="media-count">1500</span></button>'''
+          new_nav='''    <button class="nav-btn active" data-panel="play" type="button">Magazine</button>\n    <button class="nav-btn" data-panel="updates" type="button">Photos &amp; Videos <span class="media-count">26</span></button>\n    <button class="nav-btn" data-panel="members" type="button">Members <span class="media-count">1500</span></button>'''
+          if old_nav not in s:
+              raise SystemExit('navigation block not found')
+          s=s.replace(old_nav,new_nav,1)
+
+          old_updates='<section class="panel active" id="panel-updates">'
+          new_updates='<section class="panel" id="panel-updates">'
+          if old_updates not in s:
+              raise SystemExit('updates active panel marker not found')
+          s=s.replace(old_updates,new_updates,1)
+
+          old_mag='<section class="panel" id="panel-play">'
+          new_mag='<section class="panel active" id="panel-play">'
+          if old_mag not in s:
+              raise SystemExit('magazine panel marker not found')
+          s=s.replace(old_mag,new_mag,1)
+
+          old_float="if(feedMembershipFloat)feedMembershipFloat.hidden=btn.dataset.panel!=='updates';"
+          new_float="if(feedMembershipFloat)feedMembershipFloat.hidden=btn.dataset.panel==='members';"
+          if old_float not in s:
+              raise SystemExit('floating membership visibility marker not found')
+          s=s.replace(old_float,new_float,1)
+
+          p.write_text(s)
+          PY
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Make Magazine default and rename media tab" || exit 0
+          git push
