@@ -1,0 +1,35 @@
+name: Add Mom Jumpsuit Story
+
+on:
+  push:
+    paths:
+      - '.github/workflows/add-mom-jumpsuit-story.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add newest Pro story
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('pro/index.html')
+          s=p.read_text()
+          marker='<article class="story-card"><div class="story-divider">Bluia Sisters Pro</div><div class="story-meta"><span>Page 12</span><span>Latest Story</span></div><div class="story-copy"><h2>Blue Heels</h2>'
+          if marker not in s:
+              raise SystemExit('Blue Heels marker missing')
+          story='''<article class="story-card"><div class="story-divider">Bluia Sisters Pro</div><div class="story-meta"><span>Page 13</span><span>Latest Story</span></div><div class="story-copy"><h2>A Mom in Jumpsuit</h2><div class="story-by">By Kendra Bluia</div><p>A mom in a jumpsuit carries a quiet kind of confidence. The look is simple, strong and effortless at the same time.</p></div><img class="story-photo" src="https://huggingface.co/buckets/Bluia/bimg/resolve/1B370FA9-CACB-43A3-AEC0-237B100F268F.png?download=true" alt="A Mom in Jumpsuit"><div class="story-copy"><p>The jumpsuit brings structure while her energy keeps it soft and feminine. Comfort, maturity and beauty can all exist together.</p><div class="story-end">End of A Mom in Jumpsuit</div></div></article>'''
+          s=s.replace(marker,story+marker.replace('<span>Latest Story</span>','<span>Story</span>'),1)
+          p.write_text(s)
+          PY
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add pro/index.html
+          git commit -m "Add A Mom in Jumpsuit Pro story" || exit 0
+          git push
