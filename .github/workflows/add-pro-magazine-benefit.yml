@@ -1,0 +1,35 @@
+name: Add Pro magazine benefit
+
+on:
+  push:
+    paths:
+      - '.github/workflows/add-pro-magazine-benefit.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add magazine benefit
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text()
+          old='<ul class="member-benefits"><li>Hundreds of reels</li><li>TV episodes</li><li>Photos</li><li>Play with Bluia Sisters</li></ul>'
+          new='<ul class="member-benefits"><li>Hundreds of reels</li><li>TV episodes</li><li>Photos</li><li>Play with Bluia Sisters</li><li>Read full Bluia Sisters magazine</li></ul>'
+          if old not in s:
+              raise SystemExit('member benefits block not found')
+          s=s.replace(old,new,1)
+          p.write_text(s)
+          PY
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Add magazine to Pro benefits" || exit 0
+          git push
