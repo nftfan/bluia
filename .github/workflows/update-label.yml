@@ -1,5 +1,8 @@
 name: update-label
-on: workflow_dispatch
+on:
+  push:
+    paths:
+      - '.github/workflows/update-label.yml'
 jobs:
   edit:
     runs-on: ubuntu-latest
