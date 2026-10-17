@@ -1,0 +1,64 @@
+name: Upgrade membership CTA and add locked story
+
+on:
+  push:
+    paths:
+      - '.github/workflows/upgrade-membership-cta.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Upgrade CTAs and add locked Magazine story
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text()
+
+          # Stronger CTA labels
+          s=s.replace('>Buy Membership</button>', '>Unlock Full Bluia — $5/month</button>', 1)
+          s=s.replace('>Unlock Unlimited Content</button>', '>Unlock Full Bluia — $5/month</button>', 1)
+          s=s.replace('>Become a Member</button>', '>Read Full Magazine — $5/month</button>', 1)
+
+          # Cancel-anytime reassurance under price
+          old_price='<div class="member-price"><strong>$5</strong><span>/ month</span></div>'
+          new_price=old_price+'<div class="member-cancel">Cancel anytime</div>'
+          if old_price not in s:
+              raise SystemExit('member price block not found')
+          s=s.replace(old_price,new_price,1)
+
+          # Locked third Magazine story before the final membership CTA
+          old_end='<div class="mag-brand">Bluia Sisters</div><div class="mag-cta"><h3>More Stories Await</h3><p>Become a member to read more stories by Bluia Sisters and unlock the full members collection.</p><button id="magazine-member" type="button">Read Full Magazine — $5/month</button></div>'
+          locked='''<div class="mag-brand">Bluia Sisters</div><article class="mag-story mag-story-locked"><div class="mag-copy mag-locked-copy"><div class="mag-kicker">By: Kendra Bluia</div><h2>Love Hurts</h2><p>Some stories are too personal to leave completely open. This Bluia Sisters story is available to members.</p><div class="mag-lock-badge">Members Only</div><button class="mag-lock-button" id="magazine-story-lock" type="button">Unlock Love Hurts — $5/month</button></div><div class="mag-locked-visual"><img class="mag-photo" src="https://huggingface.co/buckets/Bluia/bimg/resolve/CB41C504-F995-4471-AC6F-2D8DA7909017.png?download=true" alt="Love Hurts members-only story preview"><div class="mag-lock-overlay">🔒 Love Hurts</div></div></article><div class="mag-brand">Bluia Sisters</div><div class="mag-cta"><h3>More Stories Await</h3><p>Become a member to read more stories by Bluia Sisters and unlock the full members collection.</p><button id="magazine-member" type="button">Read Full Magazine — $5/month</button></div>'''
+          if old_end not in s:
+              raise SystemExit('Magazine CTA block not found')
+          s=s.replace(old_end,locked,1)
+
+          # CSS
+          css_anchor='.member-price span{font-size:10px;color:#b9a978;padding-bottom:3px}'
+          css_add=css_anchor+'.member-cancel{margin:-7px 0 13px;color:#8e8268;font-size:8.5px;letter-spacing:.15px}.mag-story-locked{position:relative}.mag-locked-copy{padding-bottom:24px}.mag-lock-badge{display:inline-flex;align-items:center;margin:14px 0 10px;padding:5px 9px;border:1px solid rgba(112,88,48,.35);border-radius:999px;background:rgba(255,255,255,.26);color:#5d4930;font:700 9px/1 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;letter-spacing:.45px;text-transform:uppercase}.mag-lock-button{display:block;min-height:44px;padding:0 16px;border:1px solid #8f7350;border-radius:999px;background:#18120b;color:#f4e5c8;font-size:10px;font-weight:900;cursor:pointer}.mag-locked-visual{position:relative;overflow:hidden;background:#0a0a0a}.mag-locked-visual .mag-photo{filter:blur(15px) brightness(.45);transform:scale(1.06)}.mag-lock-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff8e9;font:700 20px/1 Didot,"Bodoni 72",Georgia,serif;letter-spacing:.2px;text-shadow:0 2px 15px #000;background:rgba(0,0,0,.2)}'
+          if css_anchor not in s:
+              raise SystemExit('member price CSS anchor not found')
+          s=s.replace(css_anchor,css_add,1)
+
+          # Wire locked-story CTA to the same payment popup
+          js_anchor="const magazineMember=document.getElementById('magazine-member');if(magazineMember)magazineMember.onclick=openPayment;"
+          js_add=js_anchor+"const magazineStoryLock=document.getElementById('magazine-story-lock');if(magazineStoryLock)magazineStoryLock.onclick=openPayment;"
+          if js_anchor not in s:
+              raise SystemExit('Magazine payment hook not found')
+          s=s.replace(js_anchor,js_add,1)
+
+          p.write_text(s)
+          PY
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Upgrade membership CTAs and add Love Hurts story" || exit 0
+          git push
