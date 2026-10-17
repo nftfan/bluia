@@ -1,0 +1,13 @@
+name: update-label
+on: workflow_dispatch
+jobs:
+  edit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 -c "p='index.html'; s=open(p).read(); open(p,'w').write(s.replace('Photos &amp; Videos','Updates',1))"
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Rename media tab to Updates
