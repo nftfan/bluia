@@ -1,0 +1,81 @@
+name: Add main Magazine
+
+on:
+  push:
+    paths:
+      - '.github/workflows/add-main-magazine.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Replace Play tab with Magazine stories
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          p=Path('index.html')
+          s=p.read_text()
+
+          old_nav_css='''.nav-btn[data-panel="play"]{background:linear-gradient(135deg,#745cff,#3f32c9);border-color:#8879ff;color:#fff;box-shadow:0 6px 20px rgba(111,88,255,.2)}\n    .nav-btn[data-panel="play"].active{background:linear-gradient(135deg,#8a73ff,#4a39da);border-color:#a395ff;box-shadow:0 6px 22px rgba(119,95,255,.34)}'''
+          new_nav_css='''.nav-btn[data-panel="play"]{background:linear-gradient(135deg,#f7edd5,#d8c49e);border-color:#ead9b5;color:#17120b;box-shadow:0 6px 20px rgba(229,210,171,.16)}\n    .nav-btn[data-panel="play"].active{background:linear-gradient(135deg,#fff7e6,#dbc59a);border-color:#f4e1bc;color:#130f08;box-shadow:0 6px 22px rgba(236,216,174,.28)}'''
+          if old_nav_css not in s:
+              raise SystemExit('Play nav CSS marker not found')
+          s=s.replace(old_nav_css,new_nav_css,1)
+
+          css_marker='    .member-hero{'
+          magazine_css='''    #panel-play>.inner{display:none!important}\n    .magazine{width:100%;background:#000;padding:0 0 28px}.mag-story{width:100%;margin:0;background:#000}.mag-copy{background:#f3ead7;color:#17130d;padding:22px 18px 20px}.mag-kicker{font-size:8px;font-weight:900;letter-spacing:1.2px;text-transform:uppercase;opacity:.58;margin-bottom:5px}.mag-copy h2{margin:0 0 8px;font:700 27px/1.04 Georgia,"Times New Roman",serif;letter-spacing:-.55px;color:#111}.mag-copy p{margin:0;color:#282118;font-size:10.5px;line-height:1.62;max-width:620px}.mag-photo{display:block;width:100%;height:auto;margin:0;background:#000;object-fit:cover}.mag-brand{height:10px;display:flex;align-items:center;justify-content:center;background:linear-gradient(90deg,#f7eddc,#edd9ba 35%,#fffaf0 50%,#edd9ba 65%,#f7eddc);color:#19130b;font-size:8px;line-height:10px;font-weight:950;letter-spacing:1.4px;text-transform:uppercase;box-shadow:0 0 12px rgba(239,221,187,.35);position:relative;z-index:6}\n'''
+          if css_marker not in s:
+              raise SystemExit('Magazine CSS insertion marker not found')
+          s=s.replace(css_marker,magazine_css+css_marker,1)
+
+          nav_pattern=r'(<button class="nav-btn" data-panel="play" type="button">)Play(</button>)'
+          s,n=re.subn(nav_pattern,r'\1Magazine\2',s,count=1)
+          if n!=1:
+              raise SystemExit('Play nav button not found exactly once')
+
+          panel_marker='<section class="panel" id="panel-play">'
+          if panel_marker not in s:
+              raise SystemExit('panel-play marker not found')
+
+          magazine_html='''<div class="magazine" aria-label="Bluia Sisters Magazine">
+  <article class="mag-story">
+    <div class="mag-brand">Bluia Sisters</div>
+    <div class="mag-copy"><div class="mag-kicker">Magazine Story 01</div><h2>Fashion Sense</h2><p>Our fashion sense is built around confidence, clean silhouettes and one memorable detail. We like looks that feel polished without becoming too perfect.</p></div>
+    <img class="mag-photo" src="https://huggingface.co/buckets/Bluia/bimg/resolve/CB41C504-F995-4471-AC6F-2D8DA7909017.png?download=true" alt="Bluia Sisters fashion story">
+    <div class="mag-brand">Bluia Sisters</div>
+    <div class="mag-copy"><p>Texture, shape and attitude matter more than following every trend. A strong outfit should still feel natural when the camera is gone.</p></div>
+    <img class="mag-photo" src="https://huggingface.co/buckets/Bluia/bimg/resolve/6376DFDC-5696-4994-B1E5-6273DD959B73.png?download=true" alt="Bluia Sisters fashion detail">
+    <div class="mag-brand">Bluia Sisters</div>
+    <div class="mag-copy"><p>The final touch is balance: something soft with something bold, something classic with something playful. That contrast is where the look becomes ours.</p></div>
+    <img class="mag-photo" src="https://huggingface.co/buckets/Bluia/bimg/resolve/0FB83428-CF4A-4A26-8B51-DB1F9234D2E3.png?download=true" alt="Bluia Sisters fashion look">
+  </article>
+  <article class="mag-story">
+    <div class="mag-brand">Bluia Sisters</div>
+    <div class="mag-copy"><div class="mag-kicker">Magazine Story 02</div><h2>Our Style</h2><p>Our style moves between elegant, playful and relaxed. The common thread is a look that feels intentional while still leaving room for personality.</p></div>
+    <img class="mag-photo" src="https://huggingface.co/buckets/Bluia/bimg/resolve/B2041FE1-808D-4F35-9107-473F5A357623.png?download=true" alt="Bluia Sisters style story">
+    <div class="mag-brand">Bluia Sisters</div>
+    <div class="mag-copy"><p>We mix simple foundations with expressive details, letting color, hair, accessories or posture carry the mood instead of overloading every piece.</p></div>
+    <img class="mag-photo" src="https://huggingface.co/buckets/Bluia/bimg/resolve/960EE242-6C07-4D1A-B682-67997AACD51E.png?download=true" alt="Bluia Sisters signature style">
+    <div class="mag-brand">Bluia Sisters</div>
+    <div class="mag-copy"><p>For us, style is less about a fixed uniform and more about a recognizable energy: feminine, confident, modern and always a little unexpected.</p></div>
+    <img class="mag-photo" src="https://huggingface.co/buckets/Bluia/bimg/resolve/949F7146-EFE1-4F84-904E-5A352A2B6E00.png?download=true" alt="Bluia Sisters personal style">
+    <div class="mag-brand">Bluia Sisters</div>
+  </article>
+</div>'''
+          s=s.replace(panel_marker,panel_marker+magazine_html,1)
+
+          p.write_text(s)
+          PY
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Replace Play tab with Magazine stories" || exit 0
+          git push
