@@ -1,0 +1,35 @@
+name: Add Blue Heels Story
+
+on:
+  push:
+    paths:
+      - '.github/workflows/add-blue-heels-story.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add Blue Heels as newest Pro story
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('pro/index.html')
+          s=p.read_text()
+          marker='<article class="story-card"><div class="story-divider">Bluia Sisters Pro</div><div class="story-meta"><span>Page 09</span><span>Latest Story</span></div><div class="story-copy"><h2>Love Hurts</h2>'
+          if marker not in s:
+              raise SystemExit('Love Hurts marker missing')
+          story='''<article class="story-card"><div class="story-divider">Bluia Sisters Pro</div><div class="story-meta"><span>Page 12</span><span>Latest Story</span></div><div class="story-copy"><h2>Blue Heels</h2><div class="story-by">Bluia Sisters Pro</div><p>Some outfits begin with the dress. This one began with the shoes. A pair of blue heels changed the whole mood before anything else had a chance to compete.</p><p>Blue can feel calm from a distance, but on a sharp heel it becomes something else: confident, electric and impossible to ignore. The color carried the look without needing to shout.</p></div><img class="story-photo" src="https://huggingface.co/buckets/Bluia/bimg/resolve/92BE2D2D-F90B-40C0-A22C-FA362B3DEC69.png?download=true" alt="Blue Heels Bluia Sisters Pro story"><div class="story-copy"><p>The best part was the contrast. Clean lines above, a stronger statement below. Every step gave the outfit movement, and every angle made the blue feel different.</p><p>That is what we love about one unforgettable detail. You do not need to overload a look when one choice already has enough personality.</p></div><img class="story-photo" src="https://huggingface.co/buckets/Bluia/bimg/resolve/8CD15938-6272-4F89-94A9-889F22F12D71.png?download=true" alt="Blue heels fashion story"><div class="story-copy"><p>Blue heels are not just an accessory here. They are the point of view: polished, playful and a little fearless.</p><div class="story-end">End of Blue Heels</div></div></article>'''
+          s=s.replace(marker,story+marker.replace('<span>Latest Story</span>','<span>Story</span>'),1)
+          p.write_text(s)
+          PY
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add pro/index.html
+          git commit -m "Add Blue Heels Pro story" || exit 0
+          git push
